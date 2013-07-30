@@ -1,0 +1,2 @@
+/** @jsx React.DOM */
+<div/>;

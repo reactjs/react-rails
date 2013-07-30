@@ -1,2 +1,4 @@
 *.gem
 Gemfile.lock
+*.log
+test/dummy/tmp
