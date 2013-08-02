@@ -1,4 +1,4 @@
-# react-rails
+# react-rails [![Build Status](https://travis-ci.org/facebook/react-rails.png)](https://travis-ci.org/facebook/react-rails)
 
 react-rails is a ruby gem which makes it easier to use [React](http://facebook.github.io/react/) and [JSX](http://facebook.github.io/react/docs/jsx-in-depth.html) in your Ruby on Rails application.
 
