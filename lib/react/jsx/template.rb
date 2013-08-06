@@ -1,3 +1,5 @@
+require 'tilt'
+
 module React
   module JSX
 
