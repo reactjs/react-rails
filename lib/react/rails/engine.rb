@@ -1,10 +1,8 @@
 module React
   module Rails
     class Engine < ::Rails::Engine
-      config.before_initialize do |app|
-        # force autoloading? what?
-        Sprockets::Engines
-        Sprockets.register_engine '.jsx', React::JSX::Template
+      initializer "react_rails.setup_engine", :after => "sprockets.environment", :group => :all do |app|
+        app.assets.register_engine '.jsx', React::JSX::Template
       end
     end
   end

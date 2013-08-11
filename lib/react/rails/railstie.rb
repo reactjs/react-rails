@@ -5,7 +5,7 @@ module React
     class Railtie < ::Rails::Railtie
       config.react = ActiveSupport::OrderedOptions.new
 
-      initializer "react_rails.setup_vendor" do |app|
+      initializer "react_rails.setup_vendor", :after => "sprockets.environment" do |app|
         variant = app.config.react.variant
 
         # Mimic behavior of ember-rails...
@@ -24,6 +24,7 @@ module React
                        tmp_path.join('react.js'))
           FileUtils.cp(::React::Source.bundled_path_for('JSXTransformer.js'),
                        tmp_path.join('JSXTransformer.js'))
+
           # Make sure it can be found
           app.assets.append_path(tmp_path)
         end
