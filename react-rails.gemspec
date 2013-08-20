@@ -16,7 +16,6 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency "bundler", [">= 1.2.2"]
   s.add_development_dependency "appraisal"
-  s.add_development_dependency "sqlite3" # needed for the dummy app
 
   s.add_dependency 'execjs'
   s.add_dependency 'rails', '>= 3.1'
