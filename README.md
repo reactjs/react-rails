@@ -25,7 +25,7 @@ gem 'react-rails', '~> 0.4.1.0'
 
 ### react.js
 
-In order to use React client-side in your application, you must make sure the browser requests it. One way to do that is to drop `react.js` into `app/assets/javascript/` and by default your applcation manifest will pick it up. There are downsides to this approach, so we made it even easier. Once you have `react-rails` installed, you can just require react directly in your manifest:
+In order to use React client-side in your application, you must make sure the browser requests it. One way to do that is to drop `react.js` into `app/assets/javascript/` and by default your applcation manifest will pick it up. There are downsides to this approach, so we made it even easier. Once you have `react-rails` installed, you can just add a line into your config file (see Configuring) and require react directly in your manifest:
 
 You can `require` it in your manifest:
 
