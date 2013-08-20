@@ -3,6 +3,7 @@ language: ruby
 rvm:
   - 2.0.0
   - 1.9.3
+  - jruby-19mode
 before_install:
   - gem install bundler --version '>= 1.2.2'
 before_script: 'bundle exec rake appraisal:install'
