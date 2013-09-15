@@ -129,3 +129,25 @@ Component = React.createClass
     `<ExampleComponent videos={this.props.videos} />`
 ```
 
+### Changing react.js and JSXTransformer.js versions
+
+Major, minor, and patch versions of this gem are based on react's version, e.g.
+`0.4.1.1` means that react has version `0.4.1`. There may be fixes or improvements
+introduced in say `0.5.0.0`, but you will still need react in version `0.4.1`.
+If you needed to change JSXTransformer version it's possible too.
+
+#### How to
+
+Just put another version of react or JSXTransformer in your assets. Any place
+you would put a javascript file will be fine, probably
+`/vendor/javascripts/react.js` and `/vendor/javascripts/JSXTransformer.js`
+would be best. (You don't have to replace both)
+
+#### Things to remember
+
+If you replace `JSXTransformer.js`, you have to restart your rails instance,
+because the jsx compiler context is cached, name of the file is case-sensitive.
+
+We provide different variants of `react.js` based on environment, but you will
+need to provide the same file called `react.js` which will be used for both
+production and development.
