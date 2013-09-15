@@ -9,7 +9,7 @@ module React
       def prepare
       end
 
-      def evaluate(scopre, locals, &block)
+      def evaluate(scope, locals, &block)
         @output ||= JSX::transform(data)
       end
     end

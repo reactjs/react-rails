@@ -1,9 +1,11 @@
 require 'execjs'
 require 'react/source'
 require 'react/jsx/template'
+require 'rails'
 
 module React
   module JSX
+    # lazily loaded during first request
     def self.context
       # TODO: create React::Source::contents_for
       contents =
