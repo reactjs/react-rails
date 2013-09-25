@@ -31,12 +31,12 @@ module React
           app.assets.prepend_path tmp_path
 
           # Allow overriding react files that are not based on environment
-          # e.g. /vendor/react/JSXTransformer.js
+          # e.g. /vendor/assets/react/JSXTransformer.js
           dropin_path = app.root.join("vendor/assets/react")
           app.assets.prepend_path dropin_path if dropin_path.exist?
 
           # Allow overriding react files that are based on environment
-          # e.g. /vendor/react/react.js
+          # e.g. /vendor/assets/react/react.js
           dropin_path_env = app.root.join("vendor/assets/react/#{variant}")
           app.assets.prepend_path dropin_path_env if dropin_path_env.exist?
         end
