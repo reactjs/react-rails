@@ -20,6 +20,8 @@ As with all gem dependencies, we strongly recommend adding `react-rails` to your
 gem 'react-rails', '~> 0.8.0.0'
 ```
 
+Starting with `0.4.1` there is a fix, which alows execjs to transforms jsx files, so if you need a version lower than
+`0.4.1` you will have to replace JSXTransformer.js, see below on how to do it.
 
 ## Usage
 
@@ -131,23 +133,20 @@ Component = React.createClass
 
 ### Changing react.js and JSXTransformer.js versions
 
-Major, minor, and patch versions of this gem are based on react's version, e.g.
-`0.4.1.1` means that react has version `0.4.1`. There may be fixes or improvements
-introduced in say `0.5.0.0`, but you will still need react in version `0.4.1`.
-If you needed to change JSXTransformer version it's possible too.
+This gem's version is independent from actual react's version, that's why you need declarations for both `react-rails`
+and `react-source` in your `Gemfile`. However, in some cases you may want to have your `react.js` and `JSXTransformer.js`
+files come from different releases. To achieve that, you have to manually replace either of them in your app.
 
-#### How to
+#### Instructions
 
-Just put another version of react or JSXTransformer in your assets. Any place
-you would put a javascript file will be fine, probably
-`/vendor/javascripts/react.js` and `/vendor/javascripts/JSXTransformer.js`
-would be best. (You don't have to replace both)
+Just put another version of `react.js` or `JSXTransformer.js` under `/vendor/assets/react` directory.
+If you need different versions of `react.js` for production and development, then use a subdirectory named
+after `config.react.variant`, e.g. you set `config.react.variant = :development` so for this environment
+`react.js` is expected to be in `/vendor/assets/react/development`
 
 #### Things to remember
 
 If you replace `JSXTransformer.js`, you have to restart your rails instance,
-because the jsx compiler context is cached, name of the file is case-sensitive.
+because the jsx compiler context is cached.
 
-We provide different variants of `react.js` based on environment, but you will
-need to provide the same file called `react.js` which will be used for both
-production and development.
+Name of the `JSXTransformer.js` file *is case-sensitive*.
