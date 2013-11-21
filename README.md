@@ -51,6 +51,8 @@ To transform your JSX into JS, simply create `.js.jsx` files, and ensure that th
 
 ## Configuring
 
+### Variants
+
 There are 2 variants available. `:development` gives you the unminified version of React. This provides extra debugging and error prevention. `:production` gives you the minified version of React which strips out comments and helpful warnings, and minifies.
 
 ```ruby
@@ -62,6 +64,16 @@ end
 # config/environments/production.rb
 MyApp::Application.configure do
   config.react.variant = :production
+end
+```
+
+### Add-ons
+
+Beginning with React v0.5, there is another type of build. This build ships with some "add-ons" that might be useful - [take a look at the React documentation for details](http://facebook.github.io/react/docs/addons.html). In order to make these available, we've added another configuration (which defaults to `false`).
+
+```ruby
+MyApp::Application.configure do
+  config.react.addons = true
 end
 ```
 
