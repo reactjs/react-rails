@@ -1,10 +1,10 @@
 PATH
   remote: /Users/poshannessy/FB/code/react-rails
   specs:
-    react-rails (0.4.1.0)
+    react-rails (0.5.1.0)
       execjs
       rails (>= 3.1)
-      react-source (= 0.4.1)
+      react-source (= 0.5.1)
 
 GEM
   remote: http://rubygems.org/
@@ -40,9 +40,15 @@ GEM
     atomic (1.1.12)
     atomic (1.1.12-java)
     builder (3.1.4)
+    coffee-rails (4.0.0)
+      coffee-script (>= 2.2.0)
+      railties (>= 4.0.0.beta, < 5.0)
+    coffee-script (2.2.0)
+      coffee-script-source
+      execjs
+    coffee-script-source (1.6.3)
     erubis (2.7.0)
-    execjs (1.4.0)
-      multi_json (~> 1.0)
+    execjs (2.0.2)
     hike (1.2.3)
     i18n (0.6.4)
     mail (2.5.4)
@@ -69,7 +75,7 @@ GEM
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
     rake (10.1.0)
-    react-source (0.4.1)
+    react-source (0.5.1)
     sprockets (2.10.0)
       hike (~> 1.2)
       multi_json (~> 1.0)
@@ -97,5 +103,6 @@ PLATFORMS
 DEPENDENCIES
   appraisal
   bundler (>= 1.2.2)
+  coffee-rails
   rails (~> 4.0)
   react-rails!
