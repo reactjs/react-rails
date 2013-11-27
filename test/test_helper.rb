@@ -6,6 +6,12 @@ require "rails/test_help"
 
 Rails.backtrace_cleaner.remove_silencers!
 
+# Remove cached files
+Rails.root.join('tmp').tap do |tmp|
+  tmp.rmtree
+  tmp.mkpath
+end
+
 # Load support files
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
 
