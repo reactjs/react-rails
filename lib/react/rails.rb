@@ -1,2 +1,2 @@
-require 'react/rails/railstie'
+require 'react/rails/railtie'
 require 'react/rails/engine'
