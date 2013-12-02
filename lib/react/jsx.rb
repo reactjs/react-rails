@@ -6,7 +6,11 @@ module React
   module JSX
     def self.context
       # TODO: create React::Source::contents_for
-      contents = File.read(React::Source.bundled_path_for('JSXTransformer.js'))
+      contents =
+        # If execjs uses therubyracer, there is no 'global'. Make sure
+        # we have it so JSX script can work properly.
+        'var global = global || this;' +
+        File.read(React::Source.bundled_path_for('JSXTransformer.js'))
       @context ||= ExecJS.compile(contents)
     end
 
