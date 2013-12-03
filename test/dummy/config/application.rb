@@ -7,8 +7,10 @@ require "action_mailer/railtie"
 require "sprockets/railtie"
 require "rails/test_unit/railtie"
 
-Bundler.require(*Rails.groups)
-require "react-rails"
+# Make sure gems in development group are required, for example, react-rails and turbolinks.
+# These gems are specified in .gemspec file by add_development_dependency. They are not runtime
+# dependencies for react-rails project but probably runtime dependencies for this dummy rails app.
+Bundler.require(*(Rails.groups | ['development']))
 
 module Dummy
   class Application < Rails::Application

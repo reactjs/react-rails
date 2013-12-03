@@ -48,6 +48,39 @@ Alternatively, you can include it directly as a separate script tag:
 
 To transform your JSX into JS, simply create `.js.jsx` files, and ensure that the file has the `/** @jsx React.DOM */` docblock. These files will be transformed on request, or precompiled as part of the `assets:precompile` task.
 
+### Viewer Helper
+
+There is a viewer helper called `react_component`. Suppose you have a `HelloMessage` React component defined:
+
+```js
+/** @jsx React.DOM */
+var HelloMessage = React.createClass({
+  render: function() {
+    return <div>{'Hello ' + this.props.name}</div>;
+  }
+});
+```
+
+You can render it in your views like this:
+
+```erb
+<%= react_component('HelloMessage', :name => 'John') %>
+```
+
+By default, `react_component` will use a `<div>` element. You can use other tag:
+
+```erb
+<%= react_component('HelloMessage', {:name => 'John'}, :span) %>
+```
+
+And you can specify HTML attributes:
+
+```erb
+<%= react_component('HelloMessage', {:name => 'John'}, {:id => 'hello', :class => 'foo', :tag => :span}) %>
+```
+
+The helper is Turbolinks-aware. If you have trouble, make sure to include React in `<head>`, not in `<body>`.
+
 
 ## Configuring
 
