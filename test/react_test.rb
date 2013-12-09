@@ -11,11 +11,12 @@ class ReactTest < ActionDispatch::IntegrationTest
     File.open(actual_react_file_path, 'w') {|f| f.write react_file_token}
 
     get 'assets/react.js'
-    assert_response :success
-    assert_equal react_file_token, @response.body
 
     File.open(actual_react_file_path, 'w') {|f| f.write actual_react_file_content}
     FileUtils.rm_r CACHE_PATH if CACHE_PATH.exist?
+
+    assert_response :success
+    assert_equal react_file_token, @response.body
   end
 
   test 'asset pipeline should deliver drop-in react file replacement' do
@@ -24,10 +25,12 @@ class ReactTest < ActionDispatch::IntegrationTest
 
     FileUtils.mv hidden_path, replacing_path
     get 'assets/react.js'
-    assert_response :success
-    assert_equal "'test_confirmation_token_react_content';\n", @response.body
+
     FileUtils.mv replacing_path, hidden_path
     FileUtils.rm_r CACHE_PATH if CACHE_PATH.exist?
+
+    assert_response :success
+    assert_equal "'test_confirmation_token_react_content';\n", @response.body
   end
 
 end

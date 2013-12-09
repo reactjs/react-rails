@@ -8,8 +8,6 @@ module React
       # run after all initializers to allow sprockets to pick up react.js and
       # jsxtransformer.js from end-user to override ours if needed
       config.after_initialize do |app|
-        variant = app.config.react.variant
-
         # Mimic behavior of ember-rails...
         # We want to include different files in dev/prod. The unminified builds
         # contain console logging for invariants and logging to help catch

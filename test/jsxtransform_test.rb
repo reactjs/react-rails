@@ -27,9 +27,9 @@ class JSXTransformTest < ActionDispatch::IntegrationTest
 
   test 'asset pipeline should transform JSX' do
     get 'assets/example.js'
+    FileUtils.rm_r CACHE_PATH if CACHE_PATH.exist?
     assert_response :success
     assert_equal EXPECTED_JS, @response.body
-    FileUtils.rm_r CACHE_PATH if CACHE_PATH.exist?
   end
 
   test 'asset pipeline should transform JSX + Coffeescript' do
@@ -50,9 +50,11 @@ class JSXTransformTest < ActionDispatch::IntegrationTest
 
     FileUtils.mv hidden_path, replacing_path
     get 'assets/example3.js'
-    assert_response :success
-    assert_equal 'test_confirmation_token_jsx_transformed;', @response.body
+
     FileUtils.mv replacing_path, hidden_path
     FileUtils.rm_r CACHE_PATH if CACHE_PATH.exist?
+
+    assert_response :success
+    assert_equal 'test_confirmation_token_jsx_transformed;', @response.body
   end
 end
