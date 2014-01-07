@@ -17,17 +17,14 @@ As with all gem dependencies, we strongly recommend adding `react-rails` to your
 ```ruby
 # Gemfile
 
-gem 'react-rails', '~> 0.8.0.0'
+gem 'react-rails', '~> 1.0.0'
 ```
-
-Starting with `0.4.1` there is a fix, which alows execjs to transforms jsx files, so if you need a version lower than
-`0.4.1` you will have to replace JSXTransformer.js, see below on how to do it.
 
 ## Usage
 
 ### react.js
 
-In order to use React client-side in your application, you must make sure the browser requests it. One way to do that is to drop `react.js` into `app/assets/javascript/` and by default your application manifest will pick it up. There are downsides to this approach, so we made it even easier. Once you have `react-rails` installed, you can just add a line into your config file (see Configuring) and require react directly in your manifest:
+In order to use React client-side in your application, you must make sure the browser requests it. One way to do that is to drop `react.js` into `vendor/assets/javascript/` and by default your application manifest will pick it up. There are downsides to this approach, so we made it even easier. Once you have `react-rails` installed, you can just add a line into your config file (see Configuring) and require react directly in your manifest:
 
 You can `require` it in your manifest:
 
@@ -133,9 +130,7 @@ Component = React.createClass
 
 ### Changing react.js and JSXTransformer.js versions
 
-This gem's version is independent from actual react's version, that's why you need declarations for both `react-rails`
-and `react-source` in your `Gemfile`. However, in some cases you may want to have your `react.js` and `JSXTransformer.js`
-files come from different releases. To achieve that, you have to manually replace either of them in your app.
+In some cases you may want to have your `react.js` and `JSXTransformer.js` files come from a different release than the one, that is specified in the `react-rails.gemspec`. To achieve that, you have to manually replace them in your app.
 
 #### Instructions
 
