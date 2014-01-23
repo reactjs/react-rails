@@ -85,7 +85,7 @@ It is possible to use JSX with CoffeeScript. The caveat is that you will still n
 ```coffee
 ###* @jsx React.DOM ###
 
-Component = React.createClass
+window.Component = React.createClass
   render: ->
     `<ExampleComponent videos={this.props.videos} />`
 ```
