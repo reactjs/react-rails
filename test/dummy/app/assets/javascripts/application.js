@@ -16,4 +16,5 @@
 //= require turbolinks
 //= require es5-shim/es5-shim
 //= require react
+//= require react_ujs
 //= require_tree .

@@ -43,44 +43,48 @@ Alternatively, you can include it directly as a separate script tag:
 <%= javascript_include_tag "react" %>
 ```
 
-
 ### JSX
 
 To transform your JSX into JS, simply create `.js.jsx` files, and ensure that the file has the `/** @jsx React.DOM */` docblock. These files will be transformed on request, or precompiled as part of the `assets:precompile` task.
 
-### Viewer Helper
+### Unobtrusive javascript
 
-There is a viewer helper called `react_component`. Suppose you have a `HelloMessage` React component defined:
+Like [jquery-rails](https://github.com/rails/jquery-rails), there is `react_ujs`. It will call `React.renderComponent` for every elements with `data-react-class` attribute. Properties can be specified by `data-react-props` attribute in JSON format. For example:
+
+```erb
+<!-- react_ujs will execute `React.renderComponent(element, <HelloMessage name="Bob" />)` -->
+<div data-react-class="HelloMessage" data-react-props="<%= {:name => 'Bob'}.to_json %>" />
+```
+
+To use it, simply `require` it after `react.js`:
 
 ```js
-/** @jsx React.DOM */
-var HelloMessage = React.createClass({
-  render: function() {
-    return <div>{'Hello ' + this.props.name}</div>;
-  }
-});
+// app/assets/application.js
+
+//= require react
+//= require react_ujs
 ```
 
-You can render it in your views like this:
+If you want `react_ujs` to work with [Turbolinks](https://github.com/rails/turbolinks), make sure `= require react_ujs` is after `= require turbolinks`.
 
-```erb
-<%= react_component('HelloMessage', :name => 'John') %>
+### Viewer helper
+
+There is a viewer helper method `react_component`. It is designed to work with `react_ujs` and takes React class name, properties, HTML options as arguments:
+
+```ruby
+react_component('HelloMessage', :name => 'John')
+# <div data-react-class="HelloMessage" data-react-props="{&quot;name&quot;:&quot;John&quot;}"></div>
 ```
 
-By default, `react_component` will use a `<div>` element. You can use other tag:
+By default, a `<div>` element is used. Other tag and HTML attributes can be specified:
 
-```erb
-<%= react_component('HelloMessage', {:name => 'John'}, :span) %>
+```ruby
+react_component('HelloMessage', {:name => 'John'}, :span)
+# <span data-...></span>
+
+react_component('HelloMessage', {:name => 'John'}, {:id => 'hello', :class => 'foo', :tag => :span})
+# <span class="foo" id="hello" data-...></span>
 ```
-
-And you can specify HTML attributes:
-
-```erb
-<%= react_component('HelloMessage', {:name => 'John'}, {:id => 'hello', :class => 'foo', :tag => :span}) %>
-```
-
-The helper is Turbolinks-aware. If you have trouble, make sure to include React in `<head>`, not in `<body>`.
-
 
 ## Configuring
 
