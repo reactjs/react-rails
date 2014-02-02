@@ -24,9 +24,10 @@ class ViewHelperTest < ActionDispatch::IntegrationTest
   test 'react_component accepts HTML options and HTML tag' do
     assert @helper.react_component('Foo', {}, :span).match(/<span\s.*><\/span>/)
 
-    html = @helper.react_component('Foo', {}, {:class => 'test', :tag => :span})
+    html = @helper.react_component('Foo', {}, {:class => 'test', :tag => :span, :data => {:foo => 1}})
     assert html.match(/<span\s.*><\/span>/)
     assert html.include?('class="test"')
+    assert html.include?('data-foo="1"')
   end
 
   test 'react_ujs works with rendered HTML' do
