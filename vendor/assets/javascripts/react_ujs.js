@@ -22,7 +22,7 @@
       var className = node.getAttribute(CLASS_NAME_ATTR);
       // Assume className is simple and can be found at top-level (window).
       // Fallback to eval to handle cases like 'My.React.ComponentName'.
-      var constructor = window[className] || eval(className);
+      var constructor = window[className] || eval.call(window, className);
       var propsJson = node.getAttribute(PROPS_ATTR);
       var props = propsJson && JSON.parse(propsJson);
       React.renderComponent(constructor(props), node);
