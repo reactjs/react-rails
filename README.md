@@ -141,7 +141,7 @@ after `config.react.variant`, e.g. you set `config.react.variant = :development`
 
 #### Things to remember
 
-If you replace `JSXTransformer.js`, you have to restart your rails instance,
+If you replace `JSXTransformer.js` in production environment, you have to restart your rails instance,
 because the jsx compiler context is cached.
 
 Name of the `JSXTransformer.js` file *is case-sensitive*.
