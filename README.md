@@ -49,23 +49,24 @@ To transform your JSX into JS, simply create `.js.jsx` files, and ensure that th
 
 ### Unobtrusive javascript
 
-Like [jquery-rails](https://github.com/rails/jquery-rails), there is `react_ujs`. It will call `React.renderComponent` for every elements with `data-react-class` attribute. Properties can be specified by `data-react-props` attribute in JSON format. For example:
+`react_ujs` will call `React.renderComponent` for every element with `data-react-class` attribute. React properties can be specified by `data-react-props` attribute in JSON format. For example:
 
 ```erb
-<!-- react_ujs will execute `React.renderComponent(element, <HelloMessage name="Bob" />)` -->
+<!-- react_ujs will execute `React.renderComponent(HelloMessage({name:"Bob"}), element)` -->
 <div data-react-class="HelloMessage" data-react-props="<%= {:name => 'Bob'}.to_json %>" />
 ```
 
-To use it, simply `require` it after `react.js`:
+`react_ujs` will also scan DOM elements and call `React.unmountComponentAtNode` on page unload. If you want to disable this behavior, remove `data-react-class` attribute in `componentDidMount`.
+
+To use `react_ujs`, simply `require` it after `react` (and after `turbolinks` if [Turbolinks](https://github.com/rails/turbolinks) is used):
 
 ```js
 // app/assets/application.js
 
+//= require turbolinks
 //= require react
 //= require react_ujs
 ```
-
-If you want `react_ujs` to work with [Turbolinks](https://github.com/rails/turbolinks), make sure `= require react_ujs` is after `= require turbolinks`.
 
 ### Viewer helper
 
@@ -85,6 +86,7 @@ react_component('HelloMessage', {:name => 'John'}, :span)
 react_component('HelloMessage', {:name => 'John'}, {:id => 'hello', :class => 'foo', :tag => :span})
 # <span class="foo" id="hello" data-...></span>
 ```
+
 
 ## Configuring
 
