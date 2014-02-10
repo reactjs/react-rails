@@ -14,9 +14,12 @@ Gem::Specification.new do |s|
   s.author = ['Paul O’Shannessy']
   s.email = ['paul@oshannessy.com']
 
-  s.add_development_dependency "bundler", [">= 1.2.2"]
-  s.add_development_dependency "appraisal"
-  s.add_development_dependency "coffee-rails"
+  s.add_development_dependency 'bundler', '>= 1.2.2'
+  s.add_development_dependency 'appraisal'
+  s.add_development_dependency 'coffee-rails'
+  s.add_development_dependency 'turbolinks', '>= 2.0.0'
+  s.add_development_dependency 'es5-shim-rails', '>= 2.0.5'
+  s.add_development_dependency 'poltergeist', '>= 0.3.3'
 
   s.add_dependency 'execjs'
   s.add_dependency 'rails', '>= 3.1'

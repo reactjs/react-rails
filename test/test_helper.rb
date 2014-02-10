@@ -7,8 +7,8 @@ require "rails/test_help"
 Rails.backtrace_cleaner.remove_silencers!
 
 # Remove cached files
-Rails.root.join('tmp').tap do |tmp|
-  tmp.rmtree
+Rails.root.join('tmp/cache').tap do |tmp|
+  tmp.rmtree if tmp.exist?
   tmp.mkpath
 end
 
