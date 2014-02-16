@@ -17,15 +17,14 @@ As with all gem dependencies, we strongly recommend adding `react-rails` to your
 ```ruby
 # Gemfile
 
-gem 'react-rails', '~> 0.8.0.0'
+gem 'react-rails', '~> 1.0.0'
 ```
-
 
 ## Usage
 
 ### react.js
 
-In order to use React client-side in your application, you must make sure the browser requests it. One way to do that is to drop `react.js` into `app/assets/javascript/` and by default your application manifest will pick it up. There are downsides to this approach, so we made it even easier. Once you have `react-rails` installed, you can just add a line into your config file (see Configuring) and require react directly in your manifest:
+In order to use React client-side in your application, you must make sure the browser requests it. One way to do that is to drop `react.js` into `vendor/assets/javascript/` and by default your application manifest will pick it up. There are downsides to this approach, so we made it even easier. Once you have `react-rails` installed, you can just add a line into your config file (see Configuring) and require react directly in your manifest:
 
 You can `require` it in your manifest:
 
@@ -129,3 +128,20 @@ Component = React.createClass
     `<ExampleComponent videos={this.props.videos} />`
 ```
 
+### Changing react.js and JSXTransformer.js versions
+
+In some cases you may want to have your `react.js` and `JSXTransformer.js` files come from a different release than the one, that is specified in the `react-rails.gemspec`. To achieve that, you have to manually replace them in your app.
+
+#### Instructions
+
+Just put another version of `react.js` or `JSXTransformer.js` under `/vendor/assets/react` directory.
+If you need different versions of `react.js` for production and development, then use a subdirectory named
+after `config.react.variant`, e.g. you set `config.react.variant = :development` so for this environment
+`react.js` is expected to be in `/vendor/assets/react/development`
+
+#### Things to remember
+
+If you replace `JSXTransformer.js` in production environment, you have to restart your rails instance,
+because the jsx compiler context is cached.
+
+Name of the `JSXTransformer.js` file *is case-sensitive*.

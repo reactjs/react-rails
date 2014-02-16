@@ -1,6 +1,7 @@
 require 'test_helper'
+require 'fileutils'
 
-# The transformer is inserting a newline after the docblock for some reason...
+# Sprockets is inserting a newline after the docblock for some reason...
 EXPECTED_JS = <<eos
 /** @jsx React.DOM */
 
@@ -26,6 +27,7 @@ class JSXTransformTest < ActionDispatch::IntegrationTest
 
   test 'asset pipeline should transform JSX' do
     get 'assets/example.js'
+    FileUtils.rm_r CACHE_PATH if CACHE_PATH.exist?
     assert_response :success
     assert_equal EXPECTED_JS, @response.body
   end
@@ -42,4 +44,17 @@ class JSXTransformTest < ActionDispatch::IntegrationTest
     assert_equal EXPECTED_JS_2.gsub(/\s/, ''), @response.body.gsub(/\s/, '')
   end
 
+  test 'can use dropped in version of JSX transformer' do
+    hidden_path = File.expand_path("../dummy/vendor/assets/react/JSXTransformer__.js",  __FILE__)
+    replacing_path = File.expand_path("../dummy/vendor/assets/react/JSXTransformer.js",  __FILE__)
+
+    FileUtils.mv hidden_path, replacing_path
+    get 'assets/example3.js'
+
+    FileUtils.mv replacing_path, hidden_path
+    FileUtils.rm_r CACHE_PATH if CACHE_PATH.exist?
+
+    assert_response :success
+    assert_equal 'test_confirmation_token_jsx_transformed;', @response.body
+  end
 end

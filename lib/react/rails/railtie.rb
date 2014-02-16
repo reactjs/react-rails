@@ -5,9 +5,9 @@ module React
     class Railtie < ::Rails::Railtie
       config.react = ActiveSupport::OrderedOptions.new
 
-      initializer "react_rails.setup_vendor", :after => "sprockets.environment" do |app|
-        variant = app.config.react.variant
-
+      # run after all initializers to allow sprockets to pick up react.js and
+      # jsxtransformer.js from end-user to override ours if needed
+      config.after_initialize do |app|
         # Mimic behavior of ember-rails...
         # We want to include different files in dev/prod. The unminified builds
         # contain console logging for invariants and logging to help catch
@@ -26,9 +26,17 @@ module React
                        tmp_path.join('react.js'))
           FileUtils.cp(::React::Source.bundled_path_for('JSXTransformer.js'),
                        tmp_path.join('JSXTransformer.js'))
+          app.assets.prepend_path tmp_path
 
-          # Make sure it can be found
-          app.assets.append_path(tmp_path)
+          # Allow overriding react files that are not based on environment
+          # e.g. /vendor/assets/react/JSXTransformer.js
+          dropin_path = app.root.join("vendor/assets/react")
+          app.assets.prepend_path dropin_path if dropin_path.exist?
+
+          # Allow overriding react files that are based on environment
+          # e.g. /vendor/assets/react/react.js
+          dropin_path_env = app.root.join("vendor/assets/react/#{variant}")
+          app.assets.prepend_path dropin_path_env if dropin_path_env.exist?
         end
       end
     end
