@@ -15,6 +15,7 @@ EXPECTED_JS_2 = <<eos
   var Component;
 
   Component = React.createClass({
+    displayName:'Component',
     render: function() {
       return ExampleComponent( {videos:this.props.videos} );
     }
