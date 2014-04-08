@@ -87,6 +87,19 @@ react_component('HelloMessage', {:name => 'John'}, {:id => 'hello', :class => 'f
 ```
 
 
+## CoffeeScript
+
+It is possible to use JSX with CoffeeScript. The caveat is that you will still need to include the docblock. Since CoffeeScript doesn't allow `/* */` style comments, we need to do something a little different. We also need to embed JSX inside backticks so CoffeeScript ignores the syntax it doesn't understand. Here's an example:
+
+```coffee
+###* @jsx React.DOM ###
+
+Component = React.createClass
+  render: ->
+    `<ExampleComponent videos={this.props.videos} />`
+```
+
+
 ## Configuring
 
 ### Variants
@@ -106,5 +119,28 @@ end
 ```
 
 ### Add-ons
+Beginning with React v0.5, there is another type of build. This build ships with some "add-ons" that might be useful - [take a look at the React documentation for details](http://facebook.github.io/react/docs/addons.html). In order to make these available, we've added another configuration (which defaults to `false`).
 
-Beginning with React v0.5, there is another type of build. This build ships with some "add-ons" that might be useful - [take a look at the React documentation for details](http://facebook.github.io/react/docs/getting-started.html)
+```ruby
+MyApp::Application.configure do
+  config.react.addons = true
+end
+```
+
+### Changing react.js and JSXTransformer.js versions
+
+In some cases you may want to have your `react.js` and `JSXTransformer.js` files come from a different release than the one, that is specified in the `react-rails.gemspec`. To achieve that, you have to manually replace them in your app.
+
+#### Instructions
+
+Just put another version of `react.js` or `JSXTransformer.js` under `/vendor/assets/react` directory.
+If you need different versions of `react.js` for production and development, then use a subdirectory named
+after `config.react.variant`, e.g. you set `config.react.variant = :development` so for this environment
+`react.js` is expected to be in `/vendor/assets/react/development`
+
+#### Things to remember
+
+If you replace `JSXTransformer.js` in production environment, you have to restart your rails instance,
+because the jsx compiler context is cached.
+
+Name of the `JSXTransformer.js` file *is case-sensitive*.
