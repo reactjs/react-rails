@@ -1,5 +1,10 @@
 # react-rails [![Build Status](https://travis-ci.org/reactjs/react-rails.png)](https://travis-ci.org/reactjs/react-rails) [![Code Climate](https://codeclimate.com/github/reactjs/react-rails.png)](https://codeclimate.com/github/reactjs/react-rails)
 
+**react-rails version discaimer**
+*This README is for `1.x` branch which is still in development. Please switch to latest `0.x` branch for stable version.*
+
+*Additionaly: `0.x` branch directly follows React versions, `1.x` will not do so.*
+
 react-rails is a ruby gem which makes it easier to use [React](http://facebook.github.io/react/) and [JSX](http://facebook.github.io/react/docs/jsx-in-depth.html) in your Ruby on Rails application.
 
 This is done in 2 ways:
@@ -16,6 +21,8 @@ As with all gem dependencies, we strongly recommend adding `react-rails` to your
 
 ```ruby
 # Gemfile
+# If you missed a warning at the top of this README - this is still in development
+# which means this version is not pushed to rubygems.org
 
 gem 'react-rails', '~> 1.0.0'
 ```
@@ -130,6 +137,10 @@ end
 ### Changing react.js and JSXTransformer.js versions
 
 In some cases you may want to have your `react.js` and `JSXTransformer.js` files come from a different release than the one, that is specified in the `react-rails.gemspec`. To achieve that, you have to manually replace them in your app.
+
+react-rails at `0.x` requires React at `0.4+`, or `0.5+` or even higher if you need certain add-ons.
+
+react-rails at `1.x` requires React at `0.9+`.
 
 #### Instructions
 
