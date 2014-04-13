@@ -6,6 +6,14 @@ require 'capybara/poltergeist'
 Capybara.javascript_driver = :poltergeist
 Capybara.app = Rails.application
 
+# Useful for debugging.
+# Just put page.driver.debug in your test and it will
+# pause and throw up a browser
+Capybara.register_driver :poltergeist_debug do |app|
+  Capybara::Poltergeist::Driver.new(app, :inspector => true)
+end
+Capybara.javascript_driver = :poltergeist_debug
+
 class ViewHelperTest < ActionDispatch::IntegrationTest
   include Capybara::DSL
 
@@ -63,5 +71,12 @@ class ViewHelperTest < ActionDispatch::IntegrationTest
 
     page.click_link('Bob')
     assert page.has_content?('Hello Bob')
+  end
+
+  test 'react server rendering also gets mounted on client' do
+    visit '/server/1'
+    assert_match /data-react-class=\"TodoList\"/, page.html
+    assert_match /data-react-checksum/, page.html
+    assert_match /yep/, page.find("#status").text
   end
 end

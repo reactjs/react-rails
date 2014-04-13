@@ -7,11 +7,10 @@
 
 react-rails is a ruby gem which makes it easier to use [React](http://facebook.github.io/react/) and [JSX](http://facebook.github.io/react/docs/jsx-in-depth.html) in your Ruby on Rails application.
 
-This is done in 2 ways:
 
-1. making it easy to include `react.js` as part of your dependencies in `application.js`.
-2. transforming JSX into regular JS on request, or as part of asset precompilation.
-
+1. Making it easy to include `react.js` as part of your dependencies in `application.js`.
+2. Transforming JSX into regular JS on request, or as part of asset precompilation.
+3. View helpers to render React components in an unobtrusive style and/or on the server.
 
 ## Installation
 
@@ -53,7 +52,18 @@ Alternatively, you can include it directly as a separate script tag:
 
 To transform your JSX into JS, simply create `.js.jsx` files, and ensure that the file has the `/** @jsx React.DOM */` docblock. These files will be transformed on request, or precompiled as part of the `assets:precompile` task.
 
-### Unobtrusive javascript
+CoffeeScript files can also be used, by creating `.js.jsx.coffee` files. You must use this form of the docblock at the top of each file: `###* @jsx React.DOM ###`. We also need to embed JSX inside backticks so CoffeeScript ignores the syntax it doesn't understand. Here's an example:
+
+```coffee
+###* @jsx React.DOM ###
+
+Component = React.createClass
+  render: ->
+    `<ExampleComponent videos={this.props.videos} />`
+```
+
+
+### Unobtrusive JavaScript
 
 `react_ujs` will call `React.renderComponent` for every element with `data-react-class` attribute. React properties can be specified by `data-react-props` attribute in JSON format. For example:
 
@@ -76,7 +86,7 @@ To use `react_ujs`, simply `require` it after `react` (and after `turbolinks` if
 
 ### Viewer helper
 
-There is a viewer helper method `react_component`. It is designed to work with `react_ujs` and takes React class name, properties, HTML options as arguments:
+There is a viewer helper method `react_component`. It is designed to work with `react_ujs` and takes a React class name, properties, and HTML options as arguments:
 
 ```ruby
 react_component('HelloMessage', :name => 'John')
@@ -93,10 +103,29 @@ react_component('HelloMessage', {:name => 'John'}, {:id => 'hello', :class => 'f
 # <span class="foo" id="hello" data-...></span>
 ```
 
+### Server Rendering
 
-## CoffeeScript
+React components can also use the same ExecJS mechanisims in Sprockets to execute JavaScript code on the server, and render React components to HTML to be delivered to the browser, and then the `react_ujs` script will cause the component to be mounted. In this way, users get fast initial page loads and search-engine-friendly pages.
 
-It is possible to use JSX with CoffeeScript. The caveat is that you will still need to include the docblock. Since CoffeeScript doesn't allow `/* */` style comments, we need to do something a little different. We also need to embed JSX inside backticks so CoffeeScript ignores the syntax it doesn't understand. Here's an example:
+#### ExecJS
+
+By default, ExecJS will use node.js in an external process to run JS code. Because we will be executing JS on the server in production, an in-process, high-performance JS VM should be used. Simply add the proper one for your platform to your Gemfile:
+
+```ruby
+gem "therubyracer", :platforms => :ruby
+gem "therubyrhino", :platforms => :jruby
+```
+
+#### components.js
+
+In order for us to render your React components, we need to be able to find them and load them into the JS VM. By convention, we look for a `assets/components.js` file through the asset pipeline, and load that. For example:
+
+```sass
+// app/assets/javascripts/components.js
+//= require_tree ./components
+```
+
+This will bring in all files located in the `app/assets/components` directory.  You can organize your code however you like, as long as a request for `/assets/components.js` brings in a concatenated file containing all of your React components, and each one has to be available in the global scope (either `window` or `global` can be used). For `.js.jsx` files this is not a problem, but if you are using `.js.jsx.coffee` files then the wrapper function needs to be taken into account:
 
 ```coffee
 ###* @jsx React.DOM ###
@@ -104,8 +133,18 @@ It is possible to use JSX with CoffeeScript. The caveat is that you will still n
 Component = React.createClass
   render: ->
     `<ExampleComponent videos={this.props.videos} />`
+
+window.Component = Component
 ```
 
+#### View Helper
+
+To take advantage of server rendering, use the same view helper `react_component`, and pass in `:prerender => true` in the `options` hash.
+
+```erb
+react_component('HelloMessage', {:name => 'John'}, {:prerender => true})
+```
+This will return the fully rendered component markup, and as long as you have included the `react_ujs` script in your page, then the component will also be instantiated and mounted on the client.
 
 ## Configuring
 
@@ -126,6 +165,7 @@ end
 ```
 
 ### Add-ons
+
 Beginning with React v0.5, there is another type of build. This build ships with some "add-ons" that might be useful - [take a look at the React documentation for details](http://facebook.github.io/react/docs/addons.html). In order to make these available, we've added another configuration (which defaults to `false`).
 
 ```ruby
@@ -134,13 +174,37 @@ MyApp::Application.configure do
 end
 ```
 
+### Server Rendering
+
+For performance and thread-safety reasons, a pool of JS VMs are spun up on application start, and the size of the pool and the timeout on requesting a VM from the pool are configurable. You can also say where you want to grab the `react.js` code from, and if you want to change the filenames for the components (this should be an array of filenames that will be requested from the asset pipeline and concatenated together.)
+
+```ruby
+# config/environments/application.rb
+# These are the defaults if you dont specify any yourself
+MyApp::Application.configure do
+  config.react.max_renderers = 10
+  config.react.timeout = 20 #seconds
+  config.react.react_js = lambda {File.read(::Rails.application.assets.resolve('react.js'))}
+  config.react.component_filenames = ['components.js']
+end
+
+```
+
+## CoffeeScript
+
+It is possible to use JSX with CoffeeScript. The caveat is that you will still need to include the docblock. Since CoffeeScript doesn't allow `/* */` style comments, we need to do something a little different. We also need to embed JSX inside backticks so CoffeeScript ignores the syntax it doesn't understand. Here's an example:
+
+```coffee
+###* @jsx React.DOM ###
+
+Component = React.createClass
+  render: ->
+    `<ExampleComponent videos={this.props.videos} />`
+```
+
 ### Changing react.js and JSXTransformer.js versions
 
 In some cases you may want to have your `react.js` and `JSXTransformer.js` files come from a different release than the one, that is specified in the `react-rails.gemspec`. To achieve that, you have to manually replace them in your app.
-
-react-rails at `0.x` requires React at `0.4+`, or `0.5+` or even higher if you need certain add-ons.
-
-react-rails at `1.x` requires React at `0.9+`.
 
 #### Instructions
 
