@@ -84,7 +84,7 @@ To use `react_ujs`, simply `require` it after `react` (and after `turbolinks` if
 //= require react_ujs
 ```
 
-### Viewe helper
+### View helper
 
 There is a view helper method `react_component`. It is designed to work with `react_ujs` and takes a React class name, properties, and HTML options as arguments:
 
