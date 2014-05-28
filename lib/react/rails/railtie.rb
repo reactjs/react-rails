@@ -5,7 +5,7 @@ module React
     class Railtie < ::Rails::Railtie
       config.react = ActiveSupport::OrderedOptions.new
 
-      initializer "react_rails.setup_vendor", :after => "sprockets.environment" do |app|
+      initializer "react_rails.setup_vendor", :after => "sprockets.environment", group: :all do |app|
         variant = app.config.react.variant
 
         # Mimic behavior of ember-rails...
