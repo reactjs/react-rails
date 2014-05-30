@@ -6,5 +6,6 @@ rvm:
   - jruby-19mode
 before_install:
   - gem install bundler --version '>= 1.2.2'
+  - npm install -g coffee-react
 before_script: 'bundle exec rake appraisal:install'
 script: 'bundle exec rake appraisal test'
