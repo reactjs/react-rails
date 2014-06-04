@@ -23,7 +23,7 @@ As with all gem dependencies, we strongly recommend adding `react-rails` to your
 # If you missed a warning at the top of this README - this is still in development
 # which means this version is not pushed to rubygems.org
 
-gem 'react-rails', '~> 1.0.0'
+gem 'react-rails', '~> 1.0.0.pre', github: 'reactjs/react-rails'
 ```
 
 ## Usage
