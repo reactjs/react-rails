@@ -10,6 +10,7 @@ module React
       @@react_js = react_js
       @@components_js = components_js
       @@pool.shutdown{} if @@pool
+      @@combined_js = nil if defined? @@combined_js
       @@pool = ConnectionPool.new(:size => args[:size]||10, :timeout => args[:timeout]||20) { self.new }
     end
 

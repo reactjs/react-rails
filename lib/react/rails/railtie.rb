@@ -56,13 +56,15 @@ module React
       config.after_initialize do |app|
         # Server Rendering
         # Concat component_filenames together for server rendering
-        app.config.react.components_js = app.config.react.component_filenames.map do |filename|
-          app.assets[filename].to_s
-        end.join(";")
+        app.config.react.components_js = lambda {
+          app.config.react.component_filenames.map do |filename|
+            app.assets[filename].to_s
+          end.join(";")
+        }
 
         do_setup = lambda do
           cfg = app.config.react
-          React::Renderer.setup!( cfg.react_js.call, cfg.components_js,
+          React::Renderer.setup!( cfg.react_js.call, cfg.components_js.call,
                                 {:size => cfg.size, :timeout => cfg.timeout})
         end
 
