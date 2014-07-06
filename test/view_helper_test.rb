@@ -58,6 +58,10 @@ class ViewHelperTest < ActionDispatch::IntegrationTest
     page.click_link('Bob')
     assert page.has_content?('Hello Bob')
 
+    # Try going back.
+    page.execute_script('history.back();')
+    assert page.has_content?('Hello Alice')
+
     # Try Turbolinks javascript API.
     page.execute_script('Turbolinks.visit("/pages/2");')
     assert page.has_content?('Hello Alice')

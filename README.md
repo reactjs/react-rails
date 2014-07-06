@@ -84,9 +84,9 @@ To use `react_ujs`, simply `require` it after `react` (and after `turbolinks` if
 //= require react_ujs
 ```
 
-### Viewer helper
+### View helper
 
-There is a viewer helper method `react_component`. It is designed to work with `react_ujs` and takes a React class name, properties, and HTML options as arguments:
+There is a view helper method `react_component`. It is designed to work with `react_ujs` and takes a React class name, properties, and HTML options as arguments:
 
 ```ruby
 react_component('HelloMessage', :name => 'John')
@@ -125,7 +125,7 @@ In order for us to render your React components, we need to be able to find them
 //= require_tree ./components
 ```
 
-This will bring in all files located in the `app/assets/components` directory.  You can organize your code however you like, as long as a request for `/assets/components.js` brings in a concatenated file containing all of your React components, and each one has to be available in the global scope (either `window` or `global` can be used). For `.js.jsx` files this is not a problem, but if you are using `.js.jsx.coffee` files then the wrapper function needs to be taken into account:
+This will bring in all files located in the `app/assets/javascripts/components` directory.  You can organize your code however you like, as long as a request for `/assets/components.js` brings in a concatenated file containing all of your React components, and each one has to be available in the global scope (either `window` or `global` can be used). For `.js.jsx` files this is not a problem, but if you are using `.js.jsx.coffee` files then the wrapper function needs to be taken into account:
 
 ```coffee
 ###* @jsx React.DOM ###
