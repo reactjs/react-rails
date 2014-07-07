@@ -130,11 +130,9 @@ This will bring in all files located in the `app/assets/javascripts/components` 
 ```coffee
 ###* @jsx React.DOM ###
 
-Component = React.createClass
+@Component = React.createClass
   render: ->
     `<ExampleComponent videos={this.props.videos} />`
-
-window.Component = Component
 ```
 
 #### View Helper
