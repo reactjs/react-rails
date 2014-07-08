@@ -8,4 +8,11 @@ class ReactRendererTest < ActiveSupport::TestCase
     assert_match /data-react-checksum/, result
   end
 
+  test 'Rendering does not throw an exception when console log api is used' do
+    %W(error info log warn).each do |fn|
+      assert_nothing_raised(ExecJS::ProgramError) do
+        React::Renderer.pool.checkout.context.eval("console.#{fn}()")
+      end
+    end
+  end
 end

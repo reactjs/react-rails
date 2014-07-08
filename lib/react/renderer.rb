@@ -22,6 +22,14 @@ module React
     def self.combined_js
       @@combined_js ||= <<-CODE
         var global = global || this;
+
+        var console = global.console || {};
+        ['error', 'log', 'info', 'warn'].forEach(function (fn) {
+          if (!(fn in console)) {
+            console[fn] = function () {};
+          }
+        });
+
         #{@@react_js};
         React = global.React;
         #{@@components_js};
