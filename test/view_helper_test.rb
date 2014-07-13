@@ -68,7 +68,7 @@ class ViewHelperTest < ActionDispatch::IntegrationTest
 
     # Sometimes Turbolinks isn't available right away. We need to wait for a brief moment
     # for phantomJS to finish loading javascript.
-    sleep(0.1)
+    sleep(1)
 
     page.execute_script('Turbolinks.visit("/pages/1");')
     assert page.has_content?('Hello Bob')
