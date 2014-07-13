@@ -12,8 +12,8 @@ require 'rake/testtask'
 Rake::TestTask.new(:test) do |t|
   t.libs << 'lib'
   t.libs << 'test'
-  t.pattern = 'test/**/*_test.rb'
-  t.verbose = false
+  t.pattern = ENV['TEST_PATTERN'] || 'test/**/*_test.rb'
+  t.verbose = ENV['TEST_VERBOSE'] == '1'
 end
 
 task default: :test
