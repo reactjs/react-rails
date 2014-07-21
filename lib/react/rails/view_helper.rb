@@ -15,8 +15,11 @@ module React
           data[:react_class] = name
           data[:react_props] = args.to_json unless args.empty?
         end
-        html_tag = html_options.delete(:tag) || :div
-
+        html_tag = html_options[:tag] || :div
+        
+        # remove internally used properties so they aren't rendered to DOM
+        [:tag, :prerender].each{|prop| html_options.delete(prop)}
+        
         content_tag(html_tag, '', html_options, &block)
       end
 
