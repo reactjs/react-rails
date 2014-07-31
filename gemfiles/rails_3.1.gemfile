@@ -3,6 +3,6 @@
 source "http://rubygems.org"
 
 gem "rails", "~> 3.1"
-gem "sprockets", ">= 2.2.1"
+gem "sprockets", ">= 2.2.2"
 
 gemspec :path=>"../"
