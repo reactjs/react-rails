@@ -52,6 +52,9 @@ module React
         app.assets.prepend_path dropin_path_env if dropin_path_env.exist?
       end
 
+      initializer "react_rails.setup_view_helpers" do
+        ActionView::Base.send :include, ::React::Rails::ViewHelper
+      end
 
       config.after_initialize do |app|
         # Server Rendering
@@ -71,8 +74,6 @@ module React
         # Reload the JS VMs in dev when files change
         ActionDispatch::Reloader.to_prepare(&do_setup)
       end
-
-
     end
   end
 end
