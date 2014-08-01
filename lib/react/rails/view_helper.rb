@@ -24,6 +24,8 @@ module React
   end
 end
 
-ActionView::Base.class_eval do
-  include ::React::Rails::ViewHelper
+module ActionView
+  class Base
+    include ::React::Rails::ViewHelper
+  end
 end
