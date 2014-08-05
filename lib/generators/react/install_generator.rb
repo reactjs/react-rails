@@ -17,10 +17,7 @@ module React
       end
 
       def inject_react
-        require_react = "//= require react\n//= require react_ujs\n//= require components\n"
-
-        manifest = Pathname.new(destination_root).join('app/assets/javascripts',
-                                                       'application.js')
+        require_react = "//= require react\n"
 
         if manifest.exist?
           manifest_contents = File.read(manifest)
@@ -37,10 +34,24 @@ module React
         end
       end
 
+      def inject_components
+        inject_into_file manifest, "//= require components\n", {after: "//= require react\n"}
+      end
+
+      def inject_react_ujs
+        inject_into_file manifest, "//= require react_ujs\n", {after: "//= require react\n"}
+      end
+
       def create_components
         components_js = "//= require_tree ./components\n"
         components_file = File.join(*%w(app assets javascripts components.js))
         create_file components_file, components_js
+      end
+
+      private
+
+      def manifest
+        Pathname.new(destination_root).join('app/assets/javascripts', 'application.js')
       end
     end
   end
