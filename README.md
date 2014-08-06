@@ -23,7 +23,7 @@ As with all gem dependencies, we strongly recommend adding `react-rails` to your
 # If you missed a warning at the top of this README - this is still in development
 # which means this version is not pushed to rubygems.org
 
-gem 'react-rails', '~> 1.0.0'
+gem 'react-rails', '~> 1.0.0.pre', github: 'reactjs/react-rails'
 ```
 
 ## Usage
@@ -69,7 +69,7 @@ Component = React.createClass
 
 ```erb
 <!-- react_ujs will execute `React.renderComponent(HelloMessage({name:"Bob"}), element)` -->
-<div data-react-class="HelloMessage" data-react-props="<%= {:name => 'Bob'}.to_json %>" />
+<div data-react-class="HelloMessage" data-react-props="<%= {name: 'Bob'}.to_json %>" />
 ```
 
 `react_ujs` will also scan DOM elements and call `React.unmountComponentAtNode` on page unload. If you want to disable this behavior, remove `data-react-class` attribute in `componentDidMount`.
@@ -89,17 +89,17 @@ To use `react_ujs`, simply `require` it after `react` (and after `turbolinks` if
 There is a view helper method `react_component`. It is designed to work with `react_ujs` and takes a React class name, properties, and HTML options as arguments:
 
 ```ruby
-react_component('HelloMessage', :name => 'John')
+react_component('HelloMessage', name: 'John')
 # <div data-react-class="HelloMessage" data-react-props="{&quot;name&quot;:&quot;John&quot;}"></div>
 ```
 
 By default, a `<div>` element is used. Other tag and HTML attributes can be specified:
 
 ```ruby
-react_component('HelloMessage', {:name => 'John'}, :span)
+react_component('HelloMessage', {name: 'John'}, :span)
 # <span data-...></span>
 
-react_component('HelloMessage', {:name => 'John'}, {:id => 'hello', :class => 'foo', :tag => :span})
+react_component('HelloMessage', {name: 'John'}, {id: 'hello', class: 'foo', tag: :span})
 # <span class="foo" id="hello" data-...></span>
 ```
 
@@ -139,10 +139,10 @@ window.Component = Component
 
 #### View Helper
 
-To take advantage of server rendering, use the same view helper `react_component`, and pass in `:prerender => true` in the `options` hash.
+To take advantage of server rendering, use the same view helper `react_component`, and pass in `prerender: true` in the `options` hash.
 
 ```erb
-react_component('HelloMessage', {:name => 'John'}, {:prerender => true})
+react_component('HelloMessage', {name: 'John'}, {prerender: true})
 ```
 This will return the fully rendered component markup, and as long as you have included the `react_ujs` script in your page, then the component will also be instantiated and mounted on the client.
 

@@ -10,6 +10,7 @@ module React
       @@react_js = react_js
       @@components_js = components_js
       @@pool.shutdown{} if @@pool
+      reset_combined_js!
       @@pool = ConnectionPool.new(:size => args[:size]||10, :timeout => args[:timeout]||20) { self.new }
     end
 
@@ -19,8 +20,8 @@ module React
       end
     end
 
-    def self.combined_js
-      @@combined_js ||= <<-CODE
+    def self.setup_combined_js
+      <<-CODE
         var global = global || this;
 
         var console = global.console || {};
@@ -30,10 +31,18 @@ module React
           }
         });
 
-        #{@@react_js};
+        #{@@react_js.call};
         React = global.React;
-        #{@@components_js};
+        #{@@components_js.call};
       CODE
+    end
+
+    def self.reset_combined_js!
+      @@combined_js = setup_combined_js
+    end
+
+    def self.combined_js
+      @@combined_js
     end
 
     def context

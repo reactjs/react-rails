@@ -19,6 +19,13 @@ module React
         app.config.watchable_files.concat Dir["#{app.root}/app/assets/javascripts/**/*.jsx*"]
       end
 
+      # Include the react-rails view helper lazily
+      initializer "react_rails.setup_view_helpers" do
+        ActiveSupport.on_load(:action_view) do
+          include ::React::Rails::ViewHelper
+        end
+      end
+
       # run after all initializers to allow sprockets to pick up react.js and
       # jsxtransformer.js from end-user to override ours if needed
       initializer "react_rails.setup_vendor", :after => "sprockets.environment", group: :all do |app|
@@ -56,13 +63,15 @@ module React
       config.after_initialize do |app|
         # Server Rendering
         # Concat component_filenames together for server rendering
-        app.config.react.components_js = app.config.react.component_filenames.map do |filename|
-          app.assets[filename].to_s
-        end.join(";")
+        app.config.react.components_js = lambda {
+          app.config.react.component_filenames.map do |filename|
+            app.assets[filename].to_s
+          end.join(";")
+        }
 
         do_setup = lambda do
           cfg = app.config.react
-          React::Renderer.setup!( cfg.react_js.call, cfg.components_js,
+          React::Renderer.setup!( cfg.react_js, cfg.components_js,
                                 {:size => cfg.size, :timeout => cfg.timeout})
         end
 
