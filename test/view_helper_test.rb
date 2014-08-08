@@ -29,6 +29,11 @@ class ViewHelperTest < ActionDispatch::IntegrationTest
     end
   end
 
+  test 'passed React props are converted to camel-case' do
+    html = @helper.react_component('FooBar', {foo_bar: 'value'})
+    assert html.include?('data-react-props="{&quot;fooBar&quot;:&quot;value&quot;}"')
+  end
+
   test 'react_component accepts HTML options and HTML tag' do
     assert @helper.react_component('Foo', {}, :span).match(/<span\s.*><\/span>/)
 

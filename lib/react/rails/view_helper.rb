@@ -7,6 +7,7 @@ module React
       # on the client.
       #
       def react_component(name, args = {}, options = {}, &block)
+        args = Hash[args.map { |k, v| [k.to_s.camelize(:lower).to_sym, v] }]
         options = {:tag => options} if options.is_a?(Symbol)
         block = Proc.new{concat React::Renderer.render(name, args)} if options[:prerender] == true
 
