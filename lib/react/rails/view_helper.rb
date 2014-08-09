@@ -7,7 +7,7 @@ module React
       # on the client.
       #
       def react_component(name, args = {}, options = {}, &block)
-        args = Hash[args.map { |k, v| [k.to_s.camelize(:lower).to_sym, v] }]
+        args = camelize_args(args) if ::Rails.application.config.react.camelize_props
         options = {:tag => options} if options.is_a?(Symbol)
         block = Proc.new{concat React::Renderer.render(name, args)} if options[:prerender] == true
 
@@ -19,6 +19,17 @@ module React
         html_tag = html_options.delete(:tag) || :div
 
         content_tag(html_tag, '', html_options, &block)
+      end
+
+      private
+
+      def camelize_args(args)
+        mapped_array = args.map do |key, value|
+          value = camelize_args(value) if value.is_a?(Hash)
+          [key.to_s.camelize(:lower).to_sym, value]
+        end
+
+        Hash[mapped_array]
       end
 
     end

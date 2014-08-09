@@ -30,8 +30,12 @@ class ViewHelperTest < ActionDispatch::IntegrationTest
   end
 
   test 'passed React props are converted to camel-case' do
-    html = @helper.react_component('FooBar', {foo_bar: 'value'})
-    assert html.include?('data-react-props="{&quot;fooBar&quot;:&quot;value&quot;}"')
+    html = @helper.react_component('FooBar', {foo_bar: { hello_world: 'value' }})
+    assert html.include?('data-react-props="{&quot;foo_bar&quot;:{&quot;hello_world&quot;:&quot;value&quot;}}"')
+
+    Rails.application.config.react.camelize_props = true
+    html = @helper.react_component('FooBar', {foo_bar: { hello_world: 'value' }})
+    assert html.include?('data-react-props="{&quot;fooBar&quot;:{&quot;helloWorld&quot;:&quot;value&quot;}}"')
   end
 
   test 'react_component accepts HTML options and HTML tag' do
