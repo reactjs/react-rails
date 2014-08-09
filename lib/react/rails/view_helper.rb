@@ -7,7 +7,7 @@ module React
       # on the client.
       #
       def react_component(name, args = {}, options = {}, &block)
-        args = camelize_args(args) if ::Rails.application.config.react.camelize_props
+        args = camelize_args(args) if ::Rails.configuration.react.camelize_props
         options = {:tag => options} if options.is_a?(Symbol)
         block = Proc.new{concat React::Renderer.render(name, args)} if options[:prerender] == true
 
