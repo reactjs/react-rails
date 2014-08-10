@@ -33,8 +33,7 @@ class ViewHelperTest < ActionDispatch::IntegrationTest
     html = @helper.react_component('FooBar', {foo_bar: { hello_world: 'value' }})
     assert html.include?('data-react-props="{&quot;foo_bar&quot;:{&quot;hello_world&quot;:&quot;value&quot;}}"')
 
-    Rails.stubs(:configuration).returns(Rails::Application::Configuration.allocate)
-    Rails.configuration.react.camelize_props = true
+    Rails.configuration.react.stubs(:camelize_props).returns(true)
     html = @helper.react_component('FooBar', {foo_bar: { hello_world: 'value' }})
     assert html.include?('data-react-props="{&quot;fooBar&quot;:{&quot;helloWorld&quot;:&quot;value&quot;}}"')
   end
