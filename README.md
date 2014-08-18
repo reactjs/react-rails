@@ -1,9 +1,9 @@
 # react-rails [![Build Status](https://travis-ci.org/reactjs/react-rails.png)](https://travis-ci.org/reactjs/react-rails) [![Code Climate](https://codeclimate.com/github/reactjs/react-rails.png)](https://codeclimate.com/github/reactjs/react-rails)
 
-**react-rails version discaimer**
+**react-rails version disclaimer**
 *This README is for `1.x` branch which is still in development. Please switch to latest `0.x` branch for stable version.*
 
-*Additionaly: `0.x` branch directly follows React versions, `1.x` will not do so.*
+*Additionally: `0.x` branch directly follows React versions, `1.x` will not do so.*
 
 react-rails is a ruby gem which makes it easier to use [React](http://facebook.github.io/react/) and [JSX](http://facebook.github.io/react/docs/jsx-in-depth.html) in your Ruby on Rails application.
 
@@ -105,7 +105,7 @@ react_component('HelloMessage', {name: 'John'}, {id: 'hello', class: 'foo', tag:
 
 ### Server Rendering
 
-React components can also use the same ExecJS mechanisims in Sprockets to execute JavaScript code on the server, and render React components to HTML to be delivered to the browser, and then the `react_ujs` script will cause the component to be mounted. In this way, users get fast initial page loads and search-engine-friendly pages.
+React components can also use the same ExecJS mechanisms in Sprockets to execute JavaScript code on the server, and render React components to HTML to be delivered to the browser, and then the `react_ujs` script will cause the component to be mounted. In this way, users get fast initial page loads and search-engine-friendly pages.
 
 #### ExecJS
 
