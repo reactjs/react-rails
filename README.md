@@ -35,7 +35,7 @@ In order to use React client-side in your application, you must make sure the br
 You can `require` it in your manifest:
 
 ```js
-// app/assets/application.js
+// app/assets/javascripts/application.js
 
 //= require react
 ```
@@ -77,7 +77,7 @@ Component = React.createClass
 To use `react_ujs`, simply `require` it after `react` (and after `turbolinks` if [Turbolinks](https://github.com/rails/turbolinks) is used):
 
 ```js
-// app/assets/application.js
+// app/assets/javascripts/application.js
 
 //= require turbolinks
 //= require react
@@ -118,14 +118,14 @@ gem "therubyrhino", :platforms => :jruby
 
 #### components.js
 
-In order for us to render your React components, we need to be able to find them and load them into the JS VM. By convention, we look for a `assets/components.js` file through the asset pipeline, and load that. For example:
+In order for us to render your React components, we need to be able to find them and load them into the JS VM. By convention, we look for a `assets/javascripts/components.js` file through the asset pipeline, and load that. For example:
 
 ```sass
 // app/assets/javascripts/components.js
 //= require_tree ./components
 ```
 
-This will bring in all files located in the `app/assets/javascripts/components` directory.  You can organize your code however you like, as long as a request for `/assets/components.js` brings in a concatenated file containing all of your React components, and each one has to be available in the global scope (either `window` or `global` can be used). For `.js.jsx` files this is not a problem, but if you are using `.js.jsx.coffee` files then the wrapper function needs to be taken into account:
+This will bring in all files located in the `app/assets/javascripts/components` directory.  You can organize your code however you like, as long as a request for `/assets/javascripts/components.js` brings in a concatenated file containing all of your React components, and each one has to be available in the global scope (either `window` or `global` can be used). For `.js.jsx` files this is not a problem, but if you are using `.js.jsx.coffee` files then the wrapper function needs to be taken into account:
 
 ```coffee
 ###* @jsx React.DOM ###
