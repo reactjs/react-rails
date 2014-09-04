@@ -26,6 +26,14 @@ As with all gem dependencies, we strongly recommend adding `react-rails` to your
 gem 'react-rails', '~> 1.0.0.pre', github: 'reactjs/react-rails'
 ```
 
+Next, run the installation script.
+
+```bash
+rails g react:install
+```
+
+This will add react.js, react\_ujs.js, and a components.js manifest file to your project, as well as adding the appropriate `require` directives to application.js
+
 ## Usage
 
 ### react.js
