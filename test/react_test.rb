@@ -31,6 +31,8 @@ class ReactTest < ActionDispatch::IntegrationTest
 
     assert_response :success
     assert_equal "'test_confirmation_token_react_content';\n", @response.body
+
+    React::Renderer.reset_combined_js!
   end
 
 end
