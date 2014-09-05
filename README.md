@@ -32,7 +32,7 @@ Next, run the installation script.
 rails g react:install
 ```
 
-This will require `react.js`, `react_ujs.js`, and a `components.js` manifest file in application.js, and create a directory named `app/assets/javascripts/components` for you to put yunderour React components in.
+This will require `react.js`, `react_ujs.js`, and a `components.js` manifest file in application.js, and create a directory named `app/assets/javascripts/components` for you to store React components in.
 
 ## Usage
 
