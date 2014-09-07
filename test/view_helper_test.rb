@@ -87,4 +87,10 @@ class ViewHelperTest < ActionDispatch::IntegrationTest
     assert_match /data-react-checksum/, page.html
     assert_match /yep/, page.find("#status").text
   end
+  
+  test 'react server rendering does not include internal properties' do
+    visit '/server/1'
+    assert_no_match /tag=/, page.html
+    assert_no_match /prerender=/, page.html
+  end
 end
