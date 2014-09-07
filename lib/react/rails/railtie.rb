@@ -8,6 +8,7 @@ module React
       # Sensible defaults. Can be overridden in application.rb
       config.react.variant = (::Rails.env.production? ? :production : :development)
       config.react.addons = false
+      config.react.camelize_props = false
       # Server-side rendering
       config.react.max_renderers = 10
       config.react.timeout = 20 #seconds
