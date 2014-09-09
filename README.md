@@ -17,7 +17,7 @@ As with all gem dependencies, we strongly recommend adding `react-rails` to your
 ```ruby
 # Gemfile
 
-gem 'react-rails', '~> 0.11.0.0'
+gem 'react-rails', '~> 0.11.1.0'
 ```
 
 
