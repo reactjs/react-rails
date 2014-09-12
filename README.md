@@ -84,6 +84,8 @@ Component = React.createClass
 
 To use `react_ujs`, simply `require` it after `react` (and after `turbolinks` if [Turbolinks](https://github.com/rails/turbolinks) is used):
 
+**Note:** _`react_ujs` disables the Turbolinks cache. This is a workaround to ensure components are correctly unmounted. See [#87](https://github.com/reactjs/react-rails/issues/87) for details._
+
 ```js
 // app/assets/javascripts/application.js
 
