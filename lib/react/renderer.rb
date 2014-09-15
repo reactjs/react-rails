@@ -22,7 +22,9 @@ module React
 
     def self.setup_combined_js
       <<-CODE
-        var global = global || this, self = self || this, window = window || this;
+        var global = global || this;
+        var self = self || this;
+        var window = window || this;
 
         var console = global.console || {};
         ['error', 'log', 'info', 'warn'].forEach(function (fn) {
