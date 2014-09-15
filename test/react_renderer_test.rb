@@ -15,4 +15,12 @@ class ReactRendererTest < ActiveSupport::TestCase
       end
     end
   end
+
+  test 'prerender errors are thrown' do
+    err = assert_raises React::Renderer::PrerenderError do
+      React::Renderer.render("NonexistentComponent", {error: true, exists: false})
+    end
+    expected_message = 'Encountered error "ReferenceError: NonexistentComponent is not defined" when prerendering NonexistentComponent with {"error":true,"exists":false}'
+    assert_equal expected_message, err.message
+  end
 end
