@@ -6,4 +6,4 @@ Todo = React.createClass
 
 # Because Coffee files are in an anonymous function,
 # expose it for server rendering tests
-global.Todo = Todo
+window.Todo = Todo
