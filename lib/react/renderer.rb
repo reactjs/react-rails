@@ -3,6 +3,13 @@ require 'connection_pool'
 module React
   class Renderer
 
+    class PrerenderError < RuntimeError
+      def initialize(component_name, props, js_message)
+        message = "Encountered error \"#{js_message}\" when prerendering #{component_name} with #{props.to_json}"
+        super(message)
+      end
+    end
+
     cattr_accessor :pool
 
     def self.setup!(react_js, components_js, args={})
@@ -58,13 +65,8 @@ module React
         }()
       JS
       context.eval(jscode).html_safe
-    # What should be done here? If we are server rendering, and encounter an error in the JS code,
-    # then log it and continue, which will just render the react ujs tag, and when the browser tries
-    # to render the component it will most likely encounter the same error and throw to the browser
-    # console for a better debugging experience.
     rescue ExecJS::ProgramError => e
-      ::Rails.logger.error "[React::Renderer] #{e.message}"
+      raise PrerenderError.new(component, args, e)
     end
-
   end
 end
