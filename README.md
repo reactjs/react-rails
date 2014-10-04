@@ -111,6 +111,61 @@ react_component('HelloMessage', {name: 'John'}, {id: 'hello', class: 'foo', tag:
 # <span class="foo" id="hello" data-...></span>
 ```
 
+#### With JSON and Jbuilder
+
+You can pass prepared JSON directly to the helper, as well.
+
+```ruby
+react_component('HelloMessage', {name: 'John'}.to_json)
+# <div data-react-class="HelloMessage" data-react-props="{&quot;name&quot;:&quot;John&quot;}"></div>
+```
+
+This is especially helpful if you are already using a tool like Jbuilder in your project.
+
+```ruby
+# messages/show.json.jbuilder
+json.name name
+```
+
+```ruby
+react_component('HelloMessage', render(template: 'messages/show.json.jbuilder', locals: {name: 'John'}))
+# <div data-react-class="HelloMessage" data-react-props="{&quot;name&quot;:&quot;John&quot;}"></div>
+```
+
+##### Important Note
+
+By default, the scaffolded Rails index jbuilder templates do not include a root-node. An example scaffolded index.json.jbuilder looks like this:
+
+```ruby
+json.array!(@messages) do |message|
+  json.extract! message, :id, :name
+  json.url message_url(message, format: :json)
+end
+```
+
+which generates JSON like this:
+
+```json
+[{"id":1,"name":"hello","url":"http://localhost:3000/messages/1.json"},{"id":2,"name":"hello","url":"http://localhost:3000/messages/2.json"},{"id":3,"name":"hello","url":"http://localhost:3000/messages/3.json"}]
+```
+
+This is not suitable for ReactJS props, which is expected to be a key-value object. You will need to wrap your index.json.jbuilder node with a root node, like so:
+
+```ruby
+json.messages do |json|
+  json.array!(@messages) do |message|
+    json.extract! message, :id, :name
+    json.url message_url(message, format: :json)
+  end
+end
+```
+
+Which will generate:
+
+```json
+{"messages":[{"id":1,"name":"hello","url":"http://localhost:3000/messages/1.json"},{"id":2,"name":"hello","url":"http://localhost:3000/messages/2.json"},{"id":3,"name":"hello","url":"http://localhost:3000/messages/3.json"}]}
+```
+
 ### Server Rendering
 
 React components can also use the same ExecJS mechanisms in Sprockets to execute JavaScript code on the server, and render React components to HTML to be delivered to the browser, and then the `react_ujs` script will cause the component to be mounted. In this way, users get fast initial page loads and search-engine-friendly pages.

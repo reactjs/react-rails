@@ -13,7 +13,7 @@ module React
         html_options = options.reverse_merge(:data => {})
         html_options[:data].tap do |data|
           data[:react_class] = name
-          data[:react_props] = args.to_json unless args.empty?
+          data[:react_props] = React::Renderer.react_props(args) unless args.empty?
         end
         html_tag = html_options[:tag] || :div
         
