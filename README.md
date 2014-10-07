@@ -82,9 +82,9 @@ Component = React.createClass
 
 `react_ujs` will also scan DOM elements and call `React.unmountComponentAtNode` on page unload. If you want to disable this behavior, remove `data-react-class` attribute in `componentDidMount`.
 
-To use `react_ujs`, simply `require` it after `react` (and after `turbolinks` if [Turbolinks](https://github.com/rails/turbolinks) is used):
+To use `react_ujs`, simply `require` it after `react` (and after `turbolinks` if [Turbolinks](https://github.com/rails/turbolinks) is used).
 
-**Note:** _`react_ujs` disables the Turbolinks cache. This is a workaround to ensure components are correctly unmounted. See [#87](https://github.com/reactjs/react-rails/issues/87) for details._
+**Note:** _Turbolinks >= 2.4.0 is recommended. For older versions `react_ujs` will disable the Turbolinks cache to ensure components are correctly unmounted. See [#87](https://github.com/reactjs/react-rails/issues/87) for details._
 
 ```js
 // app/assets/javascripts/application.js
