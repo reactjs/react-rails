@@ -21,6 +21,8 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'es5-shim-rails', '>= 2.0.5'
   s.add_development_dependency 'poltergeist', '>= 0.3.3'
 
+  s.add_development_dependency 'jbuilder'
+
   s.add_dependency 'execjs'
   s.add_dependency 'rails', '>= 3.1'
   s.add_dependency 'react-source', '0.11.1'

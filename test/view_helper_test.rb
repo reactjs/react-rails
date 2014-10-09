@@ -29,6 +29,17 @@ class ViewHelperTest < ActionDispatch::IntegrationTest
     end
   end
 
+  test 'react_component accepts jbuilder-based strings as properties' do
+    jbuilder_json = Jbuilder.new do |json|
+      json.bar 'value'
+    end.target!
+
+    html = @helper.react_component('Foo', jbuilder_json)
+    %w(data-react-class="Foo" data-react-props="{&quot;bar&quot;:&quot;value&quot;}").each do |segment|
+      assert html.include?(segment), "expected #{html} to include #{segment}"
+    end
+  end
+
   test 'react_component accepts HTML options and HTML tag' do
     assert @helper.react_component('Foo', {}, :span).match(/<span\s.*><\/span>/)
 
