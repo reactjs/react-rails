@@ -2,6 +2,7 @@
 (function(document, window, React) {
   var CLASS_NAME_ATTR = 'data-react-class';
   var PROPS_ATTR = 'data-react-props';
+  var RAILS_ENV_DEVELOPMENT = <%= Rails.env == "development" %>;
 
   // jQuery is optional. Use it to support legacy browsers.
   var $ = (typeof jQuery !== 'undefined') && jQuery;
@@ -55,6 +56,10 @@
     } else {
       unmountEvent = 'page:receive';
       Turbolinks.pagesCached(0);
+
+      if (RAILS_ENV_DEVELOPMENT) {
+        console.warn('The Turbolinks cache has been disabled (Turbolinks >= 2.4.0 is recommended). See https://github.com/reactjs/react-rails/issues/87 for more information.');
+      }
     }
 
     handleEvent('page:change', mountReactComponents);
