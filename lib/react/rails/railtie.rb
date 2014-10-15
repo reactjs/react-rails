@@ -11,12 +11,11 @@ module React
       # Server-side rendering
       config.react.max_renderers = 10
       config.react.timeout = 20 #seconds
-      config.react.react_js = lambda {File.read(::Rails.application.assets.resolve('react.js'))}
       config.react.component_filenames = ['components.js']
 
-      # Watch .jsx files for changes in dev, so we can reload the JS VMs with the new JS code.
-      initializer "react_rails.add_watchable_files" do |app|
-        app.config.watchable_files.concat Dir["#{app.root}/app/assets/javascripts/**/*.jsx*"]
+      # Add a custom file reloader middleware
+      initializer "react_rails.configure_reloader" do |app|
+        app.middleware.use React::Rails::Reloader
       end
 
       # Include the react-rails view helper lazily
@@ -62,23 +61,35 @@ module React
 
       config.after_initialize do |app|
         # Server Rendering
+
         # Concat component_filenames together for server rendering
-        app.config.react.components_js = lambda {
+        component_source = lambda {
           app.config.react.component_filenames.map do |filename|
             app.assets[filename].to_s
           end.join(";")
         }
 
-        do_setup = lambda do
+        watchable_files = lambda {
+          app.config.react.component_filenames.flat_map { |filename|
+            asset = app.assets[filename]
+            [asset.pathname.to_s] + asset.dependencies.map(&:pathname).map(&:to_s)
+          }.uniq
+        }
+
+        react_source = lambda { File.read(app.assets.resolve('react.js')) }
+
+        setup_renderer = lambda do
           cfg = app.config.react
-          React::Renderer.setup!( cfg.react_js, cfg.components_js,
+          React::Renderer.setup!( react_source, component_source,
                                 {:size => cfg.size, :timeout => cfg.timeout})
+
+          # Update the watch file list with the latest set of dependencies
+          if app.config.reload_classes_only_on_change
+            React::Rails::Reloader.on_change(watchable_files.call, &setup_renderer)
+          end
         end
 
-        do_setup.call
-
-        # Reload the JS VMs in dev when files change
-        ActionDispatch::Reloader.to_prepare(&do_setup)
+        setup_renderer.call
       end
 
 
