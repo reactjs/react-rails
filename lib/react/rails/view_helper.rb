@@ -8,7 +8,7 @@ module React
       #
       def react_component(name, args = {}, options = {}, &block)
         options = {:tag => options} if options.is_a?(Symbol)
-        block = Proc.new{concat React::Renderer.render(name, args)} if options[:prerender] == true
+        block = Proc.new{concat React::Renderer.render(name, args)} if options[:prerender]
 
         html_options = options.reverse_merge(:data => {})
         html_options[:data].tap do |data|
@@ -18,7 +18,7 @@ module React
         html_tag = html_options[:tag] || :div
         
         # remove internally used properties so they aren't rendered to DOM
-        [:tag, :prerender].each{|prop| html_options.delete(prop)}
+        html_options.except!(:tag, :prerender)
         
         content_tag(html_tag, '', html_options, &block)
       end
