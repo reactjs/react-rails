@@ -49,6 +49,16 @@ class ViewHelperTest < ActionDispatch::IntegrationTest
     assert html.include?('data-foo="1"')
   end
 
+  test 'react_component accepts reference option' do
+    assert @helper.react_component('Foo', {}, { reference: 'myReference' })
+      .include?('data-react-reference="myReference"')
+  end
+
+  test 'react_ujs saves reference to rendered component as a global variable' do
+    visit '/pages/1'
+    assert page.evaluate_script('!!window.myReference')
+  end
+
   test 'react_ujs works with rendered HTML' do
     visit '/pages/1'
     assert page.has_content?('Hello Bob')
