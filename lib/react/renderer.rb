@@ -13,17 +13,18 @@ module React
     cattr_accessor :pool
 
     def self.setup!(react_js, components_js, args={})
-      args.assert_valid_keys(:size, :timeout)
+      args.assert_valid_keys(:size, :timeout, :benchmark)
       @@react_js = react_js
       @@components_js = components_js
       @@pool.shutdown{} if @@pool
       reset_combined_js!
+      @@render_method = args[:benchmark] ? :render_with_benchmark : :render
       @@pool = ConnectionPool.new(:size => args[:size]||10, :timeout => args[:timeout]||20) { self.new }
     end
 
     def self.render(component, args={})
       @@pool.with do |renderer|
-        renderer.render(component, args)
+        renderer.send(@@render_method, component, args)
       end
     end
 
@@ -74,8 +75,18 @@ module React
         }()
       JS
       context.eval(jscode).html_safe
-    rescue ExecJS::ProgramError => e
+    rescue ::ExecJS::ProgramError => e
       raise PrerenderError.new(component, react_props, e)
     end
+
+    def render_with_benchmark(component, args={})
+      result = ''
+      time = Benchmark.realtime do
+        result = self.render(component, args)
+      end
+      ::Rails.logger.info "[React::Renderer#render] Rendered #{component} with #{args} (#{(time*1000).round(1)}ms)"
+      result
+    end
+
   end
 end

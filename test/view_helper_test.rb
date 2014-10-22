@@ -49,6 +49,38 @@ class ViewHelperTest < ActionDispatch::IntegrationTest
     assert html.include?('data-foo="1"')
   end
 
+  test 'react_component prerender:true and a simple Ruby Hash does not raise' do
+    a_hash = {todos: %w{todo1 todo2 todo3}}
+
+    assert_nothing_raised(StandardError) do
+      @helper.react_component('TodoList', a_hash, {prerender:true, tag: :span})
+    end
+  end
+
+  test 'react_component prerender:true and a complex Ruby Hash does not raise' do
+    a_hash = {data: {some: {thing: [0,1,2]}}, todos: [:some,:nested,:data]}
+
+    assert_nothing_raised(StandardError) do
+      @helper.react_component('TodoList', a_hash, {prerender:true, tag: :span})
+    end
+  end
+
+  test 'react_component prerender:true and a simple Ruby Hash' do
+    a_hash = {todos: %w{todo1 todo2 todo3}}
+
+    html = @helper.react_component('TodoList', a_hash, {prerender:true, tag: :span})
+    assert html.match(/<span\s.*><\/span>/)
+    assert html.match(/<li\sdata-reactid=\".*\">todo1<\/li>/)
+  end
+
+  test 'react_component prerender:true and a complex Ruby Hash' do
+    a_hash = {data: {some: {thing: [0,1,2]}}, todos: [:some,:nested,:data]}
+
+    html = @helper.react_component('TodoList', a_hash, {prerender:true, tag: :span})
+    assert html.match(/<span\s.*><\/span>/)
+    assert html.match(/<li\sdata-reactid=\".*\">some<\/li>/)
+  end
+
   test 'react_ujs works with rendered HTML' do
     visit '/pages/1'
     assert page.has_content?('Hello Bob')
@@ -98,7 +130,7 @@ class ViewHelperTest < ActionDispatch::IntegrationTest
     assert_match /data-react-checksum/, page.html
     assert_match /yep/, page.find("#status").text
   end
-  
+
   test 'react server rendering does not include internal properties' do
     visit '/server/1'
     assert_no_match /tag=/, page.html

@@ -18,6 +18,32 @@ class ReactRendererTest < ActiveSupport::TestCase
     assert_match /data-react-checksum/, result
   end
 
+  test 'prerender errors are thrown with non-json-encoded string' do
+    not_json_string = %w{todo1 todo2 todo3}.to_s
+
+    err = assert_raises React::Renderer::PrerenderError do
+      React::Renderer.render "TodoList", not_json_string
+    end
+    expected_message = 'Encountered error "Error: Invariant Violation: Tried to merge an object, instead got todo1,todo2,todo3." when prerendering TodoList with ["todo1", "todo2", "todo3"]'
+    assert_equal expected_message, err.message
+  end
+
+  test 'Server rendering with a simple Ruby Hash' do
+    a_hash = {todos: %w{todo1 todo2 todo3}}
+
+    result = React::Renderer.render "TodoList", a_hash
+    assert_match /todo1.*todo2.*todo3/, result
+    assert_match /data-react-checksum/, result
+  end
+
+  test 'Server rendering with a complex Ruby Hash' do
+    a_hash_with_nest = {data: {some: {thing: [0,1,2]}}, todos: [:some,:nested,:data]}
+
+    result = React::Renderer.render "TodoList", a_hash_with_nest
+    assert_match /some.*nested.*data/, result
+    assert_match /data-react-checksum/, result
+  end
+
   test 'Rendering does not throw an exception when console log api is used' do
     %W(error info log warn).each do |fn|
       assert_nothing_raised(ExecJS::ProgramError) do
