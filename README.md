@@ -111,6 +111,15 @@ react_component('HelloMessage', {name: 'John'}, {id: 'hello', class: 'foo', tag:
 # <span class="foo" id="hello" data-...></span>
 ```
 
+If you want to store a global reference to the rendered component, add `reference: 'myReference'` to the options hash:
+
+```ruby
+react_component('HelloMessage', {}, {reference: 'myReference'})
+# <div data-react-class="HelloMessage" data-react-props="{}" data-react-reference="myReference"></div>
+```
+
+`react_ujs` will pick up the `data-react-reference` attribute and store a global reference to the component at the specified name, in this case `myReference`.
+
 #### With JSON and Jbuilder
 
 You can pass prepared JSON directly to the helper, as well.
