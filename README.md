@@ -46,7 +46,7 @@ Alternatively, you can include it directly as a separate script tag:
 
 ### JSX
 
-To transform your JSX into JS, simply create `.js.jsx` files, and ensure that the file has the `/** @jsx React.DOM */` docblock. These files will be transformed on request, or precompiled as part of the `assets:precompile` task.
+To transform your JSX into JS, simply create `.js.jsx` files. These files will be transformed on request, or precompiled as part of the `assets:precompile` task.
 
 
 ## Configuring
@@ -83,8 +83,6 @@ end
 It is possible to use JSX with CoffeeScript. The caveat is that you will still need to include the docblock. Since CoffeeScript doesn't allow `/* */` style comments, we need to do something a little different. We also need to embed JSX inside backticks so CoffeeScript ignores the syntax it doesn't understand. Here's an example:
 
 ```coffee
-###* @jsx React.DOM ###
-
 Component = React.createClass
   render: ->
     `<ExampleComponent videos={this.props.videos} />`
