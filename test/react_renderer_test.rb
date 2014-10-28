@@ -30,7 +30,7 @@ class ReactRendererTest < ActiveSupport::TestCase
     err = assert_raises React::Renderer::PrerenderError do
       React::Renderer.render("NonexistentComponent", {error: true, exists: false})
     end
-    expected_message = 'Encountered error "ReferenceError: NonexistentComponent is not defined" when prerendering NonexistentComponent with {"error":true,"exists":false}'
+    expected_message = 'Encountered error "ReferenceError: Can\'t find variable: NonexistentComponent" when prerendering NonexistentComponent with {"error":true,"exists":false}'
     assert_equal expected_message, err.message
   end
 
@@ -43,7 +43,7 @@ class ReactRendererTest < ActiveSupport::TestCase
     err = assert_raises React::Renderer::PrerenderError do
       React::Renderer.render("NonexistentComponent", json_string)
     end
-    expected_message = 'Encountered error "ReferenceError: NonexistentComponent is not defined" when prerendering NonexistentComponent with {"error":true,"exists":false}'
+    expected_message = 'Encountered error "ReferenceError: Can\'t find variable: NonexistentComponent" when prerendering NonexistentComponent with {"error":true,"exists":false}'
     assert_equal expected_message, err.message
   end
 end

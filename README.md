@@ -58,13 +58,11 @@ Alternatively, you can include it directly as a separate script tag:
 
 ### JSX
 
-To transform your JSX into JS, simply create `.js.jsx` files, and ensure that the file has the `/** @jsx React.DOM */` docblock. These files will be transformed on request, or precompiled as part of the `assets:precompile` task.
+To transform your JSX into JS, simply create `.js.jsx` files. These files will be transformed on request, or precompiled as part of the `assets:precompile` task.
 
-CoffeeScript files can also be used, by creating `.js.jsx.coffee` files. You must use this form of the docblock at the top of each file: `###* @jsx React.DOM ###`. We also need to embed JSX inside backticks so CoffeeScript ignores the syntax it doesn't understand. Here's an example:
+CoffeeScript files can also be used, by creating `.js.jsx.coffee` files. We also need to embed JSX inside backticks so CoffeeScript ignores the syntax it doesn't understand. Here's an example:
 
 ```coffee
-###* @jsx React.DOM ###
-
 Component = React.createClass
   render: ->
     `<ExampleComponent videos={this.props.videos} />`
@@ -191,8 +189,6 @@ In order for us to render your React components, we need to be able to find them
 This will bring in all files located in the `app/assets/javascripts/components` directory.  You can organize your code however you like, as long as a request for `/assets/javascripts/components.js` brings in a concatenated file containing all of your React components, and each one has to be available in the global scope (either `window` or `global` can be used). For `.js.jsx` files this is not a problem, but if you are using `.js.jsx.coffee` files then the wrapper function needs to be taken into account:
 
 ```coffee
-###* @jsx React.DOM ###
-
 Component = React.createClass
   render: ->
     `<ExampleComponent videos={this.props.videos} />`
@@ -258,8 +254,6 @@ end
 It is possible to use JSX with CoffeeScript. The caveat is that you will still need to include the docblock. Since CoffeeScript doesn't allow `/* */` style comments, we need to do something a little different. We also need to embed JSX inside backticks so CoffeeScript ignores the syntax it doesn't understand. Here's an example:
 
 ```coffee
-###* @jsx React.DOM ###
-
 Component = React.createClass
   render: ->
     `<ExampleComponent videos={this.props.videos} />`

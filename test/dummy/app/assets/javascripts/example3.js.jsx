@@ -1,2 +1,1 @@
-/** @jsx React.DOM */
 <div/>;
