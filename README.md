@@ -252,6 +252,16 @@ MyApp::Application.configure do
 end
 
 ```
+### Compile options
+
+To enable the "Harmony" compile functionality of the JSX compiler (which turns on JS transformations such as ES6 classes, etc.):
+
+```ruby
+MyApp::Application.configure do
+  config.react.harmony = true
+end
+```
+
 
 ## CoffeeScript
 
