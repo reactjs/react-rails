@@ -5,10 +5,6 @@ module React
 
     class Reloader
       def self.on_change(watch_files, &block)
-        unless block_given?
-          warn "Reloader.on_change requires a callback block"
-        end
-
         @@file_checker = ActiveSupport::FileUpdateChecker.new(watch_files, &block)
       end
 
