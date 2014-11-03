@@ -63,7 +63,7 @@ module React
         # Server Rendering
 
         # Concat component_filenames together for server rendering
-        component_source = lambda {
+        combined_components_source = lambda {
           app.config.react.component_filenames.map do |filename|
             app.assets[filename].to_s
           end.join(";")
@@ -80,7 +80,7 @@ module React
 
         setup_renderer = lambda do
           cfg = app.config.react
-          React::Renderer.setup!( react_source, component_source,
+          React::Renderer.setup!( react_source, combined_components_source,
                                 {:size => cfg.size, :timeout => cfg.timeout})
 
           # Update the watch file list with the latest set of dependencies
