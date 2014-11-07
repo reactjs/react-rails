@@ -6,5 +6,5 @@ rvm:
   - jruby-19mode
 before_install:
   - gem install bundler --version '>= 1.2.2'
-before_script: 'bundle exec rake appraisal:install'
+before_script: 'bundle exec appraisal install'
 script: 'bundle exec rake appraisal test'
