@@ -71,10 +71,10 @@ Component = React.createClass
 
 ### Unobtrusive JavaScript
 
-`react_ujs` will call `React.renderComponent` for every element with `data-react-class` attribute. React properties can be specified by `data-react-props` attribute in JSON format. For example:
+`react_ujs` will call `React.render` for every element with `data-react-class` attribute. React properties can be specified by `data-react-props` attribute in JSON format. For example:
 
 ```erb
-<!-- react_ujs will execute `React.renderComponent(HelloMessage({name:"Bob"}), element)` -->
+<!-- react_ujs will execute `React.render(HelloMessage({name:"Bob"}), element)` -->
 <div data-react-class="HelloMessage" data-react-props="<%= {name: 'Bob'}.to_json %>" />
 ```
 
