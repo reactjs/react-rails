@@ -21,9 +21,9 @@ module React
       @@pool = ConnectionPool.new(:size => args[:size]||10, :timeout => args[:timeout]||20) { self.new }
     end
 
-    def self.render(component, args={})
+    def self.render(component, args={}, context_suffix='')
       @@pool.with do |renderer|
-        renderer.render(component, args)
+        renderer.render(component, args, context_suffix)
       end
     end
 
@@ -62,18 +62,26 @@ module React
       end
     end
 
-    def context
-      @context ||= ExecJS.compile(self.class.combined_js)
+    def context(suffix_code='')
+      if suffix_code.present?
+        reset_context(suffix_code)
+      else
+        @context ||= ExecJS.compile(self.class.combined_js)
+      end
     end
 
-    def render(component, args={})
+    def reset_context(suffix_code='')
+      @context = ExecJS.compile(self.class.combined_js + suffix_code)
+    end
+
+    def render(component, args={}, context_suffix='')
       react_props = React::Renderer.react_props(args)
       jscode = <<-JS
         function() {
           return React.renderToString(React.createElement(#{component}, #{react_props}));
         }()
       JS
-      context.eval(jscode).html_safe
+      context(context_suffix).eval(jscode).html_safe
     rescue ExecJS::ProgramError => e
       raise PrerenderError.new(component, react_props, e)
     end
