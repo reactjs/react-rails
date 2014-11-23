@@ -78,7 +78,16 @@ Component = React.createClass
 <div data-react-class="HelloMessage" data-react-props="<%= {name: 'Bob'}.to_json %>" />
 ```
 
-`react_ujs` will also scan DOM elements and call `React.unmountComponentAtNode` on page unload. If you want to disable this behavior, remove `data-react-class` attribute in `componentDidMount`.
+`react_ujs` will also scan DOM elements and call `React.unmountComponentAtNode` on page unload. If you want to disable this behavior (if you are not using Turbolinks), remove `data-react-class` attribute in `componentDidMount`:
+
+```js
+var MyRootComponent = React.createClass({
+  ...
+  componentDidMount: function() {
+    this.getDOMNode().parentElement.removeAttribute('data-react-class');
+  }
+});
+```
 
 To use `react_ujs`, simply `require` it after `react` (and after `turbolinks` if [Turbolinks](https://github.com/rails/turbolinks) is used):
 
