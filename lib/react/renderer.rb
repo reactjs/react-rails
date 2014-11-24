@@ -70,7 +70,7 @@ module React
       react_props = React::Renderer.react_props(args)
       jscode = <<-JS
         function() {
-          return React.renderComponentToString(#{component}(#{react_props}));
+          return React.renderToString(React.createElement(#{component}, #{react_props}));
         }()
       JS
       context.eval(jscode).html_safe
