@@ -48,6 +48,29 @@ class ViewHelperTest < ActionDispatch::IntegrationTest
     assert html.include?('class="test"')
     assert html.include?('data-foo="1"')
   end
+  
+  test 'ujs object present on the global React object and has our methods' do
+    visit '/pages/1'
+    assert page.has_content?('Hello Bob')
+  
+    # the exposed ujs object is present
+    ujs_present = page.evaluate_script('typeof React.ujs === "object";')
+    assert_equal(ujs_present, true)
+  
+    # it contains the constants
+    class_name_present = page.evaluate_script('React.ujs.CLASS_NAME_ATTR === "data-react-class";')
+    assert_equal(class_name_present, true)
+    props_present = page.evaluate_script('React.ujs.PROPS_ATTR === "data-react-props";')
+    assert_equal(props_present, true)
+  
+    #it contains the methods
+    find_dom_nodes_present = page.evaluate_script('typeof React.ujs.findDOMNodes === "function";')
+    assert_equal(find_dom_nodes_present, true)
+    mount_components_present = page.evaluate_script('typeof React.ujs.mountComponents === "function";')
+    assert_equal(mount_components_present, true)
+    unmount_components_present = page.evaluate_script('typeof React.ujs.unmountComponents === "function";')
+    assert_equal(unmount_components_present, true)
+  end
 
   test 'react_ujs works with rendered HTML' do
     visit '/pages/1'
