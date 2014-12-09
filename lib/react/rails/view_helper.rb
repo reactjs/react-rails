@@ -8,7 +8,8 @@ module React
       #
       def react_component(name, args = {}, options = {}, &block)
         options = {:tag => options} if options.is_a?(Symbol)
-        block = Proc.new{concat React::Renderer.render(name, args)} if options[:prerender] == true
+        context_suffix = options.delete(:context_suffix) || ''
+        block = Proc.new{concat React::Renderer.render(name, args, context_suffix)} if options[:prerender] == true
 
         html_options = options.reverse_merge(:data => {})
         html_options[:data].tap do |data|
