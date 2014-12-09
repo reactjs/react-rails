@@ -11,16 +11,16 @@ module React
       Available field types:
 
           Basic prop types do not take any additional arguments. If you do not specify
-          a prop type, the generic renderable will be used. The basic types available are:
+          a prop type, the generic node will be used. The basic types available are:
 
           any
           array
           bool
-          component
+          element
           func
           number
           object
-          renderable
+          node
           shape
           string
 
@@ -51,7 +51,7 @@ module React
                :banner => "field[:type] field[:type] ..."
 
       REACT_PROP_TYPES = {
-        "renderable" =>  'React.PropTypes.renderable',
+        "node" =>        'React.PropTypes.node',
         "bool" =>        'React.PropTypes.bool',
         "boolean" =>     'React.PropTypes.bool',
         "string" =>      'React.PropTypes.string',
@@ -59,7 +59,7 @@ module React
         "object" =>      'React.PropTypes.object',
         "array" =>       'React.PropTypes.array',
         "shape" =>       'React.PropTypes.shape({})',
-        "component" =>   'React.PropTypes.component',
+        "element" =>     'React.PropTypes.element',
         "func" =>        'React.PropTypes.func',
         "function" =>    'React.PropTypes.func',
         "any" =>         'React.PropTypes.any',
@@ -103,13 +103,13 @@ module React
          end
        end
 
-       def self.lookup(type = "renderable", options = "")
+       def self.lookup(type = "node", options = "")
          react_prop_type = REACT_PROP_TYPES[type]
          if react_prop_type.blank?
            if type =~ /^[[:upper:]]/
              react_prop_type = REACT_PROP_TYPES['instanceOf']
            else
-             react_prop_type = REACT_PROP_TYPES['renderable']
+             react_prop_type = REACT_PROP_TYPES['node']
            end
          end
 
@@ -119,7 +119,7 @@ module React
          react_prop_type
        end
 
-       def lookup(type = "renderable", options = "")
+       def lookup(type = "node", options = "")
          self.class.lookup(type, options)
        end
     end

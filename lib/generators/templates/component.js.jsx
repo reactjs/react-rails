@@ -1,4 +1,3 @@
-/** @jsx React.DOM */
 var <%= file_name.camelize %> = React.createClass({
 <% if attributes.size > 0 -%>
   propTypes: {
@@ -10,13 +9,15 @@ var <%= file_name.camelize %> = React.createClass({
 
   render: function() {
 <% if attributes.size > 0 -%>
-    return <div>
+    return (
+      <div>
 <% attributes.each do |attribute| -%>
-      <div><%= attribute[:name].titleize %>: {this.props.<%= attribute[:name] %>}</div>
+        <div><%= attribute[:name].titleize %>: {this.props.<%= attribute[:name] %>}</div>
 <% end -%>
-    </div>;
+      </div>
+    );
 <% else -%>
     return <div />;
 <% end -%>
   }
-})
+});

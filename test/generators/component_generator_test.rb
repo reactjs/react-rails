@@ -16,14 +16,9 @@ class ComponentGeneratorTest < Rails::Generators::TestCase
     assert_file filename
   end
 
-  test "creates the component file with jsx pragma" do
-    run_generator %w(GeneratedComponent)
-    assert_file filename, %r{/\*\* @jsx React\.DOM \*/}
-  end
-
-  test "creates the component file with a renderable argument" do
+  test "creates the component file with a node argument" do
     run_generator %w(GeneratedComponent name)
-    assert_file filename, %r{name: React.PropTypes.renderable}
+    assert_file filename, %r{name: React.PropTypes.node}
   end
 
   test "creates the component file with various standard proptypes" do
@@ -52,8 +47,8 @@ class ComponentGeneratorTest < Rails::Generators::TestCase
   end
 
   test "generates working jsx" do
-    expected_name_div = Regexp.escape('React.DOM.div(null, "Name: ", this.props.name)')
-    expected_shape_div = Regexp.escape('React.DOM.div(null, "Address: ", this.props.address)')
+    expected_name_div = Regexp.escape('React.createElement("div", null, "Name: ", this.props.name)')
+    expected_shape_div = Regexp.escape('React.createElement("div", null, "Address: ", this.props.address)')
 
     run_generator %w(GeneratedComponent name:string address:shape)
     jsx = React::JSX.transform(File.read(File.join(destination_root, filename)))
