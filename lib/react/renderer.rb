@@ -5,7 +5,7 @@ module React
 
     class PrerenderError < RuntimeError
       def initialize(component_name, props, js_message)
-        message = "Encountered error \"#{js_message}\" when prerendering #{component_name} with #{props.to_json}"
+        message = "Encountered error \"#{js_message}\" when prerendering #{component_name} with #{props}"
         super(message)
       end
     end
@@ -54,19 +54,28 @@ module React
       @@combined_js
     end
 
+    def self.react_props(args={})
+      if args.is_a? String
+        args
+      else
+        args.to_json
+      end
+    end
+
     def context
       @context ||= ExecJS.compile(self.class.combined_js)
     end
 
     def render(component, args={})
+      react_props = React::Renderer.react_props(args)
       jscode = <<-JS
         function() {
-          return React.renderComponentToString(#{component}(#{args.to_json}));
+          return React.renderToString(React.createElement(#{component}, #{react_props}));
         }()
       JS
       context.eval(jscode).html_safe
     rescue ExecJS::ProgramError => e
-      raise PrerenderError.new(component, args, e)
+      raise PrerenderError.new(component, react_props, e)
     end
   end
 end

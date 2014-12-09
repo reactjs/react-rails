@@ -58,13 +58,11 @@ Alternatively, you can include it directly as a separate script tag:
 
 ### JSX
 
-To transform your JSX into JS, simply create `.js.jsx` files, and ensure that the file has the `/** @jsx React.DOM */` docblock. These files will be transformed on request, or precompiled as part of the `assets:precompile` task.
+To transform your JSX into JS, simply create `.js.jsx` files. These files will be transformed on request, or precompiled as part of the `assets:precompile` task.
 
-CoffeeScript files can also be used, by creating `.js.jsx.coffee` files. You must use this form of the docblock at the top of each file: `###* @jsx React.DOM ###`. We also need to embed JSX inside backticks so CoffeeScript ignores the syntax it doesn't understand. Here's an example:
+CoffeeScript files can also be used, by creating `.js.jsx.coffee` files. We also need to embed JSX inside backticks so CoffeeScript ignores the syntax it doesn't understand. Here's an example:
 
 ```coffee
-###* @jsx React.DOM ###
-
 Component = React.createClass
   render: ->
     `<ExampleComponent videos={this.props.videos} />`
@@ -73,10 +71,10 @@ Component = React.createClass
 
 ### Unobtrusive JavaScript
 
-`react_ujs` will call `React.renderComponent` for every element with `data-react-class` attribute. React properties can be specified by `data-react-props` attribute in JSON format. For example:
+`react_ujs` will call `React.render` for every element with `data-react-class` attribute. React properties can be specified by `data-react-props` attribute in JSON format. For example:
 
 ```erb
-<!-- react_ujs will execute `React.renderComponent(HelloMessage({name:"Bob"}), element)` -->
+<!-- react_ujs will execute `React.render(HelloMessage({name:"Bob"}), element)` -->
 <div data-react-class="HelloMessage" data-react-props="<%= {name: 'Bob'}.to_json %>" />
 ```
 
@@ -111,6 +109,61 @@ react_component('HelloMessage', {name: 'John'}, {id: 'hello', class: 'foo', tag:
 # <span class="foo" id="hello" data-...></span>
 ```
 
+#### With JSON and Jbuilder
+
+You can pass prepared JSON directly to the helper, as well.
+
+```ruby
+react_component('HelloMessage', {name: 'John'}.to_json)
+# <div data-react-class="HelloMessage" data-react-props="{&quot;name&quot;:&quot;John&quot;}"></div>
+```
+
+This is especially helpful if you are already using a tool like Jbuilder in your project.
+
+```ruby
+# messages/show.json.jbuilder
+json.name name
+```
+
+```ruby
+react_component('HelloMessage', render(template: 'messages/show.json.jbuilder', locals: {name: 'John'}))
+# <div data-react-class="HelloMessage" data-react-props="{&quot;name&quot;:&quot;John&quot;}"></div>
+```
+
+##### Important Note
+
+By default, the scaffolded Rails index jbuilder templates do not include a root-node. An example scaffolded index.json.jbuilder looks like this:
+
+```ruby
+json.array!(@messages) do |message|
+  json.extract! message, :id, :name
+  json.url message_url(message, format: :json)
+end
+```
+
+which generates JSON like this:
+
+```json
+[{"id":1,"name":"hello","url":"http://localhost:3000/messages/1.json"},{"id":2,"name":"hello","url":"http://localhost:3000/messages/2.json"},{"id":3,"name":"hello","url":"http://localhost:3000/messages/3.json"}]
+```
+
+This is not suitable for ReactJS props, which is expected to be a key-value object. You will need to wrap your index.json.jbuilder node with a root node, like so:
+
+```ruby
+json.messages do |json|
+  json.array!(@messages) do |message|
+    json.extract! message, :id, :name
+    json.url message_url(message, format: :json)
+  end
+end
+```
+
+Which will generate:
+
+```json
+{"messages":[{"id":1,"name":"hello","url":"http://localhost:3000/messages/1.json"},{"id":2,"name":"hello","url":"http://localhost:3000/messages/2.json"},{"id":3,"name":"hello","url":"http://localhost:3000/messages/3.json"}]}
+```
+
 ### Server Rendering
 
 React components can also use the same ExecJS mechanisms in Sprockets to execute JavaScript code on the server, and render React components to HTML to be delivered to the browser, and then the `react_ujs` script will cause the component to be mounted. In this way, users get fast initial page loads and search-engine-friendly pages.
@@ -136,8 +189,6 @@ In order for us to render your React components, we need to be able to find them
 This will bring in all files located in the `app/assets/javascripts/components` directory.  You can organize your code however you like, as long as a request for `/assets/javascripts/components.js` brings in a concatenated file containing all of your React components, and each one has to be available in the global scope (either `window` or `global` can be used). For `.js.jsx` files this is not a problem, but if you are using `.js.jsx.coffee` files then the wrapper function needs to be taken into account:
 
 ```coffee
-###* @jsx React.DOM ###
-
 Component = React.createClass
   render: ->
     `<ExampleComponent videos={this.props.videos} />`
@@ -257,8 +308,6 @@ end
 It is possible to use JSX with CoffeeScript. The caveat is that you will still need to include the docblock. Since CoffeeScript doesn't allow `/* */` style comments, we need to do something a little different. We also need to embed JSX inside backticks so CoffeeScript ignores the syntax it doesn't understand. Here's an example:
 
 ```coffee
-###* @jsx React.DOM ###
-
 Component = React.createClass
   render: ->
     `<ExampleComponent videos={this.props.videos} />`

@@ -1,5 +1,3 @@
-###* @jsx React.DOM ###
-
 Todo = React.createClass
   render: ->
     `<li>{this.props.todo}</li>`

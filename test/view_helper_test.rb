@@ -29,6 +29,17 @@ class ViewHelperTest < ActionDispatch::IntegrationTest
     end
   end
 
+  test 'react_component accepts jbuilder-based strings as properties' do
+    jbuilder_json = Jbuilder.new do |json|
+      json.bar 'value'
+    end.target!
+
+    html = @helper.react_component('Foo', jbuilder_json)
+    %w(data-react-class="Foo" data-react-props="{&quot;bar&quot;:&quot;value&quot;}").each do |segment|
+      assert html.include?(segment), "expected #{html} to include #{segment}"
+    end
+  end
+
   test 'react_component accepts HTML options and HTML tag' do
     assert @helper.react_component('Foo', {}, :span).match(/<span\s.*><\/span>/)
 
@@ -83,14 +94,14 @@ class ViewHelperTest < ActionDispatch::IntegrationTest
 
   test 'react server rendering also gets mounted on client' do
     visit '/server/1'
-    assert_match /data-react-class=\"TodoList\"/, page.html
-    assert_match /data-react-checksum/, page.html
-    assert_match /yep/, page.find("#status").text
+    assert_match(/data-react-class=\"TodoList\"/, page.html)
+    assert_match(/data-react-checksum/, page.html)
+    assert_match(/yep/, page.find("#status").text)
   end
   
   test 'react server rendering does not include internal properties' do
     visit '/server/1'
-    assert_no_match /tag=/, page.html
-    assert_no_match /prerender=/, page.html
+    assert_no_match(/tag=/, page.html)
+    assert_no_match(/prerender=/, page.html)
   end
 end
