@@ -218,7 +218,6 @@ rails generate react:component Post title:string body:string published:bool publ
 would generate the following in `app/assets/javascripts/components/post.js.jsx`:
 
 ```jsx
-/** @jsx React.DOM */
 var Post = React.createClass({
   propTypes: {
     title: React.PropTypes.string,
@@ -228,14 +227,16 @@ var Post = React.createClass({
   },
 
   render: function() {
-    return <div>
-      <div>Title: {this.props.title}</div>
-      <div>Body: {this.props.body}</div>
-      <div>Published: {this.props.published}</div>
-      <div>Published By: {this.props.published_by}</div>
-    </div>;
+    return (
+      <div>
+        <div>Title: {this.props.title}</div>
+        <div>Body: {this.props.body}</div>
+        <div>Published: {this.props.published}</div>
+        <div>Published By: {this.props.published_by}</div>
+      </div>
+    );
   }
-})
+});
 ```
 
 The generator can use the following arguments to create basic propTypes:
@@ -243,11 +244,11 @@ The generator can use the following arguments to create basic propTypes:
   * any
   * array
   * bool
-  * component
+  * element
   * func
   * number
   * object
-  * renderable
+  * node
   * shape
   * string
 
