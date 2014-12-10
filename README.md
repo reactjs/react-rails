@@ -205,6 +205,61 @@ react_component('HelloMessage', {name: 'John'}, {prerender: true})
 ```
 This will return the fully rendered component markup, and as long as you have included the `react_ujs` script in your page, then the component will also be instantiated and mounted on the client.
 
+### Component Generator
+
+react-rails ships with a Rails generator to help you get started with a simple component scaffold. You can run it using `rails generate react:component ComponentName`. The generator takes an optional list of arguments for default propTypes, which follow the conventions set in the [Reusable Components](http://facebook.github.io/react/docs/reusable-components.html) section of the React documentation. 
+
+For example:
+
+```shell
+rails generate react:component Post title:string body:string published:bool published_by:instanceOf{Person}
+```
+
+would generate the following in `app/assets/javascripts/components/post.js.jsx`:
+
+```jsx
+var Post = React.createClass({
+  propTypes: {
+    title: React.PropTypes.string,
+    body: React.PropTypes.string,
+    published: React.PropTypes.bool,
+    publishedBy: React.PropTypes.instanceOf(Person)
+  },
+
+  render: function() {
+    return (
+      <div>
+        <div>Title: {this.props.title}</div>
+        <div>Body: {this.props.body}</div>
+        <div>Published: {this.props.published}</div>
+        <div>Published By: {this.props.published_by}</div>
+      </div>
+    );
+  }
+});
+```
+
+The generator can use the following arguments to create basic propTypes:
+
+  * any
+  * array
+  * bool
+  * element
+  * func
+  * number
+  * object
+  * node
+  * shape
+  * string
+
+The following additional arguments have special behavior:
+
+  * `instanceOf` takes an optional class name in the form of {className}
+  * `oneOf` behaves like an enum, and takes an optional list of strings in the form of `'name:oneOf{one,two,three}'`.
+  * `oneOfType` takes an optional list of react and custom types in the form of `'model:oneOfType{string,number,OtherType}'`
+
+Note that the arguments for `oneOf` and `oneOfType` must be enclosed in single quotes to prevent your terminal from expanding them into an argument list.
+
 ## Configuring
 
 ### Variants
