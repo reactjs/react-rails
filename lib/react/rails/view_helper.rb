@@ -14,11 +14,12 @@ module React
         html_options[:data].tap do |data|
           data[:react_class] = name
           data[:react_props] = React::Renderer.react_props(args) unless args.empty?
+          data[:react_reference] = html_options[:reference] if html_options[:reference]
         end
         html_tag = html_options[:tag] || :div
         
         # remove internally used properties so they aren't rendered to DOM
-        [:tag, :prerender].each{|prop| html_options.delete(prop)}
+        [:tag, :prerender, :reference].each{|prop| html_options.delete(prop)}
         
         content_tag(html_tag, '', html_options, &block)
       end
