@@ -5,6 +5,7 @@ require 'rails'
 
 module React
   module JSX
+
     def self.context
       # lazily loaded during first request and reloaded every time when in dev or test
       unless @context && ::Rails.env.production?
@@ -24,7 +25,8 @@ module React
     end
 
     def self.transform(code)
-      result = context.call('JSXTransformer.transform', code)
+      result = context.call('JSXTransformer.transform', code,
+                            harmony: ::Rails.application.config.react.harmony)
       return result['code']
     end
   end

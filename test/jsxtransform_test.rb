@@ -19,6 +19,14 @@ EXPECTED_JS_2 = <<eos
 }).call(this);
 eos
 
+EXPECTED_JS_4 = <<eos
+/** @jsx React.DOM */
+
+function Example4(){"use strict";}
+var e=new Example4();
+eos
+
+
 class JSXTransformTest < ActionDispatch::IntegrationTest
 
   test 'asset pipeline should transform JSX' do
@@ -37,6 +45,18 @@ class JSXTransformTest < ActionDispatch::IntegrationTest
     # together. Remove all spaces to make test pass.
     assert_equal EXPECTED_JS_2.gsub(/\s/, ''), @response.body.gsub(/\s/, '')
   end
+
+  test 'asset pipeline should transform JSX + Harmony' do
+    # multiple tests run simultaneously, so, the setting can't be flipped on
+    # and off for multiple tests (as they'll conflict)
+    Rails.application.config.react.harmony = true
+    get 'assets/example4.js'
+    assert_response :success
+    # remove any unnecessary trailing space from either example or response
+    # as it's not relevant to the test
+    assert_equal EXPECTED_JS_4.rstrip, @response.body.rstrip
+  end
+
 
   test 'can use dropped in version of JSX transformer' do
     hidden_path = File.expand_path("../dummy/vendor/assets/react/JSXTransformer__.js",  __FILE__)
