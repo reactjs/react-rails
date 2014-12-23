@@ -17,4 +17,5 @@
 //= require es5-shim/es5-shim
 //= require react
 //= require react_ujs
-//= require_tree .
+//= require_tree ./components
+//= require ./pages

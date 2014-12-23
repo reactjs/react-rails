@@ -38,7 +38,7 @@ class JSXTransformTest < ActionDispatch::IntegrationTest
     assert_equal EXPECTED_JS_2.gsub(/\s/, ''), @response.body.gsub(/\s/, '')
   end
 
-  test 'can use dropped in version of JSX transformer' do
+  test 'can use dropped-in version of JSX transformer' do
     hidden_path = File.expand_path("../dummy/vendor/assets/react/JSXTransformer__.js",  __FILE__)
     replacing_path = File.expand_path("../dummy/vendor/assets/react/JSXTransformer.js",  __FILE__)
 
@@ -50,5 +50,14 @@ class JSXTransformTest < ActionDispatch::IntegrationTest
 
     assert_response :success
     assert_equal 'test_confirmation_token_jsx_transformed;', @response.body
+  end
+
+  test 'accepts harmony: true option' do
+    React::JSX.transform_options = {harmony: true}
+    get 'assets/harmony_example.js'
+    assert_response :success
+    assert_match(/generateGreeting:function\(\)/, @response.body, "object literal methods")
+    assert_match(/React.__spread/, @response.body, "spreading props")
+    assert_match(/Your greeting is: '" \+ insertedGreeting \+ "'/, @response.body, "string interpolation")
   end
 end

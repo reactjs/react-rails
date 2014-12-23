@@ -5,6 +5,8 @@ require 'rails'
 
 module React
   module JSX
+    mattr_accessor :transform_options
+
     def self.context
       # lazily loaded during first request and reloaded every time when in dev or test
       unless @context && ::Rails.env.production?
@@ -23,8 +25,8 @@ module React
       @context
     end
 
-    def self.transform(code)
-      result = context.call('JSXTransformer.transform', code)
+    def self.transform(code, options={})
+      result = context.call('JSXTransformer.transform', code, options)
       return result['code']
     end
   end

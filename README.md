@@ -68,6 +68,11 @@ Component = React.createClass
     `<ExampleComponent videos={this.props.videos} />`
 ```
 
+You can use the `--harmony` option by adding a configuration to `application.rb`:
+
+```ruby
+  config.react.jsx_transform_options = {harmony: true}
+```
 
 ### Unobtrusive JavaScript
 
