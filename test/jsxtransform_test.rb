@@ -22,14 +22,14 @@ eos
 class JSXTransformTest < ActionDispatch::IntegrationTest
 
   test 'asset pipeline should transform JSX' do
-    get 'assets/example.js'
+    get '/assets/example.js'
     FileUtils.rm_r CACHE_PATH if CACHE_PATH.exist?
     assert_response :success
     assert_equal EXPECTED_JS, @response.body
   end
 
   test 'asset pipeline should transform JSX + Coffeescript' do
-    get 'assets/example2.js'
+    get '/assets/example2.js'
     assert_response :success
     # Different coffee-script may generate slightly different outputs,
     # as some version inserts an extra "\n" at the beginning.
@@ -43,7 +43,7 @@ class JSXTransformTest < ActionDispatch::IntegrationTest
     replacing_path = File.expand_path("../dummy/vendor/assets/react/JSXTransformer.js",  __FILE__)
 
     FileUtils.mv hidden_path, replacing_path
-    get 'assets/example3.js'
+    get '/assets/example3.js'
 
     FileUtils.mv replacing_path, hidden_path
     FileUtils.rm_r CACHE_PATH if CACHE_PATH.exist?
