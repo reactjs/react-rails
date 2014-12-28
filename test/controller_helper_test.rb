@@ -10,14 +10,14 @@ class ControllerHelperTest < ActionDispatch::IntegrationTest
   end
 
   test 'uses a custom layout and status' do
-    get 'helper/1'
+    get '/helper/1'
 
     assert response.status == 218
     assert response.body.include?('This is a different layout')
   end
 
   test 'renders the React component' do
-    get 'helper/1'
+    get '/helper/1'
 
     %w(data-react-class="Foo" data-react-props="{&quot;bar&quot;:&quot;value&quot;}").each do |segment|
       assert response.body.include?(segment)
