@@ -26,6 +26,13 @@ module React
         end
       end
 
+      # Include the react-rails controller helper lazily
+      initializer "react_rails.setup_controller_helpers" do
+        ActiveSupport.on_load(:action_controller) do
+          include ::React::Rails::ControllerHelper
+        end
+      end
+
       # run after all initializers to allow sprockets to pick up react.js and
       # jsxtransformer.js from end-user to override ours if needed
       initializer "react_rails.setup_vendor", :after => "sprockets.environment", group: :all do |app|

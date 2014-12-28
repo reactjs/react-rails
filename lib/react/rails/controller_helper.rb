@@ -16,5 +16,3 @@ module React
     end
   end
 end
-
-ActionController::Base.send(:include, React::Rails::ControllerHelper) if defined?(Rails)
