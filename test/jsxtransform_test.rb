@@ -56,7 +56,7 @@ class JSXTransformTest < ActionDispatch::IntegrationTest
     React::JSX.transform_options = {harmony: true}
     get 'assets/harmony_example.js'
     assert_response :success
-    assert_match(/generateGreeting:function\(\)/, @response.body, "object literal methods")
+    assert_match(/generateGreeting:\s*function\(\)/, @response.body, "object literal methods")
     assert_match(/React.__spread/, @response.body, "spreading props")
     assert_match(/Your greeting is: '" \+ insertedGreeting \+ "'/, @response.body, "string interpolation")
   end
