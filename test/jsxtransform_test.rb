@@ -54,10 +54,17 @@ class JSXTransformTest < ActionDispatch::IntegrationTest
 
   test 'accepts harmony: true option' do
     React::JSX.transform_options = {harmony: true}
-    get 'assets/harmony_example.js'
+    get '/assets/harmony_example.js'
     assert_response :success
     assert_match(/generateGreeting:\s*function\(\)/, @response.body, "object literal methods")
     assert_match(/React.__spread/, @response.body, "spreading props")
     assert_match(/Your greeting is: '" \+ insertedGreeting \+ "'/, @response.body, "string interpolation")
+  end
+
+  test 'accepts strip_types: true option' do
+    React::JSX.transform_options = {strip_types: true, harmony: true}
+    get '/assets/flow_types_example.js'
+    assert_response :success
+    assert_match(/\(i\s*,\s*name\s*\)\s*\{/, @response.body, "type annotations are removed")
   end
 end

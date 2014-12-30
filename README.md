@@ -68,10 +68,13 @@ Component = React.createClass
     `<ExampleComponent videos={this.props.videos} />`
 ```
 
-You can use the `--harmony` option by adding a configuration to `application.rb`:
+You can use the `--harmony` or `--strip-types` options by adding a configuration to `application.rb`:
 
 ```ruby
-  config.react.jsx_transform_options = {harmony: true}
+  config.react.jsx_transform_options = {
+      harmony: true,
+      strip_types: true, # for removing Flow type annotations
+    }
 ```
 
 ### Unobtrusive JavaScript
