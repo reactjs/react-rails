@@ -19,14 +19,14 @@ class ServerRenderedHtmlTest  < ActionDispatch::IntegrationTest
 
     begin
       get '/server/1'
-      refute_match /Updated/, response.body
+      refute_match(/Updated/, response.body)
 
       wait_to_ensure_asset_pipeline_detects_changes
       FileUtils.cp file_with_updates, app_file
       FileUtils.touch app_file
 
       get '/server/1'
-      assert_match /Updated/, response.body
+      assert_match(/Updated/, response.body)
     ensure
       # if we have a test failure, we want to make sure that we revert the dummy file
       wait_to_ensure_asset_pipeline_detects_changes
