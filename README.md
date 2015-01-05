@@ -51,7 +51,7 @@ You can `require` it in your manifest:
 Alternatively, you can include it directly as a separate script tag:
 
 ```erb
-# app/views/layouts/application.erb.html
+# app/views/layouts/application.html.erb
 
 <%= javascript_include_tag "react" %>
 ```
