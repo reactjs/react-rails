@@ -1,4 +1,11 @@
-# react-rails [![Build Status](https://travis-ci.org/reactjs/react-rails.png)](https://travis-ci.org/reactjs/react-rails) [![Code Climate](https://codeclimate.com/github/reactjs/react-rails.png)](https://codeclimate.com/github/reactjs/react-rails)
+[![Gem](https://img.shields.io/gem/v/react-rails.svg?style=flat-square)](http://rubygems.org/gems/react-rails)
+[![Build Status](https://img.shields.io/travis/reactjs/react-rails/master.svg?style=flat-square)](https://travis-ci.org/reactjs/react-rails)
+[![Gemnasium](https://img.shields.io/gemnasium/reactjs/react-rails.svg?style=flat-square)](https://gemnasium.com/reactjs/react-rails)
+[![Code Climate](https://img.shields.io/codeclimate/github/reactjs/react-rails.svg?style=flat-square)](https://codeclimate.com/github/reactjs/react-rails)
+
+* * *
+
+# react-rails
 
 **react-rails version disclaimer**
 *This README is for `1.x` branch which is still in development. Please switch to latest `0.x` branch for stable version.*
