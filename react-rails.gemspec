@@ -16,6 +16,7 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency 'appraisal'
   s.add_development_dependency 'bundler', '>= 1.2.2'
+  s.add_development_dependency 'codeclimate-test-reporter'
   s.add_development_dependency 'coffee-rails'
   s.add_development_dependency 'es5-shim-rails', '>= 2.0.5'
   s.add_development_dependency 'guard'
