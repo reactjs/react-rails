@@ -165,11 +165,9 @@ which generates JSON like this:
 This is not suitable for ReactJS props, which is expected to be a key-value object. You will need to wrap your index.json.jbuilder node with a root node, like so:
 
 ```ruby
-json.messages do |json|
-  json.array!(@messages) do |message|
-    json.extract! message, :id, :name
-    json.url message_url(message, format: :json)
-  end
+json.messages(@messages) do |message|
+  json.extract! message, :id, :name
+  json.url message_url(message, format: :json)
 end
 ```
 
