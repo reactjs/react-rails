@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.version = React::Rails::VERSION
   s.summary = 'React/JSX adapter for the Ruby on Rails asset pipeline.'
   s.description = 'Compile your JSX on demand or precompile for production.'
-  s.homepage = 'https://github.com/facebook/react-rails'
+  s.homepage = 'https://github.com/reactjs/react-rails'
   s.license = 'APL 2.0'
 
   s.author = ['Paul O’Shannessy']
