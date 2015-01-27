@@ -54,21 +54,21 @@ class ViewHelperTest < ActionDispatch::IntegrationTest
     assert page.has_content?('Hello Bob')
   
     # the exposed ujs object is present
-    ujs_present = page.evaluate_script('typeof React.ujs === "object";')
+    ujs_present = page.evaluate_script('typeof ReactRailsUJS === "object";')
     assert_equal(ujs_present, true)
   
     # it contains the constants
-    class_name_present = page.evaluate_script('React.ujs.CLASS_NAME_ATTR === "data-react-class";')
+    class_name_present = page.evaluate_script('ReactRailsUJS.CLASS_NAME_ATTR === "data-react-class";')
     assert_equal(class_name_present, true)
-    props_present = page.evaluate_script('React.ujs.PROPS_ATTR === "data-react-props";')
+    props_present = page.evaluate_script('ReactRailsUJS.PROPS_ATTR === "data-react-props";')
     assert_equal(props_present, true)
   
     #it contains the methods
-    find_dom_nodes_present = page.evaluate_script('typeof React.ujs.findDOMNodes === "function";')
+    find_dom_nodes_present = page.evaluate_script('typeof ReactRailsUJS.findDOMNodes === "function";')
     assert_equal(find_dom_nodes_present, true)
-    mount_components_present = page.evaluate_script('typeof React.ujs.mountComponents === "function";')
+    mount_components_present = page.evaluate_script('typeof ReactRailsUJS.mountComponents === "function";')
     assert_equal(mount_components_present, true)
-    unmount_components_present = page.evaluate_script('typeof React.ujs.unmountComponents === "function";')
+    unmount_components_present = page.evaluate_script('typeof ReactRailsUJS.unmountComponents === "function";')
     assert_equal(unmount_components_present, true)
   end
 
