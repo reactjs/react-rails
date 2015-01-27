@@ -317,6 +317,16 @@ end
 
 ```
 
+In production your compiled JS is cached by each JS VM. In development this cache is cleared whenever you change a `*.jsx*` file in `app/assets/javascripts`. In order to clear this cache when you edit files that do not fit this pattern, you need to tell Rails which paths to watch for changes.
+
+```ruby
+# config/environments/application.rb
+# These are the defaults if you dont specify any yourself
+MyApp::Application.configure do
+  config.watchable_files.concat Dir["#{app.root}/app/assets/javascripts/**/*.jsx*"]
+end
+```
+
 ## CoffeeScript
 
 It is possible to use JSX with CoffeeScript. The caveat is that you will still need to include the docblock. Since CoffeeScript doesn't allow `/* */` style comments, we need to do something a little different. We also need to embed JSX inside backticks so CoffeeScript ignores the syntax it doesn't understand. Here's an example:
