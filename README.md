@@ -323,7 +323,7 @@ In production your compiled JS is cached by each JS VM. In development this cach
 # config/environments/application.rb
 # These are the defaults if you dont specify any yourself
 MyApp::Application.configure do
-  config.watchable_files.concat Dir["#{app.root}/app/assets/javascripts/**/*.jsx*"]
+  config.watchable_dirs[Dir["#{app.root}/app/assets/javascripts"]] = ["*.jsx*"]
 end
 ```
 
