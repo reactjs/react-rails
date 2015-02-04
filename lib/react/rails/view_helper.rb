@@ -7,22 +7,23 @@ module React
       # on the client.
       #
       def react_component(name, args = {}, options = {}, &block)
+        html_for_dangerously_set_inner_html = (block_given? ? capture(&block) : nil)
         options = {:tag => options} if options.is_a?(Symbol)
         block = Proc.new{concat React::Renderer.render(name, args)} if options[:prerender]
 
         html_options = options.reverse_merge(:data => {})
         html_options[:data].tap do |data|
           data[:react_class] = name
+          args[:__html] = html_for_dangerously_set_inner_html unless html_for_dangerously_set_inner_html.nil?
           data[:react_props] = React::Renderer.react_props(args) unless args.empty?
         end
         html_tag = html_options[:tag] || :div
-        
+
         # remove internally used properties so they aren't rendered to DOM
         html_options.except!(:tag, :prerender)
-        
+
         content_tag(html_tag, '', html_options, &block)
       end
-
     end
   end
 end
