@@ -10,7 +10,7 @@ class ReactTest < ActionDispatch::IntegrationTest
     react_file_token = "'test_confirmation_token_react_content_non_production';\n";
     File.open(actual_react_file_path, 'w') {|f| f.write react_file_token}
 
-    get 'assets/react.js'
+    get '/assets/react.js'
 
     File.open(actual_react_file_path, 'w') {|f| f.write actual_react_file_content}
     FileUtils.rm_r CACHE_PATH if CACHE_PATH.exist?
@@ -24,7 +24,7 @@ class ReactTest < ActionDispatch::IntegrationTest
     replacing_path = File.expand_path("../dummy/vendor/assets/react/test/react.js",  __FILE__)
 
     FileUtils.mv hidden_path, replacing_path
-    get 'assets/react.js'
+    get '/assets/react.js'
 
     FileUtils.mv replacing_path, hidden_path
     FileUtils.rm_r CACHE_PATH if CACHE_PATH.exist?

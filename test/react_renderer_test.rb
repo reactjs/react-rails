@@ -4,8 +4,8 @@ class ReactRendererTest < ActiveSupport::TestCase
 
   test 'Server rendering class directly' do
     result = React::Renderer.render "TodoList", :todos => %w{todo1 todo2 todo3}
-    assert_match /todo1.*todo2.*todo3/, result
-    assert_match /data-react-checksum/, result
+    assert_match(/todo1.*todo2.*todo3/, result)
+    assert_match(/data-react-checksum/, result)
   end
 
   test 'Server rendering with an already-encoded json string' do
@@ -14,8 +14,8 @@ class ReactRendererTest < ActiveSupport::TestCase
     end.target!
 
     result = React::Renderer.render "TodoList", json_string
-    assert_match /todo1.*todo2.*todo3/, result
-    assert_match /data-react-checksum/, result
+    assert_match(/todo1.*todo2.*todo3/, result)
+    assert_match(/data-react-checksum/, result)
   end
 
   test 'Rendering does not throw an exception when console log api is used' do
@@ -30,8 +30,9 @@ class ReactRendererTest < ActiveSupport::TestCase
     err = assert_raises React::Renderer::PrerenderError do
       React::Renderer.render("NonexistentComponent", {error: true, exists: false})
     end
-    expected_message = 'Encountered error "ReferenceError: NonexistentComponent is not defined" when prerendering NonexistentComponent with {"error":true,"exists":false}'
-    assert_equal expected_message, err.message
+    expected_message_one = 'Encountered error "ReferenceError: Can\'t find variable: NonexistentComponent" when prerendering NonexistentComponent with {"error":true,"exists":false}'
+    expected_message_two = 'Encountered error "ReferenceError: NonexistentComponent is not defined" when prerendering NonexistentComponent with {"error":true,"exists":false}'
+    assert (expected_message_one == err.message || expected_message_two == err.message)
   end
 
   test 'prerender errors are thrown when given a string' do
@@ -43,7 +44,8 @@ class ReactRendererTest < ActiveSupport::TestCase
     err = assert_raises React::Renderer::PrerenderError do
       React::Renderer.render("NonexistentComponent", json_string)
     end
-    expected_message = 'Encountered error "ReferenceError: NonexistentComponent is not defined" when prerendering NonexistentComponent with {"error":true,"exists":false}'
-    assert_equal expected_message, err.message
+    expected_message_one = 'Encountered error "ReferenceError: Can\'t find variable: NonexistentComponent" when prerendering NonexistentComponent with {"error":true,"exists":false}'
+    expected_message_two = 'Encountered error "ReferenceError: NonexistentComponent is not defined" when prerendering NonexistentComponent with {"error":true,"exists":false}'
+    assert (expected_message_one == err.message || expected_message_two == err.message)
   end
 end

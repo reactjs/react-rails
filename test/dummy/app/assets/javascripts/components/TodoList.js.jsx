@@ -1,5 +1,3 @@
-/** @jsx React.DOM */
-
 TodoList = React.createClass({
   getInitialState: function() {
     return({mounted: "nope"});
@@ -18,4 +16,3 @@ TodoList = React.createClass({
     )
   }
 })
-

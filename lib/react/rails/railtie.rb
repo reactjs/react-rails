@@ -8,6 +8,7 @@ module React
       # Sensible defaults. Can be overridden in application.rb
       config.react.variant = (::Rails.env.production? ? :production : :development)
       config.react.addons = false
+      config.react.jsx_transform_options = {}
       # Server-side rendering
       config.react.max_renderers = 10
       config.react.timeout = 20 #seconds
@@ -20,7 +21,8 @@ module React
       end
 
       # Include the react-rails view helper lazily
-      initializer "react_rails.setup_view_helpers" do
+      initializer "react_rails.setup_view_helpers" do |app|
+        React::JSX.transform_options = app.config.react.jsx_transform_options
         ActiveSupport.on_load(:action_view) do
           include ::React::Rails::ViewHelper
         end
@@ -72,7 +74,7 @@ module React
         do_setup = lambda do
           cfg = app.config.react
           React::Renderer.setup!( cfg.react_js, cfg.components_js,
-                                {:size => cfg.size, :timeout => cfg.timeout})
+                                {:size => cfg.max_renderers, :timeout => cfg.timeout})
         end
 
         do_setup.call
