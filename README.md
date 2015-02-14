@@ -30,7 +30,11 @@ As with all gem dependencies, we strongly recommend adding `react-rails` to your
 # If you missed a warning at the top of this README - this is still in development
 # which means this version is not pushed to rubygems.org
 
+# bundler <  1.8
 gem 'react-rails', '~> 1.0.0.pre', github: 'reactjs/react-rails'
+
+# bundler > 1.8 
+gem 'react-rails', '~> 1.0.0.pre', github: 'reactjs/react-rails', source: 'http://gems.github.com'
 ```
 
 Next, run the installation script.
