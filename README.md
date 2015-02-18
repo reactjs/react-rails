@@ -149,7 +149,7 @@ react_component('HelloMessage', render(template: 'messages/show.json.jbuilder', 
 
 ##### Important Note
 
-By default, the scaffolded Rails index jbuilder templates do not include a root-node. An example scaffolded index.json.jbuilder looks like this:
+By default, the scaffolded Rails index Jbuilder templates do not include a root node. An example scaffolded index.json.jbuilder looks like this:
 
 ```ruby
 json.array!(@messages) do |message|
@@ -164,7 +164,7 @@ which generates JSON like this:
 [{"id":1,"name":"hello","url":"http://localhost:3000/messages/1.json"},{"id":2,"name":"hello","url":"http://localhost:3000/messages/2.json"},{"id":3,"name":"hello","url":"http://localhost:3000/messages/3.json"}]
 ```
 
-This is not suitable for ReactJS props, which is expected to be a key-value object. You will need to wrap your index.json.jbuilder node with a root node, like so:
+However ReactJS expects the collection of props provided to a component to be a key-value object. Therefore, if you want to use your Jbuilder templates directly with the helper, you will need to wrap your index.json.jbuilder array with a root node like so:
 
 ```ruby
 json.messages(@messages) do |message|
