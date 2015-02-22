@@ -126,6 +126,18 @@ react_component('HelloMessage', {name: 'John'}, {id: 'hello', class: 'foo', tag:
 # <span class="foo" id="hello" data-...></span>
 ```
 
+### Controller helper
+
+There is also a controller helper `render_react_component` which is included so that you can specify a component as your view instead of an extra view file that only uses the `react_component` view helper.
+
+```ruby
+class TodoController < ApplicationController
+  def show
+    todos = Todos.all
+    render_react_component 'TodoList', { todos: todos }, prerender: true
+  end
+```
+
 #### With JSON and Jbuilder
 
 You can pass prepared JSON directly to the helper, as well.
