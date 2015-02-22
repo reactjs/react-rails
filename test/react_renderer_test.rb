@@ -2,6 +2,24 @@ require 'test_helper'
 
 class ReactRendererTest < ActiveSupport::TestCase
 
+  test 'Rendering with a different json engine' do
+    require 'oj'
+    ::Oj.default_options = { :mode => :compat }
+
+    cfg = Rails.application.config.react
+    React::Renderer.setup!(cfg.react_js, cfg.components_js, {
+      :size => cfg.max_renderers, :timeout => cfg.timeout, :json_engine => ::Oj
+    })
+
+    result = React::Renderer.render "TodoList", :todos => %w{todo1 todo2 todo3}
+    assert_match(/todo1.*todo2.*todo3/, result)
+    assert_match(/data-react-checksum/, result)
+
+    React::Renderer.setup!(cfg.react_js, cfg.components_js, {
+      :size => cfg.max_renderers, :timeout => cfg.timeout, :json_engine => ::JSON
+    })
+  end
+
   test 'Server rendering class directly' do
     result = React::Renderer.render "TodoList", :todos => %w{todo1 todo2 todo3}
     assert_match(/todo1.*todo2.*todo3/, result)

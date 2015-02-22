@@ -13,9 +13,10 @@ module React
     cattr_accessor :pool
 
     def self.setup!(react_js, components_js, args={})
-      args.assert_valid_keys(:size, :timeout)
+      args.assert_valid_keys(:size, :timeout, :json_engine)
       @@react_js = react_js
       @@components_js = components_js
+      @@json_engine = args.delete(:json_engine)
       @@pool.shutdown{} if @@pool
       reset_combined_js!
       default_pool_options = {:size =>10, :timeout => 20}
@@ -32,7 +33,7 @@ module React
       if args.is_a? String
         args
       else
-        args.to_json
+        format_json(args)
       end
     end
 
@@ -54,6 +55,14 @@ module React
 
 
     private
+
+    def self.format_json(args)
+      if @@json_engine.respond_to?(:dump)
+        @@json_engine.dump(args)
+      else
+        @@json_engine.encode(args)
+      end
+    end
 
     def self.setup_combined_js
       <<-CODE
