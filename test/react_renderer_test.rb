@@ -1,6 +1,23 @@
 require 'test_helper'
 
 class ReactRendererTest < ActiveSupport::TestCase
+  test 'Rendering with a different json engine' do
+    cfg = Rails.application.config.react
+    React::Renderer.setup!(cfg.react_js, cfg.components_js, {
+      :size => cfg.max_renderers, :timeout => cfg.timeout, :json_engine => Class.new do
+        def self.encode(*args)
+          "{\"todos\":[\"custom1\",\"custom2\",\"custom3\"]}"
+        end
+      end
+    })
+
+    result = React::Renderer.render "TodoList", :todos => %w{todo1 todo2 todo3}
+    assert_match(/custom1.*custom2.*custom3/, result)
+
+    React::Renderer.setup!(cfg.react_js, cfg.components_js, {
+      :size => cfg.max_renderers, :timeout => cfg.timeout, :json_engine => ::JSON
+    })
+  end
 
   test 'Server rendering class directly' do
     result = React::Renderer.render "TodoList", :todos => %w{todo1 todo2 todo3}
