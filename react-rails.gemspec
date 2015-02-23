@@ -23,7 +23,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'test-unit', '~> 2.5'
 
   s.add_development_dependency 'jbuilder'
-  s.add_development_dependency 'oj'
 
   s.add_dependency 'execjs'
   s.add_dependency 'coffee-script-source', '~>1.9'
