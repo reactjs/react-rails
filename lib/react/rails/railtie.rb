@@ -16,21 +16,19 @@ module React
       config.react.component_filenames = ['components.js']
 
       # Watch .jsx files for changes in dev, so we can reload the JS VMs with the new JS code.
-      initializer "react_rails.add_watchable_files" do |app|
+      initializer "react_rails.add_watchable_files", group: :all do |app|
         app.config.watchable_files.concat Dir["#{app.root}/app/assets/javascripts/**/*.jsx*"]
       end
 
       # Include the react-rails view helper lazily
-      initializer "react_rails.setup_view_helpers" do |app|
+      initializer "react_rails.setup_view_helpers", group: :all do |app|
         React::JSX.transform_options = app.config.react.jsx_transform_options
         ActiveSupport.on_load(:action_view) do
           include ::React::Rails::ViewHelper
         end
       end
 
-      # run after all initializers to allow sprockets to pick up react.js and
-      # jsxtransformer.js from end-user to override ours if needed
-      initializer "react_rails.setup_vendor", :after => "sprockets.environment", group: :all do |app|
+      initializer "react_rails.setup_vendor", group: :all do |app|
         # Mimic behavior of ember-rails...
         # We want to include different files in dev/prod. The unminified builds
         # contain console logging for invariants and logging to help catch
