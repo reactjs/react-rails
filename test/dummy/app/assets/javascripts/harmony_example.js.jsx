@@ -10,8 +10,14 @@ var HarmonyComponent = React.createClass({
   },
   render: function(){
     var greeting = HarmonyComponent.generateGreeting();
+    var { active, ...other } = { active: true, x: 1, y:2 }
     return (
-      <h1 {...this.props}>{greeting}</h1>
+      <div>
+        <h1 {...this.props}>{greeting}</h1>
+        <div active={active}>
+          <span {...other} />
+        </div>
+      </div>
       )
   },
 });
