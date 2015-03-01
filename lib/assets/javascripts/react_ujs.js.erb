@@ -47,8 +47,6 @@
         var node = nodes[i];
 
         React.unmountComponentAtNode(node);
-        // now remove the `data-react-class` wrapper as well
-        node.parentElement && node.parentElement.removeChild(node);
       }
     }
   };
