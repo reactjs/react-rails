@@ -39,7 +39,9 @@ Next, run the installation script.
 rails g react:install
 ```
 
-This will require `react.js`, `react_ujs.js`, and a `components.js` manifest file in application.js, and create a directory named `app/assets/javascripts/components` for you to store React components in.
+This will:
+- create a `components.js` manifest file and a `app/assets/javascripts/components/` directory, where you will put your compoennts
+- require `react.js`, `react_ujs.js`, and `components.js` in `application.js`
 
 ## Usage
 
@@ -67,15 +69,7 @@ MyApp::Application.configure do
 end
 ```
 
-Then, you can include the requested build in your front-end by restarting your Rails server and adding `react` to your manifest:
-
-```js
-// app/assets/javascripts/application.js
-
-//= require react
-```
-
-It will provide the build of React.js which was specified by the configurations.
+After restarting your Rails server, `//= require react`  will provide the build of React.js which was specified by the configurations.
 
 In a pinch, you can also provide your own copies of React.js and JSXTransformer. Just add `react.js` or `JSXTransformer.js` (case-sensitive) files to `app/vendor/assets/javascripts/react/` and restart your development server. If you need different versions of React in different environments, put them in directories that match `config.react.variant`. For example, if you set `config.react.variant = :development`, you could put a copy of `react.js` in `/vendor/assets/react/development/`.
 
@@ -102,15 +96,7 @@ Component = React.createClass
 
 ### Rendering & mounting
 
-`react-rails` includes a view helper (`react_component`) and an unobtrusive JavaScript (UJS) driver which work together to put React components on the page. You should require the UJS driver in your manifest after `react` (and after `turbolinks` if you use [Turbolinks](https://github.com/rails/turbolinks))
-
-```js
-// app/assets/javascripts/application.js
-
-//= require turbolinks
-//= require react
-//= require react_ujs
-```
+`react-rails` includes a view helper (`react_component`) and an unobtrusive JavaScript driver (`react_ujs`) which work together to put React components on the page. You should require the UJS driver in your manifest after `react` (and after `turbolinks` if you use [Turbolinks](https://github.com/rails/turbolinks))
 
 The __view helper__ puts a `div` on the page with the requested component class & props. For example:
 
@@ -138,7 +124,6 @@ react_component(component_class_name, props={}, html_options={})
   - `**other` Any other arguments (eg `class:`, `id:`) are passed through to [`content_tag`](http://api.rubyonrails.org/classes/ActionView/Helpers/TagHelper.html#method-i-content_tag).
 
 
-
 ### Server rendering
 
 To render components on the server, pass `prerender: true` to `react_component`:
@@ -155,13 +140,7 @@ _(It will be also be mounted by the UJS on page load.)_
 
 There are some requirements for this to work:
 
-- `react-rails` must load your code. By convention, it looks for a `assets/javascripts/components.js` file through the asset pipeline and loads that. This file must include your components _and_ their dependencies (eg, Underscore.js). For example:
-
-  ```js
-  // app/assets/javascripts/components.js
-  //= require_tree ./components
-  //  ^^ loads all files in `app/assets/javascripts/components/`
-  ```
+- `react-rails` must load your code. By convention, it uses `components.js`, which was created by the install task. This file must include your components _and_ their dependencies (eg, Underscore.js).
 - Your components must be accessible in the global scope. If you are using `.js.jsx.coffee` files then the wrapper function needs to be taken into account:
 
   ```coffee
