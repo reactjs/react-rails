@@ -40,8 +40,14 @@ rails g react:install
 ```
 
 This will:
-- create a `components.js` manifest file and a `app/assets/javascripts/components/` directory, where you will put your compoennts
-- require `react.js`, `react_ujs.js`, and `components.js` in `application.js`
+- create a `components.js` manifest file and a `app/assets/javascripts/components/` directory, where you will put your components
+- place the following in your `application.js`:
+
+  ```js
+  //= require react
+  //= require react_ujs
+  //= require components
+  ```
 
 ## Usage
 
