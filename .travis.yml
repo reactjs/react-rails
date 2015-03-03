@@ -7,5 +7,7 @@ rvm:
   - 2.0.0
   - 1.9.3
   - jruby-19mode
+node_js:
+  - "0.12"
 before_script: 'bundle exec appraisal install'
 script: 'bundle exec rake appraisal test'
