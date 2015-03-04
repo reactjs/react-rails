@@ -7,10 +7,11 @@
 
 # react-rails
 
-**react-rails version disclaimer**
-*This README is for `1.x` branch which is still in development. Please switch to latest `0.x` branch for stable version.*
+> ## react-rails version disclaimer
 
-*Additionally: `0.x` branch directly follows React versions, `1.x` will not do so.*
+> ***This README is for `1.x` branch which is still in development. Please switch to latest `0.x` branch for stable version.***
+
+> ***Additionally: `0.x` branch directly follows React versions, `1.x` will not do so.***
 
 react-rails is a ruby gem which makes it easier to use [React](http://facebook.github.io/react/) and [JSX](http://facebook.github.io/react/docs/jsx-in-depth.html) in your Ruby on Rails application.
 
