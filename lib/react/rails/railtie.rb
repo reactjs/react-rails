@@ -71,7 +71,7 @@ module React
 
         do_setup = lambda do
           cfg = app.config.react
-          React::Renderer.setup!( cfg.react_js, cfg.components_js,
+          React::Renderer.setup!( cfg.react_js, cfg.components_js, cfg.replay_console,
                                 {:size => cfg.max_renderers, :timeout => cfg.timeout})
         end
 

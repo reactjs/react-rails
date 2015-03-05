@@ -306,7 +306,7 @@ end
 
 ### Server Rendering
 
-For performance and thread-safety reasons, a pool of JS VMs are spun up on application start, and the size of the pool and the timeout on requesting a VM from the pool are configurable. You can also say where you want to grab the `react.js` code from, and if you want to change the filenames for the components (this should be an array of filenames that will be requested from the asset pipeline and concatenated together.)
+For performance and thread-safety reasons, a pool of JS VMs are spun up on application start, and the size of the pool and the timeout on requesting a VM from the pool are configurable.
 
 ```ruby
 # config/environments/application.rb
@@ -316,9 +316,14 @@ MyApp::Application.configure do
   config.react.timeout = 20 #seconds
   config.react.react_js = lambda {File.read(::Rails.application.assets.resolve('react.js'))}
   config.react.component_filenames = ['components.js']
+  config.react.replay_console = false
 end
-
 ```
+
+Other configuration options include:
+* `react_js`: where you want to grab the javascript library from
+* `component_filenames`: an array of filenames that will be requested from the asset pipeline and concatenated together
+* `replay_console`: additional debugging by replaying any captured console messages from server-rendering back on the client (note: they will lose their call stack, but it can help point you in right direction)
 
 ## CoffeeScript
 

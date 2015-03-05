@@ -3,3 +3,4 @@ Gemfile.lock
 *.log
 test/dummy/tmp
 gemfiles/*.lock
+*.swp

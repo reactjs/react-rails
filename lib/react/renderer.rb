@@ -12,10 +12,11 @@ module React
 
     cattr_accessor :pool
 
-    def self.setup!(react_js, components_js, args={})
+    def self.setup!(react_js, components_js, replay_console, args={})
       args.assert_valid_keys(:size, :timeout)
       @@react_js = react_js
       @@components_js = components_js
+      @@replay_console = replay_console
       @@pool.shutdown{} if @@pool
       reset_combined_js!
       default_pool_options = {:size =>10, :timeout => 20}
@@ -43,9 +44,11 @@ module React
     def render(component, args={})
       react_props = React::Renderer.react_props(args)
       jscode = <<-JS
-        function() {
-          return React.renderToString(React.createElement(#{component}, #{react_props}));
-        }()
+        (function () {
+          var result = React.renderToString(React.createElement(#{component}, #{react_props}));
+          #{@@replay_console ? React::Console.replay_as_script_js : ''}
+          return result;
+        })()
       JS
       context.eval(jscode).html_safe
     rescue ExecJS::ProgramError => e
@@ -56,22 +59,15 @@ module React
     private
 
     def self.setup_combined_js
-      <<-CODE
+      <<-JS
         var global = global || this;
         var self = self || this;
         var window = window || this;
-
-        var console = global.console || {};
-        ['error', 'log', 'info', 'warn'].forEach(function (fn) {
-          if (!(fn in console)) {
-            console[fn] = function () {};
-          }
-        });
-
+        #{React::Console.polyfill_js}
         #{@@react_js.call};
         React = global.React;
         #{@@components_js.call};
-      CODE
+      JS
     end
 
     def self.reset_combined_js!

@@ -16,22 +16,39 @@ class ServerRenderedHtmlTest  < ActionDispatch::IntegrationTest
 
     FileUtils.cp app_file, file_without_updates
     FileUtils.touch app_file
+    wait_to_ensure_asset_pipeline_detects_changes
 
     begin
       get '/server/1'
       refute_match(/Updated/, response.body)
 
-      wait_to_ensure_asset_pipeline_detects_changes
       FileUtils.cp file_with_updates, app_file
       FileUtils.touch app_file
+      wait_to_ensure_asset_pipeline_detects_changes
 
       get '/server/1'
       assert_match(/Updated/, response.body)
     ensure
       # if we have a test failure, we want to make sure that we revert the dummy file
-      wait_to_ensure_asset_pipeline_detects_changes
       FileUtils.mv file_without_updates, app_file
       FileUtils.touch app_file
+      wait_to_ensure_asset_pipeline_detects_changes
     end
+  end
+
+  test 'react server rendering shows console output as html comment' do
+    # Make sure console messages are replayed when requested
+    get '/server/console_example'
+    assert_match(/Console Logged/, response.body)
+    assert_match(/console.log.apply\(console, \["got initial state"\]\)/, response.body)
+    assert_match(/console.warn.apply\(console, \["mounted component"\]\)/, response.body)
+    assert_match(/console.error.apply\(console, \["rendered!","foo"\]\)/, response.body)
+
+    # Make sure they're not when we don't ask for them
+    get '/server/console_example_suppressed'
+    assert_match('Console Logged', response.body)
+    assert_no_match(/console.log/, response.body)
+    assert_no_match(/console.warn/, response.body)
+    assert_no_match(/console.error/, response.body)
   end
 end
