@@ -26,5 +26,9 @@ module Dummy
     config.react.variant = :production
 
     config.assets.enabled = true
+    config.react.jsx_transform_options = {
+      harmony: true,
+      strip_types: true, # for removing Flow type annotations
+    }
   end
 end
