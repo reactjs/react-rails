@@ -19,7 +19,6 @@ module React
           # Copy over the variant into a path that sprockets will pick up.
           # We'll always copy to 'react.js' so that no includes need to change.
           # We'll also always copy of JSXTransformer.js
-          puts app.config.react.jsx_transform_options
           tmp_path = app.root.join('tmp/react-rails')
           filename = 'react' + (addons ? '-with-addons' : '') + (variant == :production ? '.min.js' : '.js')
           FileUtils.mkdir_p(tmp_path)
