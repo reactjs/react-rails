@@ -55,7 +55,7 @@ class ViewHelperTest < ActionDispatch::IntegrationTest
   end
 
   test 'react_component can render separate props moved to any place in DOM' do
-    @helper.react_component "TodoList", {:todos => %w(todo1 todo2, todo3)},
+    html = @helper.react_component "TodoList", {:todos => %w(todo1 todo2, todo3)},
                             :prerender => true,
                             :separate_props => true,
                             :move_separate_props_out => true
