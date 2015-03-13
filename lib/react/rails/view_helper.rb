@@ -13,7 +13,7 @@ module React
         html_options = options.reverse_merge(:data => {})
         html_options[:data].tap do |data|
           data[:react_class] = name
-          data[:react_props] = React::Renderer.react_props(args) unless args.empty?
+          data[:react_props_id] = add_react_props args
         end
         html_tag = html_options[:tag] || :div
         
@@ -21,6 +21,26 @@ module React
         html_options.except!(:tag, :prerender)
         
         content_tag(html_tag, '', html_options, &block)
+      end
+
+      # Add properties for component and return element id.
+      #
+      def add_react_props(props={})
+        return if props.empty?
+        props_id = SecureRandom.base64
+        content_for :react_props do
+          content_tag :script, type: 'text/json', id: props_id do
+            raw React::Renderer.react_props props
+          end
+        end
+        props_id
+      end
+
+      # Render script tag with JSON props. Should be placed at the end of body
+      # in order to speedup page rendering.
+      #
+      def render_react_props
+        content_for :react_props
       end
 
     end
