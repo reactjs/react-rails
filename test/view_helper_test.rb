@@ -50,21 +50,19 @@ class ViewHelperTest < ActionDispatch::IntegrationTest
   end
 
   test 'react_component can render separate props inline' do
-    get '/separate/1'
-    inline_props_id = response.body.scan(/data-react-props-id="([^"]+)/).flatten.first
-    assert !inline_props_id.nil?
-    dummy_index = response.body.index '<div id="dummy">'
-    inline_props_index = response.body.index("<script id=\"#{inline_props_id}\" type=\"text/json\">")
-    assert inline_props_index < dummy_index
+    html = @helper.react_component "TodoList", {:todos => %w(todo1 todo2, todo3)}, :prerender => true, :separate_props => true
+    assert_match /{"todos":\["todo1","todo2,","todo3"\]}<\/script>$/, html
   end
 
   test 'react_component can render separate props moved to any place in DOM' do
-    get '/separate/1?move_separate_props_out=true'
-    moved_props_id = response.body.scan(/data-react-props-id="([^"]+)/).flatten.first
-    assert !moved_props_id.nil?
-    dummy_index = response.body.index '<div id="dummy">'
-    moved_props_index = response.body.index("<script id=\"#{moved_props_id}\" type=\"text/json\">")
-    assert moved_props_index > dummy_index
+    @helper.react_component "TodoList", {:todos => %w(todo1 todo2, todo3)},
+                            :prerender => true,
+                            :separate_props => true,
+                            :move_separate_props_out => true
+    assert_no_match /{"todos":\["todo1","todo2,","todo3"\]}<\/script>$/, html
+    props_tag = @helper.render_react_props
+    assert_not_empty props_tag
+    assert_match /{"todos":\["todo1","todo2,","todo3"\]}<\/script>$/, props_tag
   end
 
   test 'ujs object present on the global React object and has our methods' do
@@ -134,7 +132,7 @@ class ViewHelperTest < ActionDispatch::IntegrationTest
   end
 
   test 'react server rendering also gets mounted on client' do
-    paths = %w(/server/1 /separate/1)
+    paths = %w(/server/1 /separate/1 /separate/1?move_separate_props_out=true)
     paths.each do |path|
       visit path
       assert_match(/data-react-class=\"TodoList\"/, page.html)
