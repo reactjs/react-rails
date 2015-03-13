@@ -51,6 +51,7 @@ class ViewHelperTest < ActionDispatch::IntegrationTest
 
   test 'react_component can render separate props inline' do
     html = @helper.react_component "TodoList", {:todos => %w(todo1 todo2, todo3)}, :prerender => true, :separate_props => true
+    assert_match /data-react-class=\"TodoList\"/, html
     assert_match /{"todos":\["todo1","todo2,","todo3"\]}<\/script>$/, html
   end
 
@@ -59,6 +60,7 @@ class ViewHelperTest < ActionDispatch::IntegrationTest
                             :prerender => true,
                             :separate_props => true,
                             :move_separate_props_out => true
+    assert_match /data-react-class=\"TodoList\"/, html
     assert_no_match /{"todos":\["todo1","todo2,","todo3"\]}<\/script>$/, html
     props_tag = @helper.render_react_props
     assert_not_empty props_tag

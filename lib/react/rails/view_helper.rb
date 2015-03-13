@@ -51,7 +51,7 @@ module React
       # in order to speedup page rendering.
       #
       def render_react_props(element_id=nil)
-        content_for("react_props_#{element_id}") || content_for('react_props') || nil
+        element_id.nil? && content_for('react_props') || content_for("react_props_#{element_id}")
       end
 
     end
