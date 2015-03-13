@@ -52,7 +52,7 @@ class ViewHelperTest < ActionDispatch::IntegrationTest
   test 'react_component can render separate props inline' do
     get '/separate/1'
     inline_props_id = response.body.scan(/data-react-props-id="([^"]+)/).flatten.first
-    assert_not inline_props_id.nil?
+    assert !inline_props_id.nil?
     dummy_index = response.body.index '<div id="dummy">'
     inline_props_index = response.body.index("<script id=\"#{inline_props_id}\" type=\"text/json\">")
     assert inline_props_index < dummy_index
@@ -61,7 +61,7 @@ class ViewHelperTest < ActionDispatch::IntegrationTest
   test 'react_component can render separate props moved to any place in DOM' do
     get '/separate/1?move_separate_props_out=true'
     moved_props_id = response.body.scan(/data-react-props-id="([^"]+)/).flatten.first
-    assert_not moved_props_id.nil?
+    assert !moved_props_id.nil?
     dummy_index = response.body.index '<div id="dummy">'
     moved_props_index = response.body.index("<script id=\"#{moved_props_id}\" type=\"text/json\">")
     assert moved_props_index > dummy_index
