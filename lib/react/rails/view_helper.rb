@@ -9,13 +9,15 @@ module React
       def react_component(name, args = {}, options = {}, &block)
         options = {:tag => options} if options.is_a?(Symbol)
         block = Proc.new{concat React::Renderer.render(name, args)} if options[:prerender]
+        separate_props = options.delete :separate_props
+        move_separate_props_out = options.delete :move_separate_props_out
 
         html_options = options.reverse_merge(:data => {})
         html_options[:data].tap do |data|
           data[:react_class] = name
           next if args.empty?
-          if react_separate_props?
-            data[:react_props_id] = add_react_props args, options[:inline_props]
+          if separate_props
+            data[:react_props_id] = add_react_props args, move_separate_props_out
           else
             data[:react_props] = React::Renderer.react_props args
           end
@@ -26,17 +28,17 @@ module React
         html_options.except!(:tag, :prerender)
 
         result = content_tag(html_tag, '', html_options, &block)
-        result += render_react_props html_options[:data][:react_props_id] if options[:inline_props] && react_separate_props?
+        result += render_react_props html_options[:data][:react_props_id] if separate_props && !move_separate_props_out
         result
       end
 
       # Add properties for component and return element id.
       #
-      def add_react_props(props={}, inline=false)
+      def add_react_props(props={}, move_out=false)
         return if props.empty?
         props_id = SecureRandom.base64
         content_key = "react_props"
-        content_key += "_#{props_id}" if inline
+        content_key += "_#{props_id}" unless move_out
         content_for content_key do
           content_tag :script, type: 'text/json', id: props_id do
             raw React::Renderer.react_props props
@@ -49,15 +51,7 @@ module React
       # in order to speedup page rendering.
       #
       def render_react_props(element_id=nil)
-        if react_separate_props?
-          content_for("react_props_#{element_id}") || content_for('react_props')
-        else
-          nil
-        end
-      end
-
-      def react_separate_props?
-        ::Rails.configuration.react.separate_props
+        content_for("react_props_#{element_id}") || content_for('react_props') || nil
       end
 
     end

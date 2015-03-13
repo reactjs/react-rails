@@ -48,7 +48,25 @@ class ViewHelperTest < ActionDispatch::IntegrationTest
     assert html.include?('class="test"')
     assert html.include?('data-foo="1"')
   end
-  
+
+  test 'react_component can render separate props inline' do
+    get '/separate/1'
+    inline_props_id = response.body.scan(/data-react-props-id="([^"]+)/).flatten.first
+    assert_not inline_props_id.nil?
+    dummy_index = response.body.index '<div id="dummy">'
+    inline_props_index = response.body.index("<script id=\"#{inline_props_id}\" type=\"text/json\">")
+    assert inline_props_index < dummy_index
+  end
+
+  test 'react_component can render separate props moved to any place in DOM' do
+    get '/separate/1?move_separate_props_out=true'
+    moved_props_id = response.body.scan(/data-react-props-id="([^"]+)/).flatten.first
+    assert_not moved_props_id.nil?
+    dummy_index = response.body.index '<div id="dummy">'
+    moved_props_index = response.body.index("<script id=\"#{moved_props_id}\" type=\"text/json\">")
+    assert moved_props_index > dummy_index
+  end
+
   test 'ujs object present on the global React object and has our methods' do
     visit '/pages/1'
     assert page.has_content?('Hello Bob')
@@ -116,15 +134,21 @@ class ViewHelperTest < ActionDispatch::IntegrationTest
   end
 
   test 'react server rendering also gets mounted on client' do
-    visit '/server/1'
-    assert_match(/data-react-class=\"TodoList\"/, page.html)
-    assert_match(/data-react-checksum/, page.html)
-    assert_match(/yep/, page.find("#status").text)
+    paths = %w(/server/1 /separate/1)
+    paths.each do |path|
+      visit path
+      assert_match(/data-react-class=\"TodoList\"/, page.html)
+      assert_match(/data-react-checksum/, page.html)
+      assert_match(/yep/, page.find("#status").text)
+    end
   end
   
   test 'react server rendering does not include internal properties' do
     visit '/server/1'
     assert_no_match(/tag=/, page.html)
     assert_no_match(/prerender=/, page.html)
+    visit '/separate/1'
+    assert_no_match(/separate_props=/, page.html)
+    assert_no_match(/move_separate_props_out=/, page.html)
   end
 end

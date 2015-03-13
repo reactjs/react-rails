@@ -10,7 +10,6 @@
     CLASS_NAME_ATTR: 'data-react-class',
     PROPS_ATTR: 'data-react-props',
     PROPS_ID_ATTR: 'data-react-props-id',
-    SEPARATE_PROPS: <%= Rails.configuration.react.separate_props %>,
     RAILS_ENV_DEVELOPMENT: <%= Rails.env == "development" %>,
     // helper method for the mount and unmount methods to find the
     // `data-react-class` DOM elements
@@ -37,9 +36,8 @@
         // Fallback to eval to handle cases like 'My.React.ComponentName'.
         var constructor = window[className] || eval.call(window, className);
 
-
-        if (window.ReactRailsUJS.SEPARATE_PROPS) {
-            propsId = node.getAttribute(window.ReactRailsUJS.PROPS_ID_ATTR);
+        propsId = node.getAttribute(window.ReactRailsUJS.PROPS_ID_ATTR);
+        if (propsId != null) {
             propsElement = document.getElementById(propsId);
             propsJson = propsElement && propsElement.text;
         } else {

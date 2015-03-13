@@ -9,7 +9,6 @@ module React
       config.react.variant = (::Rails.env.production? ? :production : :development)
       config.react.addons = false
       config.react.jsx_transform_options = {}
-      config.react.separate_props = false
 
       # Server-side rendering
       config.react.max_renderers = 10
