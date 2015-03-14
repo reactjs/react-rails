@@ -347,3 +347,11 @@ If you replace `JSXTransformer.js` in production environment, you have to restar
 because the jsx compiler context is cached.
 
 Name of the `JSXTransformer.js` file *is case-sensitive*.
+
+# Testing
+
+A global installation of Phantomjs is required to run the tests:
+
+    npm install -g phantomjs
+    
+Run `rake` to launch the test suites.
