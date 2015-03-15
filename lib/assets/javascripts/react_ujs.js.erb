@@ -9,6 +9,7 @@
   window.ReactRailsUJS = {
     CLASS_NAME_ATTR: 'data-react-class',
     PROPS_ATTR: 'data-react-props',
+    PROPS_ID_ATTR: 'data-react-props-id',
     RAILS_ENV_DEVELOPMENT: <%= Rails.env == "development" %>,
     // helper method for the mount and unmount methods to find the
     // `data-react-class` DOM elements
@@ -27,13 +28,22 @@
       var nodes = window.ReactRailsUJS.findDOMNodes();
 
       for (var i = 0; i < nodes.length; ++i) {
+        var propsId, propsElement, propsJson;
         var node = nodes[i];
         var className = node.getAttribute(window.ReactRailsUJS.CLASS_NAME_ATTR);
 
         // Assume className is simple and can be found at top-level (window).
         // Fallback to eval to handle cases like 'My.React.ComponentName'.
         var constructor = window[className] || eval.call(window, className);
-        var propsJson = node.getAttribute(window.ReactRailsUJS.PROPS_ATTR);
+
+        propsId = node.getAttribute(window.ReactRailsUJS.PROPS_ID_ATTR);
+        if (propsId != null) {
+            propsElement = document.getElementById(propsId);
+            propsJson = propsElement && propsElement.text;
+        } else {
+            propsJson = node.getAttribute(window.ReactRailsUJS.PROPS_ATTR);
+        }
+
         var props = propsJson && JSON.parse(propsJson);
 
         React.render(React.createElement(constructor, props), node);

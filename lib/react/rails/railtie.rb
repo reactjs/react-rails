@@ -9,6 +9,7 @@ module React
       config.react.variant = (::Rails.env.production? ? :production : :development)
       config.react.addons = false
       config.react.jsx_transform_options = {}
+
       # Server-side rendering
       config.react.max_renderers = 10
       config.react.timeout = 20 #seconds

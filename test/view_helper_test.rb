@@ -48,7 +48,25 @@ class ViewHelperTest < ActionDispatch::IntegrationTest
     assert html.include?('class="test"')
     assert html.include?('data-foo="1"')
   end
-  
+
+  test 'react_component can render separate props inline' do
+    html = @helper.react_component "TodoList", {:todos => %w(todo1 todo2, todo3)}, :prerender => true, :separate_props => true
+    assert_match /data-react-class=\"TodoList\"/, html
+    assert_match /{"todos":\["todo1","todo2,","todo3"\]}<\/script>$/, html
+  end
+
+  test 'react_component can render separate props moved to any place in DOM' do
+    html = @helper.react_component "TodoList", {:todos => %w(todo1 todo2, todo3)},
+                            :prerender => true,
+                            :separate_props => true,
+                            :move_separate_props_out => true
+    assert_match /data-react-class=\"TodoList\"/, html
+    assert_no_match /{"todos":\["todo1","todo2,","todo3"\]}<\/script>$/, html
+    props_tag = @helper.render_react_props
+    assert_not_empty props_tag
+    assert_match /{"todos":\["todo1","todo2,","todo3"\]}<\/script>$/, props_tag
+  end
+
   test 'ujs object present on the global React object and has our methods' do
     visit '/pages/1'
     assert page.has_content?('Hello Bob')
@@ -116,15 +134,21 @@ class ViewHelperTest < ActionDispatch::IntegrationTest
   end
 
   test 'react server rendering also gets mounted on client' do
-    visit '/server/1'
-    assert_match(/data-react-class=\"TodoList\"/, page.html)
-    assert_match(/data-react-checksum/, page.html)
-    assert_match(/yep/, page.find("#status").text)
+    paths = %w(/server/1 /separate/1 /separate/1?move_separate_props_out=true)
+    paths.each do |path|
+      visit path
+      assert_match(/data-react-class=\"TodoList\"/, page.html)
+      assert_match(/data-react-checksum/, page.html)
+      assert_match(/yep/, page.find("#status").text)
+    end
   end
   
   test 'react server rendering does not include internal properties' do
     visit '/server/1'
     assert_no_match(/tag=/, page.html)
     assert_no_match(/prerender=/, page.html)
+    visit '/separate/1'
+    assert_no_match(/separate_props=/, page.html)
+    assert_no_match(/move_separate_props_out=/, page.html)
   end
 end

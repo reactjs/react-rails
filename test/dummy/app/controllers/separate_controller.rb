@@ -1,0 +1,2 @@
+class SeparateController < ServerController
+end
