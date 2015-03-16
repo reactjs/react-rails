@@ -65,7 +65,7 @@ module React
       config.after_initialize do |app|
         # Server Rendering
         # Concat component_filenames together for server rendering
-        app.config.react.components_js = lambda {
+        app.config.react.components_js ||= lambda {
           app.config.react.component_filenames.map do |filename|
             app.assets[filename].to_s
           end.join(";")

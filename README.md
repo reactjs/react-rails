@@ -316,8 +316,20 @@ MyApp::Application.configure do
   config.react.react_js = lambda {File.read(::Rails.application.assets.resolve('react.js'))}
   config.react.component_filenames = ['components.js']
 end
-
 ```
+
+#### Precompiled Component File
+
+The default configuration assumes the asset pipeline is available in all environments.  If you precompile assets for production and want to fetch `components.js` from the precompiled assets, add this additional configuration:
+
+```ruby
+config.react.component_js = lambda do
+  config.react.component_filenames.map do |filename|
+    File.read(Rails.root.join('public', 'assets', filename))
+  end.join(';')
+end
+```
+
 
 ## CoffeeScript
 
