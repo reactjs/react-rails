@@ -13,18 +13,17 @@
 
 > ***Additionally: `0.x` branch directly follows React versions, `1.x` will not do so.***
 
-react-rails is a ruby gem which makes it easier to use [React](http://facebook.github.io/react/) and [JSX](http://facebook.github.io/react/docs/jsx-in-depth.html) in your Ruby on Rails application.
+`react-rails` makes it easy to use [React](http://facebook.github.io/react/) and [JSX](http://facebook.github.io/react/docs/jsx-in-depth.html) in your Ruby on Rails (3.1+) application. `react-rails` can:
 
-
-1. Making it easy to include `react.js` as part of your dependencies in `application.js`.
-2. Transforming JSX into regular JS on request, or as part of asset precompilation.
-3. View helpers to render React components in an unobtrusive style and/or on the server.
+- Provide [various `react` builds](#reactjs-builds) to your asset bundle
+- Transform [`.jsx` in the asset pipeline](#jsx)
+- [Render components into views and mount them](#rendering--mounting) via view helper & `react_ujs`
+- [Render components server-side](#server-rendering) with `prerender: true`.
+- [Generate components](#component-generator) with a Rails generator
 
 ## Installation
 
-We're specifically targeting versions of Ruby on Rails which make use of the asset pipeline, which means Rails 3.1+.
-
-As with all gem dependencies, we strongly recommend adding `react-rails` to your `Gemfile` and using `bundler` to manage your application's dependencies.
+Add `react-rails` to your gemfile:
 
 ```ruby
 # Gemfile
@@ -40,43 +39,51 @@ Next, run the installation script.
 rails g react:install
 ```
 
-This will require `react.js`, `react_ujs.js`, and a `components.js` manifest file in application.js, and create a directory named `app/assets/javascripts/components` for you to store React components in.
+This will:
+- create a `components.js` manifest file and a `app/assets/javascripts/components/` directory, where you will put your components
+- place the following in your `application.js`:
+
+  ```js
+  //= require react
+  //= require react_ujs
+  //= require components
+  ```
 
 ## Usage
 
-### react.js
+### React.js builds
 
-In order to use React client-side in your application, you must make sure the browser requests it. One way to do that is to drop `react.js` into `vendor/assets/javascript/` and by default your application manifest will pick it up. There are downsides to this approach, so we made it even easier. Once you have `react-rails` installed, you can just add a line into your config file (see Configuring) and require react directly in your manifest:
+You can pick which React.js build (development, production, with or without [add-ons]((http://facebook.github.io/react/docs/addons.html))) to serve in each environment by adding a config. Here are the defaults:
 
-You can `require` it in your manifest:
+```ruby
+# config/environments/development.rb
+MyApp::Application.configure do
+  config.react.variant = :development
+end
 
-```js
-// app/assets/javascripts/application.js
-
-//= require react
+# config/environments/production.rb
+MyApp::Application.configure do
+  config.react.variant = :production
+end
 ```
 
-Alternatively, you can include it directly as a separate script tag:
+To include add-ons, use this config:
 
-```erb
-# app/views/layouts/application.html.erb
-
-<%= javascript_include_tag "react" %>
+```ruby
+MyApp::Application.configure do
+  config.react.addons = true # defaults to false
+end
 ```
+
+After restarting your Rails server, `//= require react`  will provide the build of React.js which was specified by the configurations.
+
+In a pinch, you can also provide your own copies of React.js and JSXTransformer. Just add `react.js` or `JSXTransformer.js` (case-sensitive) files to `app/vendor/assets/javascripts/react/` and restart your development server. If you need different versions of React in different environments, put them in directories that match `config.react.variant`. For example, if you set `config.react.variant = :development`, you could put a copy of `react.js` in `/vendor/assets/react/development/`.
 
 ### JSX
 
-To transform your JSX into JS, simply create `.js.jsx` files. These files will be transformed on request, or precompiled as part of the `assets:precompile` task.
+After installing `react-rails`, restart your server. Now, `.js.jsx` files will be transformed in the asset pipeline.
 
-CoffeeScript files can also be used, by creating `.js.jsx.coffee` files. We also need to embed JSX inside backticks so CoffeeScript ignores the syntax it doesn't understand. Here's an example:
-
-```coffee
-Component = React.createClass
-  render: ->
-    `<ExampleComponent videos={this.props.videos} />`
-```
-
-You can use the `--harmony` or `--strip-types` options by adding a configuration to `application.rb`:
+You can use JSX `--harmony` or `--strip-types` options by adding a configuration:
 
 ```ruby
   config.react.jsx_transform_options = {
@@ -85,145 +92,95 @@ You can use the `--harmony` or `--strip-types` options by adding a configuration
     }
 ```
 
-### Unobtrusive JavaScript
-
-`react_ujs` will call `React.render` for every element with `data-react-class` attribute. React properties can be specified by `data-react-props` attribute in JSON format. For example:
-
-```erb
-<!-- react_ujs will execute `React.render(HelloMessage({name:"Bob"}), element)` -->
-<div data-react-class="HelloMessage" data-react-props="<%= {name: 'Bob'}.to_json %>" />
-```
-
-`react_ujs` will also scan DOM elements and call `React.unmountComponentAtNode` on page unload. If you want to disable this behavior, remove `data-react-class` attribute in `componentDidMount`.
-
-To use `react_ujs`, simply `require` it after `react` (and after `turbolinks` if [Turbolinks](https://github.com/rails/turbolinks) is used).
-
-**Note:** _Turbolinks >= 2.4.0 is recommended. For older versions `react_ujs` will disable the Turbolinks cache to ensure components are correctly unmounted. See [#87](https://github.com/reactjs/react-rails/issues/87) for details._
-
-```js
-// app/assets/javascripts/application.js
-
-//= require turbolinks
-//= require react
-//= require react_ujs
-```
-
-### View helper
-
-There is a view helper method `react_component`. It is designed to work with `react_ujs` and takes a React class name, properties, and HTML options as arguments:
-
-```ruby
-react_component('HelloMessage', name: 'John')
-# <div data-react-class="HelloMessage" data-react-props="{&quot;name&quot;:&quot;John&quot;}"></div>
-```
-
-By default, a `<div>` element is used. Other tag and HTML attributes can be specified:
-
-```ruby
-react_component('HelloMessage', {name: 'John'}, :span)
-# <span data-...></span>
-
-react_component('HelloMessage', {name: 'John'}, {id: 'hello', class: 'foo', tag: :span})
-# <span class="foo" id="hello" data-...></span>
-```
-
-#### With JSON and Jbuilder
-
-You can pass prepared JSON directly to the helper, as well.
-
-```ruby
-react_component('HelloMessage', {name: 'John'}.to_json)
-# <div data-react-class="HelloMessage" data-react-props="{&quot;name&quot;:&quot;John&quot;}"></div>
-```
-
-This is especially helpful if you are already using a tool like Jbuilder in your project.
-
-```ruby
-# messages/show.json.jbuilder
-json.name name
-```
-
-```ruby
-react_component('HelloMessage', render(template: 'messages/show.json.jbuilder', locals: {name: 'John'}))
-# <div data-react-class="HelloMessage" data-react-props="{&quot;name&quot;:&quot;John&quot;}"></div>
-```
-
-##### Important Note
-
-By default, the scaffolded Rails index Jbuilder templates do not include a root node. An example scaffolded index.json.jbuilder looks like this:
-
-```ruby
-json.array!(@messages) do |message|
-  json.extract! message, :id, :name
-  json.url message_url(message, format: :json)
-end
-```
-
-which generates JSON like this:
-
-```json
-[{"id":1,"name":"hello","url":"http://localhost:3000/messages/1.json"},{"id":2,"name":"hello","url":"http://localhost:3000/messages/2.json"},{"id":3,"name":"hello","url":"http://localhost:3000/messages/3.json"}]
-```
-
-However ReactJS expects the collection of props provided to a component to be a key-value object. Therefore, if you want to use your Jbuilder templates directly with the helper, you will need to wrap your index.json.jbuilder array with a root node like so:
-
-```ruby
-json.messages(@messages) do |message|
-  json.extract! message, :id, :name
-  json.url message_url(message, format: :json)
-end
-```
-
-Which will generate:
-
-```json
-{"messages":[{"id":1,"name":"hello","url":"http://localhost:3000/messages/1.json"},{"id":2,"name":"hello","url":"http://localhost:3000/messages/2.json"},{"id":3,"name":"hello","url":"http://localhost:3000/messages/3.json"}]}
-```
-
-### Server Rendering
-
-React components can also use the same ExecJS mechanisms in Sprockets to execute JavaScript code on the server, and render React components to HTML to be delivered to the browser, and then the `react_ujs` script will cause the component to be mounted. In this way, users get fast initial page loads and search-engine-friendly pages.
-
-#### ExecJS
-
-By default, ExecJS will use node.js in an external process to run JS code. Because we will be executing JS on the server in production, an in-process, high-performance JS VM should be used. Simply add the proper one for your platform to your Gemfile:
-
-```ruby
-gem "therubyracer", :platforms => :ruby
-gem "therubyrhino", :platforms => :jruby
-```
-
-#### components.js
-
-In order for us to render your React components, we need to be able to find them and load them into the JS VM. By convention, we look for a `assets/javascripts/components.js` file through the asset pipeline, and load that. For example:
-
-```sass
-// app/assets/javascripts/components.js
-//= require_tree ./components
-```
-
-This will bring in all files located in the `app/assets/javascripts/components` directory.  You can organize your code however you like, as long as a request for `/assets/javascripts/components.js` brings in a concatenated file containing all of your React components, and each one has to be available in the global scope (either `window` or `global` can be used). For `.js.jsx` files this is not a problem, but if you are using `.js.jsx.coffee` files then the wrapper function needs to be taken into account:
+To use CoffeeScript, create `.js.jsx.coffee` files and embed JSX inside backticks, for example:
 
 ```coffee
 Component = React.createClass
   render: ->
     `<ExampleComponent videos={this.props.videos} />`
-
-window.Component = Component
 ```
 
-#### View Helper
+### Rendering & mounting
 
-To take advantage of server rendering, use the same view helper `react_component`, and pass in `prerender: true` in the `options` hash.
+`react-rails` includes a view helper (`react_component`) and an unobtrusive JavaScript driver (`react_ujs`) which work together to put React components on the page. You should require the UJS driver in your manifest after `react` (and after `turbolinks` if you use [Turbolinks](https://github.com/rails/turbolinks))
+
+The __view helper__ puts a `div` on the page with the requested component class & props. For example:
 
 ```erb
-react_component('HelloMessage', {name: 'John'}, {prerender: true})
+<%= react_component('HelloMessage', name: 'John') %>
+<!-- becomes: -->
+<div data-react-class="HelloMessage" data-react-props="{&quot;name&quot;:&quot;John&quot;}"></div>
 ```
-This will return the fully rendered component markup, and as long as you have included the `react_ujs` script in your page, then the component will also be instantiated and mounted on the client.
 
-### Component Generator
+On page load, the __`react_ujs` driver__ will scan the page and mount components using `data-react-class` and `data-react-props`. Before page unload, it will unmount components (if you want to disable this behavior, remove `data-react-class` attribute in `componentDidMount`).
 
-react-rails ships with a Rails generator to help you get started with a simple component scaffold. You can run it using `rails generate react:component ComponentName`. The generator takes an optional list of arguments for default propTypes, which follow the conventions set in the [Reusable Components](http://facebook.github.io/react/docs/reusable-components.html) section of the React documentation. 
+`react_ujs` uses Turbolinks events if they're available, otherwise, it uses native events. __Turbolinks >= 2.4.0__ is recommended because it exposes better events.
+
+The view helper's signature is
+
+```ruby
+react_component(component_class_name, props={}, html_options={})
+```
+
+- `component_class_name` is a string which names a globally-accessible component class. It may have dots (eg, `"MyApp.Header.MenuItem"`).
+- `props` is either an object that responds to `#to_json` or an already-stringified JSON object (eg, made with Jbuilder, see note below)
+- `html_options` may include:
+  - `tag:` to use an element other than a `div` to embed `data-react-class` and `-props`.
+  - `prerender: true` to render the component on the server.
+  - `**other` Any other arguments (eg `class:`, `id:`) are passed through to [`content_tag`](http://api.rubyonrails.org/classes/ActionView/Helpers/TagHelper.html#method-i-content_tag).
+
+
+### Server rendering
+
+To render components on the server, pass `prerender: true` to `react_component`:
+
+```erb
+<%= react_component('HelloMessage', {name: 'John'}, {prerender: true}) %>
+<!-- becomes: -->
+<div data-react-class="HelloMessage" data-react-props="{&quot;name&quot;:&quot;John&quot;}">
+  <h1>Hello, John!</h1>
+</div>
+```
+
+_(It will be also be mounted by the UJS on page load.)_
+
+There are some requirements for this to work:
+
+- `react-rails` must load your code. By convention, it uses `components.js`, which was created by the install task. This file must include your components _and_ their dependencies (eg, Underscore.js).
+- Your components must be accessible in the global scope. If you are using `.js.jsx.coffee` files then the wrapper function needs to be taken into account:
+
+  ```coffee
+  # @ is `window`:
+  @Component = React.createClass
+    render: ->
+      `<ExampleComponent videos={this.props.videos} />`
+  ```
+- Your code can't reference `document`. Prerender processes don't have access to `document`, so jQuery and some other libs won't work in this environment :(
+
+You can configure your pool of JS virtual machines and specify where it should load code:
+
+```ruby
+# config/environments/application.rb
+# These are the defaults if you dont specify any yourself
+MyApp::Application.configure do
+  # renderer pool size:
+  config.react.max_renderers = 10
+  # prerender timeout, in seconds:
+  config.react.timeout = 20
+  # where to get React.js source:
+  config.react.react_js = lambda { File.read(::Rails.application.assets.resolve('react.js')) }
+  # array of filenames that will be requested from the asset pipeline
+  # and concatenated:
+  config.react.component_filenames = ['components.js']
+  # server-side console.log, console.warn, and console.error messages will be replayed on the client
+  # (you can set this to `true` in config/enviroments/development.rb to replay in development only)
+  config.react.replay_console = false
+end
+```
+
+### Component generator
+
+react-rails ships with a Rails generator to help you get started with a simple component scaffold. You can run it using `rails generate react:component ComponentName`. The generator takes an optional list of arguments for default propTypes, which follow the conventions set in the [Reusable Components](http://facebook.github.io/react/docs/reusable-components.html) section of the React documentation.
 
 For example:
 
@@ -276,54 +233,23 @@ The following additional arguments have special behavior:
 
 Note that the arguments for `oneOf` and `oneOfType` must be enclosed in single quotes to prevent your terminal from expanding them into an argument list.
 
-## Configuring
+### Jbuilder & react-rails
 
-### Variants
-
-There are 2 variants available. `:development` gives you the unminified version of React. This provides extra debugging and error prevention. `:production` gives you the minified version of React which strips out comments and helpful warnings, and minifies.
+If you use Jbuilder to pass JSON string to `react_component`, make sure your JSON is a stringified hash, not an array. This is not the Rails default -- you should add the root node yourself. For example:
 
 ```ruby
-# config/environments/development.rb
-MyApp::Application.configure do
-  config.react.variant = :development
+# BAD: returns a stringified array
+json.array!(@messages) do |message|
+  json.extract! message, :id, :name
+  json.url message_url(message, format: :json)
 end
 
-# config/environments/production.rb
-MyApp::Application.configure do
-  config.react.variant = :production
-end
-```
-
-### Add-ons
-
-Beginning with React v0.5, there is another type of build. This build ships with some "add-ons" that might be useful - [take a look at the React documentation for details](http://facebook.github.io/react/docs/addons.html). In order to make these available, we've added another configuration (which defaults to `false`).
-
-```ruby
-MyApp::Application.configure do
-  config.react.addons = true
+# GOOD: returns a stringified hash
+json.messages(@messages) do |message|
+  json.extract! message, :id, :name
+  json.url message_url(message, format: :json)
 end
 ```
-
-### Server Rendering
-
-For performance and thread-safety reasons, a pool of JS VMs are spun up on application start, and the size of the pool and the timeout on requesting a VM from the pool are configurable.
-
-```ruby
-# config/environments/application.rb
-# These are the defaults if you dont specify any yourself
-MyApp::Application.configure do
-  config.react.max_renderers = 10
-  config.react.timeout = 20 #seconds
-  config.react.react_js = lambda {File.read(::Rails.application.assets.resolve('react.js'))}
-  config.react.component_filenames = ['components.js']
-  config.react.replay_console = false
-end
-```
-
-Other configuration options include:
-* `react_js`: where you want to grab the javascript library from
-* `component_filenames`: an array of filenames that will be requested from the asset pipeline and concatenated together
-* `replay_console`: additional debugging by replaying any captured console messages from server-rendering back on the client (note: they will lose their call stack, but it can help point you in right direction)
 
 ## CoffeeScript
 
@@ -334,21 +260,3 @@ Component = React.createClass
   render: ->
     `<ExampleComponent videos={this.props.videos} />`
 ```
-
-### Changing react.js and JSXTransformer.js versions
-
-In some cases you may want to have your `react.js` and `JSXTransformer.js` files come from a different release than the one, that is specified in the `react-rails.gemspec`. To achieve that, you have to manually replace them in your app.
-
-#### Instructions
-
-Just put another version of `react.js` or `JSXTransformer.js` under `/vendor/assets/react` directory.
-If you need different versions of `react.js` for production and development, then use a subdirectory named
-after `config.react.variant`, e.g. you set `config.react.variant = :development` so for this environment
-`react.js` is expected to be in `/vendor/assets/react/development`
-
-#### Things to remember
-
-If you replace `JSXTransformer.js` in production environment, you have to restart your rails instance,
-because the jsx compiler context is cached.
-
-Name of the `JSXTransformer.js` file *is case-sensitive*.
