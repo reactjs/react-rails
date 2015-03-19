@@ -16,6 +16,7 @@ EXPECTED_JS_2 = <<eos
     }
   });
 
+  window.Component = Component;
 }).call(this);
 eos
 
