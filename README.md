@@ -28,9 +28,10 @@ Add `react-rails` to your gemfile:
 ```ruby
 # Gemfile
 # If you missed a warning at the top of this README - this is still in development
-# which means this version is not pushed to rubygems.org
+# which means the latest is not pushed to rubygems.org or tagged as a version. Live
+# on the bleeding edge and depend on master.
 
-gem 'react-rails', '~> 1.0.0.pre', github: 'reactjs/react-rails'
+gem 'react-rails', github: 'reactjs/react-rails'
 ```
 
 Next, run the installation script.
