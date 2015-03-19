@@ -27,7 +27,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'execjs'
   s.add_dependency 'coffee-script-source', '~>1.9'
   s.add_dependency 'rails', '>= 3.1'
-  s.add_dependency 'react-source', '~> 0.12'
+  s.add_dependency 'react-source', '~> 0.13'
   s.add_dependency 'connection_pool'
 
   s.files = Dir[
