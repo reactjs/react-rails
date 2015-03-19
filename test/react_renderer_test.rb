@@ -35,6 +35,21 @@ class ReactRendererTest < ActiveSupport::TestCase
     assert (err.message.starts_with?(expected_message_one) || err.message.starts_with?(expected_message_two))
   end
 
+  test 'prerender errors include the error backtrace' do
+    # Stub the backtrace returned by ExecJS
+    ExecJS::ProgramError.class_eval {
+      def backtrace
+        ["Line 1 exception", "Backtrace line 2"]
+      end
+    }
+
+    err = assert_raises React::Renderer::PrerenderError do
+      React::Renderer.render("NonexistentComponent", {error: true, exists: false})
+    end
+
+    assert (err.message.ends_with?("Line 1 exception\nBacktrace line 2"))
+  end
+
   test 'prerender errors are thrown when given a string' do
     json_string = Jbuilder.new do |json|
       json.error true
