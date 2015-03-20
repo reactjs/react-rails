@@ -36,18 +36,11 @@ class ReactRendererTest < ActiveSupport::TestCase
   end
 
   test 'prerender errors include the error backtrace' do
-    # Stub the backtrace returned by ExecJS
-    ExecJS::ProgramError.class_eval {
-      def backtrace
-        ["Line 1 exception", "Backtrace line 2"]
-      end
-    }
-
     err = assert_raises React::Renderer::PrerenderError do
       React::Renderer.render("NonexistentComponent", {error: true, exists: false})
     end
 
-    assert (err.message.ends_with?("Line 1 exception\nBacktrace line 2"))
+    assert (err.message.count("\n") > 2), "The error has a multi-line backtrace"
   end
 
   test 'prerender errors are thrown when given a string' do
