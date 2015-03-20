@@ -79,6 +79,9 @@
     }
     handleEvent('page:change', window.ReactRailsUJS.mountComponents);
     handleEvent(unmountEvent, window.ReactRailsUJS.unmountComponents);
+    // you can get a native page-change a couple ways, eg after deploying new assets, clicking data-no-turbolink
+    window.addEventListener('unload', window.ReactRailsUJS.unmountComponents);
+
   }
 
   function handleNativeEvents() {
