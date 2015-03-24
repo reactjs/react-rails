@@ -60,6 +60,7 @@ class JSXTransformTest < ActionDispatch::IntegrationTest
     assert_match(/generateGreeting:\s*function\(\)/, @response.body, "object literal methods")
     assert_match(/React.__spread/, @response.body, "spreading props")
     assert_match(/Your greeting is: '" \+ insertedGreeting \+ "'/, @response.body, "string interpolation")
+    assert_match(/active=\$__0\.active/, @response.body, "destructuring assignment")
   end
 
   test 'accepts strip_types: true option' do
