@@ -12,9 +12,14 @@
     RAILS_ENV_DEVELOPMENT: <%= Rails.env == "development" %>,
     // helper method for the mount and unmount methods to find the
     // `data-react-class` DOM elements
-    findDOMNodes: function() {
+    findDOMNodes: function(searchSelector) {
       // we will use fully qualified paths as we do not bind the callbacks
-      var selector = '[' + window.ReactRailsUJS.CLASS_NAME_ATTR + ']';
+      var selector;
+      if (typeof searchSelector === 'undefined') {
+        var selector = '[' + window.ReactRailsUJS.CLASS_NAME_ATTR + ']';
+      } else {
+        var selector = searchSelector + ' [' + window.ReactRailsUJS.CLASS_NAME_ATTR + ']';
+      }
 
       if ($) {
         return $(selector);
@@ -23,8 +28,8 @@
       }
     },
 
-    mountComponents: function() {
-      var nodes = window.ReactRailsUJS.findDOMNodes();
+    mountComponents: function(searchSelector) {
+      var nodes = window.ReactRailsUJS.findDOMNodes(searchSelector);
 
       for (var i = 0; i < nodes.length; ++i) {
         var node = nodes[i];
@@ -40,8 +45,8 @@
       }
     },
 
-    unmountComponents: function() {
-      var nodes = window.ReactRailsUJS.findDOMNodes();
+    unmountComponents: function(searchSelector) {
+      var nodes = window.ReactRailsUJS.findDOMNodes(searchSelector);
 
       for (var i = 0; i < nodes.length; ++i) {
         var node = nodes[i];
@@ -77,17 +82,17 @@
         console.warn('The Turbolinks cache has been disabled (Turbolinks >= 2.4.0 is recommended). See https://github.com/reactjs/react-rails/issues/87 for more information.');
       }
     }
-    handleEvent('page:change', window.ReactRailsUJS.mountComponents);
-    handleEvent(unmountEvent, window.ReactRailsUJS.unmountComponents);
+    handleEvent('page:change', function() {window.ReactRailsUJS.mountComponents()});
+    handleEvent(unmountEvent, function() {window.ReactRailsUJS.unmountComponents()});
   }
 
   function handleNativeEvents() {
     if ($) {
-      $(window.ReactRailsUJS.mountComponents);
-      $(window).unload(window.ReactRailsUJS.unmountComponents);
+      $(function() {window.ReactRailsUJS.mountComponents()});
+      $(window).unload(function() {window.ReactRailsUJS.unmountComponents()});
     } else {
-      document.addEventListener('DOMContentLoaded', window.ReactRailsUJS.mountComponents);
-      window.addEventListener('unload', window.ReactRailsUJS.unmountComponents);
+      document.addEventListener('DOMContentLoaded', function() {window.ReactRailsUJS.mountComponents()});
+      window.addEventListener('unload', function() {window.ReactRailsUJS.unmountComponents()});
     }
   }
 
