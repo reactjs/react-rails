@@ -32,7 +32,15 @@ class ReactRendererTest < ActiveSupport::TestCase
     end
     expected_message_one = 'Encountered error "ReferenceError: Can\'t find variable: NonexistentComponent" when prerendering NonexistentComponent with {"error":true,"exists":false}'
     expected_message_two = 'Encountered error "ReferenceError: NonexistentComponent is not defined" when prerendering NonexistentComponent with {"error":true,"exists":false}'
-    assert (expected_message_one == err.message || expected_message_two == err.message)
+    assert (err.message.starts_with?(expected_message_one) || err.message.starts_with?(expected_message_two))
+  end
+
+  test 'prerender errors include the error backtrace' do
+    err = assert_raises React::Renderer::PrerenderError do
+      React::Renderer.render("NonexistentComponent", {error: true, exists: false})
+    end
+
+    assert (err.message.count("\n") > 2), "The error has a multi-line backtrace"
   end
 
   test 'prerender errors are thrown when given a string' do
@@ -46,6 +54,6 @@ class ReactRendererTest < ActiveSupport::TestCase
     end
     expected_message_one = 'Encountered error "ReferenceError: Can\'t find variable: NonexistentComponent" when prerendering NonexistentComponent with {"error":true,"exists":false}'
     expected_message_two = 'Encountered error "ReferenceError: NonexistentComponent is not defined" when prerendering NonexistentComponent with {"error":true,"exists":false}'
-    assert (expected_message_one == err.message || expected_message_two == err.message)
+    assert (err.message.starts_with?(expected_message_one) || err.message.starts_with?(expected_message_two))
   end
 end
