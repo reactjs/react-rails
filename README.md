@@ -86,10 +86,10 @@ After installing `react-rails`, restart your server. Now, `.js.jsx` files will b
 You can use JSX `--harmony` or `--strip-types` options by adding a configuration:
 
 ```ruby
-  config.react.jsx_transform_options = {
-      harmony: true,
-      strip_types: true, # for removing Flow type annotations
-    }
+config.react.jsx_transform_options = {
+  harmony: true,
+  strip_types: true, # for removing Flow type annotations
+}
 ```
 
 To use CoffeeScript, create `.js.jsx.coffee` files and embed JSX inside backticks, for example:
