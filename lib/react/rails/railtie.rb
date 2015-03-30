@@ -37,16 +37,14 @@ module React
         # Copy over the variant into a path that sprockets will pick up.
         # We'll always copy to 'react.js' so that no includes need to change.
         # We'll also always copy of JSXTransformer.js
+
         tmp_path = app.root.join('tmp/react-rails')
-        filename = 'react' +
-                   (app.config.react.addons ? '-with-addons' : '') +
-                   (app.config.react.variant == :production ? '.min.js' : '.js')
         FileUtils.mkdir_p(tmp_path)
-        FileUtils.cp(::React::Source.bundled_path_for(filename),
-                     tmp_path.join('react.js'))
-        FileUtils.cp(::React::Source.bundled_path_for('JSXTransformer.js'),
-                     tmp_path.join('JSXTransformer.js'))
         app.assets.prepend_path tmp_path
+
+        asset_clone = React::Rails::AssetRegistry.new(config: app.config)
+        FileUtils.cp(asset_clone.react_source, tmp_path.join('react.js'))
+        FileUtils.cp(asset_clone.jsx_transformer_source,tmp_path.join('JSXTransformer.js'))
 
         # Allow overriding react files that are not based on environment
         # e.g. /vendor/assets/react/JSXTransformer.js
