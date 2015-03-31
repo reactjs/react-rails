@@ -48,21 +48,21 @@ class ViewHelperTest < ActionDispatch::IntegrationTest
     assert html.include?('class="test"')
     assert html.include?('data-foo="1"')
   end
-  
+
   test 'ujs object present on the global React object and has our methods' do
     visit '/pages/1'
     assert page.has_content?('Hello Bob')
-  
+
     # the exposed ujs object is present
     ujs_present = page.evaluate_script('typeof ReactRailsUJS === "object";')
     assert_equal(ujs_present, true)
-  
+
     # it contains the constants
     class_name_present = page.evaluate_script('ReactRailsUJS.CLASS_NAME_ATTR === "data-react-class";')
     assert_equal(class_name_present, true)
     props_present = page.evaluate_script('ReactRailsUJS.PROPS_ATTR === "data-react-props";')
     assert_equal(props_present, true)
-  
+
     #it contains the methods
     find_dom_nodes_present = page.evaluate_script('typeof ReactRailsUJS.findDOMNodes === "function";')
     assert_equal(find_dom_nodes_present, true)
@@ -115,13 +115,24 @@ class ViewHelperTest < ActionDispatch::IntegrationTest
     assert page.has_content?('Hello Bob')
   end
 
+  test 'react_ujs can unount at node' do
+    visit '/pages/1'
+    assert page.has_content?('Hello Bob')
+
+    page.click_link 'Unmount at #test-component'
+    assert page.has_no_content?('Hello Bob')
+
+    page.click_link 'Mount at #test-component'
+    assert page.has_content?('Hello Bob')
+  end
+
   test 'react server rendering also gets mounted on client' do
     visit '/server/1'
     assert_match(/data-react-class=\"TodoList\"/, page.html)
     assert_match(/data-react-checksum/, page.html)
     assert_match(/yep/, page.find("#status").text)
   end
-  
+
   test 'react server rendering does not include internal properties' do
     visit '/server/1'
     assert_no_match(/tag=/, page.html)

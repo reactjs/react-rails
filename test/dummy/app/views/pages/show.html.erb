@@ -2,4 +2,8 @@
   <li><%= link_to 'Alice', page_path(:id => 0) %></li>
   <li><%= link_to 'Bob', page_path(:id => 1) %></li>
 </ul>
-<%= react_component 'HelloMessage', :name => @name %>
+<div id='test-component'>
+  <%= react_component 'HelloMessage', :name => @name %>
+</div>
+<a href='#' onClick="ReactRailsUJS.unmountComponents('#test-component')">Unmount at #test-component</a>
+<a href='#' onClick="ReactRailsUJS.mountComponents('#test-component')">Mount at #test-component</a>
