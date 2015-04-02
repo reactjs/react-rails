@@ -78,7 +78,7 @@ end
 
 After restarting your Rails server, `//= require react`  will provide the build of React.js which was specified by the configurations.
 
-In a pinch, you can also provide your own copies of React.js and JSXTransformer. Just add `react.js` or `JSXTransformer.js` (case-sensitive) files to `app/vendor/assets/javascripts/react/` and restart your development server. If you need different versions of React in different environments, put them in directories that match `config.react.variant`. For example, if you set `config.react.variant = :development`, you could put a copy of `react.js` in `/vendor/assets/react/development/`.
+`react-rails` offers a few other options for versions & builds of React.js. See [VERSIONS.md](https://github.com/reactjs/react-rails/blob/master/VERSIONS.md) for more info about using the `react-source` gem or dropping in your own copies of React.js.
 
 ### JSX
 
