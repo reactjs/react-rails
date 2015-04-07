@@ -7,11 +7,6 @@
 
 # react-rails
 
-> ## react-rails version disclaimer
-
-> ***This README is for `1.x` branch which is still in development. Please switch to latest `0.x` branch for stable version.***
-
-> ***Additionally: `0.x` branch directly follows React versions, `1.x` will not do so.***
 
 `react-rails` makes it easy to use [React](http://facebook.github.io/react/) and [JSX](http://facebook.github.io/react/docs/jsx-in-depth.html) in your Ruby on Rails (3.1+) application. `react-rails` can:
 
@@ -26,12 +21,7 @@
 Add `react-rails` to your gemfile:
 
 ```ruby
-# Gemfile
-# If you missed a warning at the top of this README - this is still in development
-# which means the latest is not pushed to rubygems.org or tagged as a version. Live
-# on the bleeding edge and depend on master.
-
-gem 'react-rails', github: 'reactjs/react-rails'
+gem 'react-rails', '~> 1.0'
 ```
 
 Next, run the installation script.

@@ -11,6 +11,7 @@ There are three ways to control what version of React.js (and JSXTransformer) is
 | Gem      | React.js |
 |----------|----------|
 | master   | ~> 0.13  |
+| 1.0.0    | ~> 0.13  |
 | 0.13.0.0 | 0.13.0   |
 | 0.12.2.0 | 0.12.2   |
 | 0.12.1.0 | 0.12.1   |
