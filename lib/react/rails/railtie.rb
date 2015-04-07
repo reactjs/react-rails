@@ -42,9 +42,9 @@ module React
         FileUtils.mkdir_p(tmp_path)
         app.assets.prepend_path tmp_path
 
-        asset_clone = React::Rails::AssetRegistry.new(config: app.config)
-        FileUtils.cp(asset_clone.react_source, tmp_path.join('react.js'))
-        FileUtils.cp(asset_clone.jsx_transformer_source,tmp_path.join('JSXTransformer.js'))
+        asset_registry = React::Rails::AssetRegistry.new(config: app.config)
+        FileUtils.cp(asset_registry.react_source,           tmp_path.join('react.js'))
+        FileUtils.cp(asset_registry.jsx_transformer_source, tmp_path.join('JSXTransformer.js'))
 
         # Allow overriding react files that are not based on environment
         # e.g. /vendor/assets/react/JSXTransformer.js
