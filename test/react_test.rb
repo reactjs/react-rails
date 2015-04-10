@@ -4,7 +4,7 @@ require 'fileutils'
 class ReactTest < ActionDispatch::IntegrationTest
 
   test 'asset pipeline should deliver react file in a non-production variant' do
-    actual_react_file_path = File.expand_path("../dummy/tmp/react-rails/react.js",  __FILE__)
+    actual_react_file_path = File.join(Dir.tmpdir, 'react-rails', 'react.js')
     actual_react_file_content = File.read actual_react_file_path
 
     react_file_token = "'test_confirmation_token_react_content_non_production';\n";
