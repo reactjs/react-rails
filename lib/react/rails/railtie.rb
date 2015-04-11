@@ -13,6 +13,7 @@ module React
       config.react.max_renderers = 10
       config.react.timeout = 20 #seconds
       config.react.react_js = lambda {File.read(::Rails.application.assets.resolve('react.js'))}
+      config.react.jsx_transformer_js = lambda {File.read(::Rails.application.assets.resolve('JSXTransformer.js'))}
       config.react.component_filenames = ['components.js']
 
       # Watch .jsx files for changes in dev, so we can reload the JS VMs with the new JS code.
@@ -71,6 +72,7 @@ module React
 
         do_setup = lambda do
           cfg = app.config.react
+          React::JSX.jsx_transformer_js = cfg.jsx_transformer_js
           React::Renderer.setup!( cfg.react_js, cfg.components_js, cfg.replay_console,
                                 {:size => cfg.max_renderers, :timeout => cfg.timeout})
         end

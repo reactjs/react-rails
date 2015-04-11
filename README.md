@@ -160,6 +160,8 @@ MyApp::Application.configure do
   config.react.timeout = 20
   # where to get React.js source:
   config.react.react_js = lambda { File.read(::Rails.application.assets.resolve('react.js')) }
+  # where to get JSXTransformer.js
+  config.react.jsx_transformer_js = lambda { File.read(::Rails.application.assets.resolve('JSXTransformer.js')) }
   # array of filenames that will be requested from the asset pipeline
   # and concatenated:
   config.react.component_filenames = ['components.js']
