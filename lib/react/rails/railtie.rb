@@ -28,7 +28,7 @@ module React
         end
       end
 
-      initializer "react_rails.setup_vendor", group: :all do |app|
+      config.after_initialize do |app|
         # Mimic behavior of ember-rails...
         # We want to include different files in dev/prod. The unminified builds
         # contain console logging for invariants and logging to help catch
@@ -46,6 +46,7 @@ module React
                      tmp_path.join('react.js'))
         FileUtils.cp(::React::Source.bundled_path_for('JSXTransformer.js'),
                      tmp_path.join('JSXTransformer.js'))
+
         app.assets.prepend_path tmp_path
 
         # Allow overriding react files that are not based on environment
@@ -57,10 +58,7 @@ module React
         # e.g. /vendor/assets/react/development/react.js
         dropin_path_env = app.root.join("vendor/assets/react/#{app.config.react.variant}")
         app.assets.prepend_path dropin_path_env if dropin_path_env.exist?
-      end
 
-
-      config.after_initialize do |app|
         # Server Rendering
         # Concat component_filenames together for server rendering
         app.config.react.components_js = lambda {
@@ -80,8 +78,6 @@ module React
         # Reload the JS VMs in dev when files change
         ActionDispatch::Reloader.to_prepare(&do_setup)
       end
-
-
     end
   end
 end
