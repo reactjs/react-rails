@@ -244,7 +244,7 @@ end
 
 ## CoffeeScript
 
-It is possible to use JSX with CoffeeScript. The caveat is that you will still need to include the docblock. Since CoffeeScript doesn't allow `/* */` style comments, we need to do something a little different. We also need to embed JSX inside backticks so CoffeeScript ignores the syntax it doesn't understand. Here's an example:
+It is possible to use JSX with CoffeeScript. We need to embed JSX inside backticks so CoffeeScript ignores the syntax it doesn't understand. Here's an example:
 
 ```coffee
 Component = React.createClass
