@@ -1,8 +1,8 @@
 module React
   module Rails
     class Engine < ::Rails::Engine
-      config.after_initialize do |app|
-        app.assets.register_engine '.jsx', React::JSX::Template
+      initializer "react_rails.setup_engine", group: :all do |app|
+        Sprockets.register_engine '.jsx', React::JSX::Template
       end
     end
   end
