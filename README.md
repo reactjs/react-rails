@@ -13,7 +13,7 @@
 - Provide [various `react` builds](#reactjs-builds) to your asset bundle
 - Transform [`.jsx` in the asset pipeline](#jsx)
 - [Render components into views and mount them](#rendering--mounting) via view helper & `react_ujs`
-- [Render components server-side](#server-rendering) with `prerender: true`.
+- [Render components server-side](#server-rendering) with `prerender: true`
 - [Generate components](#component-generator) with a Rails generator
 
 ## Installation
@@ -24,7 +24,7 @@ Add `react-rails` to your gemfile:
 gem 'react-rails', '~> 1.0'
 ```
 
-Next, run the installation script.
+Next, run the installation script:
 
 ```bash
 rails g react:install
@@ -93,7 +93,7 @@ Component = React.createClass
 
 ### Rendering & mounting
 
-`react-rails` includes a view helper (`react_component`) and an unobtrusive JavaScript driver (`react_ujs`) which work together to put React components on the page. You should require the UJS driver in your manifest after `react` (and after `turbolinks` if you use [Turbolinks](https://github.com/rails/turbolinks))
+`react-rails` includes a view helper (`react_component`) and an unobtrusive JavaScript driver (`react_ujs`) which work together to put React components on the page. You should require the UJS driver in your manifest after `react` (and after `turbolinks` if you use [Turbolinks](https://github.com/rails/turbolinks)).
 
 The __view helper__ puts a `div` on the page with the requested component class & props. For example:
 
@@ -107,14 +107,14 @@ On page load, the __`react_ujs` driver__ will scan the page and mount components
 
 `react_ujs` uses Turbolinks events if they're available, otherwise, it uses native events. __Turbolinks >= 2.4.0__ is recommended because it exposes better events.
 
-The view helper's signature is
+The view helper's signature is:
 
 ```ruby
 react_component(component_class_name, props={}, html_options={})
 ```
 
 - `component_class_name` is a string which names a globally-accessible component class. It may have dots (eg, `"MyApp.Header.MenuItem"`).
-- `props` is either an object that responds to `#to_json` or an already-stringified JSON object (eg, made with Jbuilder, see note below)
+- `props` is either an object that responds to `#to_json` or an already-stringified JSON object (eg, made with Jbuilder, see note below).
 - `html_options` may include:
   - `tag:` to use an element other than a `div` to embed `data-react-class` and `-props`.
   - `prerender: true` to render the component on the server.
@@ -137,7 +137,7 @@ _(It will be also be mounted by the UJS on page load.)_
 
 There are some requirements for this to work:
 
-- `react-rails` must load your code. By convention, it uses `components.js`, which was created by the install task. This file must include your components _and_ their dependencies (eg, Underscore.js).
+- `react-rails` must load your code. By convention it uses `components.js`, which was created by the install task. This file must include your components _and_ their dependencies (eg, Underscore.js).
 - Your components must be accessible in the global scope. If you are using `.js.jsx.coffee` files then the wrapper function needs to be taken into account:
 
   ```coffee
@@ -171,7 +171,7 @@ end
 
 ### Component generator
 
-react-rails ships with a Rails generator to help you get started with a simple component scaffold. You can run it using `rails generate react:component ComponentName`. The generator takes an optional list of arguments for default propTypes, which follow the conventions set in the [Reusable Components](http://facebook.github.io/react/docs/reusable-components.html) section of the React documentation.
+`react-rails` ships with a Rails generator to help you get started with a simple component scaffold. You can run it using `rails generate react:component ComponentName`. The generator takes an optional list of arguments for default propTypes, which follow the conventions set in the [Reusable Components](http://facebook.github.io/react/docs/reusable-components.html) section of the React documentation.
 
 For example:
 
@@ -218,9 +218,9 @@ The generator can use the following arguments to create basic propTypes:
 
 The following additional arguments have special behavior:
 
-  * `instanceOf` takes an optional class name in the form of {className}
+  * `instanceOf` takes an optional class name in the form of {className}.
   * `oneOf` behaves like an enum, and takes an optional list of strings in the form of `'name:oneOf{one,two,three}'`.
-  * `oneOfType` takes an optional list of react and custom types in the form of `'model:oneOfType{string,number,OtherType}'`
+  * `oneOfType` takes an optional list of react and custom types in the form of `'model:oneOfType{string,number,OtherType}'`.
 
 Note that the arguments for `oneOf` and `oneOfType` must be enclosed in single quotes to prevent your terminal from expanding them into an argument list.
 
