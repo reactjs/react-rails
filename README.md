@@ -226,7 +226,7 @@ Note that the arguments for `oneOf` and `oneOfType` must be enclosed in single q
 
 ### Jbuilder & react-rails
 
-If you use Jbuilder to pass JSON string to `react_component`, make sure your JSON is a stringified hash, not an array. This is not the Rails default -- you should add the root node yourself. For example:
+If you use Jbuilder to pass a JSON string to `react_component`, make sure your JSON is a stringified hash, not an array. This is not the Rails default -- you should add the root node yourself. For example:
 
 ```ruby
 # BAD: returns a stringified array
