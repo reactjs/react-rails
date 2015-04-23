@@ -4,6 +4,7 @@ require 'react/jsx/template'
 
 module React
   module JSX
+    mattr_accessor :transform_options
     def self.context
       # TODO: create React::Source::contents_for
       contents =
@@ -14,8 +15,12 @@ module React
       @context ||= ExecJS.compile(contents)
     end
 
-    def self.transform(code)
-      result = context.call('JSXTransformer.transform', code)
+    def self.transform(code, options={})
+      js_options = {
+        stripTypes: options[:strip_types],
+        harmony: options[:harmony],
+      }
+      result = context.call('JSXTransformer.transform', code, js_options)
       return result['code']
     end
   end
