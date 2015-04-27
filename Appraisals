@@ -25,3 +25,9 @@ end
 appraise "rails-4.2" do
   gem 'rails', '~> 4.2'
 end
+
+
+appraise "rails-4.2-with-sprockets-3.0" do
+  gem 'rails', '~> 4.2'
+  gem 'sprockets', '~> 3'
+end
