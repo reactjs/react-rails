@@ -9,11 +9,11 @@ module React
       config.react.variant = (::Rails.env.production? ? :production : :development)
       config.react.addons = false
       config.react.jsx_transform_options = {}
-      # Server-side rendering
-      config.react.max_renderers = 10
-      config.react.timeout = 20 #seconds
-      config.react.react_js = lambda {File.read(::Rails.application.assets.resolve('react.js'))}
-      config.react.component_filenames = ['components.js']
+      # Server rendering:
+      config.react.server_renderer_pool_size  = 10
+      config.react.server_renderer_timeout    = 20 # seconds
+      config.react.server_renderer            = nil # defaults to SprocketsRenderer
+      config.react.server_renderer_options    = {}  # SprocketsRenderer provides defaults
 
       # Watch .jsx files for changes in dev, so we can reload the JS VMs with the new JS code.
       initializer "react_rails.add_watchable_files", group: :all do |app|
@@ -49,10 +49,14 @@ module React
           "react-#{variant}",
         ].compact.join('-')
 
-        app.config.react.server_renderer_options  ||= {}
-        app.config.react.server_renderer          ||= React::ServerRendering::SprocketsRenderer
-        React::ServerRendering.renderer_options   = app.config.react.server_renderer_options
-        React::ServerRendering.renderer           = app.config.react.server_renderer
+        # The class isn't accessible in the configure block, so assign it here if it wasn't overridden:
+        app.config.react.server_renderer ||= React::ServerRendering::SprocketsRenderer
+
+        React::ServerRendering.pool_size        = app.config.react.server_renderer_pool_size
+        React::ServerRendering.pool_timeout     = app.config.react.server_renderer_timeout
+        React::ServerRendering.renderer_options = app.config.react.server_renderer_options
+        React::ServerRendering.renderer         = app.config.react.server_renderer
+
         React::ServerRendering.reset_pool
         # Reload renderers in dev when files change
         ActionDispatch::Reloader.to_prepare { React::ServerRendering.reset_pool }
