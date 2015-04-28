@@ -28,19 +28,17 @@ module React
         end
       end
 
-      initializer "react_rails.setup_vendor", group: :all do |app|
+      config.after_initialize do |app|
         # We want to include different files in dev/prod. The development builds
         # contain console logging for invariants and logging to help catch
         # common mistakes. These are all stripped out in the production build.
+        root_path = Pathname.new('../../../../').expand_path(__FILE__)
+        directory = app.config.react.variant == :production ? 'production' : 'development'
+        directory += '-with-addons' if app.config.react.addons
 
-        directory = (app.config.react.variant || :production).to_s
-        directory += 'with-addons' if app.config.react.addons
-        app.assets.prepend_path ::React::Source.bundled_path_for(directory)
-        app.assets.prepend_path ::React::Source.bundled_path_for('') # JSXTransformer.js
-      end
+        app.assets.append_path(root_path.join('lib/assets/react-source/').join(directory).to_s)
+        app.assets.append_path(root_path.join('lib/assets/javascripts/').to_s)
 
-
-      config.after_initialize do |app|
         # Server Rendering
         # Concat component_filenames together for server rendering
         app.config.react.components_js = lambda {
@@ -60,8 +58,6 @@ module React
         # Reload the JS VMs in dev when files change
         ActionDispatch::Reloader.to_prepare(&do_setup)
       end
-
-
     end
   end
 end
