@@ -49,24 +49,13 @@ module React
           "react-#{variant}",
         ].compact.join('-')
 
-        # Server Rendering
-        # Concat component_filenames together for server rendering
-        app.config.react.components_js = lambda {
-          app.config.react.component_filenames.map do |filename|
-            app.assets[filename].to_s
-          end.join(";")
-        }
-
-        do_setup = lambda do
-          cfg = app.config.react
-          React::Renderer.setup!( cfg.react_js, cfg.components_js, cfg.replay_console,
-                                {:size => cfg.max_renderers, :timeout => cfg.timeout})
-        end
-
-        do_setup.call
-
-        # Reload the JS VMs in dev when files change
-        ActionDispatch::Reloader.to_prepare(&do_setup)
+        app.config.react.server_renderer_options  ||= {}
+        app.config.react.server_renderer          ||= React::ServerRendering::SprocketsRenderer
+        React::ServerRendering.renderer_options   = app.config.react.server_renderer_options
+        React::ServerRendering.renderer           = app.config.react.server_renderer
+        React::ServerRendering.reset_pool
+        # Reload renderers in dev when files change
+        ActionDispatch::Reloader.to_prepare { React::ServerRendering.reset_pool }
       end
     end
   end

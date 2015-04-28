@@ -13,9 +13,16 @@ end
 
 class ReactServerRenderingTest < ActiveSupport::TestCase
   setup do
+    @previous_renderer = React::ServerRendering.renderer
+    @previous_options = React::ServerRendering.renderer_options
     React::ServerRendering.renderer_options = "TEST"
     React::ServerRendering.renderer = NullRenderer
     React::ServerRendering.reset_pool
+  end
+
+  teardown do
+    React::ServerRendering.renderer = @previous_renderer
+    React::ServerRendering.renderer_options = @previous_options
   end
 
   test '.create_renderer makes a renderer with initialization options' do
