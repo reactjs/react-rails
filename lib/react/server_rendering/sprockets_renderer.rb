@@ -2,10 +2,10 @@ module React
   module ServerRendering
     class SprocketsRenderer
       def initialize(options={})
-        filenames = options.fetch(:setup, ["react.js", "components.js"])
         @replay_console = options.fetch(:replay_console, true)
 
-        js_code = SetupJavascript.new(filenames).to_s
+        filenames = options.fetch(:files, ["react.js", "components.js"])
+        js_code = SetupJavascript.new(filenames).code
         @context = ExecJS.compile(js_code)
       end
 
@@ -13,14 +13,18 @@ module React
         if !props.is_a?(String)
           props = props.to_json
         end
+
         js_code = <<-JS
           (function () {
             var result = React.renderToString(React.createElement(#{component_name}, #{props}));
+            #{@replay_console ? CONSOLE_REPLAY : ""}
             return result;
           })()
         JS
+
         @context.eval(js_code).html_safe
-      # handle error
+      rescue ExecJS::ProgramError => err
+        raise PrerenderError.new(component_name, props, err)
       end
 
       class SetupJavascript
@@ -29,16 +33,43 @@ module React
         var self = self || this;
         var window = window || this;
         JS
-        def initialize(filenames)
-          js_code = ""
-          filenames.each do |filename|
-            js_code << ::Rails.application.assets[filename].to_s
-          end
-          @wrapped_code = GLOBAL_WRAPPER + js_code
-        end
 
-        def to_s
-          @wrapped_code
+        attr_reader :code
+
+        def initialize(filenames)
+          @code  = GLOBAL_WRAPPER + CONSOLE_POLYFILL
+          filenames.each do |filename|
+            @code << ::Rails.application.assets[filename].to_s
+          end
+        end
+      end
+
+      CONSOLE_POLYFILL = <<-JS
+        var console = { history: [] };
+        ['error', 'log', 'info', 'warn'].forEach(function (fn) {
+          console[fn] = function () {
+            console.history.push({level: fn, arguments: Array.prototype.slice.call(arguments)});
+          };
+        });
+      JS
+
+      CONSOLE_REPLAY = <<-JS
+      (function (history) {
+        if (history && history.length > 0) {
+          result += '\\n<scr'+'ipt>';
+          history.forEach(function (msg) {
+            result += '\\nconsole.' + msg.level + '.apply(console, ' + JSON.stringify(msg.arguments) + ');';
+          });
+          result += '\\n</scr'+'ipt>';
+        }
+      })(console.history);
+      JS
+
+      class PrerenderError < RuntimeError
+        def initialize(component_name, props, js_message)
+          message = ["Encountered error \"#{js_message}\" when prerendering #{component_name} with #{props}",
+                      js_message.backtrace.join("\n")].join("\n")
+          super(message)
         end
       end
     end
