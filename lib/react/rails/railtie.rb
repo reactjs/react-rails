@@ -29,34 +29,14 @@ module React
       end
 
       initializer "react_rails.setup_vendor", group: :all do |app|
-        # Mimic behavior of ember-rails...
-        # We want to include different files in dev/prod. The unminified builds
+        # We want to include different files in dev/prod. The development builds
         # contain console logging for invariants and logging to help catch
-        # common mistakes. These are all stripped out in the minified build.
+        # common mistakes. These are all stripped out in the production build.
 
-        # Copy over the variant into a path that sprockets will pick up.
-        # We'll always copy to 'react.js' so that no includes need to change.
-        # We'll also always copy of JSXTransformer.js
-        tmp_path = app.root.join('tmp/react-rails')
-        filename = 'react' +
-                   (app.config.react.addons ? '-with-addons' : '') +
-                   (app.config.react.variant == :production ? '.min.js' : '.js')
-        FileUtils.mkdir_p(tmp_path)
-        FileUtils.cp(::React::Source.bundled_path_for(filename),
-                     tmp_path.join('react.js'))
-        FileUtils.cp(::React::Source.bundled_path_for('JSXTransformer.js'),
-                     tmp_path.join('JSXTransformer.js'))
-        app.assets.prepend_path tmp_path
-
-        # Allow overriding react files that are not based on environment
-        # e.g. /vendor/assets/react/JSXTransformer.js
-        dropin_path = app.root.join("vendor/assets/react")
-        app.assets.prepend_path dropin_path if dropin_path.exist?
-
-        # Allow overriding react files that are based on environment
-        # e.g. /vendor/assets/react/development/react.js
-        dropin_path_env = app.root.join("vendor/assets/react/#{app.config.react.variant}")
-        app.assets.prepend_path dropin_path_env if dropin_path_env.exist?
+        directory = (app.config.react.variant || :production).to_s
+        directory += 'with-addons' if app.config.react.addons
+        app.assets.prepend_path ::React::Source.bundled_path_for(directory)
+        app.assets.prepend_path ::React::Source.bundled_path_for('') # JSXTransformer.js
       end
 
 
