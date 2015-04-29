@@ -28,7 +28,7 @@ module React
         end
       end
 
-      config.after_initialize do |app|
+      config.before_initialize do |app|
         # We want to include different files in dev/prod. The development builds
         # contain console logging for invariants and logging to help catch
         # common mistakes. These are all stripped out in the production build.
@@ -38,7 +38,9 @@ module React
 
         app.assets.append_path(root_path.join('lib/assets/react-source/').join(directory).to_s)
         app.assets.append_path(root_path.join('lib/assets/javascripts/').to_s)
+      end
 
+      config.after_initialize do |app|
         # Server Rendering
         # Concat component_filenames together for server rendering
         app.config.react.components_js = lambda {
