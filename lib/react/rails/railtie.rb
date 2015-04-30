@@ -36,8 +36,8 @@ module React
         directory = app.config.react.variant == :production ? 'production' : 'development'
         directory += '-with-addons' if app.config.react.addons
 
-        app.assets.append_path(root_path.join('lib/assets/react-source/').join(directory).to_s)
-        app.assets.append_path(root_path.join('lib/assets/javascripts/').to_s)
+        app.config.assets.paths << root_path.join('lib/assets/react-source/').join(directory).to_s
+        app.config.assets.paths << root_path.join('lib/assets/javascripts/').to_s
       end
 
       config.after_initialize do |app|

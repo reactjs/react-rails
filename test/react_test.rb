@@ -16,4 +16,10 @@ class ReactTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_equal react_file_token, @response.body
   end
+
+  test 'precompiling assets works' do
+    Dummy::Application.load_tasks
+    Rake::Task['assets:precompile'].invoke
+    FileUtils.rm_r(File.expand_path("../dummy/public/assets", __FILE__))
+  end
 end
