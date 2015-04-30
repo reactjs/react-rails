@@ -16,6 +16,12 @@ class SprocketsRendererTest < ActiveSupport::TestCase
     assert_match(/<li.*write more tests<\/li>/, result)
   end
 
+  test '#render accepts prerender: :static' do
+    result = @renderer.render("Todo", {todo: "write more tests", prerender: :static})
+    assert_match(/<li>write more tests<\/li>/, result)
+    assert_no_match(/data-react-checksum/, result)
+  end
+
   test '#render replays console messages' do
     result = @renderer.render("TodoListWithConsoleLog", {todos: ["log some messages"]})
     assert_match('console.log.apply(console, ["got initial state"])', result)

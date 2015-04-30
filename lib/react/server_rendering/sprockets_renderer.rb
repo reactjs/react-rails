@@ -10,13 +10,19 @@ module React
       end
 
       def render(component_name, props)
+        # pass prerender: :static to use renderToStaticMarkup
+        react_render_method = "renderToString"
+        if props.is_a?(Hash) && props[:prerender] == :static
+          react_render_method = "renderToStaticMarkup"
+        end
+
         if !props.is_a?(String)
           props = props.to_json
         end
 
         js_code = <<-JS
           (function () {
-            var result = React.renderToString(React.createElement(#{component_name}, #{props}));
+            var result = React.#{react_render_method}(React.createElement(#{component_name}, #{props}));
             #{@replay_console ? CONSOLE_REPLAY : ""}
             return result;
           })()
