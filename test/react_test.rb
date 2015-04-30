@@ -27,4 +27,9 @@ class ReactTest < ActionDispatch::IntegrationTest
       ENV.delete('RAILS_GROUPS')
     end
   end
+
+  test "the development version is loaded" do
+    asset = Rails.application.assets.find_asset('react')
+    assert asset.pathname.to_s.end_with?('development/react.js')
+  end
 end
