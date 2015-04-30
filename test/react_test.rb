@@ -18,8 +18,13 @@ class ReactTest < ActionDispatch::IntegrationTest
   end
 
   test 'precompiling assets works' do
-    Dummy::Application.load_tasks
-    Rake::Task['assets:precompile'].invoke
-    FileUtils.rm_r(File.expand_path("../dummy/public/assets", __FILE__))
+    begin
+      ENV['RAILS_GROUPS'] = 'assets' # required for Rails 3.2
+      Dummy::Application.load_tasks
+      Rake::Task['assets:precompile'].invoke
+      FileUtils.rm_r(File.expand_path("../dummy/public/assets", __FILE__))
+    ensure
+      ENV.delete('RAILS_GROUPS')
+    end
   end
 end
