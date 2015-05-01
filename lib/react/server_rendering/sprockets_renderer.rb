@@ -5,15 +5,21 @@ module React
         @replay_console = options.fetch(:replay_console, true)
 
         filenames = options.fetch(:files, ["react.js", "components.js"])
-        js_code = SetupJavascript.new(filenames).code
+        js_code = GLOBAL_WRAPPER + CONSOLE_POLYFILL
+
+        filenames.each do |filename|
+          js_code << ::Rails.application.assets[filename].to_s
+        end
+
         @context = ExecJS.compile(js_code)
       end
 
       def render(component_name, props)
         # pass prerender: :static to use renderToStaticMarkup
-        react_render_method = "renderToString"
         if props.is_a?(Hash) && props[:prerender] == :static
           react_render_method = "renderToStaticMarkup"
+        else
+          react_render_method = "renderToString"
         end
 
         if !props.is_a?(String)
@@ -33,23 +39,14 @@ module React
         raise PrerenderError.new(component_name, props, err)
       end
 
-      class SetupJavascript
-        GLOBAL_WRAPPER = <<-JS
-        var global = global || this;
-        var self = self || this;
-        var window = window || this;
-        JS
+      # Handle node.js & other RubyRacer contexts
+      GLOBAL_WRAPPER = <<-JS
+      var global = global || this;
+      var self = self || this;
+      var window = window || this;
+      JS
 
-        attr_reader :code
-
-        def initialize(filenames)
-          @code  = GLOBAL_WRAPPER + CONSOLE_POLYFILL
-          filenames.each do |filename|
-            @code << ::Rails.application.assets[filename].to_s
-          end
-        end
-      end
-
+      # Reimplement console methods for replaying on the client
       CONSOLE_POLYFILL = <<-JS
         var console = { history: [] };
         ['error', 'log', 'info', 'warn'].forEach(function (fn) {
@@ -59,6 +56,7 @@ module React
         });
       JS
 
+      # Replay message from console history
       CONSOLE_REPLAY = <<-JS
       (function (history) {
         if (history && history.length > 0) {
