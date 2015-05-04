@@ -41,6 +41,14 @@ module React
       end
 
       config.after_initialize do |app|
+        variant = app.config.react.variant == :production ? 'production' : 'development'
+        variant += '-with-addons' if app.config.react.addons
+
+        app.assets.version = [
+          app.assets.version,
+          "react-#{variant}",
+        ].compact.join('-')
+
         # Server Rendering
         # Concat component_filenames together for server rendering
         app.config.react.components_js = lambda {
