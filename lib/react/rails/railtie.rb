@@ -28,37 +28,17 @@ module React
         end
       end
 
-      initializer "react_rails.setup_vendor", group: :all do |app|
-        # Mimic behavior of ember-rails...
-        # We want to include different files in dev/prod. The unminified builds
+      config.before_initialize do |app|
+        # We want to include different files in dev/prod. The development builds
         # contain console logging for invariants and logging to help catch
-        # common mistakes. These are all stripped out in the minified build.
+        # common mistakes. These are all stripped out in the production build.
+        root_path = Pathname.new('../../../../').expand_path(__FILE__)
+        directory = app.config.react.variant == :production ? 'production' : 'development'
+        directory += '-with-addons' if app.config.react.addons
 
-        # Copy over the variant into a path that sprockets will pick up.
-        # We'll always copy to 'react.js' so that no includes need to change.
-        # We'll also always copy of JSXTransformer.js
-        tmp_path = app.root.join('tmp/react-rails')
-        filename = 'react' +
-                   (app.config.react.addons ? '-with-addons' : '') +
-                   (app.config.react.variant == :production ? '.min.js' : '.js')
-        FileUtils.mkdir_p(tmp_path)
-        FileUtils.cp(::React::Source.bundled_path_for(filename),
-                     tmp_path.join('react.js'))
-        FileUtils.cp(::React::Source.bundled_path_for('JSXTransformer.js'),
-                     tmp_path.join('JSXTransformer.js'))
-        app.assets.prepend_path tmp_path
-
-        # Allow overriding react files that are not based on environment
-        # e.g. /vendor/assets/react/JSXTransformer.js
-        dropin_path = app.root.join("vendor/assets/react")
-        app.assets.prepend_path dropin_path if dropin_path.exist?
-
-        # Allow overriding react files that are based on environment
-        # e.g. /vendor/assets/react/development/react.js
-        dropin_path_env = app.root.join("vendor/assets/react/#{app.config.react.variant}")
-        app.assets.prepend_path dropin_path_env if dropin_path_env.exist?
+        app.config.assets.paths << root_path.join('lib/assets/react-source/').join(directory).to_s
+        app.config.assets.paths << root_path.join('lib/assets/javascripts/').to_s
       end
-
 
       config.after_initialize do |app|
         # Server Rendering
@@ -80,8 +60,6 @@ module React
         # Reload the JS VMs in dev when files change
         ActionDispatch::Reloader.to_prepare(&do_setup)
       end
-
-
     end
   end
 end

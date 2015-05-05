@@ -23,13 +23,10 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'test-unit', '~> 2.5'
   s.add_development_dependency 'turbolinks', '>= 2.0.0'
 
-
   s.add_dependency 'coffee-script-source', '~>1.8'
   s.add_dependency 'connection_pool'
   s.add_dependency 'execjs'
   s.add_dependency 'rails', '>= 3.1'
-  # If you change this, make sure to update VERSIONS.md:
-  s.add_dependency 'react-source', '~> 0.13'
   s.add_dependency 'tilt'
 
   s.files = Dir[

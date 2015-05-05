@@ -1,5 +1,4 @@
 require 'execjs'
-require 'react/source'
 require 'react/jsx/template'
 require 'rails'
 

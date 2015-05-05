@@ -4,3 +4,4 @@ Gemfile.lock
 test/dummy/tmp
 gemfiles/*.lock
 *.swp
+/vendor/react
