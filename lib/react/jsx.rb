@@ -4,7 +4,7 @@ require 'rails'
 
 module React
   module JSX
-    mattr_accessor :transform_options
+    mattr_accessor :transform_options, :jsx_transformer_js
 
     def self.context
       # lazily loaded during first request and reloaded every time when in dev or test
@@ -16,7 +16,7 @@ module React
 
           # search for transformer file using sprockets - allows user to override
           # this file in his own application
-          File.read(::Rails.application.assets.resolve('JSXTransformer.js'))
+          jsx_transformer_js.call
 
         @context = ExecJS.compile(contents)
       end
