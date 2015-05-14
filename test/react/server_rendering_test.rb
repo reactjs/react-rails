@@ -26,7 +26,7 @@ class ReactServerRenderingTest < ActiveSupport::TestCase
   end
 
   test '.create_renderer makes a renderer with initialization options' do
-    mock_renderer = MiniTest::Mock.new
+    mock_renderer = Minitest::Mock.new
     mock_renderer.expect(:new, :fake_renderer, [{mock: true}])
     React::ServerRendering.renderer = mock_renderer
     React::ServerRendering.renderer_options = {mock: true}

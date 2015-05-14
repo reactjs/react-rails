@@ -129,7 +129,6 @@ class ViewHelperTest < ActionDispatch::IntegrationTest
   test 'react server rendering also gets mounted on client' do
     visit '/server/1'
     assert_match(/data-react-class=\"TodoList\"/, page.html)
-    assert_match(/data-react-checksum/, page.html)
     assert_match(/yep/, page.find("#status").text)
   end
 
