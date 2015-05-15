@@ -123,6 +123,8 @@ react_component(component_class_name, props={}, html_options={})
 
 ### Server rendering
 
+(This documentation is for the __`master` branch__, please check the [__`1.0.0` README__](https://github.com/reactjs/react-rails/tree/v1.0.0#server-rendering) for that API!)
+
 To render components on the server, pass `prerender: true` to `react_component`:
 
 ```erb
