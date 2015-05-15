@@ -28,6 +28,16 @@ module React
         end
       end
 
+      initializer "react_rails.bust_cache", group: :all do |app|
+        variant = app.config.react.variant == :production ? 'production' : 'development'
+        variant += '-with-addons' if app.config.react.addons
+
+        app.assets.version = [
+          app.assets.version,
+          "react-#{variant}",
+        ].compact.join('-')
+      end
+
       config.before_initialize do |app|
         # We want to include different files in dev/prod. The development builds
         # contain console logging for invariants and logging to help catch
@@ -41,14 +51,6 @@ module React
       end
 
       config.after_initialize do |app|
-        variant = app.config.react.variant == :production ? 'production' : 'development'
-        variant += '-with-addons' if app.config.react.addons
-
-        app.assets.version = [
-          app.assets.version,
-          "react-#{variant}",
-        ].compact.join('-')
-
         # The class isn't accessible in the configure block, so assign it here if it wasn't overridden:
         app.config.react.server_renderer ||= React::ServerRendering::SprocketsRenderer
 
