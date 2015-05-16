@@ -6,8 +6,8 @@ class NullRenderer
     @name = options
   end
 
-  def render(component_name, props)
-    "#{@name} rendered #{component_name} with #{props}"
+  def render(component_name, props, prerender_options)
+    "#{@name} rendered #{component_name} with #{props} and #{prerender_options}"
   end
 end
 
@@ -36,20 +36,20 @@ class ReactServerRenderingTest < ActiveSupport::TestCase
 
   test '.render returns a rendered string' do
     props = {"props" => true}
-    result = React::ServerRendering.render("MyComponent", props)
-    assert_equal("TEST rendered MyComponent with #{props}", result)
+    result = React::ServerRendering.render("MyComponent", props, "prerender-opts")
+    assert_equal("TEST rendered MyComponent with #{props} and prerender-opts", result)
   end
 
   test '.reset_pool forgets old renderers' do
     # At first, they use the first options:
-    assert_match(/^TEST/, React::ServerRendering.render(nil, nil))
-    assert_match(/^TEST/, React::ServerRendering.render(nil, nil))
+    assert_match(/^TEST/, React::ServerRendering.render(nil, nil, nil))
+    assert_match(/^TEST/, React::ServerRendering.render(nil, nil, nil))
 
     # Then change the init options and clear the pool:
     React::ServerRendering.renderer_options = "DIFFERENT"
     React::ServerRendering.reset_pool
     # New renderers are created with the new init options:
-    assert_match(/^DIFFERENT/, React::ServerRendering.render(nil, nil))
-    assert_match(/^DIFFERENT/, React::ServerRendering.render(nil, nil))
+    assert_match(/^DIFFERENT/, React::ServerRendering.render(nil, nil, nil))
+    assert_match(/^DIFFERENT/, React::ServerRendering.render(nil, nil, nil))
   end
 end

@@ -40,6 +40,19 @@ class ViewHelperTest < ActionDispatch::IntegrationTest
     end
   end
 
+  test 'react_component accepts string props with prerender: true' do
+    html = @helper.react_component('Todo', {todo: 'render on the server'}.to_json, prerender: true)
+    assert(html.include?('data-react-class="Todo"'), "it includes attrs for UJS")
+    assert(html.include?('>render on the server</li>'), "it includes rendered HTML")
+    assert(html.include?('data-reactid'), "it includes React properties")
+  end
+
+  test 'react_component passes :static to SprocketsRenderer' do
+    html = @helper.react_component('Todo', {todo: 'render on the server'}.to_json, prerender: :static)
+    assert(html.include?('>render on the server</li>'), "it includes rendered HTML")
+    assert(!html.include?('data-reactid'), "it DOESNT INCLUDE React properties")
+  end
+
   test 'react_component accepts HTML options and HTML tag' do
     assert @helper.react_component('Foo', {}, :span).match(/<span\s.*><\/span>/)
 

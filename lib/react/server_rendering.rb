@@ -11,9 +11,9 @@ module React
       @@pool = ConnectionPool.new(options) { create_renderer }
     end
 
-    def self.render(component_name, props)
+    def self.render(component_name, props, prerender_options)
       @@pool.with do |renderer|
-        renderer.render(component_name, props)
+        renderer.render(component_name, props, prerender_options)
       end
     end
 

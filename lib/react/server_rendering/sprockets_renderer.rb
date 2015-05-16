@@ -14,13 +14,13 @@ module React
         @context = ExecJS.compile(js_code)
       end
 
-      def render(component_name, props)
+      def render(component_name, props, prerender_options)
         # pass prerender: :static to use renderToStaticMarkup
-        if props.is_a?(Hash) && props[:prerender] == :static
-          react_render_method = "renderToStaticMarkup"
-        else
-          react_render_method = "renderToString"
-        end
+        react_render_method = if prerender_options == :static
+            "renderToStaticMarkup"
+          else
+            "renderToString"
+          end
 
         if !props.is_a?(String)
           props = props.to_json
