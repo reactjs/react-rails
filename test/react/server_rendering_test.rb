@@ -23,6 +23,7 @@ class ReactServerRenderingTest < ActiveSupport::TestCase
   teardown do
     React::ServerRendering.renderer = @previous_renderer
     React::ServerRendering.renderer_options = @previous_options
+    React::ServerRendering.reset_pool
   end
 
   test '.create_renderer makes a renderer with initialization options' do
