@@ -8,7 +8,7 @@
 # react-rails
 
 
-`react-rails` makes it easy to use [React](http://facebook.github.io/react/) and [JSX](http://facebook.github.io/react/docs/jsx-in-depth.html) in your Ruby on Rails (3.1+) application. `react-rails` can:
+`react-rails` makes it easy to use [React](http://facebook.github.io/react/) and [JSX](http://facebook.github.io/react/docs/jsx-in-depth.html) in your Ruby on Rails (3.2+) application. `react-rails` can:
 
 - Provide [various `react` builds](#reactjs-builds) to your asset bundle
 - Transform [`.jsx` in the asset pipeline](#jsx)
