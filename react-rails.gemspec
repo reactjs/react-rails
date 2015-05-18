@@ -28,7 +28,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'coffee-script-source', '~>1.8'
   s.add_dependency 'connection_pool'
   s.add_dependency 'execjs'
-  s.add_dependency 'rails', '>= 3.1'
+  s.add_dependency 'rails', '>= 3.2'
   s.add_dependency 'tilt'
 
   s.files = Dir[
