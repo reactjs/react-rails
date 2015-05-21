@@ -80,6 +80,7 @@ You can use JSX `--harmony` or `--strip-types` options by adding a configuration
 config.react.jsx_transform_options = {
   harmony: true,
   strip_types: true, # for removing Flow type annotations
+  asset_path: "path/to/JSXTransformer.js", # if your JSXTransformer is somewhere else
 }
 ```
 

@@ -4,9 +4,12 @@ module React
       DEFAULT_ASSET_PATH = 'JSXTransformer.js'
 
       def initialize(options)
-        @strip_types =  options.fetch(:strip_types, false)
-        @harmony =      options.fetch(:harmony, false)
-        @asset_path =    options.fetch(:asset_path, DEFAULT_ASSET_PATH)
+        @transform_options = {
+          stripTypes: options.fetch(:strip_types, false),
+          harmony:    options.fetch(:harmony, false),
+        }
+
+        @asset_path = options.fetch(:asset_path, DEFAULT_ASSET_PATH)
 
         # If execjs uses therubyracer, there is no 'global'. Make sure
         # we have it so JSX script can work properly.
@@ -16,7 +19,7 @@ module React
 
 
       def transform(code)
-        result = @context.call('JSXTransformer.transform', code, {stripTypes: @strip_types, harmony: @harmony})
+        result = @context.call('JSXTransformer.transform', code, @transform_options)
         result["code"]
       end
 
