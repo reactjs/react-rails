@@ -20,13 +20,26 @@ EXPECTED_JS_2 = <<eos
 }).call(this);
 eos
 
+class NullTransformer
+  def initialize(options={}); end
+  def transform(code)
+    "TRANSFORMED CODE!;\n"
+  end
+end
+
 class JSXTransformTest < ActionDispatch::IntegrationTest
-  setup { clear_sprockets_cache }
-  teardown { clear_sprockets_cache }
+  setup do
+    clear_sprockets_cache
+  end
+
+  teardown do
+    clear_sprockets_cache
+    React::JSX.transformer_class = React::JSX::Transformer
+    React::JSX.transform_options = {}
+  end
 
   test 'asset pipeline should transform JSX' do
     get '/assets/example.js'
-    FileUtils.rm_r CACHE_PATH if CACHE_PATH.exist?
     assert_response :success
     assert_equal EXPECTED_JS, @response.body
   end
@@ -84,5 +97,12 @@ class JSXTransformTest < ActionDispatch::IntegrationTest
     FileUtils.rm_rf custom_path
     assert_response :success
     assert_equal 'test_confirmation_token_jsx_transformed;', @response.body
+  end
+
+  test 'use a custom transformer' do
+    React::JSX.transformer_class = NullTransformer
+    manually_expire_asset('example2.js')
+    get '/assets/example2.js'
+    assert_equal "TRANSFORMED CODE!;\n", @response.body
   end
 end

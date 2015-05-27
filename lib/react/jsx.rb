@@ -5,7 +5,14 @@ require 'rails'
 
 module React
   module JSX
-    mattr_accessor :transform_options
+    mattr_accessor :transform_options, :transformer_class
+
+    # You can assign `React::JSX.transformer_class = `
+    # to provide your own transformer. It must implement:
+    # - #initialize(options)
+    # - #transform(code) => new code
+    self.transformer_class = Transformer
+
     def self.transform(code)
       transformer.transform(code)
     end
@@ -13,7 +20,7 @@ module React
     def self.transformer
       # lazily loaded during first request and reloaded every time when in dev or test
       if @transformer.nil? || !::Rails.env.production?
-        @transformer = Transformer.new(transform_options)
+        @transformer = transformer_class.new(transform_options)
       end
       @transformer
     end

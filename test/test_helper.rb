@@ -19,6 +19,14 @@ def clear_sprockets_cache
   end
 end
 
+# Sprockets 2 doesn't expire this assets well in
+# this kind of setting,
+# so override `fresh?` to mark it as expired.
+def manually_expire_asset(asset_name)
+  asset = Rails.application.assets[asset_name]
+  def asset.fresh?(env); false; end
+end
+
 # Load support files
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
 
