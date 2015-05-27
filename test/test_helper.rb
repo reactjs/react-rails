@@ -1,3 +1,8 @@
+if RUBY_PLATFORM != "java"
+  require "codeclimate-test-reporter"
+  CodeClimate::TestReporter.start
+end
+
 # Configure Rails Environment
 ENV["RAILS_ENV"] = "test"
 
