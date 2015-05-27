@@ -9,11 +9,11 @@ module React
       config.react.variant = (::Rails.env.production? ? :production : :development)
       config.react.addons = false
       config.react.jsx_transform_options = {}
-      # Server-side rendering
-      config.react.max_renderers = 10
-      config.react.timeout = 20 #seconds
-      config.react.react_js = lambda {File.read(::Rails.application.assets.resolve('react.js'))}
-      config.react.component_filenames = ['components.js']
+      # Server rendering:
+      config.react.server_renderer_pool_size  = 10
+      config.react.server_renderer_timeout    = 20 # seconds
+      config.react.server_renderer            = nil # defaults to SprocketsRenderer
+      config.react.server_renderer_options    = {}  # SprocketsRenderer provides defaults
 
       # Watch .jsx files for changes in dev, so we can reload the JS VMs with the new JS code.
       initializer "react_rails.add_watchable_files", group: :all do |app|
@@ -28,60 +28,41 @@ module React
         end
       end
 
-      initializer "react_rails.setup_vendor", group: :all do |app|
-        # Mimic behavior of ember-rails...
-        # We want to include different files in dev/prod. The unminified builds
-        # contain console logging for invariants and logging to help catch
-        # common mistakes. These are all stripped out in the minified build.
+      initializer "react_rails.bust_cache", group: :all do |app|
+        variant = app.config.react.variant == :production ? 'production' : 'development'
+        variant += '-with-addons' if app.config.react.addons
 
-        # Copy over the variant into a path that sprockets will pick up.
-        # We'll always copy to 'react.js' so that no includes need to change.
-        # We'll also always copy of JSXTransformer.js
-        tmp_path = app.root.join('tmp/react-rails')
-        filename = 'react' +
-                   (app.config.react.addons ? '-with-addons' : '') +
-                   (app.config.react.variant == :production ? '.min.js' : '.js')
-        FileUtils.mkdir_p(tmp_path)
-        FileUtils.cp(::React::Source.bundled_path_for(filename),
-                     tmp_path.join('react.js'))
-        FileUtils.cp(::React::Source.bundled_path_for('JSXTransformer.js'),
-                     tmp_path.join('JSXTransformer.js'))
-        app.assets.prepend_path tmp_path
-
-        # Allow overriding react files that are not based on environment
-        # e.g. /vendor/assets/react/JSXTransformer.js
-        dropin_path = app.root.join("vendor/assets/react")
-        app.assets.prepend_path dropin_path if dropin_path.exist?
-
-        # Allow overriding react files that are based on environment
-        # e.g. /vendor/assets/react/development/react.js
-        dropin_path_env = app.root.join("vendor/assets/react/#{app.config.react.variant}")
-        app.assets.prepend_path dropin_path_env if dropin_path_env.exist?
+        app.assets.version = [
+          app.assets.version,
+          "react-#{variant}",
+        ].compact.join('-')
       end
 
+      config.before_initialize do |app|
+        # We want to include different files in dev/prod. The development builds
+        # contain console logging for invariants and logging to help catch
+        # common mistakes. These are all stripped out in the production build.
+        root_path = Pathname.new('../../../../').expand_path(__FILE__)
+        directory = app.config.react.variant == :production ? 'production' : 'development'
+        directory += '-with-addons' if app.config.react.addons
+
+        app.config.assets.paths << root_path.join('lib/assets/react-source/').join(directory).to_s
+        app.config.assets.paths << root_path.join('lib/assets/javascripts/').to_s
+      end
 
       config.after_initialize do |app|
-        # Server Rendering
-        # Concat component_filenames together for server rendering
-        app.config.react.components_js = lambda {
-          app.config.react.component_filenames.map do |filename|
-            app.assets[filename].to_s
-          end.join(";")
-        }
+        # The class isn't accessible in the configure block, so assign it here if it wasn't overridden:
+        app.config.react.server_renderer ||= React::ServerRendering::SprocketsRenderer
 
-        do_setup = lambda do
-          cfg = app.config.react
-          React::Renderer.setup!( cfg.react_js, cfg.components_js, cfg.replay_console,
-                                {:size => cfg.max_renderers, :timeout => cfg.timeout})
-        end
+        React::ServerRendering.pool_size        = app.config.react.server_renderer_pool_size
+        React::ServerRendering.pool_timeout     = app.config.react.server_renderer_timeout
+        React::ServerRendering.renderer_options = app.config.react.server_renderer_options
+        React::ServerRendering.renderer         = app.config.react.server_renderer
 
-        do_setup.call
-
-        # Reload the JS VMs in dev when files change
-        ActionDispatch::Reloader.to_prepare(&do_setup)
+        React::ServerRendering.reset_pool
+        # Reload renderers in dev when files change
+        ActionDispatch::Reloader.to_prepare { React::ServerRendering.reset_pool }
       end
-
-
     end
   end
 end

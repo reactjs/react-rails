@@ -12,7 +12,7 @@ var <%= file_name.camelize %> = React.createClass({
     return (
       <div>
 <% attributes.each do |attribute| -%>
-        <div><%= attribute[:name].titleize %>: {this.props.<%= attribute[:name] %>}</div>
+        <div><%= attribute[:name].titleize %>: {this.props.<%= attribute[:name].camelize(:lower) %>}</div>
 <% end -%>
       </div>
     );

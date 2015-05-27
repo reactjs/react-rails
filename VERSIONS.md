@@ -3,7 +3,7 @@
 There are three ways to control what version of React.js (and JSXTransformer) is used by `react-rails`:
 
 - Use the [bundled version](#bundled-versions) that comes with the gem
-- Specify a [react-source verison](#react-source-version)
+- Specify a [react-source version](#react-source-version)
 - [Drop in a copy](#drop-in-version) of React.js
 
 ## Bundled Versions

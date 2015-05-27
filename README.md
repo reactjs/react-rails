@@ -8,12 +8,12 @@
 # react-rails
 
 
-`react-rails` makes it easy to use [React](http://facebook.github.io/react/) and [JSX](http://facebook.github.io/react/docs/jsx-in-depth.html) in your Ruby on Rails (3.1+) application. `react-rails` can:
+`react-rails` makes it easy to use [React](http://facebook.github.io/react/) and [JSX](http://facebook.github.io/react/docs/jsx-in-depth.html) in your Ruby on Rails (3.2+) application. `react-rails` can:
 
 - Provide [various `react` builds](#reactjs-builds) to your asset bundle
 - Transform [`.jsx` in the asset pipeline](#jsx)
 - [Render components into views and mount them](#rendering--mounting) via view helper & `react_ujs`
-- [Render components server-side](#server-rendering) with `prerender: true`.
+- [Render components server-side](#server-rendering) with `prerender: true`
 - [Generate components](#component-generator) with a Rails generator
 
 ## Installation
@@ -24,7 +24,7 @@ Add `react-rails` to your gemfile:
 gem 'react-rails', '~> 1.0'
 ```
 
-Next, run the installation script.
+Next, run the installation script:
 
 ```bash
 rails g react:install
@@ -93,7 +93,7 @@ Component = React.createClass
 
 ### Rendering & mounting
 
-`react-rails` includes a view helper (`react_component`) and an unobtrusive JavaScript driver (`react_ujs`) which work together to put React components on the page. You should require the UJS driver in your manifest after `react` (and after `turbolinks` if you use [Turbolinks](https://github.com/rails/turbolinks))
+`react-rails` includes a view helper (`react_component`) and an unobtrusive JavaScript driver (`react_ujs`) which work together to put React components on the page. You should require the UJS driver in your manifest after `react` (and after `turbolinks` if you use [Turbolinks](https://github.com/rails/turbolinks)).
 
 The __view helper__ puts a `div` on the page with the requested component class & props. For example:
 
@@ -107,14 +107,14 @@ On page load, the __`react_ujs` driver__ will scan the page and mount components
 
 `react_ujs` uses Turbolinks events if they're available, otherwise, it uses native events. __Turbolinks >= 2.4.0__ is recommended because it exposes better events.
 
-The view helper's signature is
+The view helper's signature is:
 
 ```ruby
 react_component(component_class_name, props={}, html_options={})
 ```
 
 - `component_class_name` is a string which names a globally-accessible component class. It may have dots (eg, `"MyApp.Header.MenuItem"`).
-- `props` is either an object that responds to `#to_json` or an already-stringified JSON object (eg, made with Jbuilder, see note below)
+- `props` is either an object that responds to `#to_json` or an already-stringified JSON object (eg, made with Jbuilder, see note below).
 - `html_options` may include:
   - `tag:` to use an element other than a `div` to embed `data-react-class` and `-props`.
   - `prerender: true` to render the component on the server.
@@ -122,6 +122,8 @@ react_component(component_class_name, props={}, html_options={})
 
 
 ### Server rendering
+
+(This documentation is for the __`master` branch__, please check the [__`1.0.0` README__](https://github.com/reactjs/react-rails/tree/v1.0.0#server-rendering) for that API!)
 
 To render components on the server, pass `prerender: true` to `react_component`:
 
@@ -137,7 +139,7 @@ _(It will be also be mounted by the UJS on page load.)_
 
 There are some requirements for this to work:
 
-- `react-rails` must load your code. By convention, it uses `components.js`, which was created by the install task. This file must include your components _and_ their dependencies (eg, Underscore.js).
+- `react-rails` must load your code. By convention it uses `components.js`, which was created by the install task. This file must include your components _and_ their dependencies (eg, Underscore.js).
 - Your components must be accessible in the global scope. If you are using `.js.jsx.coffee` files then the wrapper function needs to be taken into account:
 
   ```coffee
@@ -154,24 +156,20 @@ You can configure your pool of JS virtual machines and specify where it should l
 # config/environments/application.rb
 # These are the defaults if you dont specify any yourself
 MyApp::Application.configure do
-  # renderer pool size:
-  config.react.max_renderers = 10
-  # prerender timeout, in seconds:
-  config.react.timeout = 20
-  # where to get React.js source:
-  config.react.react_js = lambda { File.read(::Rails.application.assets.resolve('react.js')) }
-  # array of filenames that will be requested from the asset pipeline
-  # and concatenated:
-  config.react.component_filenames = ['components.js']
-  # server-side console.log, console.warn, and console.error messages will be replayed on the client
-  # (you can set this to `true` in config/enviroments/development.rb to replay in development only)
-  config.react.replay_console = false
+  # Settings for the pool of renderers:
+  config.react.server_renderer_pool_size  ||= 10
+  config.react.server_renderer_timeout    ||= 20 # seconds
+  config.react.server_renderer = React::ServerRendering::SprocketsRenderer
+  config.react.server_renderer_options = {
+    files: ["react.js", "components.js"], # files to load for prerendering
+    replay_console: true,                 # if true, console.* will be replayed client-side
+  }
 end
 ```
 
 ### Component generator
 
-react-rails ships with a Rails generator to help you get started with a simple component scaffold. You can run it using `rails generate react:component ComponentName`. The generator takes an optional list of arguments for default propTypes, which follow the conventions set in the [Reusable Components](http://facebook.github.io/react/docs/reusable-components.html) section of the React documentation.
+`react-rails` ships with a Rails generator to help you get started with a simple component scaffold. You can run it using `rails generate react:component ComponentName`. The generator takes an optional list of arguments for default propTypes, which follow the conventions set in the [Reusable Components](http://facebook.github.io/react/docs/reusable-components.html) section of the React documentation.
 
 For example:
 
@@ -218,15 +216,15 @@ The generator can use the following arguments to create basic propTypes:
 
 The following additional arguments have special behavior:
 
-  * `instanceOf` takes an optional class name in the form of {className}
+  * `instanceOf` takes an optional class name in the form of {className}.
   * `oneOf` behaves like an enum, and takes an optional list of strings in the form of `'name:oneOf{one,two,three}'`.
-  * `oneOfType` takes an optional list of react and custom types in the form of `'model:oneOfType{string,number,OtherType}'`
+  * `oneOfType` takes an optional list of react and custom types in the form of `'model:oneOfType{string,number,OtherType}'`.
 
 Note that the arguments for `oneOf` and `oneOfType` must be enclosed in single quotes to prevent your terminal from expanding them into an argument list.
 
 ### Jbuilder & react-rails
 
-If you use Jbuilder to pass JSON string to `react_component`, make sure your JSON is a stringified hash, not an array. This is not the Rails default -- you should add the root node yourself. For example:
+If you use Jbuilder to pass a JSON string to `react_component`, make sure your JSON is a stringified hash, not an array. This is not the Rails default -- you should add the root node yourself. For example:
 
 ```ruby
 # BAD: returns a stringified array
@@ -244,7 +242,7 @@ end
 
 ## CoffeeScript
 
-It is possible to use JSX with CoffeeScript. The caveat is that you will still need to include the docblock. Since CoffeeScript doesn't allow `/* */` style comments, we need to do something a little different. We also need to embed JSX inside backticks so CoffeeScript ignores the syntax it doesn't understand. Here's an example:
+It is possible to use JSX with CoffeeScript. We need to embed JSX inside backticks so CoffeeScript ignores the syntax it doesn't understand. Here's an example:
 
 ```coffee
 Component = React.createClass

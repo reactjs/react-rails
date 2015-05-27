@@ -46,7 +46,7 @@ class ServerRenderedHtmlTest  < ActionDispatch::IntegrationTest
 
     # Make sure they're not when we don't ask for them
     get '/server/console_example_suppressed'
-    assert_match('Console Logged', response.body)
+    assert_match(/Console Logged/, response.body)
     assert_no_match(/console.log/, response.body)
     assert_no_match(/console.warn/, response.body)
     assert_no_match(/console.error/, response.body)
