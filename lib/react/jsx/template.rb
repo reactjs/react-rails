@@ -10,7 +10,7 @@ module React
       end
 
       def evaluate(scope, locals, &block)
-        @output ||= JSX::transform(data, JSX.transform_options)
+        @output ||= JSX::transform(data)
       end
     end
   end
