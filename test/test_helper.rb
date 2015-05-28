@@ -16,10 +16,20 @@ CACHE_PATH = Pathname.new File.expand_path("../dummy/tmp/cache",  __FILE__)
 
 Rails.backtrace_cleaner.remove_silencers!
 
-# Remove cached files
-Rails.root.join('tmp/cache').tap do |tmp|
-  tmp.rmtree if tmp.exist?
-  tmp.mkpath
+def clear_sprockets_cache
+  # Remove cached files
+  Rails.root.join('tmp/cache').tap do |tmp|
+    tmp.rmtree if tmp.exist?
+    tmp.mkpath
+  end
+end
+
+# Sprockets 2 doesn't expire this assets well in
+# this kind of setting,
+# so override `fresh?` to mark it as expired.
+def manually_expire_asset(asset_name)
+  asset = Rails.application.assets[asset_name]
+  def asset.fresh?(env); false; end
 end
 
 # Load support files
