@@ -5,6 +5,9 @@ module React
       # are used by react_ujs to actually instantiate the React component
       # on the client.
       def react_component(name, props = {}, options = {}, &block)
+        
+        name = name.gsub("::",".") # allows ruby style naming
+        
         options = {:tag => options} if options.is_a?(Symbol)
 
         prerender_options = options[:prerender]
