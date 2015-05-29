@@ -46,6 +46,11 @@ class ViewHelperTest < ActionDispatch::IntegrationTest
     assert(html.include?('>render on the server</li>'), "it includes rendered HTML")
     assert(html.include?('data-reactid'), "it includes React properties")
   end
+  
+  test 'react_component will translate :: to . in the component name' do
+    html = @helper.react_component('Lib::Todo', {}, prerender: true)
+    assert(html.include?('data-react-class="Lib.Todo"'), "it includes attrs for UJS")
+  end
 
   test 'react_component passes :static to SprocketsRenderer' do
     html = @helper.react_component('Todo', {todo: 'render on the server'}.to_json, prerender: :static)

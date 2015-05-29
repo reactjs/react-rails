@@ -5,3 +5,5 @@ Todo = React.createClass
 # Because Coffee files are in an anonymous function,
 # expose it for server rendering tests
 window.Todo = Todo
+# expose second example for nested names
+window.Lib.Todo = Todo
