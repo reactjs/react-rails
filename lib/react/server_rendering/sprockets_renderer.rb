@@ -16,7 +16,7 @@ module React
 
       def load_asset(file)
         if ::Rails.application.config.assets.compile
-          ::Rails.application.assets[filename].to_s
+          ::Rails.application.assets[file].to_s
         else
           asset_path = ActionView::Base.new.asset_path(file)
           File.read(File.join(::Rails.public_path, asset_path))
