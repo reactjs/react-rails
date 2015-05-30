@@ -8,17 +8,22 @@ module React
         js_code = GLOBAL_WRAPPER + CONSOLE_POLYFILL
 
         filenames.each do |filename|
-          puts "LOADING #{filename}"
-          js_code << ::Rails.application.assets[filename].to_s
+          js_code << load_asset(filename)
         end
 
-        puts "BEFORE COMPILE"
         @context = ExecJS.compile(js_code)
-        puts "AFTER COMPILE"
+      end
+
+      def load_asset(file)
+        if ::Rails.application.config.assets.compile
+          ::Rails.application.assets[filename].to_s
+        else
+          asset_path = ActionView::Base.new.asset_path(file)
+          File.read(File.join(::Rails.public_path, asset_path))
+        end
       end
 
       def render(component_name, props, prerender_options)
-        puts "BEGIN RENDER"
         # pass prerender: :static to use renderToStaticMarkup
         react_render_method = if prerender_options == :static
             "renderToStaticMarkup"
@@ -38,9 +43,7 @@ module React
           })()
         JS
 
-        puts "BEFORE EVAL"
         @context.eval(js_code).html_safe
-        puts "END RENDER"
       rescue ExecJS::ProgramError => err
         raise PrerenderError.new(component_name, props, err)
       end
