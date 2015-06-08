@@ -1,5 +1,6 @@
 require 'connection_pool'
 require 'react/server_rendering/sprockets_renderer'
+require 'react/server_rendering/exec_js_renderer'
 
 module React
   module ServerRendering
