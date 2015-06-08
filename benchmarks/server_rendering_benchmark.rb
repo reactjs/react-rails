@@ -25,14 +25,17 @@ React::ServerRendering.renderer = React::ServerRendering::ExecJSRenderer
 React::ServerRendering.renderer_options = {code: JS_CODE}
 React::ServerRendering.pool_timeout = 1000
 
-def test_runtime(runtime, renders:, pool_size:, threaded:)
+def test_runtime(runtime, renders:, pool_size:, threaded:, thread_size:)
   ExecJS.runtime = runtime
   React::ServerRendering.pool_size = pool_size
   React::ServerRendering.reset_pool
   if threaded
-    threads = renders.times.map do
+    threads = thread_size.times.map do
       Thread.new do
-        React::ServerRendering.render("SlowComponent", {}, {})
+        renders.times do
+          React::ServerRendering.render("SlowComponent", {}, {})
+          Thread.pass
+        end
       end
     end
     threads.map(&:join)
@@ -50,12 +53,14 @@ RUNTIMES = [
   ExecJS::Runtimes::Node,
 ]
 
-Benchmark.bm(35) do |x|
+Benchmark.bm(45) do |x|
   [true, false].each do |threaded|
     [1, 10, 25].each do |pool_size|
-      RUNTIMES.each do |runtime|
-        x.report("#{threaded ? "threaded, " : ""}#{pool_size} conn, #{runtime.name}") do
-          test_runtime(runtime, renders: 50, pool_size: pool_size, threaded: true)
+      [1, 2, 4, 8].each do |thread_size|
+        RUNTIMES.each do |runtime|
+          x.report("#{threaded ? "threaded, " : ""}#{pool_size} conn, #{thread_size} threads, #{runtime.name}") do
+            test_runtime(runtime, renders: 100, pool_size: pool_size, threaded: true, thread_size: thread_size)
+          end
         end
       end
     end
