@@ -23,15 +23,23 @@ JS_CODE = File.read(REACT_JS_PATH) + SLOW_COMPONENT
 
 React::ServerRendering.renderer = React::ServerRendering::ExecJSRenderer
 React::ServerRendering.renderer_options = {code: JS_CODE}
-React::ServerRendering.pool_timeout = 10
+React::ServerRendering.pool_timeout = 1000
 
-def test_runtime(runtime, renders:, pool_size:)
+def test_runtime(runtime, renders:, pool_size:, threaded:)
   ExecJS.runtime = runtime
   React::ServerRendering.pool_size = pool_size
   React::ServerRendering.reset_pool
-
-  renders.times do
-    React::ServerRendering.render("SlowComponent", {}, {})
+  if threaded
+    threads = renders.times.map do
+      Thread.new do
+        React::ServerRendering.render("SlowComponent", {}, {})
+      end
+    end
+    threads.map(&:join)
+  else
+    renders.times.map do
+      React::ServerRendering.render("SlowComponent", {}, {})
+    end
   end
 end
 
@@ -42,10 +50,14 @@ RUNTIMES = [
   ExecJS::Runtimes::Node,
 ]
 
-Benchmark.bm(25) do |x|
-  [1, 10, 25].each do |pool_size|
-    RUNTIMES.each do |runtime|
-      x.report("#{runtime.name}, #{pool_size}x") { test_runtime(runtime, renders: 50, pool_size: pool_size)}
+Benchmark.bm(35) do |x|
+  [true, false].each do |threaded|
+    [1, 10, 25].each do |pool_size|
+      RUNTIMES.each do |runtime|
+        x.report("#{threaded ? "threaded, " : ""}#{pool_size} conn, #{runtime.name}") do
+          test_runtime(runtime, renders: 50, pool_size: pool_size, threaded: true)
+        end
+      end
     end
   end
 end
