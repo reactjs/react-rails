@@ -14,6 +14,14 @@ module React
     self.transformer_class = Transformer
 
     def self.transform(code)
+      # slim = code.match( /<slim>(.*)<\/slim>/m )
+
+      code = code.gsub( /<slim>(.*)<\/slim>/m ) {|slim| 
+        Slim::Template.new { slim }.render
+      }
+
+      
+      
       transformer.transform(code)
     end
 
