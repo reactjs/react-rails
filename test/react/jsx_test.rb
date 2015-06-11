@@ -34,7 +34,7 @@ class JSXTransformTest < ActionDispatch::IntegrationTest
 
   teardown do
     clear_sprockets_cache
-    React::JSX.transformer_class = React::JSX::Transformer
+    React::JSX.transformer_class = React::JSX::JSXTransformer
     React::JSX.transform_options = {}
   end
 
@@ -89,6 +89,7 @@ class JSXTransformTest < ActionDispatch::IntegrationTest
     replacing_path =  custom_path.join("CustomTransformer.js")
 
     React::JSX.transform_options = {asset_path: "custom/CustomTransformer.js"}
+    React::JSX.transformer_class = React::JSX::JSXTransformer
 
     FileUtils.mkdir_p(custom_path)
     FileUtils.cp(hidden_path, replacing_path)

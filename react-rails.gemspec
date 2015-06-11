@@ -31,6 +31,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'execjs'
   s.add_dependency 'rails', '>= 3.2'
   s.add_dependency 'tilt'
+  s.add_dependency 'babel-transpiler', '>=0.7.0'
 
   s.files = Dir[
     'lib/**/*',
