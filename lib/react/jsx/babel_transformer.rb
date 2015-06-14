@@ -10,11 +10,11 @@ module React
                                               "Please use new Babel Transformer options :whitelist, :plugin instead.")
         end
 
-        DEFAULT_TRANSFORM_OPTIONS.merge(options)
+        @transform_options = DEFAULT_TRANSFORM_OPTIONS.merge(options)
       end
 
       def transform(code)
-        Babel::Transpiler.transform(code)['code']
+        Babel::Transpiler.transform(code, @transform_options)['code']
       end
     end
   end

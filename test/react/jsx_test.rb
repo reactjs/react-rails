@@ -67,6 +67,14 @@ class JSXTransformTest < ActionDispatch::IntegrationTest
     assert_equal "TRANSFORMED CODE!;\n", @response.body
   end
 
+  def test_babel_transformer_accepts_babel_transformation_options
+    React::JSX.transform_options = {blacklist: ['spec.functionName', 'validation.react', "strict"]}
+    get '/assets/example.js'
+    assert_response :success
+
+    assert_not_includes @response.body, 'strict'
+  end
+
 end
 
 class JSXTransformerTest < ActionDispatch::IntegrationTest
