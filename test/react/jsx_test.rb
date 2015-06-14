@@ -3,10 +3,14 @@ require 'fileutils'
 
 # Sprockets is inserting a newline after the docblock for some reason...
 EXPECTED_JS = <<eos
+"use strict";
+
 React.createElement("div", null);
 eos
 
 EXPECTED_JS_2 = <<eos
+"use strict";
+
 (function() {
   var Component;
 
@@ -30,18 +34,19 @@ end
 class JSXTransformTest < ActionDispatch::IntegrationTest
   setup do
     clear_sprockets_cache
+    React::JSX.transformer_class = React::JSX::BabelTransformer
+    React::JSX.transform_options = {}
   end
 
   teardown do
     clear_sprockets_cache
-    React::JSX.transformer_class = React::JSX::JSXTransformer
-    React::JSX.transform_options = {}
   end
 
   test 'asset pipeline should transform JSX' do
     get '/assets/example.js'
     assert_response :success
-    assert_equal EXPECTED_JS, @response.body
+
+    assert_equal EXPECTED_JS.gsub(/\s/, ''), @response.body.gsub(/\s/, '')
   end
 
   test 'asset pipeline should transform JSX + Coffeescript' do
@@ -51,7 +56,29 @@ class JSXTransformTest < ActionDispatch::IntegrationTest
     # as some version inserts an extra "\n" at the beginning.
     # Because appraisal is used, multiple versions of coffee-script are treated
     # together. Remove all spaces to make test pass.
+    # puts @response.body
     assert_equal EXPECTED_JS_2.gsub(/\s/, ''), @response.body.gsub(/\s/, '')
+  end
+
+  test 'use a custom transformer' do
+    React::JSX.transformer_class = NullTransformer
+    manually_expire_asset('example2.js')
+    get '/assets/example2.js'
+    assert_equal "TRANSFORMED CODE!;\n", @response.body
+  end
+
+end
+
+class JSXTransformerTest < ActionDispatch::IntegrationTest
+
+  setup do
+    clear_sprockets_cache
+    React::JSX.transformer_class = React::JSX::JSXTransformer
+    React::JSX.transform_options = {}
+  end
+
+  teardown do
+    clear_sprockets_cache
   end
 
   test 'can use dropped-in version of JSX transformer' do
@@ -89,7 +116,6 @@ class JSXTransformTest < ActionDispatch::IntegrationTest
     replacing_path =  custom_path.join("CustomTransformer.js")
 
     React::JSX.transform_options = {asset_path: "custom/CustomTransformer.js"}
-    React::JSX.transformer_class = React::JSX::JSXTransformer
 
     FileUtils.mkdir_p(custom_path)
     FileUtils.cp(hidden_path, replacing_path)
@@ -100,10 +126,4 @@ class JSXTransformTest < ActionDispatch::IntegrationTest
     assert_equal 'test_confirmation_token_jsx_transformed;', @response.body
   end
 
-  test 'use a custom transformer' do
-    React::JSX.transformer_class = NullTransformer
-    manually_expire_asset('example2.js')
-    get '/assets/example2.js'
-    assert_equal "TRANSFORMED CODE!;\n", @response.body
-  end
 end
