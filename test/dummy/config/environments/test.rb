@@ -17,7 +17,8 @@ Dummy::Application.configure do
   config.eager_load = false
 
   # Configure static asset server for tests with Cache-Control for performance.
-  config.serve_static_assets  = true
+  # Disabled since we dont use it and this option is deprecated from Rails 4.2 onwards
+  # config.serve_static_assets  = true
   config.static_cache_control = "public, max-age=3600"
 
   # Show full error reports and disable caching.
