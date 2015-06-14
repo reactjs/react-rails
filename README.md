@@ -114,16 +114,6 @@ config.react.jsx_transform_options = {
 }
 ```
 
-#### CoffeeScript
-
-To use CoffeeScript, create `.js.jsx.coffee` files and embed JSX inside backticks, for example:
-
-```coffee
-Component = React.createClass
-  render: ->
-    `<ExampleComponent videos={this.props.videos} />`
-```
-
 ### Rendering & mounting
 
 `react-rails` includes a view helper (`react_component`) and an unobtrusive JavaScript driver (`react_ujs`) 
@@ -289,8 +279,9 @@ end
 
 ## CoffeeScript
 
-It is possible to use JSX with CoffeeScript. We need to embed JSX inside backticks 
-so CoffeeScript ignores the syntax it doesn't understand. Here's an example:
+It is possible to use JSX with CoffeeScript. To use CoffeeScript, create files with an extension `.js.jsx.coffee`. 
+We also need to embed JSX code inside backticks so that CoffeeScript ignores the syntax it doesn't understand.
+Here's an example:
 
 ```coffee
 Component = React.createClass
