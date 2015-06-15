@@ -5,7 +5,7 @@ module React
   module ServerRendering
     class ExecJSRenderer
       def initialize(options={})
-        js_code = options.fetch(:code) || raise("Pass `code:` option to instantiate a JS context!")
+        js_code = options[:code] || raise("Pass `code:` option to instantiate a JS context!")
         @context = ExecJS.compile(GLOBAL_WRAPPER + js_code)
       end
 
@@ -19,7 +19,7 @@ module React
             return result;
           })()
         JS
-        @context.eval(js_code)
+        @context.eval(js_code).html_safe
       rescue ExecJS::ProgramError => err
         raise React::ServerRendering::PrerenderError.new(component_name, props, err)
       end
