@@ -41,9 +41,9 @@ module React
 
       # Handle node.js & other RubyRacer contexts
       GLOBAL_WRAPPER = <<-JS
-      var global = global || this;
-      var self = self || this;
-      var window = window || this;
+        var global = global || this;
+        var self = self || this;
+        var window = window || this;
       JS
 
       # Reimplement console methods for replaying on the client
@@ -58,15 +58,15 @@ module React
 
       # Replay message from console history
       CONSOLE_REPLAY = <<-JS
-      (function (history) {
-        if (history && history.length > 0) {
-          result += '\\n<scr'+'ipt>';
-          history.forEach(function (msg) {
-            result += '\\nconsole.' + msg.level + '.apply(console, ' + JSON.stringify(msg.arguments) + ');';
-          });
-          result += '\\n</scr'+'ipt>';
-        }
-      })(console.history);
+        (function (history) {
+          if (history && history.length > 0) {
+            result += '\\n<scr'+'ipt>';
+            history.forEach(function (msg) {
+              result += '\\nconsole.' + msg.level + '.apply(console, ' + JSON.stringify(msg.arguments) + ');';
+            });
+            result += '\\n</scr'+'ipt>';
+          }
+        })(console.history);
       JS
 
       class PrerenderError < RuntimeError
