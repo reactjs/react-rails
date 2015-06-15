@@ -32,7 +32,7 @@ module React
         super(component_name, props, {render_function: react_render_method})
       end
 
-      def after_render
+      def after_render(component_name, props, prerender_options)
         @replay_console ? CONSOLE_REPLAY : ""
       end
 

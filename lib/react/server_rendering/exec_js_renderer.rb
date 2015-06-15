@@ -13,9 +13,9 @@ module React
         render_function = prerender_options.fetch(:render_function, "renderToString")
         js_code = <<-JS
           (function () {
-            #{before_render}
+            #{before_render(component_name, props, prerender_options)}
             var result = React.#{render_function}(React.createElement(#{component_name}, #{props}));
-            #{after_render}
+            #{after_render(component_name, props, prerender_options)}
             return result;
           })()
         JS
@@ -25,8 +25,8 @@ module React
       end
 
       # Hooks for inserting JS before/after rendering
-      def before_render; ""; end
-      def after_render; ""; end
+      def before_render(component_name, props, prerender_options); ""; end
+      def after_render(component_name, props, prerender_options); ""; end
 
       # Handle Node.js & other ExecJS contexts
       GLOBAL_WRAPPER = <<-JS
