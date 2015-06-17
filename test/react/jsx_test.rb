@@ -29,13 +29,17 @@ end
 
 class JSXTransformTest < ActionDispatch::IntegrationTest
   setup do
-    clear_sprockets_cache
-    React::JSX.transformer_class = React::JSX::BabelTransformer
-    React::JSX.transform_options = {}
+    reset_transformer
   end
 
   teardown do
+    reset_transformer
+  end
+
+  def reset_transformer
     clear_sprockets_cache
+    React::JSX.transformer_class = React::JSX::BabelTransformer
+    React::JSX.transform_options = {}
   end
 
   test 'asset pipeline should transform JSX' do
@@ -52,7 +56,6 @@ class JSXTransformTest < ActionDispatch::IntegrationTest
     # as some version inserts an extra "\n" at the beginning.
     # Because appraisal is used, multiple versions of coffee-script are treated
     # together. Remove all spaces to make test pass.
-    # puts @response.body
     assert_equal EXPECTED_JS_2.gsub(/\s/, ''), @response.body.gsub(/\s/, '')
   end
 
@@ -76,13 +79,17 @@ end
 class JSXTransformerTest < ActionDispatch::IntegrationTest
 
   setup do
-    clear_sprockets_cache
-    React::JSX.transformer_class = React::JSX::JSXTransformer
-    React::JSX.transform_options = {}
+    reset_transformer
   end
 
   teardown do
+    reset_transformer
+  end
+
+  def reset_transformer
     clear_sprockets_cache
+    React::JSX.transformer_class = React::JSX::JSXTransformer
+    React::JSX.transform_options = {}
   end
 
   test 'can use dropped-in version of JSX transformer' do
