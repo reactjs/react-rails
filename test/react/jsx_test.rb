@@ -68,7 +68,7 @@ class JSXTransformTest < ActionDispatch::IntegrationTest
     get '/assets/example.js'
     assert_response :success
 
-    assert_not_includes @response.body, 'strict'
+    assert !@response.body.include?('strict')
   end
 
 end
