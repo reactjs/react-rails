@@ -18,8 +18,12 @@
 - Allow custom renderers for server rendering #253
 - Server render with `renderToStaticMarkup` via `prerender: :static` #253
 - Accept `config.react.jsx_transform_options = {asset_path: "path/to/JSXTransformer.js"}` #273
+- Added `BabelTransformer` for transforming JSX #295 
+- Added `ExecJSRenderer` to server rendering tools
 
 #### Deprecations
+
+- `JSXTransformer` won't be updated 
 
 #### Bug Fixes
 
