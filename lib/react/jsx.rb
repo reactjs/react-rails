@@ -1,6 +1,7 @@
 require 'execjs'
 require 'react/jsx/template'
-require 'react/jsx/transformer'
+require 'react/jsx/jsx_transformer'
+require 'react/jsx/babel_transformer'
 require 'rails'
 
 module React
@@ -11,7 +12,7 @@ module React
     # to provide your own transformer. It must implement:
     # - #initialize(options)
     # - #transform(code) => new code
-    self.transformer_class = Transformer
+    self.transformer_class = BabelTransformer
 
     def self.transform(code)
       transformer.transform(code)

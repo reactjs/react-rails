@@ -29,19 +29,24 @@ end
 
 class JSXTransformTest < ActionDispatch::IntegrationTest
   setup do
-    clear_sprockets_cache
+    reset_transformer
   end
 
   teardown do
+    reset_transformer
+  end
+
+  def reset_transformer
     clear_sprockets_cache
-    React::JSX.transformer_class = React::JSX::Transformer
+    React::JSX.transformer_class = React::JSX::BabelTransformer
     React::JSX.transform_options = {}
   end
 
   test 'asset pipeline should transform JSX' do
     get '/assets/example.js'
     assert_response :success
-    assert_equal EXPECTED_JS, @response.body
+
+    assert_equal EXPECTED_JS.gsub(/\s/, ''), @response.body.gsub(/\s/, '')
   end
 
   test 'asset pipeline should transform JSX + Coffeescript' do
@@ -52,6 +57,39 @@ class JSXTransformTest < ActionDispatch::IntegrationTest
     # Because appraisal is used, multiple versions of coffee-script are treated
     # together. Remove all spaces to make test pass.
     assert_equal EXPECTED_JS_2.gsub(/\s/, ''), @response.body.gsub(/\s/, '')
+  end
+
+  test 'use a custom transformer' do
+    React::JSX.transformer_class = NullTransformer
+    manually_expire_asset('example2.js')
+    get '/assets/example2.js'
+    assert_equal "TRANSFORMED CODE!;\n", @response.body
+  end
+
+  def test_babel_transformer_accepts_babel_transformation_options
+    React::JSX.transform_options = {blacklist: ['spec.functionName', 'validation.react', "strict"]}
+    get '/assets/example.js'
+    assert_response :success
+
+    assert !@response.body.include?('strict')
+  end
+
+end
+
+class JSXTransformerTest < ActionDispatch::IntegrationTest
+
+  setup do
+    reset_transformer
+  end
+
+  teardown do
+    reset_transformer
+  end
+
+  def reset_transformer
+    clear_sprockets_cache
+    React::JSX.transformer_class = React::JSX::JSXTransformer
+    React::JSX.transform_options = {}
   end
 
   test 'can use dropped-in version of JSX transformer' do
@@ -99,10 +137,4 @@ class JSXTransformTest < ActionDispatch::IntegrationTest
     assert_equal 'test_confirmation_token_jsx_transformed;', @response.body
   end
 
-  test 'use a custom transformer' do
-    React::JSX.transformer_class = NullTransformer
-    manually_expire_asset('example2.js')
-    get '/assets/example2.js'
-    assert_equal "TRANSFORMED CODE!;\n", @response.body
-  end
 end

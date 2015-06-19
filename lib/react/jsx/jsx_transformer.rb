@@ -1,6 +1,6 @@
 module React
   module JSX
-    class Transformer
+    class JSXTransformer
       DEFAULT_ASSET_PATH = 'JSXTransformer.js'
 
       def initialize(options)
