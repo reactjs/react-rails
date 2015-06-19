@@ -1,4 +1,5 @@
 require 'connection_pool'
+require 'react/server_rendering/exec_js_renderer'
 require 'react/server_rendering/sprockets_renderer'
 
 module React
@@ -19,6 +20,14 @@ module React
 
     def self.create_renderer
       renderer.new(renderer_options)
+    end
+
+    class PrerenderError < RuntimeError
+      def initialize(component_name, props, js_message)
+        message = ["Encountered error \"#{js_message}\" when prerendering #{component_name} with #{props}",
+                    js_message.backtrace.join("\n")].join("\n")
+        super(message)
+      end
     end
   end
 end

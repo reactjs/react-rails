@@ -1,17 +1,20 @@
+# Extends ExecJSRenderer for the Rails environment
+# - builds JS code out of the asset pipeline
+# - stringifies props
+# - implements console replay
 module React
   module ServerRendering
-    class SprocketsRenderer
+    class SprocketsRenderer < ExecJSRenderer
       def initialize(options={})
         @replay_console = options.fetch(:replay_console, true)
-
         filenames = options.fetch(:files, ["react.js", "components.js"])
-        js_code = GLOBAL_WRAPPER + CONSOLE_POLYFILL
+        js_code = CONSOLE_POLYFILL.dup
 
         filenames.each do |filename|
           js_code << ::Rails.application.assets[filename].to_s
         end
 
-        @context = ExecJS.compile(js_code)
+        super(options.merge(code: js_code))
       end
 
       def render(component_name, props, prerender_options)
@@ -26,25 +29,12 @@ module React
           props = props.to_json
         end
 
-        js_code = <<-JS
-          (function () {
-            var result = React.#{react_render_method}(React.createElement(#{component_name}, #{props}));
-            #{@replay_console ? CONSOLE_REPLAY : ""}
-            return result;
-          })()
-        JS
-
-        @context.eval(js_code).html_safe
-      rescue ExecJS::ProgramError => err
-        raise PrerenderError.new(component_name, props, err)
+        super(component_name, props, {render_function: react_render_method})
       end
 
-      # Handle node.js & other RubyRacer contexts
-      GLOBAL_WRAPPER = <<-JS
-        var global = global || this;
-        var self = self || this;
-        var window = window || this;
-      JS
+      def after_render(component_name, props, prerender_options)
+        @replay_console ? CONSOLE_REPLAY : ""
+      end
 
       # Reimplement console methods for replaying on the client
       CONSOLE_POLYFILL = <<-JS
@@ -68,14 +58,6 @@ module React
           }
         })(console.history);
       JS
-
-      class PrerenderError < RuntimeError
-        def initialize(component_name, props, js_message)
-          message = ["Encountered error \"#{js_message}\" when prerendering #{component_name} with #{props}",
-                      js_message.backtrace.join("\n")].join("\n")
-          super(message)
-        end
-      end
     end
   end
 end

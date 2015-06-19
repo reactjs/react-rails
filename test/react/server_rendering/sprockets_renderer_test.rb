@@ -38,7 +38,7 @@ class SprocketsRendererTest < ActiveSupport::TestCase
   end
 
   test '#render errors include stack traces' do
-    err = assert_raises React::ServerRendering::SprocketsRenderer::PrerenderError do
+    err = assert_raises React::ServerRendering::PrerenderError do
       @renderer.render("NonExistentComponent", {}, nil)
     end
     assert_match(/ReferenceError/, err.to_s)
@@ -49,7 +49,7 @@ class SprocketsRendererTest < ActiveSupport::TestCase
   test '.new accepts any filenames' do
     limited_renderer = React::ServerRendering::SprocketsRenderer.new(files: ["react.js", "components/Todo.js"])
     assert_match(/get a real job<\/li>/, limited_renderer.render("Todo", {todo: "get a real job"}, nil))
-    err = assert_raises React::ServerRendering::SprocketsRenderer::PrerenderError do
+    err = assert_raises React::ServerRendering::PrerenderError do
       limited_renderer.render("TodoList", {todos: []}, nil)
     end
     assert_match(/ReferenceError/, err.to_s, "it doesnt load other files")
