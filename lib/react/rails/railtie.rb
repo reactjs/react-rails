@@ -33,25 +33,25 @@ module React
       end
 
       initializer "react_rails.bust_cache", group: :all do |app|
-        variant = app.config.react.variant == :production ? 'production' : 'development'
-        variant += '-with-addons' if app.config.react.addons
+        asset_variant = React::Rails::AssetVariant.new({
+          variant: app.config.react.variant,
+          addons: app.config.react.addons,
+        })
 
         app.assets.version = [
           app.assets.version,
-          "react-#{variant}",
+          "react-#{asset_variant.react_build}",
         ].compact.join('-')
       end
 
       config.before_initialize do |app|
-        # We want to include different files in dev/prod. The development builds
-        # contain console logging for invariants and logging to help catch
-        # common mistakes. These are all stripped out in the production build.
-        root_path = Pathname.new('../../../../').expand_path(__FILE__)
-        directory = app.config.react.variant == :production ? 'production' : 'development'
-        directory += '-with-addons' if app.config.react.addons
+        asset_variant = React::Rails::AssetVariant.new({
+          variant: app.config.react.variant,
+          addons: app.config.react.addons,
+        })
 
-        app.config.assets.paths << root_path.join('lib/assets/react-source/').join(directory).to_s
-        app.config.assets.paths << root_path.join('lib/assets/javascripts/').to_s
+        app.config.assets.paths << asset_variant.react_directory
+        app.config.assets.paths << asset_variant.jsx_directory
       end
 
       config.after_initialize do |app|
