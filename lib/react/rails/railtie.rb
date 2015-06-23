@@ -11,8 +11,8 @@ module React
       config.react.jsx_transform_options = {}
       config.react.jsx_transformer_class = nil # defaults to BabelTransformer
       # Server rendering:
-      config.react.server_renderer_pool_size  = 10
-      config.react.server_renderer_timeout    = 20 # seconds
+      config.react.server_renderer_pool_size  = 1   # increase if you're on JRuby
+      config.react.server_renderer_timeout    = 20  # seconds
       config.react.server_renderer            = nil # defaults to SprocketsRenderer
       config.react.server_renderer_options    = {}  # SprocketsRenderer provides defaults
 

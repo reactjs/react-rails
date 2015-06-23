@@ -188,7 +188,7 @@ You can configure your pool of JS virtual machines and specify where it should l
 # These are the defaults if you dont specify any yourself
 MyApp::Application.configure do
   # Settings for the pool of renderers:
-  config.react.server_renderer_pool_size  ||= 10
+  config.react.server_renderer_pool_size  ||= 1  # ExecJS doesn't allow more than one on MRI
   config.react.server_renderer_timeout    ||= 20 # seconds
   config.react.server_renderer = React::ServerRendering::SprocketsRenderer
   config.react.server_renderer_options = {
@@ -197,6 +197,10 @@ MyApp::Application.configure do
   }
 end
 ```
+
+- On MRI, use `therubyracer` for the best performance (see [discussion](https://github.com/reactjs/react-rails/pull/290))
+- On MRI, you'll get a deadlock with `pool_size` > 1
+- If you're using JRuby, you can increase `pool_size` to have real multi-threaded rendering.
 
 ### Component generator
 
