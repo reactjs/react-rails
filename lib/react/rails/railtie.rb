@@ -9,7 +9,7 @@ module React
       config.react.variant = (::Rails.env.production? ? :production : :development)
       config.react.addons = false
       config.react.jsx_transform_options = {}
-      config.react.jsx_transformer_class = React::JSX::BabelTransformer
+      config.react.jsx_transformer_class = nil # defaults to BabelTransformer
       # Server rendering:
       config.react.server_renderer_pool_size  = 10
       config.react.server_renderer_timeout    = 20 # seconds
@@ -23,8 +23,10 @@ module React
 
       # Include the react-rails view helper lazily
       initializer "react_rails.setup_view_helpers", group: :all do |app|
-        React::JSX.transform_options = app.config.react.jsx_transform_options
+        app.config.react.jsx_transformer_class ||= React::JSX::DEFAULT_TRANSFORMER
         React::JSX.transformer_class = app.config.react.jsx_transformer_class
+        React::JSX.transform_options = app.config.react.jsx_transform_options
+
         ActiveSupport.on_load(:action_view) do
           include ::React::Rails::ViewHelper
         end
