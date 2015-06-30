@@ -24,6 +24,13 @@ def clear_sprockets_cache
   end
 end
 
+def reset_transformer
+  clear_sprockets_cache
+  React::JSX.transformer_class = React::JSX::DEFAULT_TRANSFORMER
+  React::JSX.transform_options = {}
+  React::JSX.transformer = nil
+end
+
 # Sprockets 2 doesn't expire this assets well in
 # this kind of setting,
 # so override `fresh?` to mark it as expired.

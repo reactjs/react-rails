@@ -9,9 +9,10 @@ module React
       config.react.variant = (::Rails.env.production? ? :production : :development)
       config.react.addons = false
       config.react.jsx_transform_options = {}
+      config.react.jsx_transformer_class = nil # defaults to BabelTransformer
       # Server rendering:
-      config.react.server_renderer_pool_size  = 10
-      config.react.server_renderer_timeout    = 20 # seconds
+      config.react.server_renderer_pool_size  = 1   # increase if you're on JRuby
+      config.react.server_renderer_timeout    = 20  # seconds
       config.react.server_renderer            = nil # defaults to SprocketsRenderer
       config.react.server_renderer_options    = {}  # SprocketsRenderer provides defaults
 
@@ -22,32 +23,35 @@ module React
 
       # Include the react-rails view helper lazily
       initializer "react_rails.setup_view_helpers", group: :all do |app|
+        app.config.react.jsx_transformer_class ||= React::JSX::DEFAULT_TRANSFORMER
+        React::JSX.transformer_class = app.config.react.jsx_transformer_class
         React::JSX.transform_options = app.config.react.jsx_transform_options
+
         ActiveSupport.on_load(:action_view) do
           include ::React::Rails::ViewHelper
         end
       end
 
       initializer "react_rails.bust_cache", group: :all do |app|
-        variant = app.config.react.variant == :production ? 'production' : 'development'
-        variant += '-with-addons' if app.config.react.addons
+        asset_variant = React::Rails::AssetVariant.new({
+          variant: app.config.react.variant,
+          addons: app.config.react.addons,
+        })
 
         app.assets.version = [
           app.assets.version,
-          "react-#{variant}",
+          "react-#{asset_variant.react_build}",
         ].compact.join('-')
       end
 
       config.before_initialize do |app|
-        # We want to include different files in dev/prod. The development builds
-        # contain console logging for invariants and logging to help catch
-        # common mistakes. These are all stripped out in the production build.
-        root_path = Pathname.new('../../../../').expand_path(__FILE__)
-        directory = app.config.react.variant == :production ? 'production' : 'development'
-        directory += '-with-addons' if app.config.react.addons
+        asset_variant = React::Rails::AssetVariant.new({
+          variant: app.config.react.variant,
+          addons: app.config.react.addons,
+        })
 
-        app.config.assets.paths << root_path.join('lib/assets/react-source/').join(directory).to_s
-        app.config.assets.paths << root_path.join('lib/assets/javascripts/').to_s
+        app.config.assets.paths << asset_variant.react_directory
+        app.config.assets.paths << asset_variant.jsx_directory
       end
 
       config.after_initialize do |app|
