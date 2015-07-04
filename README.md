@@ -93,12 +93,12 @@ and pass [options](http://babeljs.io/docs/usage/options/) to the babel transpile
 
 ```ruby
 config.react.jsx_transform_options = {
-  blacklist: ['spec.functionName', 'validation.react'], // default options
-  optional: ["transformerName"],  // pass extra babel options
-  whitelist: ["useStrict"] // even more options    
+  blacklist: ['spec.functionName', 'validation.react'], # default options
+  optional: ["transformerName"],  # pass extra babel options
+  whitelist: ["useStrict"] # even more options    
 }
 ```
-Under the hood, `react-rails` users [ruby-babel-transpiler](https://github.com/babel/ruby-babel-transpiler), for transformation.
+Under the hood, `react-rails` uses [ruby-babel-transpiler](https://github.com/babel/ruby-babel-transpiler), for transformation.
   
 #### JSXTransformer options
 
