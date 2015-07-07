@@ -10,7 +10,7 @@ require 'pathname'
 namespace :react do
   task :update do
     FileUtils.rm_f('vendor/react/.bower.json')
-    system('bower install react')
+    `bower install react`
     assets_path = Pathname.new(File.dirname(__FILE__)).join('lib/assets/')
     copy_react_asset('JSXTransformer.js', assets_path.join('javascripts/JSXTransformer.js'))
     copy_react_asset('react.js', assets_path.join('react-source/development/react.js'))
