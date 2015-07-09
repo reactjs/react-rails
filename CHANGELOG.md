@@ -1,5 +1,7 @@
 # react-rails
 
+## 1.1.0 (July 9, 2015)
+
 #### Breaking Changes
 
 - Changed server rendering configuration names #253
@@ -13,20 +15,20 @@
   | `config.react.replay_console` | `config.react.server_renderer_options[:replay_console]` |
   | (none) | `config.react.server_renderer` |
 
-- JSX is transformed by Babel, not JSTransform #295 
+- JSX is transformed by Babel, not JSTransform #295
 
 #### New Features
 
 - Allow custom renderers for server rendering #253
 - Server render with `renderToStaticMarkup` via `prerender: :static` #253
 - Accept `config.react.jsx_transform_options = {asset_path: "path/to/JSXTransformer.js"}` #273
-- Added `BabelTransformer` for transforming JSX #295 
+- Added `BabelTransformer` for transforming JSX #295
 - Added `ExecJSRenderer` to server rendering tools
 - Accept `config.react.jsx_transformer_class` #302
 
 #### Deprecations
 
-- `JSXTransformer` won't be updated 
+- `JSXTransformer` won't be updated
 
 #### Bug Fixes
 
