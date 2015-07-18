@@ -38,10 +38,12 @@ module React
           addons: app.config.react.addons,
         })
 
-        app.assets.version = [
-          app.assets.version,
-          "react-#{asset_variant.react_build}",
-        ].compact.join('-')
+        if app.assets.nil?
+          app.config.assets.version = [app.config.assets.version, "react-#{asset_variant.react_build}",].compact.join('-')
+        else
+          app.assets.version = [app.assets.version, "react-#{asset_variant.react_build}",].compact.join('-')
+        end
+
       end
 
       config.before_initialize do |app|
