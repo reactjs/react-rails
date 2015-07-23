@@ -38,11 +38,8 @@ module React
           addons: app.config.react.addons,
         })
 
-        if app.assets.nil?
-          app.config.assets.version = [app.config.assets.version, "react-#{asset_variant.react_build}",].compact.join('-')
-        else
-          app.assets.version = [app.assets.version, "react-#{asset_variant.react_build}",].compact.join('-')
-        end
+        sprockets_env = app.assets || app.config.assets # sprockets-rails 3.x attaches this at a different config
+        sprockets_env.version = [sprockets_env.version, "react-#{asset_variant.react_build}",].compact.join('-')
 
       end
 
