@@ -18,3 +18,10 @@ end
 appraise "rails-4.2" do
   gem 'rails', '~> 4.2.1'
 end
+
+
+appraise "rails-master" do
+  gem 'sprockets-rails', github: 'rails/sprockets-rails'
+  gem 'rails', github: 'rails/rails'
+  gem 'arel', github: 'rails/arel'
+end
