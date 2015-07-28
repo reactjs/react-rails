@@ -129,10 +129,9 @@ The __view helper__ puts a `div` on the page with the requested component class 
 ```
 
 On page load, the __`react_ujs` driver__ will scan the page and mount components using `data-react-class` 
-and `data-react-props`. Before page unload, it will unmount components (if you want to disable this behavior, 
-remove `data-react-class` attribute in `componentDidMount`).
+and `data-react-props`.
 
-`react_ujs` uses Turbolinks events if they're available, otherwise, it uses native events.
+If Turbolinks is present components are mounted on the `page:change` event, and unmounted on `page:before-unload`.
  __Turbolinks >= 2.4.0__ is recommended because it exposes better events.
 
 The view helper's signature is:

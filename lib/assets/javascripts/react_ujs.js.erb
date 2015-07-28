@@ -89,10 +89,8 @@
   function handleNativeEvents() {
     if ($) {
       $(function() {window.ReactRailsUJS.mountComponents()});
-      $(window).unload(function() {window.ReactRailsUJS.unmountComponents()});
     } else {
       document.addEventListener('DOMContentLoaded', function() {window.ReactRailsUJS.mountComponents()});
-      window.addEventListener('unload', function() {window.ReactRailsUJS.unmountComponents()});
     }
   }
 
