@@ -1,5 +1,15 @@
 # react-rails
 
+#### Breaking Changes
+
+#### New Features 
+
+#### Deprecation 
+
+#### Bug Fixes 
+
+- Don't bother unmounting components `onBeforeUnload` #318
+
 ## 1.1.0 (July 9, 2015)
 
 #### Breaking Changes
