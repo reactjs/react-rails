@@ -14,4 +14,8 @@ class ServerController < ApplicationController
     React::ServerRendering.reset_pool
     @todos = %w{todo1 todo2 todo3}
   end
+
+  def inline_component
+    render component: 'TodoList', props: { todos: [{todo: 'Render this inline'}] }, tag: 'span'
+  end
 end

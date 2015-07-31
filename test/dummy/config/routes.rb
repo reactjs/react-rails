@@ -4,6 +4,7 @@ Dummy::Application.routes.draw do
     collection do
       get :console_example
       get :console_example_suppressed
+      get :inline_component
     end
   end
 end
