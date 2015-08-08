@@ -50,6 +50,11 @@ module React
                :default => [],
                :banner => "field[:type] field[:type] ..."
 
+      class_option :es6,
+       type: :boolean,
+       default: false,
+       desc: 'Output es6 class based component'
+
       REACT_PROP_TYPES = {
         "node" =>        'React.PropTypes.node',
         "bool" =>        'React.PropTypes.bool',
@@ -80,7 +85,7 @@ module React
       }
 
       def create_component_file
-        extension = "js.jsx"
+        extension = options[:es6] ? "es6.jsx" : "js.jsx"
         file_path = File.join('app/assets/javascripts/components', "#{file_name}.#{extension}")
         template("component.#{extension}", file_path)
       end
