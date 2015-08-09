@@ -17,7 +17,6 @@ class Es6ComponentGeneratorTest < Rails::Generators::TestCase
   end
 
   test "creates the component file with a node argument" do
-    puts name
     run_generator %w(GeneratedComponent name --es6)
     assert_file filename, %r{name: React.PropTypes.node}
   end
