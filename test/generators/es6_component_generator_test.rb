@@ -10,40 +10,20 @@ class Es6ComponentGeneratorTest < Rails::Generators::TestCase
     'app/assets/javascripts/components/generated_component.es6.jsx'
   end
 
-  test "creates the component file" do
-    run_generator %w(GeneratedComponent --es6)
-
-    assert_file filename
+  def class_name
+    'GeneratedComponent'
   end
 
-  test "creates the component file with a node argument" do
+  test "uses es6 syntax" do
     run_generator %w(GeneratedComponent name --es6)
-    assert_file filename, %r{name: React.PropTypes.node}
+
+    assert_file filename, /^class\s#{class_name}\sextends\sReact\.Component/
   end
 
-  test "creates the component file with various standard proptypes" do
-    proptypes = %w(string bool number array func number object any)
-    run_generator %w(GeneratedComponent) + proptypes.map { |type| "my_#{type}:#{type}"} + ["--es6"]
-    proptypes.each do |type|
-      assert_file filename, %r(my#{type.capitalize}: React.PropTypes.#{type})
-    end
-  end
+  test "assigns defaultProps after class definintion" do
+    run_generator %w(GeneratedComponent name --es6)
 
-  test "creates a component file with an instanceOf property" do
-    run_generator %w(GeneratedComponent favorite_food:instanceOf{food} --es6)
-    assert_file filename, /favoriteFood: React.PropTypes.instanceOf\(Food\)/
-  end
-
-  test "creates a component file with a oneOf property" do
-    run_generator %w(GeneratedComponent favorite_food:oneOf{pizza,hamburgers} --es6)
-    assert_file filename, /favoriteFood: React.PropTypes.oneOf\(\['pizza','hamburgers'\]\)/
-  end
-
-  test "creates a component file with a oneOfType property" do
-    run_generator %w(GeneratedComponent favorite_food:oneOfType{string,Food} --es6)
-    expected_property = "favoriteFood: React.PropTypes.oneOfType([React.PropTypes.string,React.PropTypes.instanceOf(Food)])"
-
-    assert_file filename, Regexp.new(Regexp.quote(expected_property))
+    assert_file filename, /\s^#{class_name}\.propTypes/
   end
 
   test "generates working jsx" do
