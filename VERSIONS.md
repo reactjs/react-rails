@@ -10,6 +10,7 @@ You can control what version of React.js (and JSXTransformer) is used by `react-
 | Gem      | React.js |
 |----------|----------|
 | master   | 0.13.3   |
+| 1.2.0    | 0.13.3   |
 | 1.1.0    | 0.13.3   |
 | 1.0.0    | ~> 0.13  |
 | 0.13.0.0 | 0.13.0   |

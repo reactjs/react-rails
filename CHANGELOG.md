@@ -2,14 +2,24 @@
 
 #### Breaking Changes
 
-#### New Features 
+#### New Features
+
+#### Deprecation
+
+#### Bug Fixes
+
+## 1.2.0 (August 19, 2015)
+
+#### Breaking Changes
+
+#### New Features
 
 - Support `--es6` option in component generator #332
 - Support Sprockets 3 #322
 
-#### Deprecation 
+#### Deprecation
 
-#### Bug Fixes 
+#### Bug Fixes
 
 - Don't bother unmounting components `onBeforeUnload` #318
 - Include `React::Rails::VERSION` in the gem #335
