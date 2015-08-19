@@ -204,7 +204,7 @@ end
 ### Component generator
 
 `react-rails` ships with a Rails generator to help you get started with a simple component scaffold. 
-You can run it using `rails generate react:component ComponentName`. 
+You can run it using `rails generate react:component ComponentName (--es6)`. 
 The generator takes an optional list of arguments for default propTypes, 
 which follow the conventions set in the [Reusable Components](http://facebook.github.io/react/docs/reusable-components.html) 
 section of the React documentation.
@@ -238,6 +238,18 @@ var Post = React.createClass({
   }
 });
 ```
+
+#### Options
+
+**--es6** : Generate the same component but using cutting edge es6 class
+
+For example:
+
+```shell
+rails generate react:component Label label:string --es6
+```
+
+#### Arguments
 
 The generator can use the following arguments to create basic propTypes:
 
