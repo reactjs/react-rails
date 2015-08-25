@@ -12,7 +12,7 @@ module React
         if options[:use_ssr]
           # Since we are using server side rendering
           # we make sure prerender option is always not false
-          if prerender_options == false
+          if prerender_options == false || prerender_options.nil?
             prerender_options = true 
           end
           pre_options = {
