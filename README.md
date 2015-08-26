@@ -9,7 +9,7 @@
 # react-rails
 
 
-`react-rails` makes it easy to use [React](http://facebook.github.io/react/) and [JSX](http://facebook.github.io/react/docs/jsx-in-depth.html) 
+`react-rails` makes it easy to use [React](http://facebook.github.io/react/) and [JSX](http://facebook.github.io/react/docs/jsx-in-depth.html)
 in your Ruby on Rails (3.2+) application. `react-rails` can:
 
 - Provide [various `react` builds](#reactjs-builds) to your asset bundle
@@ -82,27 +82,31 @@ See [VERSIONS.md](https://github.com/reactjs/react-rails/blob/master/VERSIONS.md
 After installing `react-rails`, restart your server. Now, `.js.jsx` files will be transformed in the asset pipeline.
 
 `react-rails` currently ships with two transformers, to convert jsx code -
- 
+
 * `BabelTransformer` using [Babel](http://babeljs.io), which is the default transformer.
 * `JSXTransformer` using `JSXTransformer.js`
 
+You can use the deprecated `JSXTransformer` by setting it in an application config:
+
+```ruby
+  config.react.jsx_transformer_class = React::JSX::JSXTransformer
+```
+
 #### BabelTransformer options
 
-You can use babel's [transformers](http://babeljs.io/docs/advanced/transformers/) and [custom plugins](http://babeljs.io/docs/advanced/plugins/), 
+You can use babel's [transformers](http://babeljs.io/docs/advanced/transformers/) and [custom plugins](http://babeljs.io/docs/advanced/plugins/),
 and pass [options](http://babeljs.io/docs/usage/options/) to the babel transpiler adding following configurations:
 
 ```ruby
 config.react.jsx_transform_options = {
   blacklist: ['spec.functionName', 'validation.react'], # default options
   optional: ["transformerName"],  # pass extra babel options
-  whitelist: ["useStrict"] # even more options    
+  whitelist: ["useStrict"] # even more options
 }
 ```
 Under the hood, `react-rails` uses [ruby-babel-transpiler](https://github.com/babel/ruby-babel-transpiler), for transformation.
-  
-#### JSXTransformer options
 
-To use old JSXTransformer you can use `React::JSX.transformer_class = React::JSX::JSXTransformer`
+#### JSXTransformer options
 
 You can use JSX `--harmony` or `--strip-types` options by adding a configuration:
 
