@@ -234,7 +234,7 @@ var Post = React.createClass({
         <div>Title: {this.props.title}</div>
         <div>Body: {this.props.body}</div>
         <div>Published: {this.props.published}</div>
-        <div>Published By: {this.props.published_by}</div>
+        <div>Published By: {this.props.publishedBy}</div>
       </div>
     );
   }
