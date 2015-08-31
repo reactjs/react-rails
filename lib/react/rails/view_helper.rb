@@ -7,7 +7,9 @@ module React
       mattr_accessor :helper_implementation_class
 
       def react_component(*args, &block)
-        self.helper_implementation_class.new.react_component(*args, &block)
+        impl_key = React::Rails::RenderMiddleware::HELPER_IMPLEMENTATION_KEY
+        helper_obj = request.env[impl_key]
+        helper_obj.react_component(*args, &block)
       end
     end
   end

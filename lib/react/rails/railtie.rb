@@ -4,7 +4,6 @@ module React
   module Rails
     class Railtie < ::Rails::Railtie
       config.react = ActiveSupport::OrderedOptions.new
-
       # Sensible defaults. Can be overridden in application.rb
       config.react.variant = (::Rails.env.production? ? :production : :development)
       config.react.addons = false
@@ -25,6 +24,7 @@ module React
 
       # Include the react-rails view helper lazily
       initializer "react_rails.setup_view_helpers", group: :all do |app|
+        app.config.middleware.use(::React::Rails::RenderMiddleware)
         app.config.react.jsx_transformer_class ||= React::JSX::DEFAULT_TRANSFORMER
         React::JSX.transformer_class = app.config.react.jsx_transformer_class
         React::JSX.transform_options = app.config.react.jsx_transform_options
