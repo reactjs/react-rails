@@ -15,6 +15,8 @@ module React
       config.react.server_renderer_timeout    = 20  # seconds
       config.react.server_renderer            = nil # defaults to SprocketsRenderer
       config.react.server_renderer_options    = {}  # SprocketsRenderer provides defaults
+      # View helper implementation:
+      config.react.view_helper_implementation = nil # Defaults to ComponentMount
 
       # Watch .jsx files for changes in dev, so we can reload the JS VMs with the new JS code.
       initializer "react_rails.add_watchable_files", group: :all do |app|
@@ -27,6 +29,8 @@ module React
         React::JSX.transformer_class = app.config.react.jsx_transformer_class
         React::JSX.transform_options = app.config.react.jsx_transform_options
 
+        app.config.react.view_helper_implementation ||= React::Rails::ComponentMount
+        React::Rails::ViewHelper.helper_implementation_class = app.config.react.view_helper_implementation
         ActiveSupport.on_load(:action_view) do
           include ::React::Rails::ViewHelper
         end
