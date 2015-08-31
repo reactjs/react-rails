@@ -4,6 +4,8 @@
 
 #### New Features
 
+- Render components directly from the controller with `render component: ...` #329
+
 #### Deprecation
 
 #### Bug Fixes
