@@ -8,8 +8,11 @@ module React
 
       def call(env)
         new_helper = React::Rails::ViewHelper.helper_implementation_class.new
+        new_helper.setup(env)
         env[HELPER_IMPLEMENTATION_KEY] = new_helper
-        @app.call(env)
+        response = @app.call(env)
+        new_helper.teardown(env)
+        response
       end
     end
   end

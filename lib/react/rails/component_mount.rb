@@ -1,9 +1,22 @@
 module React
   module Rails
+    # This is the default view helper implementation.
+    # It just inserts HTML into the DOM (see {#react_component}).
+    #
+    # You can extend this class or provide your own implementation
+    # by assigning it to `config.react.view_helper_implementation`.
     class ComponentMount
       include ActionView::Helpers::TagHelper
       include ActionView::Helpers::TextHelper
       attr_accessor :output_buffer
+
+      # RenderMiddleware calls these hooks
+      # You can use them in custom helper implementations
+      def setup(env)
+      end
+
+      def teardown(env)
+      end
 
       # Render a UJS-type HTML tag annotated with data attributes, which
       # are used by react_ujs to actually instantiate the React component

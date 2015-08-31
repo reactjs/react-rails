@@ -5,8 +5,9 @@ class React::Rails::ControllerRenderer
 
   attr_accessor :output_buffer
 
-  def self.call(*args, &block)
-    new.call(*args, &block)
+  attr_reader :request
+  def initialize(options={})
+    @request = options[:request]
   end
 
   def call(name, options, &block)

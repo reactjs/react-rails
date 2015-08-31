@@ -3,13 +3,21 @@ require 'test_helper'
 # This helper implementation just counts the number of
 # calls to `react_component`
 class DummyHelperImplementation
-  attr_reader :counter
+  attr_reader :events
   def initialize
-    @counter = 0
+    @events = []
+  end
+
+  def setup(env)
+    @events << :setup
+  end
+
+  def teardown(env)
+    @events << :teardown
   end
 
   def react_component(*args)
-    @counter += 1
+    @events << :react_component
   end
 end
 
@@ -29,7 +37,13 @@ class RenderMiddlewareTest < ActionDispatch::IntegrationTest
     get '/pages/1'
     helper_obj = request.env[impl_key]
     assert(helper_obj.is_a?(DummyHelperImplementation), "It uses the view helper implementation class")
-    assert_equal(1, helper_obj.counter, "It uses that object during rendering")
+  end
+
+  test "it calls setup and teardown methods" do
+    get '/pages/1'
+    helper_obj = request.env[impl_key]
+    lifecycle_steps = [:setup, :react_component, :teardown]
+    assert_equal(lifecycle_steps, helper_obj.events)
   end
 
   test "there's a new helper object for every request" do
