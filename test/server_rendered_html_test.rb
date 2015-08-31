@@ -51,4 +51,13 @@ class ServerRenderedHtmlTest  < ActionDispatch::IntegrationTest
     assert_no_match(/console.warn/, response.body)
     assert_no_match(/console.error/, response.body)
   end
+
+  test 'react inline component rendering' do
+    get '/server/inline_component'
+    assert_match(/<span data-react-class=\"TodoList\"/, response.body)
+    # make sure that the items are prerendered
+    assert_match(/Render this inline<\/span>/, response.body)
+    # make sure that the layout is rendered with the component
+    assert_match(/<title>Dummy<\/title>/, response.body)
+  end
 end

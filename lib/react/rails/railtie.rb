@@ -32,6 +32,14 @@ module React
         end
       end
 
+      initializer "react_rails.add_component_renderer", group: :all do |app|
+        ActionController::Renderers.add :component do |component_name, options|
+          html = ::React::Rails::ControllerRenderer.call(component_name, options)
+          render_options = options.merge(inline: html)
+          render(render_options)
+        end
+      end
+
       initializer "react_rails.bust_cache", group: :all do |app|
         asset_variant = React::Rails::AssetVariant.new({
           variant: app.config.react.variant,
