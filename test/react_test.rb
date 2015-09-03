@@ -35,8 +35,8 @@ class ReactTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test "the development version is loaded" do
+  test "the development version with addons is loaded" do
     asset = Rails.application.assets.find_asset('react')
-    assert asset.pathname.to_s.end_with?('development/react.js')
+    assert asset.pathname.to_s.end_with?('development-with-addons/react.js')
   end
 end
