@@ -17,6 +17,7 @@ in your Ruby on Rails (3.2+) application. `react-rails` can:
 - [Render components into views and mount them](#rendering--mounting) via view helper & `react_ujs`
 - [Render components server-side](#server-rendering) with `prerender: true`
 - [Generate components](#component-generator) with a Rails generator
+- [Be extended](#extending-react-rails) with custom renderers, transformers and view helpers
 
 ## Installation
 
@@ -305,3 +306,42 @@ Component = React.createClass
   render: ->
     `<ExampleComponent videos={this.props.videos} />`
 ```
+
+## Extending `react-rails`
+
+You can extend some of the core functionality of `react-rails` by injecting new implementations during configuration.
+
+### Custom Server Renderer
+
+`react-rails` depends on a renderer class for rendering components on the server. You can provide a custom renderer class to `config.react.server_renderer`. The class must implement:
+
+- `#initialize(options={})`, which accepts the hash from `config.react.server_renderer_options`
+- `#render(component_name, props, prerender_options)` to return a string of HTML
+
+`react-rails` provides two renderer classes: `React::ServerRendering::ExecJSRenderer` and `React::ServerRendering::SprocketsRenderer`.
+
+`ExecJSRenderer` offers two other points for extension:
+
+- `#before_render(component_name, props, prerender_options)` to return a string of JavaScript to execute _before_ calling `React.render`
+- `#after_render(component_name, props, prerender_options)` to return a string of JavaScript to execute _after_ calling `React.render`
+
+Any subclass of `ExecJSRenderer` may use those hooks (for example, `SprocketsRenderer` uses them to handle `console.*` on the server).
+
+### Custom View Helper
+
+`react-rails` uses a "helper implementation" class to generate the output of the `react_component` helper. The helper is initialized once per request and used for each `react_component` call during that request. You can provide a custom helper class to `config.react.view_helper_implementation`. The class must implement:
+
+- `#react_component(name, props = {}, options = {}, &block)` to return a string to inject into the Rails view
+- `#setup(rack_env)`, called when the helper is initialized at the start of the request
+- `#teardown(rack_env)`, called at the end of the request
+
+`react-rails` provides one implementation, `React::Rails::ComponentMount`.
+
+### Custom JSX Transformer
+
+`react-rails` uses a transformer class to transform JSX for the browser. The transformer is initialized once, at boot. You can provide a custom transformer to `config.react.jsx_transformer_class`. The transformer must implement:
+
+- `#initialize(options)`, where options is the value passed to `config.react.jsx_transform_options`
+- `#transform(code_string)` to return a string of transformed code
+
+`react-rails` provides two transformers, `React::JSX::JSXTransformer` and `React::JSX::BabelTransformer`.

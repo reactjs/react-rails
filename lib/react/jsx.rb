@@ -9,7 +9,7 @@ module React
     DEFAULT_TRANSFORMER = BabelTransformer
     mattr_accessor :transform_options, :transformer_class, :transformer
 
-    # You can assign `React::JSX.transformer_class = `
+    # You can assign `config.react.jsx_transformer_class = `
     # to provide your own transformer. It must implement:
     # - #initialize(options)
     # - #transform(code) => new code
