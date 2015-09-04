@@ -5,10 +5,13 @@
 #### New Features
 
 - Render components directly from the controller with `render component: ...` #329
+- Provide a custom view helper with `config.react.view_helper_implementation` #346
 
 #### Deprecation
 
 #### Bug Fixes
+
+- Allow `react-rails` configs to be set in initializers #347
 
 ## 1.2.0 (August 19, 2015)
 
