@@ -294,6 +294,16 @@ json.messages(@messages) do |message|
 end
 ```
 
+In production your compiled JS is cached by each JS VM. In development this cache is cleared whenever you change a `*.jsx*` file in `app/assets/javascripts`. In order to clear this cache when you edit files that do not fit this pattern, you need to tell Rails which paths to watch for changes.
+
+```ruby
+# config/environments/application.rb
+# These are the defaults if you dont specify any yourself
+MyApp::Application.configure do
+  config.watchable_dirs[Dir["#{app.root}/app/assets/javascripts"]] = ["*.jsx*"]
+end
+```
+
 ## CoffeeScript
 
 It is possible to use JSX with CoffeeScript. To use CoffeeScript, create files with an extension `.js.jsx.coffee`. 
