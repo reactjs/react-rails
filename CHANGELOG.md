@@ -4,6 +4,16 @@
 
 #### New Features
 
+#### Deprecation
+
+#### Bug Fixes
+
+## 1.3.0 (September 15, 2015)
+
+#### Breaking Changes
+
+#### New Features
+
 - Render components directly from the controller with `render component: ...` #329
 - Provide a custom view helper with `config.react.view_helper_implementation` #346
 
