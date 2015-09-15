@@ -24,7 +24,7 @@ in your Ruby on Rails (3.2+) application. `react-rails` can:
 Add `react-rails` to your gemfile:
 
 ```ruby
-gem 'react-rails', '~> 1.0'
+gem 'react-rails', '1.2.0'
 ```
 
 Next, run the installation script:
