@@ -204,6 +204,22 @@ end
 - On MRI, you'll get a deadlock with `pool_size` > 1
 - If you're using JRuby, you can increase `pool_size` to have real multi-threaded rendering.
 
+### Rendering components instead of views
+
+Components can also be prerendered directly from a controller action with the custom `component` renderer. For example:
+
+```ruby
+class TodoController < ApplicationController
+  def index
+    @todos = Todo.all
+    render component: 'TodoList', props: { todos: @todos }, tag: 'span'
+  end
+end
+```
+
+This custom renderer behaves the same as a normal view renderer and accepts the usual arguments - `content_type`, `layout`, `location` and `status`.
+By default, your current layout will be used and the component, rather than a view, will be rendered in place of `yield`.
+
 ### Component generator
 
 `react-rails` ships with a Rails generator to help you get started with a simple component scaffold. 
