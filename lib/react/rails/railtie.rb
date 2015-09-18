@@ -24,13 +24,18 @@ module React
 
       # Include the react-rails view helper lazily
       initializer "react_rails.setup_view_helpers", group: :all do |app|
-        app.config.middleware.use(::React::Rails::RenderMiddleware)
+
         app.config.react.jsx_transformer_class ||= React::JSX::DEFAULT_TRANSFORMER
         React::JSX.transformer_class = app.config.react.jsx_transformer_class
         React::JSX.transform_options = app.config.react.jsx_transform_options
 
         app.config.react.view_helper_implementation ||= React::Rails::ComponentMount
         React::Rails::ViewHelper.helper_implementation_class = app.config.react.view_helper_implementation
+
+        ActiveSupport.on_load(:action_controller) do
+          include ::React::Rails::ControllerLifecycle
+        end
+
         ActiveSupport.on_load(:action_view) do
           include ::React::Rails::ViewHelper
         end
@@ -38,7 +43,7 @@ module React
 
       initializer "react_rails.add_component_renderer", group: :all do |app|
         ActionController::Renderers.add :component do |component_name, options|
-          renderer = ::React::Rails::ControllerRenderer.new(request: request)
+          renderer = ::React::Rails::ControllerRenderer.new(controller: self)
           html = renderer.call(component_name, options)
           render_options = options.merge(inline: html)
           render(render_options)
