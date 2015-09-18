@@ -4,8 +4,9 @@ module React
       extend ActiveSupport::Concern
 
       included do
-        before_action :setup_react_component_helper
-        after_action :teardown_react_component_helper
+        # use old names to support Rails 3
+        before_filter :setup_react_component_helper
+        after_filter :teardown_react_component_helper
       end
 
       def setup_react_component_helper
