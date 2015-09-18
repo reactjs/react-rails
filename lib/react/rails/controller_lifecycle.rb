@@ -7,6 +7,7 @@ module React
         # use old names to support Rails 3
         before_filter :setup_react_component_helper
         after_filter :teardown_react_component_helper
+        attr_reader :__react_component_helper
       end
 
       def setup_react_component_helper
