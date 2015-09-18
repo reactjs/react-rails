@@ -4,12 +4,13 @@ require 'test_helper'
 # calls to `react_component`
 class DummyHelperImplementation
   attr_reader :events
+
   def initialize
     @events = []
   end
 
-  def setup(env)
-    @events << :setup
+  def setup(controller)
+    @events << (controller.params["param_test"] || :setup)
   end
 
   def teardown(env)
@@ -21,9 +22,7 @@ class DummyHelperImplementation
   end
 end
 
-class RenderMiddlewareTest < ActionDispatch::IntegrationTest
-  impl_key = React::Rails::RenderMiddleware::HELPER_IMPLEMENTATION_KEY
-
+class ControllerLifecycleTest < ActionDispatch::IntegrationTest
   def setup
     @previous_helper_implementation = React::Rails::ViewHelper.helper_implementation_class
     React::Rails::ViewHelper.helper_implementation_class = DummyHelperImplementation
@@ -35,22 +34,22 @@ class RenderMiddlewareTest < ActionDispatch::IntegrationTest
 
   test "it creates a helper object and puts it in the request env" do
     get '/pages/1'
-    helper_obj = request.env[impl_key]
+    helper_obj = controller.instance_variable_get(:@__react_component_helper)
     assert(helper_obj.is_a?(DummyHelperImplementation), "It uses the view helper implementation class")
   end
 
   test "it calls setup and teardown methods" do
-    get '/pages/1'
-    helper_obj = request.env[impl_key]
-    lifecycle_steps = [:setup, :react_component, :teardown]
+    get '/pages/1?param_test=123'
+    helper_obj = controller.instance_variable_get(:@__react_component_helper)
+    lifecycle_steps = ["123", :react_component, :teardown]
     assert_equal(lifecycle_steps, helper_obj.events)
   end
 
   test "there's a new helper object for every request" do
     get '/pages/1'
-    first_helper = request.env[impl_key]
+    first_helper = controller.instance_variable_get(:@__react_component_helper)
     get '/pages/1'
-    second_helper = request.env[impl_key]
+    second_helper = controller.instance_variable_get(:@__react_component_helper)
     assert(first_helper != second_helper, "The helper for the second request is brand new")
   end
 end

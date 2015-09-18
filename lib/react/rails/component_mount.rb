@@ -10,7 +10,7 @@ module React
       include ActionView::Helpers::TextHelper
       attr_accessor :output_buffer
 
-      # RenderMiddleware calls these hooks
+      # ControllerLifecycle calls these hooks
       # You can use them in custom helper implementations
       def setup(env)
       end

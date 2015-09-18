@@ -8,6 +8,8 @@
 
 #### Bug Fixes
 
+- Use controller lifecycle hooks for view helper (tests don't run middlewares)
+
 ## 1.3.0 (September 15, 2015)
 
 #### Breaking Changes
