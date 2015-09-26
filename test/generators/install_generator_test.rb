@@ -34,7 +34,8 @@ class InstallGeneratorTest < Rails::Generators::TestCase
     assert_application_file_modified
   end
 
-  test "modifies `application.js` it's empty" do
+  test "modifies `application.js` if it's empty" do
+    FileUtils.mkdir_p destination_root + '/app/assets/javascripts/'
     File.write(destination_root + '/app/assets/javascripts/application.js', '')
 
     run_generator
