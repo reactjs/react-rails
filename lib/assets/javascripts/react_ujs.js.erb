@@ -14,17 +14,29 @@
     // `data-react-class` DOM elements
     findDOMNodes: function(searchSelector) {
       // we will use fully qualified paths as we do not bind the callbacks
-      var selector;
-      if (typeof searchSelector === 'undefined') {
-        var selector = '[' + window.ReactRailsUJS.CLASS_NAME_ATTR + ']';
-      } else {
-        var selector = searchSelector + ' [' + window.ReactRailsUJS.CLASS_NAME_ATTR + ']';
+      var selector, parent;
+
+      switch (typeof searchSelector) {
+        case 'undefined':
+          selector = '[' + window.ReactRailsUJS.CLASS_NAME_ATTR + ']';
+          parent = document;
+          break;
+        case 'object':
+          selector = '[' + window.ReactRailsUJS.CLASS_NAME_ATTR + ']';
+          parent = searchSelector;
+          break;
+        case 'string':
+          selector = searchSelector + ' [' + window.ReactRailsUJS.CLASS_NAME_ATTR + ']';
+          parent = document;
+          break
+        default:
+          break;
       }
 
       if ($) {
-        return $(selector);
+        return $(selector, parent);
       } else {
-        return document.querySelectorAll(selector);
+        return parent.querySelectorAll(selector);
       }
     },
 
