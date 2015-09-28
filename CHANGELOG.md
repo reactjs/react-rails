@@ -4,6 +4,8 @@
 
 #### New Features
 
+- The UJS can mount and unmount components within a given DOM node
+
 #### Deprecation
 
 #### Bug Fixes
