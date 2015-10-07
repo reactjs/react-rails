@@ -12,11 +12,17 @@ namespace :react do
     FileUtils.rm_f('vendor/react/.bower.json')
     `bower install react`
     assets_path = Pathname.new(File.dirname(__FILE__)).join('lib/assets/')
-    copy_react_asset('JSXTransformer.js', assets_path.join('javascripts/JSXTransformer.js'))
     copy_react_asset('react.js', assets_path.join('react-source/development/react.js'))
     copy_react_asset('react.min.js', assets_path.join('react-source/production/react.js'))
     copy_react_asset('react-with-addons.js', assets_path.join('react-source/development-with-addons/react.js'))
     copy_react_asset('react-with-addons.min.js', assets_path.join('react-source/production-with-addons/react.js'))
+
+    copy_react_asset('react-dom.js', assets_path.join('react-source/development/react-dom.js'))
+    copy_react_asset('react-dom.min.js', assets_path.join('react-source/production/react-dom.js'))
+    # Make sure it's also present when addons: true
+    copy_react_asset('react-dom.js', assets_path.join('react-source/development-with-addons/react-dom.js'))
+    copy_react_asset('react-dom.min.js', assets_path.join('react-source/production-with-addons/react-dom.js'))
+
   end
 
   def copy_react_asset(source, destination)

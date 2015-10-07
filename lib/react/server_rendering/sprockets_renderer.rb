@@ -5,9 +5,11 @@
 module React
   module ServerRendering
     class SprocketsRenderer < ExecJSRenderer
+      DEFAULT_FILENAMES = ["react.js", "react-dom.js", "components.js"]
+
       def initialize(options={})
         @replay_console = options.fetch(:replay_console, true)
-        filenames = options.fetch(:files, ["react.js", "components.js"])
+        filenames = options.fetch(:files, DEFAULT_FILENAMES)
         js_code = CONSOLE_POLYFILL.dup
 
         filenames.each do |filename|
