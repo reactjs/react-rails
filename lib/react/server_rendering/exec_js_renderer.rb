@@ -14,7 +14,7 @@ module React
         js_code = <<-JS
           (function () {
             #{before_render(component_name, props, prerender_options)}
-            var result = React.#{render_function}(React.createElement(#{component_name}, #{props}));
+            var result = ReactDOMServer.#{render_function}(React.createElement(#{component_name}, #{props}));
             #{after_render(component_name, props, prerender_options)}
             return result;
           })()

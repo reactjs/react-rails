@@ -13,8 +13,10 @@ var React = {
 class ExecJSRendererTest < ActiveSupport::TestCase
   setup do
     react_source = Rails.application.assets["react.js"].to_s
+    react_dom_source = Rails.application.assets["react-dom.js"].to_s
     todo_component_source = Rails.application.assets["components/Todo.js"].to_s
-    @renderer = React::ServerRendering::ExecJSRenderer.new(code: react_source + todo_component_source)
+    prerender_env_code = react_source + react_dom_source + todo_component_source
+    @renderer = React::ServerRendering::ExecJSRenderer.new(code: prerender_env_code)
   end
 
   test '#render returns HTML' do
