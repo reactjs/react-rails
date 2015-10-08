@@ -83,6 +83,7 @@ module React
         React::ServerRendering.reset_pool
         # Reload renderers in dev when files change
         ActionDispatch::Reloader.to_prepare { React::ServerRendering.reset_pool }
+        RSpec.configure { |c| c.include React::Rails::RspecHelper } if defined?(RSpec::Rails)
       end
     end
   end

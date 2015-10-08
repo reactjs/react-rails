@@ -18,3 +18,9 @@ end
 appraise "rails-4.2" do
   gem 'rails', '~> 4.2.1'
 end
+
+appraise "rails-4.2-with-rspec" do
+  gem 'rails', '~> 4.2.1'
+  gem 'rspec'
+  gem 'rspec-rails'
+end
