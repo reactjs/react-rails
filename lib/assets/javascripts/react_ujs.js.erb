@@ -53,7 +53,10 @@
         var propsJson = node.getAttribute(window.ReactRailsUJS.PROPS_ATTR);
         var props = propsJson && JSON.parse(propsJson);
 
-        React.render(React.createElement(constructor, props), node);
+        // Prefer ReactDOM if defined (introduced in 0.14)
+        var renderer = (typeof ReactDOM == "object") ? ReactDOM : React;
+
+        renderer.render(React.createElement(constructor, props), node);
       }
     },
 
