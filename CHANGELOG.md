@@ -4,7 +4,8 @@
 
 #### New Features
 
-- The UJS can mount and unmount components within a given DOM node
+- The UJS can mount and unmount components within a given DOM node #358
+- Support dropped-in React 0.14 in UJS #366
 
 #### Deprecation
 
