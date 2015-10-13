@@ -4,6 +4,16 @@
 
 #### New Features
 
+#### Deprecation
+
+#### Bug Fixes
+
+## 1.3.2 (October 13, 2015)
+
+#### Breaking Changes
+
+#### New Features
+
 - The UJS can mount and unmount components within a given DOM node #358
 - Support dropped-in React 0.14 in UJS #366
 
