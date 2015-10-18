@@ -47,7 +47,7 @@ class SprocketsRendererTest < ActiveSupport::TestCase
   end
 
   test '.new accepts any filenames' do
-    limited_renderer = React::ServerRendering::SprocketsRenderer.new(files: ["react.js", "components/Todo.js"])
+    limited_renderer = React::ServerRendering::SprocketsRenderer.new(files: ["react-server.js", "components/Todo.js"])
     assert_match(/get a real job<\/li>/, limited_renderer.render("Todo", {todo: "get a real job"}, nil))
     err = assert_raises React::ServerRendering::PrerenderError do
       limited_renderer.render("TodoList", {todos: []}, nil)

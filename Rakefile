@@ -6,23 +6,35 @@ end
 
 Bundler::GemHelper.install_tasks
 
-require 'pathname'
+def copy_react_asset(webpack_file, destination_file)
+  full_webpack_path = File.expand_path("../react-builds/build/#{webpack_file}", __FILE__)
+  full_destination_path = File.expand_path("../lib/assets/react-source/#{destination_file}", __FILE__)
+  FileUtils.cp(full_webpack_path, full_destination_path)
+end
+
 namespace :react do
-  task :update do
-    FileUtils.rm_f('vendor/react/.bower.json')
-    `bower install react`
-    assets_path = Pathname.new(File.dirname(__FILE__)).join('lib/assets/')
-    copy_react_asset('JSXTransformer.js', assets_path.join('javascripts/JSXTransformer.js'))
-    copy_react_asset('react.js', assets_path.join('react-source/development/react.js'))
-    copy_react_asset('react.min.js', assets_path.join('react-source/production/react.js'))
-    copy_react_asset('react-with-addons.js', assets_path.join('react-source/development-with-addons/react.js'))
-    copy_react_asset('react-with-addons.min.js', assets_path.join('react-source/production-with-addons/react.js'))
+  desc "Run the JS build process to put files in the gem source"
+  task update: [:build, :copy]
+
+  desc "Build the JS bundles with Webpack"
+  task :build do
+    Dir.chdir("react-builds") do
+      `webpack`
+      `NODE_ENV=production webpack`
+    end
   end
 
-  def copy_react_asset(source, destination)
-    vendor_path = Pathname.new(File.dirname(__FILE__)).join('vendor/react')
-    FileUtils.mkdir_p(destination.dirname.to_s)
-    FileUtils.cp(vendor_path.join(source), destination.to_s)
+  desc "Copy browser-ready JS files to the gem's asset paths"
+  task :copy do
+    environments = ["development", "production"]
+    environments.each do |environment|
+      # Without addons:
+      copy_react_asset("#{environment}/react-browser.js", "#{environment}/react.js")
+      copy_react_asset("#{environment}/react-server.js", "#{environment}/react-server.js")
+      # With addons:
+      copy_react_asset("#{environment}/react-browser-with-addons.js", "#{environment}-with-addons/react.js")
+      copy_react_asset("#{environment}/react-server-with-addons.js", "#{environment}-with-addons/react-server.js")
+    end
   end
 end
 
