@@ -1,5 +1,6 @@
 # react-rails
 
+
 #### Breaking Changes
 
 #### New Features
@@ -7,6 +8,19 @@
 #### Deprecation
 
 #### Bug Fixes
+
+## 1.3.3 (October 21, 2015)
+
+#### Breaking Changes
+
+#### New Features
+
+#### Deprecation
+
+#### Bug Fixes
+
+- Also support React 0.14 in `unmountComponents` #372
+- Use a fallback view helper in case a Rails controller wasn't used #375
 
 ## 1.3.2 (October 13, 2015)
 
