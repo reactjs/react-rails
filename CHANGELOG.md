@@ -9,6 +9,18 @@
 
 #### Bug Fixes
 
+## 1.4.0 (October 22, 2015)
+
+#### Breaking Changes
+
+#### New Features
+
+- Include React.js 0.14
+
+#### Deprecation
+
+#### Bug Fixes
+
 ## 1.3.3 (October 21, 2015)
 
 #### Breaking Changes
