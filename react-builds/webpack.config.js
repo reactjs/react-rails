@@ -3,9 +3,19 @@ var webpack = require("webpack");
 
 var reactRailsEnv = process.env.NODE_ENV == "production" ? "production" : "development";
 
-var envPlugin = new webpack.DefinePlugin({
-    NODE_ENV: reactRailsEnv,
-})
+var plugins = [];
+
+if (reactRailsEnv == "production") {
+  var definePlugin = new webpack.DefinePlugin({'process.env.NODE_ENV': '"production"'});
+  var minifyPlugin = new webpack.optimize.UglifyJsPlugin({
+    compress: {
+        warnings: false
+    }
+  });
+  plugins.push(definePlugin);
+  plugins.push(minifyPlugin);
+}
+
 
 module.exports = {
   context: __dirname,
@@ -19,7 +29,5 @@ module.exports = {
       path: __dirname + "/build/" + reactRailsEnv,
       filename: "[name].js",
   },
-  plugins: [
-    envPlugin
-  ],
+  plugins: plugins,
 };

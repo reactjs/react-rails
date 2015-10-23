@@ -20,7 +20,7 @@ namespace :react do
   task :build do
     Dir.chdir("react-builds") do
       `webpack`
-      `NODE_ENV=production webpack`
+      `NODE_ENV=production webpack -p`
     end
   end
 

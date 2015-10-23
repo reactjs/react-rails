@@ -39,4 +39,11 @@ class ReactTest < ActionDispatch::IntegrationTest
     asset = Rails.application.assets.find_asset('react')
     assert asset.pathname.to_s.end_with?('development-with-addons/react.js')
   end
+
+  test "the production build is optimized for production" do
+    production_path = File.expand_path("../../lib/assets/react-source/production/react.js", __FILE__)
+    production_js = File.read(production_path)
+    env_checks = production_js.scan("NODE_ENV")
+    assert_equal(0, env_checks.length, "Dead code is removed for production")
+  end
 end
