@@ -20,7 +20,7 @@ namespace :react do
   task :build do
     Dir.chdir("react-builds") do
       `webpack`
-      `NODE_ENV=production webpack`
+      `NODE_ENV=production webpack -p`
     end
   end
 
@@ -34,6 +34,13 @@ namespace :react do
       # With addons:
       copy_react_asset("#{environment}/react-browser-with-addons.js", "#{environment}-with-addons/react.js")
       copy_react_asset("#{environment}/react-server-with-addons.js", "#{environment}-with-addons/react-server.js")
+    end
+  end
+
+  desc "Use NPM to install the JavaScript dependencies"
+  task :install do
+    Dir.chdir("react-builds") do
+      `npm install`
     end
   end
 end

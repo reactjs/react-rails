@@ -7,7 +7,7 @@ addons.createFragment = require("react-addons-create-fragment");
 addons.update = require("react-addons-update");
 addons.PureRenderMixin = require("react-addons-pure-render-mixin");
 
-if (NODE_ENV !== "production") {
+if (process.env.NODE_ENV !== "production") {
   addons.TestUtils = require("react-addons-test-utils");
   addons.Perf = require("react-addons-perf");
 }
