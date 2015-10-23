@@ -1,5 +1,14 @@
 # react-rails
 
+#### Breaking Changes
+
+#### New Features
+
+#### Deprecation
+
+#### Bug Fixes
+
+## 1.4.1 (October 23, 2015)
 
 #### Breaking Changes
 
@@ -8,6 +17,8 @@
 #### Deprecation
 
 #### Bug Fixes
+
+- Minify & optimize the production build of React.js #380
 
 ## 1.4.0 (October 22, 2015)
 
