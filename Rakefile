@@ -36,6 +36,13 @@ namespace :react do
       copy_react_asset("#{environment}/react-server-with-addons.js", "#{environment}-with-addons/react-server.js")
     end
   end
+
+  desc "Use NPM to install the JavaScript dependencies"
+  task :install do
+    Dir.chdir("react-builds") do
+      `npm install`
+    end
+  end
 end
 
 require 'appraisal'
