@@ -11,11 +11,20 @@ module React
         js_code = CONSOLE_POLYFILL.dup
 
         filenames.each do |filename|
-          js_code << ::Rails.application.assets[filename].to_s
+          js_code << load_asset(filename)
         end
 
         super(options.merge(code: js_code))
       end
+
+      def load_asset(file)
+        if ::Rails.application.config.assets.compile
+          ::Rails.application.assets[file].to_s
+        else
+          asset_path = ActionView::Base.new.asset_path(file)
+          File.read(File.join(::Rails.public_path, asset_path))
+        end
+      end      
 
       def render(component_name, props, prerender_options)
         # pass prerender: :static to use renderToStaticMarkup
