@@ -268,6 +268,14 @@ For example:
 rails generate react:component Label label:string --es6
 ```
 
+**--coffee** : Generate the component using CoffeeScript syntax
+
+For example:
+
+```shell
+rails generate react:component Label label:string --coffee
+```
+
 #### Arguments
 
 The generator can use the following arguments to create basic propTypes:

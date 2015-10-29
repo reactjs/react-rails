@@ -51,9 +51,14 @@ module React
                :banner => "field[:type] field[:type] ..."
 
       class_option :es6,
-       type: :boolean,
-       default: false,
-       desc: 'Output es6 class based component'
+                   type: :boolean,
+                   default: false,
+                   desc: 'Output es6 class based component'
+
+      class_option :coffee,
+                   type: :boolean,
+                   default: false,
+                   desc: 'Output coffeescript based component'
 
       REACT_PROP_TYPES = {
         "node" =>        'React.PropTypes.node',
@@ -85,7 +90,15 @@ module React
       }
 
       def create_component_file
-        extension = options[:es6] ? "es6.jsx" : "js.jsx"
+        extension = case
+                      when options[:es6]
+                        'es6.jsx'
+                      when options[:coffee]
+                        'js.jsx.coffee'
+                      else
+                        'js.jsx'
+                    end
+
         file_path = File.join('app/assets/javascripts/components', "#{file_name}.#{extension}")
         template("component.#{extension}", file_path)
       end
