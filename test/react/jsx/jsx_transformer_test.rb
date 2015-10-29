@@ -19,7 +19,7 @@ class JSXTransformerTest < ActionDispatch::IntegrationTest
     FileUtils.rm replacing_path
 
     assert_response :success
-    assert_equal 'test_confirmation_token_jsx_transformed;', @response.body
+    assert_equal 'test_confirmation_token_jsx_transformed;', @response.body.strip
   end
 
   test 'accepts harmony: true option' do
@@ -52,7 +52,7 @@ class JSXTransformerTest < ActionDispatch::IntegrationTest
 
     FileUtils.rm_rf custom_path
     assert_response :success
-    assert_equal 'test_confirmation_token_jsx_transformed;', @response.body
+    assert_equal 'test_confirmation_token_jsx_transformed;', @response.body.strip
   end
 
 end
