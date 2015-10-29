@@ -212,13 +212,14 @@ Components can also be prerendered directly from a controller action with the cu
 class TodoController < ApplicationController
   def index
     @todos = Todo.all
-    render component: 'TodoList', props: { todos: @todos }, tag: 'span'
+    render component: 'TodoList', props: { todos: @todos }, tag: 'span', class: 'todo'
   end
 end
 ```
 
 This custom renderer behaves the same as a normal view renderer and accepts the usual arguments - `content_type`, `layout`, `location` and `status`.
-By default, your current layout will be used and the component, rather than a view, will be rendered in place of `yield`.
+By default, your current layout will be used and the component, rather than a view, will be rendered in place of `yield`. Custom data-* attributes
+can be passed like `data: {remote: true}`.
 
 ### Component generator
 

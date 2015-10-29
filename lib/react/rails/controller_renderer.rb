@@ -12,7 +12,7 @@ class React::Rails::ControllerRenderer
 
   def call(name, options, &block)
     props = options.fetch(:props, {})
-    options = options.slice(:data, :tag).merge(prerender: true)
+    options = options.slice(:data, :aria, :tag, :class, :id).merge(prerender: true)
     react_component(name, props, options, &block)
   end
 end

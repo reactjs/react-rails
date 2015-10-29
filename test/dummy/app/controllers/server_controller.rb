@@ -16,6 +16,11 @@ class ServerController < ApplicationController
   end
 
   def inline_component
-    render component: 'TodoList', props: { todos: ['Render this inline'] }, tag: 'span'
+    render component: 'TodoList',
+           props: { todos: ['Render this inline'] },
+           tag: 'span',
+           class: 'custom-class',
+           id: 'custom-id',
+           data: { remote: true }
   end
 end

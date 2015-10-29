@@ -55,11 +55,15 @@ class ServerRenderedHtmlTest  < ActionDispatch::IntegrationTest
   test 'react inline component rendering' do
     get '/server/inline_component'
     rendered_html = response.body
-    assert_match(/<span data-react-class=\"TodoList\"/, rendered_html)
+    assert_match(/<span.*data-react-class=\"TodoList\"/, rendered_html)
     # make sure that the items are prerendered
     assert_match(/Render this inline/, rendered_html)
     assert_match(/<\/ul><\/span>/, rendered_html, "it accepts a tag override")
     # make sure that the layout is rendered with the component
     assert_match(/<title>Dummy<\/title>/, rendered_html)
+    # make sure that custom html attributes are rendered
+    assert_match(/class=\"custom-class\"/, rendered_html)
+    assert_match(/id=\"custom-id\"/, rendered_html)
+    assert_match(/data-remote=\"true\"/, rendered_html)
   end
 end
