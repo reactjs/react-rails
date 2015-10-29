@@ -11,7 +11,17 @@ module React
       end
 
       def render(component_name, props, prerender_options)
-        render_function = prerender_options.fetch(:render_function, "renderToString")
+        # pass prerender: :static to use renderToStaticMarkup
+        render_function = if prerender_options == :static
+            "renderToStaticMarkup"
+          else
+            "renderToString"
+          end
+
+        if !props.is_a?(String)
+          props = props.to_json
+        end
+
         js_code = <<-JS
           (function () {
             #{before_render(component_name, props, prerender_options)}

@@ -1,4 +1,16 @@
 class ServerController < ApplicationController
+  DUMMY_IMPLEMENTATION = "
+  var Todo = null
+  var React = {
+    createElement: function() {},
+  }
+  var ReactDOMServer = {
+    renderToString: function() {
+      return 'renderToString was called'
+    },
+  }
+  "
+
   def show
     @todos = %w{todo1 todo2 todo3}
   end
@@ -11,6 +23,13 @@ class ServerController < ApplicationController
 
   def console_example_suppressed
     React::ServerRendering.renderer_options = {replay_console:  false}
+    React::ServerRendering.reset_pool
+    @todos = %w{todo1 todo2 todo3}
+  end
+
+  def exec_js_renderer
+    React::ServerRendering.renderer = React::ServerRendering::ExecJSRenderer
+    React::ServerRendering.renderer_options[:code] = DUMMY_IMPLEMENTATION
     React::ServerRendering.reset_pool
     @todos = %w{todo1 todo2 todo3}
   end
