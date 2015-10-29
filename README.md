@@ -323,6 +323,14 @@ Component = React.createClass
     `<ExampleComponent videos={this.props.videos} />`
 ```
 
+Alternatively, the newer ES6 style class based syntax can be used like this:
+
+```coffee
+class Component extends React.Component
+  render: ->
+    `<ExampleComponent videos={this.props.videos} />`
+```
+
 ## Extending `react-rails`
 
 You can extend some of the core functionality of `react-rails` by injecting new implementations during configuration.
