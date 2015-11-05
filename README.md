@@ -19,6 +19,8 @@ in your Ruby on Rails (3.2+) application. `react-rails` can:
 - [Generate components](#component-generator) with a Rails generator
 - [Be extended](#extending-react-rails) with custom renderers, transformers and view helpers
 
+Just getting started with React? Make sure to check out the [Getting Started] (https://facebook.github.io/react/docs/getting-started.html) guide.
+
 ## Installation
 
 Add `react-rails` to your gemfile:
