@@ -102,7 +102,7 @@ and pass [options](http://babeljs.io/docs/usage/options/) to the babel transpile
 
 ```ruby
 config.react.jsx_transform_options = {
-  blacklist: ['spec.functionName', 'validation.react'], # default options
+  blacklist: ['spec.functionName', 'validation.react', 'strict'], # default options
   optional: ["transformerName"],  # pass extra babel options
   whitelist: ["useStrict"] # even more options
 }
