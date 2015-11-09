@@ -25,7 +25,8 @@ module React
           if manifest_contents.include? 'require turbolinks'
             inject_into_file manifest, require_react, {after: "//= require turbolinks\n"}
           elsif manifest_contents.include? 'require_tree'
-            inject_into_file manifest, require_react, {before: '//= require_tree'}
+            require_tree = manifest_contents.match(/\/\/= require_tree[^\n]*/)[0]
+            inject_into_file manifest, require_react, {before: require_tree}
           else
             append_file manifest, require_react
           end
