@@ -39,12 +39,7 @@ module React
       def camelize_props_key(props)
         return props unless props.is_a?(Hash)
         props.inject({}) do |h, (k,v)|
-          k = k.to_s.camelize(:lower)
-          if v.is_a?(Hash)
-            h[k] = camelize_props_key(v); h
-          else
-            h[k] = v; h
-          end
+          h[k.to_s.camelize(:lower)] = v.is_a?(Hash) ? camelize_props_key(v) : v; h
         end
       end
 
