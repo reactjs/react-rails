@@ -23,7 +23,8 @@ module React
       # on the client.
       def react_component(name, props = {}, options = {}, &block)
         options = {:tag => options} if options.is_a?(Symbol)
-
+        props = camelize_props_key(props)
+        
         prerender_options = options[:prerender]
         if prerender_options
           block = Proc.new{ concat React::ServerRendering.render(name, props, prerender_options) }
@@ -40,6 +41,15 @@ module React
         html_options.except!(:tag, :prerender)
 
         content_tag(html_tag, '', html_options, &block)
+      end
+
+      private
+
+      def camelize_props_key(props)
+        return props unless props.is_a?(Hash)
+        props.inject({}) do |h, (k,v)|
+          h[k.to_s.camelize(:lower)] = v.is_a?(Hash) ? camelize_props_key(v) : v; h
+        end
       end
     end
   end

@@ -26,7 +26,7 @@ module React
           end
 
         if !props.is_a?(String)
-          props = camelize_props_key(props).to_json
+          props = props.to_json
         end
 
         super(component_name, props, {render_function: react_render_method})
@@ -34,13 +34,6 @@ module React
 
       def after_render(component_name, props, prerender_options)
         @replay_console ? CONSOLE_REPLAY : ""
-      end
-
-      def camelize_props_key(props)
-        return props unless props.is_a?(Hash)
-        props.inject({}) do |h, (k,v)|
-          h[k.to_s.camelize(:lower)] = v.is_a?(Hash) ? camelize_props_key(v) : v; h
-        end
       end
 
       # Reimplement console methods for replaying on the client
