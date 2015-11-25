@@ -1,6 +1,7 @@
 module React
   module Rails
     # If you change this, make sure to update VERSIONS.md
-    VERSION = '1.4.2'
+    # And the version hint in README.md, if needed
+    VERSION = '1.5.0'
   end
 end

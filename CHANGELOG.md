@@ -4,6 +4,16 @@
 
 #### New Features
 
+#### Deprecation
+
+#### Bug Fixes
+
+## 1.5.0 (November 25, 2015)
+
+#### Breaking Changes
+
+#### New Features
+
 - Update to React 0.14.3 #412
 - `config.react.camelize_props = true` will camelize `react_component` prop keys #409
 
@@ -14,7 +24,7 @@
 - Fix chained `.es6` file names with JSX processor #411
 - Don't insert `// =require`s multiple times #398
 
-## 1.4.2 
+## 1.4.2 (November 5, 2015)
 
 #### Breaking Changes
 
@@ -27,7 +37,7 @@
 
 #### Bug Fixes
 
-- Support custom attributes when rendering from controller #384 
+- Support custom attributes when rendering from controller #384
 
 ## 1.4.1 (October 23, 2015)
 
