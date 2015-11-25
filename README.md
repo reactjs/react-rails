@@ -206,6 +206,14 @@ end
 - On MRI, you'll get a deadlock with `pool_size` > 1
 - If you're using JRuby, you can increase `pool_size` to have real multi-threaded rendering.
 
+You can configure camelize_props option and pass props with an underscored hash from rails but get a camelized hash in jsx :
+
+```ruby
+MyApp::Application.configure do
+  config.react.camelize_props = true #default false
+end
+```
+
 ### Rendering components instead of views
 
 Components can also be prerendered directly from a controller action with the custom `component` renderer. For example:

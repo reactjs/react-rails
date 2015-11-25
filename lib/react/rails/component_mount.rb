@@ -9,6 +9,7 @@ module React
       include ActionView::Helpers::TagHelper
       include ActionView::Helpers::TextHelper
       attr_accessor :output_buffer
+      mattr_accessor :camelize_props_switch
 
       # ControllerLifecycle calls these hooks
       # You can use them in custom helper implementations
@@ -23,6 +24,7 @@ module React
       # on the client.
       def react_component(name, props = {}, options = {}, &block)
         options = {:tag => options} if options.is_a?(Symbol)
+        props = camelize_props_key(props) if camelize_props_switch
 
         prerender_options = options[:prerender]
         if prerender_options
@@ -40,6 +42,15 @@ module React
         html_options.except!(:tag, :prerender)
 
         content_tag(html_tag, '', html_options, &block)
+      end
+
+      private
+
+      def camelize_props_key(props)
+        return props unless props.is_a?(Hash)
+        props.inject({}) do |h, (k,v)|
+          h[k.to_s.camelize(:lower)] = v.is_a?(Hash) ? camelize_props_key(v) : v; h
+        end
       end
     end
   end
