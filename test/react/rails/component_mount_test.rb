@@ -13,6 +13,16 @@ class ComponentMountTest < ActionDispatch::IntegrationTest
     end
   end
 
+  test '#react_component accepts React props with camelize_props ' do
+    React::Rails::ComponentMount.camelize_props_switch = true
+    helper = React::Rails::ComponentMount.new
+    html = helper.react_component('Foo', {foo_bar: 'value'})
+    expected_props = %w(data-react-class="Foo" data-react-props="{&quot;fooBar&quot;:&quot;value&quot;}")
+    expected_props.each do |segment|
+      assert html.include?(segment)
+    end
+  end
+
   test '#react_component accepts jbuilder-based strings as properties' do
     jbuilder_json = Jbuilder.new do |json|
       json.bar 'value'

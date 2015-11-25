@@ -9,6 +9,8 @@ module React
       config.react.addons = false
       config.react.jsx_transform_options = {}
       config.react.jsx_transformer_class = nil # defaults to BabelTransformer
+      config.react.camelize_props = false # pass in an underscored hash but get a camelized hash
+
       # Server rendering:
       config.react.server_renderer_pool_size  = 1   # increase if you're on JRuby
       config.react.server_renderer_timeout    = 20  # seconds
@@ -31,6 +33,7 @@ module React
 
         app.config.react.view_helper_implementation ||= React::Rails::ComponentMount
         React::Rails::ViewHelper.helper_implementation_class = app.config.react.view_helper_implementation
+        React::Rails::ComponentMount.camelize_props_switch = app.config.react.camelize_props
 
         ActiveSupport.on_load(:action_controller) do
           include ::React::Rails::ControllerLifecycle
