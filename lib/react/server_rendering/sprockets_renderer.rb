@@ -1,9 +1,11 @@
-# Extends ExecJSRenderer for the Rails environment
-# - builds JS code out of the asset pipeline
-# - stringifies props
-# - implements console replay
+require "react/server_rendering/environment_container"
+require "react/server_rendering/manifest_container"
 module React
   module ServerRendering
+    # Extends ExecJSRenderer for the Rails environment
+    # - builds JS code out of the asset pipeline
+    # - stringifies props
+    # - implements console replay
     class SprocketsRenderer < ExecJSRenderer
       # Reimplement console methods for replaying on the client
       CONSOLE_POLYFILL = File.read(File.join(File.dirname(__FILE__), "sprockets_renderer/console_polyfill.js"))
@@ -15,7 +17,7 @@ module React
         js_code = CONSOLE_POLYFILL.dup
 
         filenames.each do |filename|
-          js_code << get_asset_content(filename)
+          js_code << asset_container.find_asset(filename)
         end
 
         super(options.merge(code: js_code))
@@ -46,22 +48,15 @@ module React
       # and a Sprockets::Manifest (application.assets_manifest), which covers the
       # default Rails setups.
       #
-      # Make a `server.js` which has `//= require react-server` and `//= require components`.
-      # Then add `server` to the precompile list, eg `Rails.application.config.assets.precompile += %w( server.js )`.
-      #
-      # In production, react-rails will use the precompiled file.
-      #
       # TODO: what if the assets aren't on the local server (maybe they're on a CDN?)
       # Can we check for asset_host configuration here?
-      def get_asset_content(asset_name)
-        if ::Rails.application.config.assets.compile
-          ::Rails.application.assets[asset_name].to_s
+      #
+      # @return [#find_asset(logical_path)] An object that returns asset contents by logical path
+      def asset_container
+        @asset_container ||= if ::Rails.application.config.assets.compile
+          EnvironmentContainer.new
         else
-          manifest = ::Rails.application.assets_manifest
-          # Find the corresponding compiled file:
-          asset_path = manifest.assets[asset_name] || raise("No compiled asset for #{asset_name}, was it precompiled?")
-          asset_full_path = ::Rails.root.join("public", manifest.directory, asset_path)
-          File.read(asset_full_path)
+          ManifestContainer.new
         end
       end
     end

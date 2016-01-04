@@ -1,9 +1,9 @@
-# A bare-bones renderer for React.js + Exec.js
-# - Depends on global ReactDOMServer in the ExecJS context
-# - No Rails dependency
-# - No browser concerns
 module React
   module ServerRendering
+    # A bare-bones renderer for React.js + Exec.js
+    # - Depends on global ReactDOMServer in the ExecJS context
+    # - No Rails dependency
+    # - No browser concerns
     class ExecJSRenderer
       def initialize(options={})
         js_code = options[:code] || raise("Pass `code:` option to instantiate a JS context!")
