@@ -10,7 +10,7 @@ module React
       end
 
       def find_asset(logical_path)
-        asset_path = manifest.assets[logical_path] || raise("No compiled asset for #{logical_path}, was it precompiled?")
+        asset_path = @manifest.assets[logical_path] || raise("No compiled asset for #{logical_path}, was it precompiled?")
         asset_full_path = ::Rails.root.join("public", @manifest.directory, asset_path)
         File.read(asset_full_path)
       end
