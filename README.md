@@ -150,7 +150,7 @@ react_component(component_class_name, props={}, html_options={})
 - `component_class_name` is a string which names a globally-accessible component class. It may have dots (eg, `"MyApp.Header.MenuItem"`).
 - `props` is either an object that responds to `#to_json` or an already-stringified JSON object (eg, made with Jbuilder, see note below).
 - `html_options` may include:
-  - `tag:` to use an element other than a `div` to embed `data-react-class` and `-props`.
+  - `tag:` to use an element other than a `div` to embed `data-react-class` and `data-react-props`.
   - `prerender: true` to render the component on the server.
   - `**other` Any other arguments (eg `class:`, `id:`) are passed through to [`content_tag`](http://api.rubyonrails.org/classes/ActionView/Helpers/TagHelper.html#method-i-content_tag).
 
@@ -167,7 +167,7 @@ To render components on the server, pass `prerender: true` to `react_component`:
 </div>
 ```
 
-_(It will be also be mounted by the UJS on page load.)_
+_(It will also be mounted by the UJS on page load.)_
 
 There are some requirements for this to work:
 
