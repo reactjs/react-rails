@@ -42,18 +42,24 @@ module React
         @replay_console ? CONSOLE_REPLAY : ""
       end
 
-      # Given an asset name, return the fully-compiled body of that asset.
+      class << self
+        attr_accessor :asset_container_class
+      end
+
+      # Get an object which exposes assets by their logical path.
       #
       # Out of the box, it supports a Sprockets::Environment (application.assets)
       # and a Sprockets::Manifest (application.assets_manifest), which covers the
       # default Rails setups.
       #
-      # TODO: what if the assets aren't on the local server (maybe they're on a CDN?)
-      # Can we check for asset_host configuration here?
+      # You can provide a custom asset container
+      # with `React::ServerRendering::SprocketsRender.asset_container_class = MyAssetContainer`.
       #
       # @return [#find_asset(logical_path)] An object that returns asset contents by logical path
       def asset_container
-        @asset_container ||= if ::Rails.application.config.assets.compile
+        @asset_container ||= if self.class.asset_container_class.present?
+          self.class.asset_container_class.new
+        elsif ::Rails.application.config.assets.compile
           EnvironmentContainer.new
         else
           ManifestContainer.new
