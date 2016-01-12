@@ -36,6 +36,7 @@ Gem::Specification.new do |s|
   s.files = Dir[
     'lib/**/*',
     'README.md',
+    'CHANGELOG.md',
     'LICENSE'
   ]
 
