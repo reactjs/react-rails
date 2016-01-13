@@ -66,4 +66,11 @@ class ServerRenderedHtmlTest  < ActionDispatch::IntegrationTest
     assert_match(/id=\"custom-id\"/, rendered_html)
     assert_match(/data-remote=\"true\"/, rendered_html)
   end
+
+  test 'exec js renderer' do
+    get '/server/exec_js_renderer'
+    assert_match("renderToString was called", response.body)
+    React::ServerRendering.renderer = React::ServerRendering::SprocketsRenderer
+    React::ServerRendering.reset_pool
+  end
 end

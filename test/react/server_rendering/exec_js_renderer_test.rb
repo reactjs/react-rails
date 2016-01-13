@@ -21,13 +21,13 @@ class ExecJSRendererTest < ActiveSupport::TestCase
   end
 
   test '#render returns HTML' do
-    result = @renderer.render("Todo", {todo: "write tests"}.to_json, {})
+    result = @renderer.render("Todo", {todo: "write tests"}.to_json, nil)
     assert_match(/<li.*write tests<\/li>/, result)
     assert_match(/data-react-checksum/, result)
   end
 
-  test '#render accepts render_function:' do
-    result = @renderer.render("Todo", {todo: "write more tests"}.to_json, render_function: "renderToStaticMarkup")
+  test '#render accepts :static pre-render option' do
+    result = @renderer.render("Todo", {todo: "write more tests"}.to_json, :static)
     assert_match(/<li>write more tests<\/li>/, result)
     assert_no_match(/data-react-checksum/, result)
   end
@@ -42,7 +42,7 @@ class ExecJSRendererTest < ActiveSupport::TestCase
     end
 
     error = assert_raises(React::ServerRendering::PrerenderError) do
-      @renderer.render("Todo", {todo: "write tests"}.to_json, {})
+      @renderer.render("Todo", {todo: "write tests"}.to_json, nil)
     end
 
     assert_match(/before_render/, error.message)
@@ -60,7 +60,7 @@ class ExecJSRendererTest < ActiveSupport::TestCase
     end
 
     error = assert_raises(React::ServerRendering::PrerenderError) do
-      @renderer.render("Todo", {todo: "write tests"}.to_json, {})
+      @renderer.render("Todo", {todo: "write tests"}.to_json, nil)
     end
 
     assert_match(/after_render/, error.message)
@@ -69,7 +69,7 @@ class ExecJSRendererTest < ActiveSupport::TestCase
 
   test '.new accepts code:' do
     dummy_renderer = React::ServerRendering::ExecJSRenderer.new(code: DUMMY_IMPLEMENTATION)
-    result = dummy_renderer.render("Todo", {todo: "get a real job"}.to_json, {})
+    result = dummy_renderer.render("Todo", {todo: "get a real job"}.to_json, nil)
     assert_equal("renderToString was called", result)
   end
 end

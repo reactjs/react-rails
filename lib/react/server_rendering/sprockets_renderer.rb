@@ -17,21 +17,6 @@ module React
         super(options.merge(code: js_code))
       end
 
-      def render(component_name, props, prerender_options)
-        # pass prerender: :static to use renderToStaticMarkup
-        react_render_method = if prerender_options == :static
-            "renderToStaticMarkup"
-          else
-            "renderToString"
-          end
-
-        if !props.is_a?(String)
-          props = props.to_json
-        end
-
-        super(component_name, props, {render_function: react_render_method})
-      end
-
       def after_render(component_name, props, prerender_options)
         @replay_console ? CONSOLE_REPLAY : ""
       end
