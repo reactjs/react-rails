@@ -19,7 +19,7 @@ in your Ruby on Rails (3.2+) application. `react-rails` can:
 - [Generate components](#component-generator) with a Rails generator
 - [Be extended](#extending-react-rails) with custom renderers, transformers and view helpers
 
-Just getting started with React? Make sure to check out the [Getting Started] (https://facebook.github.io/react/docs/getting-started.html) guide.
+Just getting started with React? Make sure to check out the [Getting Started] (https://facebook.github.io/react/docs/getting-started.html) guide. If you're looking for a Webpack integrated method, see [Related Projects](#related-projects) below.
 
 ## Installation
 
@@ -388,3 +388,8 @@ Any subclass of `ExecJSRenderer` may use those hooks (for example, `SprocketsRen
 - `#transform(code_string)` to return a string of transformed code
 
 `react-rails` provides two transformers, `React::JSX::JSXTransformer` and `React::JSX::BabelTransformer`.
+
+### Related Projects
+
+1. [react\_on\_rails Gem](https://github.com/shakacode/react_on_rails): Webpack Integration of React with Rails utilizing the modern JavaScript tooling and libraries, including Webpack, Babel, React, Redux, React-Router. You can an example of this live at [www.reactrails.com](http://www.reactrails.com).
+2. [React.rb](http://reactrb.org/): Use Ruby to build reactive user interfaces with React under the covers.[github source code here](https://github.com/zetachang/react.rb).
