@@ -109,6 +109,7 @@
     } else if ('addEventListener' in window) {
       document.addEventListener('DOMContentLoaded', function() {window.ReactRailsUJS.mountComponents()});
     } else {
+      // add support to IE8 without jQuery
       window.attachEvent('onload', function() {window.ReactRailsUJS.mountComponents()});
     }
   }
