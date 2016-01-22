@@ -17,6 +17,7 @@ in your Ruby on Rails (3.2+) application. `react-rails` can:
 - [Render components into views and mount them](#rendering--mounting) via view helper & `react_ujs`
 - [Render components server-side](#server-rendering) with `prerender: true`
 - [Generate components](#component-generator) with a Rails generator
+- [Write your components in ruby](#reactrb) with the [react.rb](http://reactrb.org) gem.
 - [Be extended](#extending-react-rails) with custom renderers, transformers and view helpers
 
 Just getting started with React? Make sure to check out the [Getting Started] (https://facebook.github.io/react/docs/getting-started.html) guide. If you're looking for a Webpack integrated method, see [Related Projects](#related-projects) below.
@@ -120,6 +121,31 @@ config.react.jsx_transform_options = {
   asset_path: "path/to/JSXTransformer.js", # if your JSXTransformer is somewhere else
 }
 ```
+
+### React.rb
+
+The [react.rb](http://reactrb.org) gem is fully integrated with react-rails and provides a complete Ruby DSL for React. Using React.rb you can write your rails views as Reactive Ruby components.  Here is a sample:
+
+```ruby
+class Ticker < React::Component::Base
+
+  before_mount do
+    state.ticks! 0
+    @timer = every(1) {state.ticks! state.ticks+1}
+  end
+
+  before_unmount do
+    @timer.stop
+  end
+
+  def render
+    div {"Seconds Elapsed: #{state.ticks}"}
+  end
+
+end
+```
+
+For full documentation, examples and more info visit [http://reactrb.org](http://reactrb.org)
 
 ### Rendering & mounting
 
