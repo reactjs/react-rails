@@ -43,8 +43,7 @@
     mountComponents: function(searchSelector) {
       var nodes = window.ReactRailsUJS.findDOMNodes(searchSelector);
 
-      for (var i = 0; i < nodes.length; ++i) {
-        var node = nodes[i];
+      [].forEach.call(nodes, function(node) {
         var className = node.getAttribute(window.ReactRailsUJS.CLASS_NAME_ATTR);
 
         // Assume className is simple and can be found at top-level (window).
@@ -57,19 +56,17 @@
         var renderer = (typeof ReactDOM == "object") ? ReactDOM : React;
 
         renderer.render(React.createElement(constructor, props), node);
-      }
+      });
     },
 
     unmountComponents: function(searchSelector) {
       var nodes = window.ReactRailsUJS.findDOMNodes(searchSelector);
 
-      for (var i = 0; i < nodes.length; ++i) {
-        var node = nodes[i];
-
+      [].forEach.call(nodes, function(node) {
         // Prefer ReactDOM if defined (introduced in 0.14)
         var renderer = (typeof ReactDOM == "object") ? ReactDOM : React;
         renderer.unmountComponentAtNode(node);
-      }
+      });
     }
   };
 
