@@ -8,6 +8,9 @@
 
 #### Bug Fixes
 
+- Add CHANGELOG to gem bundle #471 
+- Use `window.attachEvent` to support IE8 without jQuery 😬#446
+
 ## 1.5.0 (November 25, 2015)
 
 #### Breaking Changes
