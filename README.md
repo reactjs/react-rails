@@ -102,6 +102,16 @@ config.react.jsx_transform_options = {
   whitelist: ["useStrict"] # even more options
 }
 ```
+
+If you need to make specializations on a per-file basis, the options can accept a lambda, proc, or anything that responds to `call` and returns a hash of Babel options. The argument yielded is the raw input that the `JSX::Processor` received from `Sprockets`.
+
+```ruby
+config.react.jsx_transorm_options = ->(input) {
+  amd: true,
+  moduleId: input[:name],
+}
+```
+
 Under the hood, `react-rails` uses [ruby-babel-transpiler](https://github.com/babel/ruby-babel-transpiler), for transformation.
 
 ### Rendering & mounting
