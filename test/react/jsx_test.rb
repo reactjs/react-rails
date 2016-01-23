@@ -77,19 +77,24 @@ when_sprockets_available do
     end
   end
 
-  class AmdOptions
-    def self.call(input)
-      {
-        modules: "amd",
-        moduleId: "this_was_not_possible_before/#{input[:name]}",
-      }
-    end
-  end
-
   def test_babel_transformer_can_provide_per_file_options_with_a_proc
-    React::JSX.transform_options = AmdOptions
+    React::JSX.transform_options = amd_options_with_sprockets_version_awareness
     get '/assets/amd_example.js'
     assert_response :success
     assert response.body.include?('define("this_was_not_possible_before/amd_example"'), response.body
   end
+  
+  def amd_options_with_sprockets_version_awareness
+    if Gem::Version.new(Sprockets::VERSION) >= Gem::Version.new("3.0.0")
+      lambda do |input|
+        { modules: "amd", moduleId: "this_was_not_possible_before/#{input[:name]}" }
+      end
+    else
+      # TODO: Is this even posssible before Sprockets 3? Sorry Sprockets 2 users...
+      lambda do |input|
+        { modules: "amd", moduleId: "this_was_not_possible_before/amd_example" }
+      end
+    end
+  end
+
 end
