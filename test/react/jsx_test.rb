@@ -77,17 +77,19 @@ when_sprockets_available do
     end
   end
 
-  def test_babel_transformer_can_provide_per_file_options_with_a_proc
-    React::JSX.transform_options = ->(input) do
+  class AmdOptions
+    def self.call(input)
       {
-        moduleId: "this_was_not_possible_before/#{input[:name]}",
-        moduleRoot: nil,
         modules: "amd",
+        moduleId: "this_was_not_possible_before/#{input[:name]}",
       }
     end
+  end
 
+  def test_babel_transformer_can_provide_per_file_options_with_a_proc
+    React::JSX.transform_options = AmdOptions
     get '/assets/amd_example.js'
     assert_response :success
-    assert @response.body.include?(%q[define("this_was_not_possible_before/amd_example"])
+    assert response.body.include?('define("this_was_not_possible_before/amd_example"')
   end
 end
