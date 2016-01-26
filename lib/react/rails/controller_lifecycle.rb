@@ -4,9 +4,11 @@ module React
       extend ActiveSupport::Concern
 
       included do
-        # use old names to support Rails 3
-        before_filter :setup_react_component_helper
-        after_filter :teardown_react_component_helper
+        # use both names to support Rails 3..5
+        before_action_with_fallback = begin method(:before_action); rescue method(:before_filter); end
+        after_action_with_fallback = begin method(:after_action); rescue method(:after_filter); end
+        before_action_with_fallback.call :setup_react_component_helper
+        after_action_with_fallback.call :teardown_react_component_helper
         attr_reader :__react_component_helper
       end
 
