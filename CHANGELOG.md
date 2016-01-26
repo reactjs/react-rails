@@ -4,11 +4,13 @@
 
 #### New Features
 
+- Individual add-ons can be included in a bundle with sprockets require directives.
+
 #### Deprecation
 
 #### Bug Fixes
 
-- Add CHANGELOG to gem bundle #471 
+- Add CHANGELOG to gem bundle #471
 - Use `window.attachEvent` to support IE8 without jQuery 😬#446
 
 ## 1.5.0 (November 25, 2015)
