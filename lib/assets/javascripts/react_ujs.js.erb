@@ -57,6 +57,8 @@
         var renderer = (typeof ReactDOM == "object") ? ReactDOM : React;
 
         renderer.render(React.createElement(constructor, props), node);
+
+        node.removeAttribute(window.ReactRailsUJS.PROPS_ATTR);
       }
     },
 
