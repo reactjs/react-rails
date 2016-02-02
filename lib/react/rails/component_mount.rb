@@ -34,14 +34,23 @@ module React
         html_options = options.reverse_merge(:data => {})
         html_options[:data].tap do |data|
           data[:react_class] = name
-          data[:react_props] = (props.is_a?(String) ? props : props.to_json)
         end
         html_tag = html_options[:tag] || :div
 
         # remove internally used properties so they aren't rendered to DOM
         html_options.except!(:tag, :prerender)
 
-        content_tag(html_tag, '', html_options, &block)
+        output_html = if options[:prerender] == :nowrap
+                        React::ServerRendering.render(name, props, prerender_options)
+                      else
+                        content_tag(html_tag, '', html_options, &block)
+                      end
+        output_html += react_component_props(name, props)
+        output_html
+      end
+
+      def react_component_props(component_name, props)
+        content_tag(:noindex, content_tag('script', "window.ReactComponentsProps[\"#{component_name}\"] = #{props};", {}, false))
       end
 
       private
