@@ -43,6 +43,32 @@ class InstallGeneratorTest < Rails::Generators::TestCase
     assert_application_file_modified
   end
 
+  test "updates `application.js` if require_tree is commented" do
+    FileUtils.mkdir_p destination_root + '/app/assets/javascripts/'
+    File.write destination_root + '/app/assets/javascripts/application.js', <<-END
+      //
+      // require_tree .
+      //
+    END
+
+    run_generator
+
+    assert_application_file_modified
+  end
+
+  test "updates `application.js` if require turbolinks has extra spaces" do
+    FileUtils.mkdir_p destination_root + '/app/assets/javascripts/'
+    File.write destination_root + '/app/assets/javascripts/application.js', <<-END
+      //
+      //#{"=  require  turbolinks  "}
+      //
+    END
+
+    run_generator
+
+    assert_application_file_modified
+  end
+
   def assert_application_file_modified
     assert_file 'app/assets/javascripts/application.js', %r{//= require react}
     assert_file 'app/assets/javascripts/application.js', %r{//= require react_ujs}
