@@ -76,6 +76,14 @@ end
 After restarting your Rails server, `//= require react`  will provide the build of React.js which
 was specified by the configurations.
 
+If you want to hand-pick which add-ons are added to your build they are available via sprockets
+directives.
+
+```js
+//= require react
+//= require react-addons-css-transition-group
+```
+
 `react-rails` offers a few other options for versions & builds of React.js.
 See [VERSIONS.md](https://github.com/reactjs/react-rails/blob/master/VERSIONS.md) for more info about
  using the `react-source` gem or dropping in your own copies of React.js.
