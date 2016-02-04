@@ -39,6 +39,18 @@ def manually_expire_asset(asset_name)
   def asset.fresh?(env); false; end
 end
 
+def precompile_assets
+  ENV['RAILS_GROUPS'] = 'assets' # required for Rails 3.2
+  Dummy::Application.load_tasks
+  Rake::Task['assets:precompile'].reenable
+  Rake::Task['assets:precompile'].invoke
+end
+
+def clear_precompiled_assets
+  FileUtils.rm_r(File.expand_path("../dummy/public/assets", __FILE__))
+  ENV.delete('RAILS_GROUPS')
+end
+
 # Load support files
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
 

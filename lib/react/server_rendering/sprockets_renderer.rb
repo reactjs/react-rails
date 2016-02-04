@@ -1,9 +1,11 @@
-# Extends ExecJSRenderer for the Rails environment
-# - builds JS code out of the asset pipeline
-# - stringifies props
-# - implements console replay
+require "react/server_rendering/environment_container"
+require "react/server_rendering/manifest_container"
 module React
   module ServerRendering
+    # Extends ExecJSRenderer for the Rails environment
+    # - builds JS code out of the asset pipeline
+    # - stringifies props
+    # - implements console replay
     class SprocketsRenderer < ExecJSRenderer
       # Reimplement console methods for replaying on the client
       CONSOLE_POLYFILL = File.read(File.join(File.dirname(__FILE__), "sprockets_renderer/console_polyfill.js"))
@@ -15,7 +17,7 @@ module React
         js_code = CONSOLE_POLYFILL.dup
 
         filenames.each do |filename|
-          js_code << ::Rails.application.assets[filename].to_s
+          js_code << asset_container.find_asset(filename)
         end
 
         super(options.merge(code: js_code))
@@ -38,6 +40,30 @@ module React
 
       def after_render(component_name, props, prerender_options)
         @replay_console ? CONSOLE_REPLAY : ""
+      end
+
+      class << self
+        attr_accessor :asset_container_class
+      end
+
+      # Get an object which exposes assets by their logical path.
+      #
+      # Out of the box, it supports a Sprockets::Environment (application.assets)
+      # and a Sprockets::Manifest (application.assets_manifest), which covers the
+      # default Rails setups.
+      #
+      # You can provide a custom asset container
+      # with `React::ServerRendering::SprocketsRender.asset_container_class = MyAssetContainer`.
+      #
+      # @return [#find_asset(logical_path)] An object that returns asset contents by logical path
+      def asset_container
+        @asset_container ||= if self.class.asset_container_class.present?
+          self.class.asset_container_class.new
+        elsif ::Rails.application.config.assets.compile
+          EnvironmentContainer.new
+        else
+          ManifestContainer.new
+        end
       end
     end
   end
