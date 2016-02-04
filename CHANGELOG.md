@@ -4,12 +4,26 @@
 
 #### New Features
 
-- Individual add-ons can be included in a bundle with sprockets require directives.
+#### Deprecation
+
+#### Bug Fixes
+
+## 1.6.0 (February 4, 2016)
+
+#### Breaking Changes
+
+#### New Features
+
+- Individual add-ons can be included in a bundle with sprockets require directives. #457
+- Support `sprockets-rails` 3 #430
+- Update to React 0.14.6
 
 #### Deprecation
 
 #### Bug Fixes
 
+- Fix install generator when `//= require`s are malformed #463
+- Use `before_action` if available #456
 - Add CHANGELOG to gem bundle #471
 - Use `window.attachEvent` to support IE8 without jQuery 😬#446
 
