@@ -35,12 +35,37 @@ class InstallGeneratorTest < Rails::Generators::TestCase
   end
 
   test "modifies `application.js` if it's empty" do
-    FileUtils.mkdir_p destination_root + '/app/assets/javascripts/'
-    File.write(destination_root + '/app/assets/javascripts/application.js', '')
+    init_application_js ''
 
     run_generator
-
     assert_application_file_modified
+  end
+
+  test "updates `application.js` if require_tree is commented" do
+    init_application_js <<-END
+      //
+      // require_tree .
+      //
+    END
+
+    run_generator
+    assert_application_file_modified
+  end
+
+  test "updates `application.js` if require turbolinks has extra spaces" do
+    init_application_js <<-END
+      //
+      //#{"=  require  turbolinks  "}
+      //
+    END
+
+    run_generator
+    assert_application_file_modified
+  end
+
+  def init_application_js(content)
+    FileUtils.mkdir_p destination_root + '/app/assets/javascripts/'
+    File.write destination_root + '/app/assets/javascripts/application.js', content
   end
 
   def assert_application_file_modified

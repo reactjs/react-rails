@@ -22,11 +22,10 @@ module React
         if manifest.exist?
           manifest_contents = File.read(manifest)
 
-          if manifest_contents.include? 'require turbolinks'
-            inject_into_file manifest, require_react, {after: "//= require turbolinks\n"}
-          elsif manifest_contents.include? 'require_tree'
-            require_tree = manifest_contents.match(/\/\/= require_tree[^\n]*/)[0]
-            inject_into_file manifest, require_react, {before: require_tree}
+          if match = manifest_contents.match(/\/\/=\s+require\s+turbolinks/)
+            inject_into_file manifest, require_react, { after: match[0] }
+          elsif match = manifest_contents.match(/\/\/=\s+require_tree[^\n]*/)
+            inject_into_file manifest, require_react, { before: match[0] }
           else
             append_file manifest, require_react
           end
