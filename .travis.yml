@@ -17,13 +17,13 @@ gemfile:
   - rails_5.gemfile
 
 matrix:
-   fast_finish: true
-   exclude:
-     - gemfile: gemfiles/rails_5.gemfile
-       rvm: 1.9
-     - gemfile: gemfiles/rails_5.gemfile
-       rvm: 2.0
-     - gemfile: gemfiles/rails_5.gemfile
-       rvm: 2.1
-   allow_failures:
-     - rvm: jruby-19mode
+  fast_finish: true
+  exclude:
+    - gemfile: gemfiles/rails_5.gemfile
+      rvm: 1.9
+    - gemfile: gemfiles/rails_5.gemfile
+      rvm: 2.0
+    - gemfile: gemfiles/rails_5.gemfile
+      rvm: 2.1
+  allow_failures:
+    - rvm: jruby-19mode
