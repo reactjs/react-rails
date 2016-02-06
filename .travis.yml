@@ -9,12 +9,12 @@ rvm:
   - jruby-19mode
 
 gemfile:
-  - rails_3.2.gemfile
-  - rails_4.0.gemfile
-  - rails_4.0_with_therubyracer.gemfile
-  - rails_4.2.gemfile
-  - rails_4.1.gemfile
-  - rails_5.gemfile
+  - gemfiles/rails_3.2.gemfile
+  - gemfiles/rails_4.0.gemfile
+  - gemfiles/rails_4.0_with_therubyracer.gemfile
+  - gemfiles/rails_4.2.gemfile
+  - gemfiles/rails_4.1.gemfile
+  - gemfiles/rails_5.gemfile
 
 matrix:
   fast_finish: true
