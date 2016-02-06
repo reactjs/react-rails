@@ -1,4 +1,3 @@
----
 language: ruby
 sudo: false
 rvm:
@@ -9,13 +8,13 @@ rvm:
   - 1.9
   - jruby-19mode
 
- gemfile:
-    - rails_3.2.gemfile
-    - rails_4.0.gemfile
-    - rails_4.0_with_therubyracer.gemfile
-    - rails_4.2.gemfile
-    - rails_4.1.gemfile
-    - rails_5.gemfile
+gemfile:
+  - rails_3.2.gemfile
+  - rails_4.0.gemfile
+  - rails_4.0_with_therubyracer.gemfile
+  - rails_4.2.gemfile
+  - rails_4.1.gemfile
+  - rails_5.gemfile
 
 matrix:
    fast_finish: true
@@ -27,5 +26,4 @@ matrix:
      - gemfile: gemfiles/rails50.gemfile
        rvm: 2.1
    allow_failures:
-     - rvm: ruby-head
-     - rvm: jruby-head
+     - rvm: jruby-19mode
