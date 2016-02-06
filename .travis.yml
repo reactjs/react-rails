@@ -8,8 +8,14 @@ rvm:
   - 2.0
   - 1.9
   - jruby-19mode
-before_script: 'bundle exec appraisal install'
-script: 'bundle exec rake appraisal test'
+
+ gemfile:
+    - rails_3.2.gemfile
+    - rails_4.0.gemfile
+    - rails_4.0_with_therubyracer.gemfile
+    - rails_4.2.gemfile
+    - rails_4.1.gemfile
+    - rails_5.gemfile
 
 matrix:
    fast_finish: true
