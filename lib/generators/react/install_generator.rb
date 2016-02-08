@@ -48,6 +48,11 @@ module React
         create_file components_file, components_js
       end
 
+      def create_server_rendering
+        file_path = 'app/assets/javascripts/server_rendering.js'
+        template("server_rendering.js", file_path)
+      end
+
       private
 
       def manifest

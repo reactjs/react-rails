@@ -51,6 +51,7 @@ where you will put your components
   //= require react_ujs
   //= require components
   ```
+- create a `server_rendering.js` manifest file
 
 ## Usage
 
@@ -177,8 +178,8 @@ _(It will also be mounted by the UJS on page load.)_
 
 There are some requirements for this to work:
 
-- `react-rails` must load your code. By convention, it uses `components.js`, which was created
-by the install task. This file must include your components _and_ their dependencies (eg, Underscore.js).
+- `react-rails` must load your code. By convention, it uses `server_rendering.js`, which was created
+by the install task. This file must include React, ReactDOMServer, your components _and_ their dependencies (eg, Underscore.js).
 - Your components must be accessible in the global scope.
 If you are using `.js.jsx.coffee` files then the wrapper function needs to be taken into account:
 
@@ -202,7 +203,7 @@ MyApp::Application.configure do
   config.react.server_renderer_timeout    ||= 20 # seconds
   config.react.server_renderer = React::ServerRendering::SprocketsRenderer
   config.react.server_renderer_options = {
-    files: ["react-server.js", "components.js"], # files to load for prerendering
+    files: ["server_rendering.js"],       # files to load for prerendering
     replay_console: true,                 # if true, console.* will be replayed client-side
   }
 end

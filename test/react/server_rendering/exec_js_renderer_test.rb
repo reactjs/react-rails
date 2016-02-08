@@ -14,9 +14,10 @@ var ReactDOMServer = {
 
 class ExecJSRendererTest < ActiveSupport::TestCase
   setup do
+    react_source = Rails.application.assets["react.js"].to_s
     react_server_source = Rails.application.assets["react-server.js"].to_s
     todo_component_source = Rails.application.assets["components/Todo.js"].to_s
-    code = react_server_source + todo_component_source
+    code = react_source + react_server_source + todo_component_source
     @renderer = React::ServerRendering::ExecJSRenderer.new(code: code)
   end
 

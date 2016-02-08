@@ -34,7 +34,7 @@ namespace :react do
 
       # With addons:
       copy_react_asset("#{environment}/react-browser-with-addons.js", "#{environment}-with-addons/react.js")
-      copy_react_asset("#{environment}/react-server-with-addons.js", "#{environment}-with-addons/react-server.js")
+      copy_react_asset("#{environment}/react-server.js", "#{environment}-with-addons/react-server.js")
 
       addons = %w(
         addons-clone-with-props

@@ -62,6 +62,14 @@ class InstallGeneratorTest < Rails::Generators::TestCase
     assert_application_file_modified
   end
 
+  test "creates server_rendering.js with default requires" do
+    run_generator
+    server_rendering_file_path = "app/assets/javascripts/server_rendering.js"
+    assert_file server_rendering_file_path, %r{//= require react\n}
+    assert_file server_rendering_file_path, %r{//= require react-server\n}
+    assert_file server_rendering_file_path, %r{//= require ./components\n}
+  end
+
   def init_application_js(content)
     FileUtils.mkdir_p destination_root + '/app/assets/javascripts/'
     File.write destination_root + '/app/assets/javascripts/application.js', content
