@@ -185,7 +185,7 @@ _(It will also be mounted by the UJS on page load.)_
 
 There are some requirements for this to work:
 
-- `react-rails` must load your code. By convention it uses `components.js`, which was created
+- `react-rails` must load your code. By convention, it uses `components.js`, which was created
 by the install task. This file must include your components _and_ their dependencies (eg, Underscore.js).
 - Your components must be accessible in the global scope.
 If you are using `.js.jsx.coffee` files then the wrapper function needs to be taken into account:
@@ -203,7 +203,7 @@ You can configure your pool of JS virtual machines and specify where it should l
 
 ```ruby
 # config/environments/application.rb
-# These are the defaults if you dont specify any yourself
+# These are the defaults if you don't specify any yourself
 MyApp::Application.configure do
   # Settings for the pool of renderers:
   config.react.server_renderer_pool_size  ||= 1  # ExecJS doesn't allow more than one on MRI
