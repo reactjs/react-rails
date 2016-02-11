@@ -1,11 +1,29 @@
----
 language: ruby
 sudo: false
 rvm:
-  - 2.2
+  - 2.3.0
+  - 2.2.4
   - 2.1
-  - 2.0.0
-  - 1.9.3
-  - jruby-19mode
-before_script: 'bundle exec appraisal install'
-script: 'bundle exec rake appraisal test'
+  - 2.0
+  - 1.9
+  - jruby-9.0.1.0
+
+gemfile:
+  - gemfiles/rails_3.2.gemfile
+  - gemfiles/rails_4.0.gemfile
+  - gemfiles/rails_4.0_with_therubyracer.gemfile
+  - gemfiles/rails_4.2.gemfile
+  - gemfiles/rails_4.1.gemfile
+  - gemfiles/rails_5.gemfile
+
+matrix:
+  fast_finish: true
+  exclude:
+    - gemfile: gemfiles/rails_5.gemfile
+      rvm: 1.9
+    - gemfile: gemfiles/rails_5.gemfile
+      rvm: 2.0
+    - gemfile: gemfiles/rails_5.gemfile
+      rvm: 2.1
+  allow_failures:
+    - rvm: jruby-9.0.1.0
