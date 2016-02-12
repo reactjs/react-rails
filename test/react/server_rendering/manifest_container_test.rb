@@ -5,7 +5,9 @@ require "test_helper"
 if Rails::VERSION::MAJOR > 3
   class ManifestContainerTest < ActiveSupport::TestCase
     def setup
-      precompile_assets
+      capture_io do
+        precompile_assets
+      end
 
       # Make a new manifest since assets weren't compiled before
       config = Rails.application.config

@@ -60,24 +60,26 @@ class ReactRailsUJSTest < ActionDispatch::IntegrationTest
 
     # Try clicking links.
     page.click_link('Alice')
+    wait_for_turbolinks_to_be_available
     assert page.has_content?('Hello Alice')
 
     page.click_link('Bob')
+    wait_for_turbolinks_to_be_available
     assert page.has_content?('Hello Bob')
 
     # Try going back.
     page.execute_script('history.back();')
+    wait_for_turbolinks_to_be_available
     assert page.has_content?('Hello Alice')
-
-    wait_for_turbolinks_to_be_available()
 
     # Try Turbolinks javascript API.
     page.execute_script('Turbolinks.visit("/pages/2");')
+    wait_for_turbolinks_to_be_available
     assert page.has_content?('Hello Alice')
 
-    wait_for_turbolinks_to_be_available()
 
     page.execute_script('Turbolinks.visit("/pages/1");')
+    wait_for_turbolinks_to_be_available
     assert page.has_content?('Hello Bob')
 
     # Component state is not persistent after clicking current page link.
@@ -85,6 +87,7 @@ class ReactRailsUJSTest < ActionDispatch::IntegrationTest
     assert page.has_content?('Goodbye Bob')
 
     page.click_link('Bob')
+    wait_for_turbolinks_to_be_available
     assert page.has_content?('Hello Bob')
   end
 
