@@ -56,6 +56,7 @@ class ReactRailsUJSTest < ActionDispatch::IntegrationTest
   test 'react_ujs works with Turbolinks' do
     visit '/pages/1'
     assert page.has_content?('Hello Bob')
+    assert page.evaluate_script("Turbolinks.supported")
 
     # Try clicking links.
     page.click_link('Alice')
