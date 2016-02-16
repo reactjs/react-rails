@@ -47,7 +47,8 @@ def precompile_assets
 end
 
 def clear_precompiled_assets
-  FileUtils.rm_r(File.expand_path("../dummy/public/assets", __FILE__))
+  assets_directory = File.expand_path("../dummy/public/assets", __FILE__)
+  FileUtils.rm_r(assets_directory)
   ENV.delete('RAILS_GROUPS')
 end
 
