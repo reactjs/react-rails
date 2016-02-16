@@ -3,12 +3,15 @@
   <li><%= link_to 'Bob', page_path(:id => 1) %></li>
 </ul>
 
-<div id='test-component'>
-  <%= react_component 'HelloMessage', :name => @name %>
+<div id='component-parent'>
+  <%= react_component 'HelloMessage', { :name => @name }, { :id => 'component' } %>
 </div>
 
-<a href='#' onClick="ReactRailsUJS.unmountComponents('#test-component')">Unmount at selector #test-component</a>
-<a href='#' onClick="ReactRailsUJS.mountComponents('#test-component')">Mount at selector #test-component</a>
+<a href='#' onClick="ReactRailsUJS.unmountComponents('#component-parent')">Unmount at selector #component-parent</a>
+<a href='#' onClick="ReactRailsUJS.mountComponents('#component-parent')">Mount at selector #component-parent</a>
 
-<a href='#' onClick="ReactRailsUJS.unmountComponents(document.querySelector('#test-component'))">Unmount at node #test-component</a>
-<a href='#' onClick="ReactRailsUJS.mountComponents(document.querySelector('#test-component'))">Mount at node #test-component</a>
+<a href='#' onClick="ReactRailsUJS.unmountComponents('#component')">Unmount at selector #component</a>
+<a href='#' onClick="ReactRailsUJS.mountComponents('#component')">Mount at selector #component</a>
+
+<a href='#' onClick="ReactRailsUJS.unmountComponents(document.querySelector('#component-parent'))">Unmount at node #component-parent</a>
+<a href='#' onClick="ReactRailsUJS.mountComponents(document.querySelector('#component-parent'))">Mount at node #component-parent</a>
