@@ -102,6 +102,17 @@ class ReactRailsUJSTest < ActionDispatch::IntegrationTest
     assert page.has_content?('Hello Bob')
   end
 
+  test 'react_ujs can unmount/mount using a selector reference for the component' do
+    visit '/pages/1'
+    assert page.has_content?('Hello Bob')
+
+    page.click_link "Unmount at selector #component"
+    assert page.has_no_content?('Hello Bob')
+
+    page.click_link "Mount at selector #component"
+    assert page.has_content?('Hello Bob')
+  end
+
   test 'react_ujs can unmount/mount using a dom node context' do
     visit '/pages/1'
     assert page.has_content?('Hello Bob')

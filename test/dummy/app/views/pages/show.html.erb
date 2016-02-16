@@ -4,11 +4,14 @@
 </ul>
 
 <div id='component-parent'>
-  <%= react_component 'HelloMessage', :name => @name %>
+  <%= react_component 'HelloMessage', { :name => @name }, { :id => 'component' } %>
 </div>
 
 <a href='#' onClick="ReactRailsUJS.unmountComponents('#component-parent')">Unmount at selector #component-parent</a>
 <a href='#' onClick="ReactRailsUJS.mountComponents('#component-parent')">Mount at selector #component-parent</a>
+
+<a href='#' onClick="ReactRailsUJS.unmountComponents('#component')">Unmount at selector #component</a>
+<a href='#' onClick="ReactRailsUJS.mountComponents('#component')">Mount at selector #component</a>
 
 <a href='#' onClick="ReactRailsUJS.unmountComponents(document.querySelector('#component-parent'))">Unmount at node #component-parent</a>
 <a href='#' onClick="ReactRailsUJS.mountComponents(document.querySelector('#component-parent'))">Mount at node #component-parent</a>
