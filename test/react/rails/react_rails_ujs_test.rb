@@ -91,14 +91,14 @@ class ReactRailsUJSTest < ActionDispatch::IntegrationTest
     assert page.has_content?('Hello Bob')
   end
 
-  test 'react_ujs can unmount/mount using a selector reference' do
+  test 'react_ujs can unmount/mount using a selector reference for a component parent' do
     visit '/pages/1'
     assert page.has_content?('Hello Bob')
 
-    page.click_link "Unmount at selector #test-component"
+    page.click_link "Unmount at selector #component-parent"
     assert page.has_no_content?('Hello Bob')
 
-    page.click_link "Mount at selector #test-component"
+    page.click_link "Mount at selector #component-parent"
     assert page.has_content?('Hello Bob')
   end
 
@@ -106,10 +106,10 @@ class ReactRailsUJSTest < ActionDispatch::IntegrationTest
     visit '/pages/1'
     assert page.has_content?('Hello Bob')
 
-    page.click_link "Unmount at node #test-component"
+    page.click_link "Unmount at node #component-parent"
     assert page.has_no_content?('Hello Bob')
 
-    page.click_link "Mount at node #test-component"
+    page.click_link "Mount at node #component-parent"
     assert page.has_content?('Hello Bob')
   end
 
