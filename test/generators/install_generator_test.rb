@@ -16,7 +16,7 @@ class InstallGeneratorTest < Rails::Generators::TestCase
   test "adds requires to `application.js`" do
     run_generator
 
-    assert_application_file_modified
+    assert_application_file_created
   end
 
   test "it modifes an existing 'application.js'" do
