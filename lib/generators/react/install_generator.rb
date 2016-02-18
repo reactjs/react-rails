@@ -22,7 +22,7 @@ module React
         if manifest.exist?
           manifest_contents = File.read(manifest)
 
-          if match = manifest_contents.match(/\/\/=\s+require\s+turbolinks/)
+          if match = manifest_contents.match(/\/\/=\s+require\s+turbolinks\s+\n/)
             inject_into_file manifest, require_react, { after: match[0] }
           elsif match = manifest_contents.match(/\/\/=\s+require_tree[^\n]*/)
             inject_into_file manifest, require_react, { before: match[0] }
