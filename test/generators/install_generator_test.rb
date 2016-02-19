@@ -4,6 +4,7 @@ require 'generators/react/install_generator'
 class InstallGeneratorTest < Rails::Generators::TestCase
   destination File.join(Rails.root, 'tmp', 'generator_test_output')
   tests React::Generators::InstallGenerator
+  setup :prepare_destination
 
   def copy_directory(dir)
     source = Rails.root.join(dir)
@@ -15,7 +16,6 @@ class InstallGeneratorTest < Rails::Generators::TestCase
 
   test "adds requires to `application.js`" do
     run_generator
-
     assert_application_file_created
   end
 
