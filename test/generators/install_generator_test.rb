@@ -70,6 +70,18 @@ class InstallGeneratorTest < Rails::Generators::TestCase
     assert_file server_rendering_file_path, %r{//= require ./components\n}
   end
 
+  test "creates server rendering initializer" do
+    run_generator
+    initializer_path = "config/initializers/react_server_rendering.rb"
+    assert_file(initializer_path, %r{Rails.application.config.assets.precompile \+= \["server_rendering.js"\]})
+  end
+
+  test "skipping server rendering" do
+    run_generator %w(--skip-server-rendering)
+    assert_no_file "config/initializers/react_server_rendering.rb"
+    assert_no_file "app/assets/javascripts/server_rendering.js"
+  end
+
   def init_application_js(content)
     FileUtils.mkdir_p destination_root + '/app/assets/javascripts/'
     File.write destination_root + '/app/assets/javascripts/application.js', content

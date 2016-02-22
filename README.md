@@ -51,7 +51,7 @@ where you will put your components
   //= require react_ujs
   //= require components
   ```
-- create a `server_rendering.js` manifest file
+- create a `server_rendering.js` manifest file and precompile it with `config/initializers/react_server_rendering.rb`. (Use `--skip-server-rendering` if you don't want this.)
 
 ## Usage
 
