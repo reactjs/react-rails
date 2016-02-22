@@ -23,9 +23,9 @@ module React
         result["code"]
       end
 
+      # search for transformer file using sprockets - allows user to override
+      # this file in his own application
       def jsx_transform_code
-        # search for transformer file using sprockets - allows user to override
-        # this file in his own application
         ::Rails.application.assets[@asset_path].to_s
       end
     end

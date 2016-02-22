@@ -1,4 +1,4 @@
-var HelloMessage = React.createClass({
+var GreetingMessage = React.createClass({
   getInitialState: function() {
     return {greeting: 'Hello'};
   },

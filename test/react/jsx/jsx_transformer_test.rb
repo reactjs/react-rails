@@ -4,10 +4,12 @@ class JSXTransformerTest < ActionDispatch::IntegrationTest
   setup do
     reset_transformer
     React::JSX.transformer_class = React::JSX::JSXTransformer
+    manually_expire_asset('JSXTransformer.js')
   end
 
   teardown do
     reset_transformer
+    manually_expire_asset('JSXTransformer.js')
   end
 
   test 'can use dropped-in version of JSX transformer' do
@@ -15,6 +17,8 @@ class JSXTransformerTest < ActionDispatch::IntegrationTest
     replacing_path =  Rails.root.join("vendor/assets/react/JSXTransformer.js")
 
     FileUtils.cp hidden_path, replacing_path
+    manually_expire_asset('example3.js')
+
     get '/assets/example3.js'
     FileUtils.rm replacing_path
 
@@ -48,6 +52,7 @@ class JSXTransformerTest < ActionDispatch::IntegrationTest
 
     FileUtils.mkdir_p(custom_path)
     FileUtils.cp(hidden_path, replacing_path)
+    manually_expire_asset('example3.js')
     get '/assets/example3.js'
 
     FileUtils.rm_rf custom_path
