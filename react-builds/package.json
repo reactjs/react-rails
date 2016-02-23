@@ -4,17 +4,17 @@
   "description": "Prepares react-rails asset files",
   "main": "react.js",
   "dependencies": {
-    "react": "^0.14.6",
-    "react-addons-clone-with-props": "^0.14.6",
-    "react-addons-create-fragment": "^0.14.6",
-    "react-addons-css-transition-group": "^0.14.6",
-    "react-addons-linked-state-mixin": "^0.14.6",
-    "react-addons-perf": "^0.14.6",
-    "react-addons-pure-render-mixin": "^0.14.6",
-    "react-addons-test-utils": "^0.14.6",
-    "react-addons-transition-group": "^0.14.6",
-    "react-addons-update": "^0.14.6",
-    "react-dom": "^0.14.6",
+    "react": "^0.14.3",
+    "react-addons-clone-with-props": "^0.14.3",
+    "react-addons-create-fragment": "^0.14.3",
+    "react-addons-css-transition-group": "^0.14.3",
+    "react-addons-linked-state-mixin": "^0.14.3",
+    "react-addons-perf": "^0.14.3",
+    "react-addons-pure-render-mixin": "^0.14.3",
+    "react-addons-test-utils": "^0.14.3",
+    "react-addons-transition-group": "^0.14.3",
+    "react-addons-update": "^0.14.3",
+    "react-dom": "^0.14.3",
     "webpack": "^1.12.2"
   }
 }
