@@ -3,6 +3,6 @@
 source "http://rubygems.org"
 
 gem "rails", "~> 4.2.1"
-gem "turbolinks", "~> 2.5.0"
+gem "sprockets", "~> 2.12"
 
 gemspec :path => "../"

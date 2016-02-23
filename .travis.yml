@@ -1,28 +1,24 @@
 language: ruby
 sudo: false
+cache: bundler
 rvm:
   - 2.3.0
   - 2.2.4
   - 2.1
-  - 2.0
-  - 1.9
   - jruby-9.0.1.0
 
 gemfile:
   - gemfiles/rails_3.2.gemfile
   - gemfiles/rails_4.0.gemfile
   - gemfiles/rails_4.0_with_therubyracer.gemfile
-  - gemfiles/rails_4.2.gemfile
+  - gemfiles/rails_4.2_sprockets_2.gemfile
+  - gemfiles/rails_4.2_sprockets_3.gemfile
   - gemfiles/rails_4.1.gemfile
   - gemfiles/rails_5.gemfile
 
 matrix:
   fast_finish: true
   exclude:
-    - gemfile: gemfiles/rails_5.gemfile
-      rvm: 1.9
-    - gemfile: gemfiles/rails_5.gemfile
-      rvm: 2.0
     - gemfile: gemfiles/rails_5.gemfile
       rvm: 2.1
   allow_failures:
@@ -33,3 +29,4 @@ before_install:
   - wget https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-x86_64.tar.bz2 -O $PWD/travis-phantomjs/phantomjs-2.1.1-linux-x86_64.tar.bz2
   - tar -xvf $PWD/travis-phantomjs/phantomjs-2.1.1-linux-x86_64.tar.bz2 -C $PWD/travis-phantomjs
   - export PATH=$PWD/travis-phantomjs/phantomjs-2.1.1-linux-x86_64/bin:$PATH
+  - phantomjs --version
