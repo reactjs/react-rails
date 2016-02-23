@@ -95,10 +95,10 @@ class ReactRailsUJSTest < ActionDispatch::IntegrationTest
     visit '/pages/1'
     assert page.has_content?('Hello Bob'), page.body
 
-    page.click_link "Unmount at selector #component-parent"
+    page.click_button "Unmount by parent selector"
     assert page.has_no_content?('Hello Bob'), page.body
 
-    page.click_link "Mount at selector #component-parent"
+    page.click_button "Mount by parent selector"
     assert page.has_content?('Hello Bob'), page.body
   end
 
@@ -106,10 +106,10 @@ class ReactRailsUJSTest < ActionDispatch::IntegrationTest
     visit '/pages/1'
     assert page.has_content?('Hello Bob'), page.body
 
-    page.click_link "Unmount at selector #component"
+    page.click_button "Unmount by own selector"
     assert page.has_no_content?('Hello Bob'), page.body
 
-    page.click_link "Mount at selector #component"
+    page.click_button "Mount by own selector"
     assert page.has_content?('Hello Bob'), page.body
   end
 
@@ -117,10 +117,10 @@ class ReactRailsUJSTest < ActionDispatch::IntegrationTest
     visit '/pages/1'
     assert page.has_content?('Hello Bob'), page.body
 
-    page.click_link "Unmount at node #component-parent"
+    page.click_button "Unmount by parent node"
     assert page.has_no_content?('Hello Bob'), page.body
 
-    page.click_link "Mount at node #component-parent"
+    page.click_button "Mount by parent node"
     assert page.has_content?('Hello Bob'), page.body
   end
 
