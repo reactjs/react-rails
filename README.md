@@ -157,6 +157,8 @@ react_component(component_class_name, props={}, html_options={})
 
 ### Server rendering
 
+__NOTE:__ Server rendering is currently broken in Rails 3.2 with precompiled assets. See [Issue #483](https://github.com/reactjs/react-rails/issues/483) for more details.
+
 To render components on the server, pass `prerender: true` to `react_component`:
 
 ```erb
