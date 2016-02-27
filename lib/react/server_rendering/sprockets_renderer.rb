@@ -1,5 +1,7 @@
 require "react/server_rendering/environment_container"
 require "react/server_rendering/manifest_container"
+require "react/server_rendering/yaml_manifest_container"
+
 module React
   module ServerRendering
     # Extends ExecJSRenderer for the Rails environment
@@ -62,7 +64,11 @@ module React
         elsif ::Rails.application.config.assets.compile
           EnvironmentContainer.new
         else
-          ManifestContainer.new
+          if Rails::VERSION::MAJOR == 3
+            YamlManifestContainer.new
+          else
+            ManifestContainer.new
+          end
         end
       end
     end
