@@ -4,14 +4,24 @@
 
 #### New Features
 
-- UJS can mount and unmount a component by ID (not only the component's children) #466 
-- Support Turbolinks 5 
+#### Deprecation
+
+#### Bug Fixes
+
+## 1.6.1 (February 28, 2016)
+
+#### Breaking Changes
+
+#### New Features
+
+- UJS can mount and unmount a component by ID (not only the component's children) #466
+- Support Turbolinks 5 #475
 
 #### Deprecation
 
 #### Bug Fixes
 
-- Support nested arrays with `camelize_props` #480 
+- Support nested arrays with `camelize_props` #480
 - Improve Sprockets 3 compatibility #453
 - Fix install-generator `require` spacing #476
 
