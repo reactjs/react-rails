@@ -1,5 +1,6 @@
 appraise "rails-3.2" do
   gem 'rails', '~> 3.2.21'
+  gem 'rack-cache', '~> 1.6.1'
 end
 
 appraise "rails-4.0" do

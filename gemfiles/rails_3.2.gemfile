@@ -3,5 +3,6 @@
 source "http://rubygems.org"
 
 gem "rails", "~> 3.2.21"
+gem "rack-cache", "~> 1.6.1"
 
 gemspec :path => "../"
