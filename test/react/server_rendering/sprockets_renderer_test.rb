@@ -54,4 +54,22 @@ class SprocketsRendererTest < ActiveSupport::TestCase
     end
     assert_match(/ReferenceError/, err.to_s, "it doesnt load other files")
   end
+
+  test '#render returns html when config.assets.compile is false' do
+    begin
+      precompile_assets
+
+      Rails.application.config.assets.compile = false
+
+      @renderer = React::ServerRendering::SprocketsRenderer.new({})
+
+      result = @renderer.render("Todo", {todo: "write tests"}, nil)
+      assert_match(/<li.*write tests<\/li>/, result)
+      assert_match(/data-react-checksum/, result)
+    ensure
+      Rails.application.config.assets.compile = true
+
+      clear_precompiled_assets
+    end
+  end
 end
