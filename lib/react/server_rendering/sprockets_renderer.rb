@@ -64,7 +64,7 @@ module React
         elsif ::Rails.application.config.assets.compile
           EnvironmentContainer.new
         else
-          if Rails::VERSION::MAJOR == 3
+          if ::Rails::VERSION::MAJOR == 3
             YamlManifestContainer.new
           else
             ManifestContainer.new
