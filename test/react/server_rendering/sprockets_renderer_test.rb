@@ -57,6 +57,9 @@ class SprocketsRendererTest < ActiveSupport::TestCase
 
   test '#render returns html when config.assets.compile is false' do
     begin
+      Rails.application.config.assets.precompile += [
+        "react-server.js", "components.js"]
+
       precompile_assets
 
       Rails.application.config.assets.compile = false

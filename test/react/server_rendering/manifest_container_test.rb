@@ -5,15 +5,7 @@ require "test_helper"
 if Rails::VERSION::MAJOR > 3
   class ManifestContainerTest < ActiveSupport::TestCase
     def setup
-      capture_io do
-        precompile_assets
-      end
-
-      # Make a new manifest since assets weren't compiled before
-      config = Rails.application.config
-      path = File.join(config.paths['public'].first, config.assets.prefix)
-      new_manifest = Sprockets::Manifest.new(Rails.application.assets, path)
-      Rails.application.assets_manifest = new_manifest
+      precompile_assets
 
       @manifest_container = React::ServerRendering::ManifestContainer.new
     end
