@@ -8,16 +8,18 @@
 
 #### Bug Fixes
 
-## 1.6.1 (February 28, 2016)
+## 1.6.2 (February 28, 2016)
 
-#### Breaking Changes
+#### Bug Fixes
+
+- Fix Server Rendering for Rails 3.2 #487
+
+## 1.6.1 (February 28, 2016)
 
 #### New Features
 
 - UJS can mount and unmount a component by ID (not only the component's children) #466
 - Support Turbolinks 5 #475
-
-#### Deprecation
 
 #### Bug Fixes
 
@@ -27,15 +29,11 @@
 
 ## 1.6.0 (February 4, 2016)
 
-#### Breaking Changes
-
 #### New Features
 
 - Individual add-ons can be included in a bundle with sprockets require directives. #457
 - Support `sprockets-rails` 3 #430
 - Update to React 0.14.6
-
-#### Deprecation
 
 #### Bug Fixes
 
@@ -46,14 +44,10 @@
 
 ## 1.5.0 (November 25, 2015)
 
-#### Breaking Changes
-
 #### New Features
 
 - Update to React 0.14.3 #412
 - `config.react.camelize_props = true` will camelize `react_component` prop keys #409
-
-#### Deprecation
 
 #### Bug Fixes
 
@@ -62,14 +56,10 @@
 
 ## 1.4.2 (November 5, 2015)
 
-#### Breaking Changes
-
 #### New Features
 
 - Component generator `--coffee` option #387
 - Support Sprockets 4 with a JSX processor #385
-
-#### Deprecation
 
 #### Bug Fixes
 
@@ -77,35 +67,17 @@
 
 ## 1.4.1 (October 23, 2015)
 
-#### Breaking Changes
-
-#### New Features
-
-#### Deprecation
-
 #### Bug Fixes
 
 - Minify & optimize the production build of React.js #380
 
 ## 1.4.0 (October 22, 2015)
 
-#### Breaking Changes
-
 #### New Features
 
 - Include React.js 0.14
 
-#### Deprecation
-
-#### Bug Fixes
-
 ## 1.3.3 (October 21, 2015)
-
-#### Breaking Changes
-
-#### New Features
-
-#### Deprecation
 
 #### Bug Fixes
 
@@ -114,24 +86,12 @@
 
 ## 1.3.2 (October 13, 2015)
 
-#### Breaking Changes
-
 #### New Features
 
 - The UJS can mount and unmount components within a given DOM node #358
 - Support dropped-in React 0.14 in UJS #366
 
-#### Deprecation
-
-#### Bug Fixes
-
 ## 1.3.1 (September 18, 2015)
-
-#### Breaking Changes
-
-#### New Features
-
-#### Deprecation
 
 #### Bug Fixes
 
@@ -139,14 +99,10 @@
 
 ## 1.3.0 (September 15, 2015)
 
-#### Breaking Changes
-
 #### New Features
 
 - Render components directly from the controller with `render component: ...` #329
 - Provide a custom view helper with `config.react.view_helper_implementation` #346
-
-#### Deprecation
 
 #### Bug Fixes
 
@@ -154,14 +110,10 @@
 
 ## 1.2.0 (August 19, 2015)
 
-#### Breaking Changes
-
 #### New Features
 
 - Support `--es6` option in component generator #332
 - Support Sprockets 3 #322
-
-#### Deprecation
 
 #### Bug Fixes
 
