@@ -40,16 +40,54 @@ def manually_expire_asset(asset_name)
 end
 
 def precompile_assets
-  ENV['RAILS_GROUPS'] = 'assets' # required for Rails 3.2
-  Dummy::Application.load_tasks
-  Rake::Task['assets:precompile'].reenable
-  Rake::Task['assets:precompile'].invoke
+  capture_io do
+    ENV['RAILS_GROUPS'] = 'assets' # required for Rails 3.2
+    Dummy::Application.load_tasks
+    Rake::Task['assets:precompile'].reenable
+
+    if Rails::VERSION::MAJOR == 3
+      Rake::Task['assets:precompile:all'].reenable
+      Rake::Task['assets:precompile:primary'].reenable
+      Rake::Task['assets:precompile:nondigest'].reenable
+    end
+
+    Rake::Task['assets:precompile'].invoke
+  end
+
+  if Rails::VERSION::MAJOR > 3
+    # Make a new manifest since assets weren't compiled before
+    config = Rails.application.config
+    path = File.join(config.paths['public'].first, config.assets.prefix)
+    new_manifest = Sprockets::Manifest.new(Rails.application.assets, path)
+    Rails.application.assets_manifest = new_manifest
+  end
+
+  assets_directory = File.expand_path("../dummy/public/assets", __FILE__)
+  raise "Asset precompilation failed" unless Dir.exists?(assets_directory)
 end
 
 def clear_precompiled_assets
   assets_directory = File.expand_path("../dummy/public/assets", __FILE__)
-  FileUtils.rm_rf(assets_directory)
+  FileUtils.rm_r(assets_directory)
   ENV.delete('RAILS_GROUPS')
+end
+
+# Rails 3.2's version of MiniTest does not have `capture_io` defined. For
+# consistency across multiple versions we've defined that method here.
+#
+def capture_io
+  require 'stringio'
+
+  orig_stdout, orig_stderr         = $stdout, $stderr
+  captured_stdout, captured_stderr = StringIO.new, StringIO.new
+  $stdout, $stderr                 = captured_stdout, captured_stderr
+
+  yield
+
+  return captured_stdout.string, captured_stderr.string
+ensure
+  $stdout = orig_stdout
+  $stderr = orig_stderr
 end
 
 # Load support files
