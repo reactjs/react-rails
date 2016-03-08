@@ -26,7 +26,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'test-unit', '~> 2.5'
   s.add_development_dependency 'turbolinks', '>= 2.0.0'
 
-  s.add_dependency 'coffee-script-source', '~>1.8'
+  s.add_dependency 'coffee-script-source', '~>2.3'
   s.add_dependency 'connection_pool'
   s.add_dependency 'execjs'
   s.add_dependency 'rails', '>= 3.2'
