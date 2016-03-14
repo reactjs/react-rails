@@ -24,9 +24,10 @@ class SprocketsRendererTest < ActiveSupport::TestCase
 
   test '#render replays console messages' do
     result = @renderer.render("TodoListWithConsoleLog", {todos: ["log some messages"]}, nil)
-    assert_match(/console.log.apply\(console, \["got initial state"\]\)/, result)
-    assert_match(/console.warn.apply\(console, \["mounted component"\]\)/, result)
-    assert_match(/console.error.apply\(console, \["rendered!","foo"\]\)/, result)
+    assert_match(/<script>$/, result)
+    assert_match(/console.log.apply\(console, \["got initial state"\]\);$/, result)
+    assert_match(/console.warn.apply\(console, \["mounted component"\]\);$/, result)
+    assert_match(/console.error.apply\(console, \["rendered!","foo"\]\);$/, result)
   end
 
   test '#render console messages can be disabled' do
