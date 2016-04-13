@@ -24,7 +24,6 @@ module.exports = {
     "react-browser-with-addons": "./react-browser-with-addons.js",
     "react-server": "./react-server.js",
     "react-server-with-addons": "./react-server-with-addons.js",
-    "react-addons-clone-with-props": "./addons-clone-with-props.js",
     "react-addons-create-fragment": "./addons-create-fragment.js",
     "react-addons-css-transition-group": "./addons-css-transition-group.js",
     "react-addons-linked-state-mixin": "./addons-linked-state-mixin.js",
