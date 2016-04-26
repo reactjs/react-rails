@@ -3,6 +3,7 @@
 #### Breaking Changes
 
 #### New Features
+- Update to React 15.0.1
 
 #### Deprecation
 

@@ -37,7 +37,6 @@ namespace :react do
       copy_react_asset("#{environment}/react-server-with-addons.js", "#{environment}-with-addons/react-server.js")
 
       addons = %w(
-        addons-clone-with-props
         addons-create-fragment
         addons-css-transition-group
         addons-linked-state-mixin
