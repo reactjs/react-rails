@@ -69,6 +69,7 @@ Rake::TestTask.new(:test) do |t|
   t.libs << 'test'
   t.pattern = ENV['TEST_PATTERN'] || 'test/**/*_test.rb'
   t.verbose = ENV['TEST_VERBOSE'] == '1'
+  t.warning = false
 end
 
 task default: :test

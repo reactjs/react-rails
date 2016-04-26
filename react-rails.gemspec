@@ -22,6 +22,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'guard'
   s.add_development_dependency 'guard-minitest'
   s.add_development_dependency 'jbuilder'
+  s.add_development_dependency 'listen', '~> 3.0.0' # support Ruby 2.1
   s.add_development_dependency 'poltergeist', '>= 0.3.3'
   s.add_development_dependency 'test-unit', '~> 2.5'
   s.add_development_dependency 'turbolinks', '>= 2.0.0'
