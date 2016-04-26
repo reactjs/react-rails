@@ -58,6 +58,11 @@ class ComponentMountTest < ActionDispatch::IntegrationTest
     assert(!html.include?('data-reactid'), "it DOESNT INCLUDE React properties")
   end
 
+  test '#react_component does not include HTML properties with a static render' do
+    html = @helper.react_component('Todo', {todo: 'render on the server'}.to_json, prerender: :static)
+    assert_equal('<div><li>render on the server</li></div>', html)
+  end
+
   test '#react_component accepts HTML options and HTML tag' do
     assert @helper.react_component('Foo', {}, :span).match(/<span\s.*><\/span>/)
 

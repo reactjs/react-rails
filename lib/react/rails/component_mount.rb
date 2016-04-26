@@ -32,9 +32,11 @@ module React
         end
 
         html_options = options.reverse_merge(:data => {})
-        html_options[:data].tap do |data|
-          data[:react_class] = name
-          data[:react_props] = (props.is_a?(String) ? props : props.to_json)
+        unless prerender_options == :static
+          html_options[:data].tap do |data|
+            data[:react_class] = name
+            data[:react_props] = (props.is_a?(String) ? props : props.to_json)
+          end
         end
         html_tag = html_options[:tag] || :div
 
