@@ -395,6 +395,10 @@ Any subclass of `ExecJSRenderer` may use those hooks (for example, `SprocketsRen
 
 `react-rails` provides two transformers, `React::JSX::JSXTransformer` and `React::JSX::BabelTransformer`.
 
+### Sprockets 4
+
+Support for Sprockets 4.x is currently a work in progress, and not fully featured. Use at your own risk!
+
 ### Related Projects
 
 - [react\_on\_rails Gem](https://github.com/shakacode/react_on_rails): Webpack Integration of React with Rails utilizing the modern JavaScript tooling and libraries, including Webpack, Babel, React, Redux, React-Router. You can an example of this live at [www.reactrails.com](http://www.reactrails.com).
