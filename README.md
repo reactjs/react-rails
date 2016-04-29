@@ -26,7 +26,7 @@ Just getting started with React? Make sure to check out the [Getting Started] (h
 Add `react-rails` to your gemfile:
 
 ```ruby
-gem 'react-rails', '~> 1.6.0'
+gem 'react-rails', '~> 1.7.0'
 ```
 
 And install:

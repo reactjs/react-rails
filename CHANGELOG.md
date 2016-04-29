@@ -3,11 +3,27 @@
 #### Breaking Changes
 
 #### New Features
-- Update to React 15.0.1
 
 #### Deprecation
 
 #### Bug Fixes
+
+## 1.7.0 (April 29, 2016)
+
+#### Breaking Changes
+
+#### New Features
+
+- Update to React 15.0.1 #512
+- Support PJAX #518
+- Static renders don't include `data-react-` attributes #497
+
+#### Deprecation
+
+#### Bug Fixes
+
+- Better unmounting on Turbolinks 5 #521
+- Fix console replay #496
 
 ## 1.6.2 (February 28, 2016)
 
