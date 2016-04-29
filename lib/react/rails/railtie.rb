@@ -90,7 +90,7 @@ module React
 
       initializer "react_rails.setup_engine", :group => :all do |app|
         sprockets_env = app.assets || Sprockets # Sprockets 3.x expects this in a different place
-        if Gem::Version.new(Sprockets::VERSION) >= Gem::Version.new("4.0.0")
+        if Gem::Version.new(Sprockets::VERSION) >= Gem::Version.new("4.x")
           sprockets_env.register_mime_type("application/jsx", extensions: [".jsx", ".js.jsx", ".es.jsx", ".es6.jsx"])
           sprockets_env.register_transformer("application/jsx", "application/javascript", React::JSX::Processor)
         elsif Gem::Version.new(Sprockets::VERSION) >= Gem::Version.new("3.0.0")
