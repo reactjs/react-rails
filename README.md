@@ -147,6 +147,11 @@ and `data-react-props`.
 If Turbolinks is present components are mounted on the `page:change` event, and unmounted on `page:before-unload`.
  __Turbolinks >= 2.4.0__ is recommended because it exposes better events.
 
+In case of __Ajax calls__, the UJS mounting can be triggered manually by calling from javascript:
+```javascript
+ReactRailsUJS.mountComponents()
+```
+
 The view helper's signature is:
 
 ```ruby
