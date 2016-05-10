@@ -26,7 +26,7 @@ Just getting started with React? Make sure to check out the [Getting Started] (h
 Add `react-rails` to your gemfile:
 
 ```ruby
-gem 'react-rails', '~> 1.7.0'
+gem 'react-rails'
 ```
 
 And install:
@@ -90,17 +90,6 @@ See [VERSIONS.md](https://github.com/reactjs/react-rails/blob/master/VERSIONS.md
 
 After installing `react-rails`, restart your server. Now, `.js.jsx` files will be transformed in the asset pipeline.
 
-`react-rails` currently ships with two transformers, to convert jsx code -
-
-* `BabelTransformer` using [Babel](http://babeljs.io), which is the default transformer.
-* `JSXTransformer` using `JSXTransformer.js`
-
-You can use the deprecated `JSXTransformer` by setting it in an application config:
-
-```ruby
-  config.react.jsx_transformer_class = React::JSX::JSXTransformer
-```
-
 #### BabelTransformer options
 
 You can use babel's [transformers](http://babeljs.io/docs/advanced/transformers/) and [custom plugins](http://babeljs.io/docs/advanced/plugins/),
@@ -114,18 +103,6 @@ config.react.jsx_transform_options = {
 }
 ```
 Under the hood, `react-rails` uses [ruby-babel-transpiler](https://github.com/babel/ruby-babel-transpiler), for transformation.
-
-#### JSXTransformer options
-
-You can use JSX `--harmony` or `--strip-types` options by adding a configuration:
-
-```ruby
-config.react.jsx_transform_options = {
-  harmony: true,
-  strip_types: true, # for removing Flow type annotations
-  asset_path: "path/to/JSXTransformer.js", # if your JSXTransformer is somewhere else
-}
-```
 
 ### Rendering & mounting
 
@@ -148,6 +125,7 @@ If Turbolinks is present components are mounted on the `page:change` event, and 
  __Turbolinks >= 2.4.0__ is recommended because it exposes better events.
 
 In case of __Ajax calls__, the UJS mounting can be triggered manually by calling from javascript:
+
 ```javascript
 ReactRailsUJS.mountComponents()
 ```

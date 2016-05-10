@@ -8,17 +8,24 @@
 
 #### Bug Fixes
 
-## 1.7.0 (April 29, 2016)
+## 1.7.1 (May 10, 2016)
 
-#### Breaking Changes
+#### New Features
+
+- Update to React 15.0.2 #525
+
+#### Bug Fixes
+
+- Update `.to_prepare` for Rails 5 #526
+- Use `register_engine` with Sprockets 3 to avoid compiling _all_ files #522
+
+## 1.7.0 (April 29, 2016)
 
 #### New Features
 
 - Update to React 15.0.1 #512
 - Support PJAX #518
 - Static renders don't include `data-react-` attributes #497
-
-#### Deprecation
 
 #### Bug Fixes
 
