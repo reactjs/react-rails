@@ -9,6 +9,7 @@ rvm:
 gemfile:
   - gemfiles/rails_3.2.gemfile
   - gemfiles/rails_4.0.gemfile
+  - gemfiles/rails_4.0.5.gemfile
   - gemfiles/rails_4.0_with_therubyracer.gemfile
   - gemfiles/rails_4.2_sprockets_2.gemfile
   - gemfiles/rails_4.2_sprockets_3.gemfile
