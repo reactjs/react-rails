@@ -26,7 +26,6 @@ module React
 
       # Include the react-rails view helper lazily
       initializer "react_rails.setup_view_helpers", group: :all do |app|
-
         app.config.react.jsx_transformer_class ||= React::JSX::DEFAULT_TRANSFORMER
         React::JSX.transformer_class = app.config.react.jsx_transformer_class
         React::JSX.transform_options = app.config.react.jsx_transform_options
@@ -61,7 +60,6 @@ module React
 
         sprockets_env = app.assets || app.config.assets # sprockets-rails 3.x attaches this at a different config
         sprockets_env.version = [sprockets_env.version, "react-#{asset_variant.react_build}",].compact.join('-')
-
       end
 
       initializer "react_rails.set_variant", after: :engines_blank_point, group: :all do |app|
@@ -86,10 +84,10 @@ module React
         React::ServerRendering.reset_pool
         # Reload renderers in dev when files change
         if Gem::Version.new(::Rails::VERSION::STRING) >= Gem::Version.new("5.x")
-          ActiveSupport::Reloader.to_prepare { React::ServerRendering.reset_pool }
+          ActiveSupport::Reloader
         else
-          ActionDispatch::Reloader.to_prepare { React::ServerRendering.reset_pool }
-        end
+          ActionDispatch::Reloader
+        end.to_prepare { React::ServerRendering.reset_pool }
       end
 
       initializer "react_rails.setup_engine", :group => :all do |app|

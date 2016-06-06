@@ -1,5 +1,51 @@
 module React
   module Generators
+    module ComponentTypes
+      BASE = 'React.PropTypes'.freeze
+
+      %w(node bool string number object array element func any).each do |type|
+        define_method(type) do
+          "#{ComponentTypes::BASE}.#{type}"
+        end
+      end
+
+      def boolean
+        "#{ComponentTypes::BASE}.bool"
+      end
+
+      def function
+        "#{ComponentTypes::BASE}.func"
+      end
+
+      def shape
+        "#{ComponentTypes::BASE}.shape({})"
+      end
+
+      def instanceOf
+        ->(type) do
+          format("#{ComponentTypes::BASE}.instanceOf(%s)", type.to_s.camelize)
+        end
+      end
+
+      def oneOf
+        ->(*options) do
+          format(
+            "#{ComponentTypes::BASE}.oneOf([%s])",
+            options.map { |k| "'#{k}'" }.join(',')
+          )
+        end
+      end
+
+      def oneOfType
+        ->(*options) do
+          format(
+            "#{ComponentTypes::BASE}.oneOfType([%s])",
+            options.map { |k| "#{lookup(k.to_s, k.to_s)}" }.join(',')
+          )
+        end
+      end
+    end
+
     class ComponentGenerator < ::Rails::Generators::NamedBase
       source_root File.expand_path '../../templates', __FILE__
       desc <<-DESC.strip_heredoc
@@ -45,58 +91,25 @@ module React
           rails g react:component events 'location:oneOfType{string,Restaurant}'
       DESC
 
-      argument :attributes,
-               :type => :array,
-               :default => [],
-               :banner => "field[:type] field[:type] ..."
+      extend ComponentTypes
 
-      class_option :es6,
-                   type: :boolean,
-                   default: false,
-                   desc: 'Output es6 class based component'
+      argument :attributes, type: :array, default: [],
+                            banner: 'field[:type] field[:type] ...'
 
-      class_option :coffee,
-                   type: :boolean,
-                   default: false,
-                   desc: 'Output coffeescript based component'
+      class_option :es6, type: :boolean, default: false,
+                         desc: 'Output es6 class based component'
 
-      REACT_PROP_TYPES = {
-        "node" =>        'React.PropTypes.node',
-        "bool" =>        'React.PropTypes.bool',
-        "boolean" =>     'React.PropTypes.bool',
-        "string" =>      'React.PropTypes.string',
-        "number" =>      'React.PropTypes.number',
-        "object" =>      'React.PropTypes.object',
-        "array" =>       'React.PropTypes.array',
-        "shape" =>       'React.PropTypes.shape({})',
-        "element" =>     'React.PropTypes.element',
-        "func" =>        'React.PropTypes.func',
-        "function" =>    'React.PropTypes.func',
-        "any" =>         'React.PropTypes.any',
-
-        "instanceOf" => ->(type) {
-          'React.PropTypes.instanceOf(%s)' % type.to_s.camelize
-        },
-
-        "oneOf" => ->(*options) {
-          enums = options.map{|k| "'#{k.to_s}'"}.join(',')
-          'React.PropTypes.oneOf([%s])' % enums
-        },
-
-        "oneOfType" => ->(*options) {
-          types = options.map{|k| "#{lookup(k.to_s, k.to_s)}" }.join(',')
-          'React.PropTypes.oneOfType([%s])' % types
-        },
-      }
+      class_option :coffee, type: :boolean, default: false,
+                            desc: 'Output coffeescript based component'
 
       def create_component_file
         extension = case
-                      when options[:es6]
-                        'es6.jsx'
-                      when options[:coffee]
-                        'js.jsx.coffee'
-                      else
-                        'js.jsx'
+                    when options[:es6]
+                      'es6.jsx'
+                    when options[:coffee]
+                      'js.jsx.coffee'
+                    else
+                      'js.jsx'
                     end
 
         file_path = File.join('app/assets/javascripts/components', "#{file_name}.#{extension}")
@@ -107,27 +120,28 @@ module React
 
        def parse_attributes!
          self.attributes = (attributes || []).map do |attr|
-           name, type, options = "", "", ""
            options_regex = /(?<options>{.*})/
 
            name, type = attr.split(':')
 
-           if matchdata = options_regex.match(type)
-             options = matchdata[:options]
-             type = type.gsub(options_regex, '')
-           end
-
-           { :name => name, :type => lookup(type, options) }
+           matchdata = options_regex.match(type)
+           options = if matchdata
+                       type = type.gsub(options_regex, '')
+                       matchdata[:options]
+                     else
+                       ''
+                     end
+           { name: name, type: lookup(type, options) }
          end
        end
 
-       def self.lookup(type = "node", options = "")
-         react_prop_type = REACT_PROP_TYPES[type]
+       def self.lookup(type = 'node', options = '')
+         react_prop_type = type && respond_to?(type) ? send(type) : ''
          if react_prop_type.blank?
            if type =~ /^[[:upper:]]/
-             react_prop_type = REACT_PROP_TYPES['instanceOf']
+             react_prop_type = send('instanceOf')
            else
-             react_prop_type = REACT_PROP_TYPES['node']
+             react_prop_type = send('node')
            end
          end
 
@@ -137,7 +151,7 @@ module React
          react_prop_type
        end
 
-       def lookup(type = "node", options = "")
+       def lookup(type = 'node', options = '')
          self.class.lookup(type, options)
        end
     end
