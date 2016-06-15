@@ -25,7 +25,7 @@ module React
       end
 
       # Include the react-rails view helper lazily
-      initializer "react_rails.setup_view_helpers", group: :all do |app|
+      initializer "react_rails.setup_view_helpers", after: :load_config_initializers, group: :all do |app|
 
         app.config.react.jsx_transformer_class ||= React::JSX::DEFAULT_TRANSFORMER
         React::JSX.transformer_class = app.config.react.jsx_transformer_class
@@ -53,7 +53,7 @@ module React
         end
       end
 
-      initializer "react_rails.bust_cache", group: :all do |app|
+      initializer "react_rails.bust_cache", after: :load_config_initializers, group: :all do |app|
         asset_variant = React::Rails::AssetVariant.new({
           variant: app.config.react.variant,
           addons: app.config.react.addons,

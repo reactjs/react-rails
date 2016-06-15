@@ -17,4 +17,11 @@ class ViewHelperTest < ActionView::TestCase
     render template: "pages/show"
     assert_includes(rendered, "React-Rails")
   end
+
+  test "view helper uses the implementation class set in the initializer" do
+    assert_equal(
+      React::Rails::ViewHelper.helper_implementation_class.to_s,
+      "CustomComponentMount"
+    )
+  end
 end
