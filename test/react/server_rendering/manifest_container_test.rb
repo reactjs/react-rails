@@ -1,8 +1,12 @@
 require "test_helper"
 
-# Rails 3.x doesn't have `application.assets_manifest=`
-# I don't think we have to support Rails 3 + Sprockets 3 anyways!
-if Rails::VERSION::MAJOR > 3
+# sprockets-rails < 2.2.2 does not support
+# `application.assets_manifest`. Since sprockets-rails < 2.1.2 does
+# not define `Sprockets::Rails::VERSION`, checking for
+# `Sprockets::Rails` is not enough.
+if defined?(Sprockets::Rails::VERSION) &&
+    Gem::Version.new(Sprockets::Rails::VERSION) >= Gem::Version.new('2.2.2')
+
   class ManifestContainerTest < ActiveSupport::TestCase
     def setup
       precompile_assets

@@ -61,15 +61,17 @@ module React
       def asset_container
         @asset_container ||= if self.class.asset_container_class.present?
           self.class.asset_container_class.new
-        elsif ::Rails.application.config.assets.compile
-          EnvironmentContainer.new
+        elsif assets_precompiled? && ManifestContainer.compatible?
+          ManifestContainer.new
+        elsif assets_precompiled? && YamlManifestContainer.compatible?
+          YamlManifestContainer.new
         else
-          if ::Rails::VERSION::MAJOR == 3
-            YamlManifestContainer.new
-          else
-            ManifestContainer.new
-          end
+          EnvironmentContainer.new
         end
+      end
+
+      def assets_precompiled?
+        !::Rails.application.config.assets.compile
       end
     end
   end

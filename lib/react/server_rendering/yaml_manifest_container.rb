@@ -14,6 +14,10 @@ module React
         asset_full_path = ::Rails.root.join("public", "assets", asset_path)
         File.read(asset_full_path)
       end
+
+      def self.compatible?
+        ::Rails::VERSION::MAJOR == 3
+      end
     end
   end
 end

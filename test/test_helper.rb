@@ -54,7 +54,7 @@ def precompile_assets
     Rake::Task['assets:precompile'].invoke
   end
 
-  if Rails::VERSION::MAJOR > 3
+  if Rails.application.respond_to?(:assets_manifest)
     # Make a new manifest since assets weren't compiled before
     config = Rails.application.config
     path = File.join(config.paths['public'].first, config.assets.prefix)

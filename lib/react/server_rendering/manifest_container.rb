@@ -14,6 +14,11 @@ module React
         asset_full_path = ::Rails.root.join("public", @manifest.dir, asset_path)
         File.read(asset_full_path)
       end
+
+      # sprockets-rails < 2.2.2 does not have `application.assets_manifest`
+      def self.compatible?
+        ::Rails.application.respond_to?(:assets_manifest)
+      end
     end
   end
 end
