@@ -8,6 +8,17 @@
 
 #### Bug Fixes
 
+## 1.7.2 (Jun3 19, 2016)
+
+#### New Features
+
+- Improved error messages for missing components #538
+
+#### Bug Fixes
+
+- Fix `view_helper_implementation` config #551
+- Fallback to `EnvironmentContainer` for server rendering when manifest isn't available #545
+
 ## 1.7.1 (May 10, 2016)
 
 #### New Features
