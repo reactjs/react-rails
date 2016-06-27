@@ -4,7 +4,13 @@ require File.expand_path('../boot', __FILE__)
 # require "active_record/railtie"
 require "action_controller/railtie"
 require "action_mailer/railtie"
-require "sprockets/railtie"
+
+# Test no-sprockets environment by testing the gemfile name
+SKIP_SPROCKETS = ENV["BUNDLE_GEMFILE"] =~ /no_sprockets/
+if !SKIP_SPROCKETS
+  require "sprockets/railtie"
+end
+
 require "rails/test_unit/railtie"
 
 # Make sure gems in development group are required, for example, react-rails and turbolinks.
@@ -27,7 +33,8 @@ module Dummy
     # config.i18n.default_locale = :de
     config.react.variant = :production
     config.react.addons = false
-
-    config.assets.enabled = true
+    if !SKIP_SPROCKETS
+      config.assets.enabled = true
+    end
   end
 end

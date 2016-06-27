@@ -14,8 +14,8 @@ var ReactDOMServer = {
 
 class ExecJSRendererTest < ActiveSupport::TestCase
   setup do
-    react_server_source = Rails.application.assets["react-server.js"].to_s
-    todo_component_source = Rails.application.assets["components/Todo.js"].to_s
+    react_server_source = File.read(File.expand_path("../../../../lib/assets/react-source/production/react-server.js", __FILE__))
+    todo_component_source = File.read(File.expand_path("../../../dummy/app/assets/javascripts/components/PlainJSTodo.js", __FILE__))
     code = react_server_source + todo_component_source
     @renderer = React::ServerRendering::ExecJSRenderer.new(code: code)
   end

@@ -105,3 +105,11 @@ end
 def wait_for_turbolinks_to_be_available
   sleep(1)
 end
+
+
+# The block depends on sprockets, don't run it if sprockets is missing
+def when_sprockets_available
+  if !SKIP_SPROCKETS
+    yield
+  end
+end
