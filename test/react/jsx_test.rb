@@ -26,52 +26,54 @@ class NullTransformer
   end
 end
 
-class JSXTransformTest < ActionDispatch::IntegrationTest
-  setup do
-    reset_transformer
-  end
+when_sprockets_available do
+  class JSXTransformTest < ActionDispatch::IntegrationTest
+    setup do
+      reset_transformer
+    end
 
-  teardown do
-    reset_transformer
-  end
+    teardown do
+      reset_transformer
+    end
 
-  test 'asset pipeline should transform JSX' do
-    manually_expire_asset('example.js')
-    get '/assets/example.js'
-    assert_response :success
-    assert_compiled_javascript_matches(EXPECTED_JS, @response.body)
-  end
+    test 'asset pipeline should transform JSX' do
+      manually_expire_asset('example.js')
+      get '/assets/example.js'
+      assert_response :success
+      assert_compiled_javascript_matches(EXPECTED_JS, @response.body)
+    end
 
-  test 'asset pipeline should transform JSX + Coffeescript' do
-    manually_expire_asset('example2.js')
-    get '/assets/example2.js'
-    assert_response :success
-    assert_compiled_javascript_matches(EXPECTED_JS_2, @response.body)
-  end
+    test 'asset pipeline should transform JSX + Coffeescript' do
+      manually_expire_asset('example2.js')
+      get '/assets/example2.js'
+      assert_response :success
+      assert_compiled_javascript_matches(EXPECTED_JS_2, @response.body)
+    end
 
-  test 'use a custom transformer' do
-    React::JSX.transformer_class = NullTransformer
-    manually_expire_asset('example2.js')
-    get '/assets/example2.js'
+    test 'use a custom transformer' do
+      React::JSX.transformer_class = NullTransformer
+      manually_expire_asset('example2.js')
+      get '/assets/example2.js'
 
-    assert_equal "TRANSFORMED CODE!;\n", @response.body
-  end
+      assert_equal "TRANSFORMED CODE!;\n", @response.body
+    end
 
-  def test_babel_transformer_accepts_babel_transformation_options
-    React::JSX.transform_options = {blacklist: ['spec.functionName', 'validation.react', "strict"]}
-    manually_expire_asset('example.js')
-    get '/assets/example.js'
-    assert_response :success
+    def test_babel_transformer_accepts_babel_transformation_options
+      React::JSX.transform_options = {blacklist: ['spec.functionName', 'validation.react', "strict"]}
+      manually_expire_asset('example.js')
+      get '/assets/example.js'
+      assert_response :success
 
-    assert !@response.body.include?('strict')
-  end
+      assert !@response.body.include?('strict')
+    end
 
 
-  # Different processors may generate slightly different outputs,
-  # as some version inserts an extra "\n" at the beginning.
-  # Because appraisal is used, multiple versions of coffee-script are treated
-  # together. Remove all spaces to make test pass.
-  def assert_compiled_javascript_matches(javascript, expectation)
-    assert_equal expectation.gsub(/\s/, ''), javascript.gsub(/\s/, '')
+    # Different processors may generate slightly different outputs,
+    # as some version inserts an extra "\n" at the beginning.
+    # Because appraisal is used, multiple versions of coffee-script are treated
+    # together. Remove all spaces to make test pass.
+    def assert_compiled_javascript_matches(javascript, expectation)
+      assert_equal expectation.gsub(/\s/, ''), javascript.gsub(/\s/, '')
+    end
   end
 end

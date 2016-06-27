@@ -59,8 +59,10 @@ module React
           addons: app.config.react.addons,
         })
 
-        sprockets_env = app.assets || app.config.assets # sprockets-rails 3.x attaches this at a different config
-        sprockets_env.version = [sprockets_env.version, "react-#{asset_variant.react_build}",].compact.join('-')
+        sprockets_env = app.assets || app.config.try(:assets) # sprockets-rails 3.x attaches this at a different config
+        if !sprockets_env.nil?
+          sprockets_env.version = [sprockets_env.version, "react-#{asset_variant.react_build}",].compact.join('-')
+        end
 
       end
 
@@ -70,8 +72,10 @@ module React
           addons: app.config.react.addons,
         })
 
-        app.config.assets.paths << asset_variant.react_directory
-        app.config.assets.paths << asset_variant.jsx_directory
+        if app.config.respond_to?(:assets)
+          app.config.assets.paths << asset_variant.react_directory
+          app.config.assets.paths << asset_variant.jsx_directory
+        end
       end
 
       config.after_initialize do |app|
@@ -93,14 +97,18 @@ module React
       end
 
       initializer "react_rails.setup_engine", :group => :all do |app|
-        sprockets_env = app.assets || Sprockets # Sprockets 3.x expects this in a different place
-        if Gem::Version.new(Sprockets::VERSION) >= Gem::Version.new("4.x")
-          sprockets_env.register_mime_type("application/jsx", extensions: [".jsx", ".js.jsx", ".es.jsx", ".es6.jsx"])
-          sprockets_env.register_transformer("application/jsx", "application/javascript", React::JSX::Processor)
-        elsif Gem::Version.new(Sprockets::VERSION) >= Gem::Version.new("3.0.0")
-          sprockets_env.register_engine(".jsx", React::JSX::Processor, mime_type: "application/javascript")
-        else
-          sprockets_env.register_engine(".jsx", React::JSX::Template)
+        # Sprockets 3.x expects this in a different place
+        sprockets_env = app.assets || defined?(Sprockets) && Sprockets
+
+        if !sprockets_env.nil?
+          if Gem::Version.new(Sprockets::VERSION) >= Gem::Version.new("4.x")
+            sprockets_env.register_mime_type("application/jsx", extensions: [".jsx", ".js.jsx", ".es.jsx", ".es6.jsx"])
+            sprockets_env.register_transformer("application/jsx", "application/javascript", React::JSX::Processor)
+          elsif Gem::Version.new(Sprockets::VERSION) >= Gem::Version.new("3.0.0")
+            sprockets_env.register_engine(".jsx", React::JSX::Processor, mime_type: "application/javascript")
+          else
+            sprockets_env.register_engine(".jsx", React::JSX::Template)
+          end
         end
       end
     end
