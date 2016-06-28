@@ -38,6 +38,7 @@ module React
 
         ActiveSupport.on_load(:action_controller) do
           include ::React::Rails::ControllerLifecycle
+          include ::React::Rails::ComponentMount::ControllerHelpers
         end
 
         ActiveSupport.on_load(:action_view) do

@@ -7,19 +7,26 @@ module React
     mattr_accessor :renderer, :renderer_options,
       :pool_size, :pool_timeout
 
+    # Discard the old ConnectionPool & create a new one
     def self.reset_pool
       options = {size: pool_size, timeout: pool_timeout}
-      @@pool = ConnectionPool.new(options) { create_renderer }
+      @@pool = ConnectionPool.new(options) { self.renderer.new(self.renderer_options) }
     end
 
+    # Check a renderer out of the pool and use it to render the component.
+    # @return [String] Prerendered HTML from `component_name`
     def self.render(component_name, props, prerender_options)
       @@pool.with do |renderer|
         renderer.render(component_name, props, prerender_options)
       end
     end
 
-    def self.create_renderer
-      renderer.new(renderer_options)
+    def self.checkout_renderer
+      @@pool.checkout
+    end
+
+    def self.checkin_renderer(renderer)
+      @@pool.checkin
     end
 
     class PrerenderError < RuntimeError

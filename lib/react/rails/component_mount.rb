@@ -11,12 +11,16 @@ module React
       attr_accessor :output_buffer
       mattr_accessor :camelize_props_switch
 
-      # ControllerLifecycle calls these hooks
+      # {ControllerLifecycle} calls these hooks
       # You can use them in custom helper implementations
-      def setup(env)
+      def setup(controller)
+        @controller = controller
       end
 
-      def teardown(env)
+      def teardown(controller)
+        if controller.__prerenderer
+          React::ServerRendering.checkin_renderer(controller.__prerenderer)
+        end
       end
 
       # Render a UJS-type HTML tag annotated with data attributes, which
@@ -30,7 +34,7 @@ module React
 
         prerender_options = options[:prerender]
         if prerender_options
-          block = Proc.new{ concat React::ServerRendering.render(name, props, prerender_options) }
+          block = Proc.new{ concat(prerender_component(name, props, prerender_options)) }
         end
 
         html_options = options.reverse_merge(:data => {})
@@ -46,6 +50,30 @@ module React
         html_options.except!(:tag, :prerender, :camelize_props)
 
         content_tag(html_tag, '', html_options, &block)
+      end
+
+      module ControllerHelpers
+        extend ActiveSupport::Concern
+
+        included do
+          # An instance of a server renderer, for use during this request
+          attr_accessor :__prerenderer
+        end
+
+        # If you want a per-request renderer, add this method as a before-action
+        #
+        # @example Having one renderer instance for each controller action
+        #   before_action :checkout_renderer
+        def checkout_prerenderer
+          self.__prerenderer = React::ServerRendering.checkout_renderer
+        end
+      end
+
+      private
+
+      def prerender_component(component_name, props, prerender_options)
+        renderer = @controller.try(:__prerenderer) || React::ServerRendering
+        renderer.render(component_name, props, prerender_options)
       end
     end
   end

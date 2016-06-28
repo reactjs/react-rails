@@ -90,5 +90,23 @@ when_sprockets_available do
       assert html.include?('class="test"')
       assert html.include?('data-foo="1"')
     end
+
+    module DummyRenderer
+      def self.render(component_name, props, prerender_options)
+        "rendered #{component_name} with #{props.to_json}"
+      end
+    end
+
+    module DummyController
+      def self.__prerenderer
+        DummyRenderer
+      end
+    end
+
+    test "it uses the controller's __prerenderer, if available" do
+      @helper.setup(DummyController)
+      rendered_component = @helper.react_component('Foo', {"ok" => true}, prerender: :static)
+      assert_equal %|<div>rendered Foo with {&quot;ok&quot;:true}</div>|, rendered_component
+    end
   end
 end

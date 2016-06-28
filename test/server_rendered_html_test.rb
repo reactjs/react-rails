@@ -39,6 +39,8 @@ when_sprockets_available do
 
     test 'react server rendering shows console output as html comment' do
       # Make sure console messages are replayed when requested
+      React::ServerRendering.renderer_options = {replay_console: true}
+      React::ServerRendering.reset_pool
       get '/server/console_example'
       assert_match(/Console Logged/, response.body)
       assert_match(/console.log.apply\(console, \["got initial state"\]\)/, response.body)
@@ -46,7 +48,10 @@ when_sprockets_available do
       assert_match(/console.error.apply\(console, \["rendered!","foo"\]\)/, response.body)
 
       # Make sure they're not when we don't ask for them
-      get '/server/console_example_suppressed'
+      React::ServerRendering.renderer_options = {replay_console: false}
+      React::ServerRendering.reset_pool
+
+      get '/server/console_example'
       assert_match(/Console Logged/, response.body)
       assert_no_match(/console.log/, response.body)
       assert_no_match(/console.warn/, response.body)
