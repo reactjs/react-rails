@@ -36,7 +36,15 @@ when_sprockets_available do
 
     test "the development version with addons is loaded" do
       asset = Rails.application.assets.find_asset('react')
-      assert asset.pathname.to_s.end_with?('development-with-addons/react.js')
+      path =
+        if asset.respond_to?(:pathname)
+          # Sprockets < 4
+          asset.pathname.to_s
+        else
+          # Sprockets 4+
+          asset.filename
+        end
+      assert path.end_with?('development-with-addons/react.js')
     end
 
     test "the production build is optimized for production" do
