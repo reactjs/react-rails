@@ -21,12 +21,9 @@ module React
       end
     end
 
-    def self.checkout_renderer
-      @@pool.checkout
-    end
-
-    def self.checkin_renderer(renderer)
-      @@pool.checkin
+    # Yield a renderer for an arbitrary block
+    def self.with_renderer
+      @@pool.with { |renderer| yield(renderer) }
     end
 
     class PrerenderError < RuntimeError

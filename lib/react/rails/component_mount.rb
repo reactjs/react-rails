@@ -18,9 +18,6 @@ module React
       end
 
       def teardown(controller)
-        if controller.__prerenderer
-          React::ServerRendering.checkin_renderer(controller.__prerenderer)
-        end
       end
 
       # Render a UJS-type HTML tag annotated with data attributes, which
@@ -60,12 +57,15 @@ module React
           attr_accessor :__prerenderer
         end
 
-        # If you want a per-request renderer, add this method as a before-action
+        # If you want a per-request renderer, add this method as an around-action
         #
         # @example Having one renderer instance for each controller action
-        #   before_action :checkout_renderer
-        def checkout_prerenderer
-          self.__prerenderer = React::ServerRendering.checkout_renderer
+        #   around_action :per_request_react_prerenderer
+        def per_request_react_prerenderer
+          React::ServerRendering.with_renderer do |renderer|
+            self.__prerenderer = renderer
+            yield
+          end
         end
       end
 
