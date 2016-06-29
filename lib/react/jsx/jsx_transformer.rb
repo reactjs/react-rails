@@ -1,5 +1,6 @@
 module React
   module JSX
+    # A {React::JSX}-compliant transformer which uses the deprecated `JSXTransformer.js` to transform JSX.
     class JSXTransformer
       DEFAULT_ASSET_PATH = 'JSXTransformer.js'
 

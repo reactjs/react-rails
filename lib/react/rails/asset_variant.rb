@@ -1,13 +1,23 @@
 module React
   module Rails
+    # This class accepts some options for which build you want, then exposes where you can find
+    # them. In general, these paths should be added to the sprockets environment.
     class AssetVariant
       GEM_ROOT = Pathname.new('../../../../').expand_path(__FILE__)
-      attr_reader :react_build, :react_directory, :jsx_directory
+      # @return [String] "production" or "development"
+      attr_reader :react_build
 
+      # @return [String] The path which contains the specified React.js build as "react.js"
+      attr_reader :react_directory
+
+      # @return [String] The path which contains the JSX Transformer
+      attr_reader :jsx_directory
+
+      # @param [Hash] Options for the asset variant
+      # @option variant [Symbol] if `:production`, use the minified React.js build
+      # @option addons [Boolean] if true, use a React.js build with all addons
       def initialize(options={})
-        # We want to include different files in dev/prod. The development builds
-        # contain console logging for invariants and logging to help catch
-        # common mistakes. These are all stripped out in the production build.
+
         @react_build = options[:variant] == :production ? 'production' : 'development'
         options[:addons] && @react_build += '-with-addons'
 

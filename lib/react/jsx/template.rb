@@ -2,7 +2,7 @@ require 'tilt'
 
 module React
   module JSX
-
+    # Sprockets 2-compliant processor
     class Template < Tilt::Template
       self.default_mime_type = 'application/javascript'
 

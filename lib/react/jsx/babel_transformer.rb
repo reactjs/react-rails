@@ -1,6 +1,7 @@
 require 'babel/transpiler'
 module React
   module JSX
+    # A {React::JSX}-compliant transformer which uses `Babel::Transpiler` to transform JSX.
     class BabelTransformer
       DEPRECATED_OPTIONS = [:harmony, :strip_types, :asset_path]
       DEFAULT_TRANSFORM_OPTIONS = { blacklist: ['spec.functionName', 'validation.react', 'strict'] }
