@@ -49,8 +49,6 @@ matrix:
 
   allow_failures:
     - rvm: jruby-9.0.1.0
-    - gemfile: gemfiles/rails_4.2_sprockets_4.gemfile
-    - gemfile: gemfiles/rails_5_sprockets_4.gemfile
 
 before_install:
   - mkdir travis-phantomjs
