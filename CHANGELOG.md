@@ -8,7 +8,18 @@
 
 #### Bug Fixes
 
-## 1.7.2 (Jun3 19, 2016)
+## 1.8.0 (June 29, 2016)
+
+#### New Features
+
+- Sprockets 4 Support 🎉 #560
+- Depend on Railties, not Rails #558
+- Don't depend on `sprockets/railtie` #558
+- Expose `React.camelize_props(props_hash)` #556
+- Add `rails generate react:ujs --output=...` for copying the UJS into your app #557
+- Support Babel 6 module exports & extension point `ReactRailsUJS.getConstructor` #503
+
+## 1.7.2 (June 19, 2016)
 
 #### New Features
 
