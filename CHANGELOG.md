@@ -2,7 +2,7 @@
 
 #### Breaking Changes
 
-- The `Transformer#transform` signature has changed from `transform(code)` to `transform(code, options = {})`.
+- The `Transformer#transform` signature has changed from `transform(code)` to `transform(code, local_options = {})`.
 
 #### New Features
 
