@@ -13,7 +13,7 @@ module React
     # You can assign `config.react.jsx_transformer_class = `
     # to provide your own transformer. It must implement:
     # - #initialize(options)
-    # - #transform(code) => new code
+    # - #transform(code, local_options = {}) => new code
     #
     # If you want to configure per-file transformation options with a proc, you may
     # accept an optional second parameter
@@ -23,13 +23,10 @@ module React
     def self.transform(code, input = {})
       self.transformer ||= transformer_class.new(transform_options)
 
-      if self.transformer.method(:transform).arity == 1
-        self.transformer.transform(code)
-      else
-        local_options = self.transform_options
-        local_options = local_options.call(input) if local_options.respond_to?(:call)
-        self.transformer.transform(code, local_options)
-      end
+      local_options = self.transform_options
+      local_options = local_options.call(input) if local_options.respond_to?(:call)
+
+      self.transformer.transform(code, local_options)
     end
   end
 end
