@@ -21,7 +21,7 @@ eos
 
 class NullTransformer
   def initialize(options={}); end
-  def transform(code)
+  def transform(code, options = {})
     "TRANSFORMED CODE!;\n"
   end
 end
@@ -83,7 +83,7 @@ when_sprockets_available do
     assert_response :success
     assert response.body.include?('define("this_was_not_possible_before/amd_example"'), response.body
   end
-  
+
   def amd_options_with_sprockets_version_awareness
     if Gem::Version.new(Sprockets::VERSION) >= Gem::Version.new("3.0.0")
       lambda do |input|
