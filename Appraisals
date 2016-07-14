@@ -45,12 +45,17 @@ appraise "rails-4.2-sprockets_4" do
 end
 
 appraise "rails-5" do
-  gem 'rails', '~> 5.0.0.beta2'
-  gem "turbolinks", "~> 5.0.0.beta"
+  gem 'rails', '~> 5.0.0'
+  gem "turbolinks", "~> 5.0.0"
+end
+
+appraise "rails-5-no_sprockets" do
+  gem 'rails', '~> 5.0.0'
+  gem "turbolinks", "~> 5.0.0"
 end
 
 appraise "rails-5-sprockets_4" do
-  gem "rails", "~> 5.0.0.beta2"
+  gem "rails", "~> 5.0.0"
   gem "sprockets", "~> 4.0.x"
-  gem "turbolinks", "~> 5.0.0.beta"
+  gem "turbolinks", "~> 5.0.0"
 end
