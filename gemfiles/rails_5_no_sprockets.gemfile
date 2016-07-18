@@ -2,6 +2,7 @@
 
 source "http://rubygems.org"
 
-gem "rails", "~> 5.0.0.rc2"
+gem "rails", "~> 5.0.0"
+gem "turbolinks", "~> 5.0.0", require: false
 
 gemspec :path => "../"
