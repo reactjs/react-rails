@@ -2,13 +2,18 @@
 
 #### Breaking Changes
 
+- The `Transformer#transform` signature has changed from `transform(code)` to `transform(code, local_options = {})`.
+
 #### New Features
+
+- When using the (default) `BabelTransformer`, `config.react.jsx_transform_options` can accept a lambda, proc, or anything that responds to `call` and returns a hash. This is useful if you have Babel transformation options that need to be uniq per file.
 
 #### Deprecation
 
 #### Bug Fixes
 
-## 1.8.0 (June 29, 2016)
+- Add CHANGELOG to gem bundle #471
+- Use `window.attachEvent` to support IE8 without jQuery 😬#446
 
 #### New Features
 

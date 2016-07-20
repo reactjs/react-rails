@@ -19,7 +19,7 @@ module React
       end
 
 
-      def transform(code)
+      def transform(code, _local_options = {})
         result = @context.call('JSXTransformer.transform', code, @transform_options)
         result["code"]
       end
