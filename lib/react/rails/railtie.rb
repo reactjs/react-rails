@@ -107,7 +107,7 @@ module React
             sprockets_env.register_mime_type("application/jsx+coffee", extensions: [".jsx.coffee", ".js.jsx.coffee"])
             sprockets_env.register_transformer("application/jsx+coffee", "application/jsx", Sprockets::CoffeeScriptProcessor)
           elsif Gem::Version.new(Sprockets::VERSION) >= Gem::Version.new("3.0.0")
-            sprockets_env.register_engine(".jsx", React::JSX::Processor, mime_type: "application/javascript")
+            sprockets_env.register_engine(".jsx", React::JSX::Processor, mime_type: "application/javascript", silence_deprecation: true)
           else
             sprockets_env.register_engine(".jsx", React::JSX::Template)
           end
