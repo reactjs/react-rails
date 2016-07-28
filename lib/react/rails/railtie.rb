@@ -101,7 +101,7 @@ module React
         sprockets_env = app.assets || defined?(Sprockets) && Sprockets
 
         if !sprockets_env.nil?
-          if Gem::Version.new(Sprockets::VERSION) >= Gem::Version.new("4.x")
+          if Gem::Version.new(Sprockets::VERSION) >= Gem::Version.new("3.7.0")
             sprockets_env.register_mime_type("application/jsx", extensions: [".jsx", ".js.jsx", ".es.jsx", ".es6.jsx"])
             sprockets_env.register_transformer("application/jsx", "application/javascript", React::JSX::Processor)
             sprockets_env.register_mime_type("application/jsx+coffee", extensions: [".jsx.coffee", ".js.jsx.coffee"])
