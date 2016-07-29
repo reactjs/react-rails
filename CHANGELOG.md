@@ -17,6 +17,7 @@
 #### Bug Fixes
 
 - Fix deprecation warnings on Sprockets 3.7+ #574
+- Stop building broken addons files #576
 
 ## 1.8.0 (June 29, 2016)
 
