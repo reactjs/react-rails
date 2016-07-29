@@ -8,6 +8,16 @@
 
 #### Bug Fixes
 
+## 1.8.2 (July 29, 2016)
+
+#### New Features
+
+- Update to React 15.2.1 #569
+
+#### Bug Fixes
+
+- Fix deprecation warnings on Sprockets 3.7+ #574
+
 ## 1.8.0 (June 29, 2016)
 
 #### New Features
