@@ -35,21 +35,6 @@ namespace :react do
       # With addons:
       copy_react_asset("#{environment}/react-browser-with-addons.js", "#{environment}-with-addons/react.js")
       copy_react_asset("#{environment}/react-server-with-addons.js", "#{environment}-with-addons/react-server.js")
-
-      addons = %w(
-        addons-create-fragment
-        addons-css-transition-group
-        addons-linked-state-mixin
-        addons-perf
-        addons-pure-render-mixin
-        addons-test-utils
-        addons-transition-group
-        addons-update
-      )
-
-      addons.each do |name|
-        copy_react_asset("#{environment}/react-#{name}.js", "#{environment}/react-#{name}.js")
-      end
     end
   end
 
