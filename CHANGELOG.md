@@ -8,7 +8,7 @@
 
 #### Bug Fixes
 
-## 1.8.2 (July 29, 2016)
+## 1.8.1 (July 29, 2016)
 
 #### New Features
 
