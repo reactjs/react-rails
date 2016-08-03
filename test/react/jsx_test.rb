@@ -2,7 +2,7 @@ require 'test_helper'
 
 # Sprockets is inserting a newline after the docblock for some reason...
 EXPECTED_JS = <<eos
-React.createElement("div", null);
+[2].concat([1]);React.createElement("div", null);
 eos
 
 EXPECTED_JS_2 = <<eos
