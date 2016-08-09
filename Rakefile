@@ -14,7 +14,7 @@ end
 
 namespace :react do
   desc "Run the JS build process to put files in the gem source"
-  task update: [:build, :copy]
+  task update: [:install, :build, :copy]
 
   desc "Build the JS bundles with Webpack"
   task :build do
