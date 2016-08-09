@@ -384,3 +384,8 @@ Any subclass of `ExecJSRenderer` may use those hooks (for example, `SprocketsRen
 - [React.rb](http://reactrb.org/): Use Ruby to build reactive user interfaces with React under the covers.[github source code here](https://github.com/zetachang/react.rb).
 - [react-rails-hot-loader](https://github.com/rmosolgo/react-rails-hot-loader) is a simple live-reloader for `react-rails`.
 - [react-rails-benchmark_renderer](https://github.com/pboling/react-rails-benchmark_renderer) adds performance instrumentation to server rendering.
+
+## Development
+
+- Run tests with `rake test` or `appraisal rake test`
+- Update React assets with `rake react:update`
