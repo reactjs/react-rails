@@ -66,14 +66,5 @@ when_sprockets_available do
 
       assert !@response.body.include?('strict')
     end
-
-
-    # Different processors may generate slightly different outputs,
-    # as some version inserts an extra "\n" at the beginning.
-    # Because appraisal is used, multiple versions of coffee-script are treated
-    # together. Remove all spaces to make test pass.
-    def assert_compiled_javascript_matches(javascript, expectation)
-      assert_equal expectation.gsub(/\s/, ''), javascript.gsub(/\s/, '')
-    end
   end
 end

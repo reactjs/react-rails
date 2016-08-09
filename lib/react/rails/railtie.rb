@@ -103,9 +103,11 @@ module React
         if !sprockets_env.nil?
           if Gem::Version.new(Sprockets::VERSION) >= Gem::Version.new("3.7.0")
             sprockets_env.register_mime_type("application/jsx", extensions: [".jsx", ".js.jsx", ".es.jsx", ".es6.jsx"])
-            sprockets_env.register_transformer("application/jsx", "application/javascript", React::JSX::Processor)
             sprockets_env.register_mime_type("application/jsx+coffee", extensions: [".jsx.coffee", ".js.jsx.coffee"])
+            sprockets_env.register_transformer("application/jsx", "application/javascript", React::JSX::Processor)
             sprockets_env.register_transformer("application/jsx+coffee", "application/jsx", Sprockets::CoffeeScriptProcessor)
+            sprockets_env.register_preprocessor("application/jsx", Sprockets::DirectiveProcessor.new(comments: ["//", ["/*", "*/"]]))
+            sprockets_env.register_preprocessor("application/jsx+coffee", Sprockets::DirectiveProcessor.new(comments: ["#", ["###", "###"]]))
           elsif Gem::Version.new(Sprockets::VERSION) >= Gem::Version.new("3.0.0")
             sprockets_env.register_engine(".jsx", React::JSX::Processor, mime_type: "application/javascript")
           else
