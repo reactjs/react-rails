@@ -109,7 +109,7 @@ module React
             sprockets_env.register_preprocessor("application/jsx", Sprockets::DirectiveProcessor.new(comments: ["//", ["/*", "*/"]]))
             sprockets_env.register_preprocessor("application/jsx+coffee", Sprockets::DirectiveProcessor.new(comments: ["#", ["###", "###"]]))
           elsif Gem::Version.new(Sprockets::VERSION) >= Gem::Version.new("3.0.0")
-            sprockets_env.register_engine(".jsx", React::JSX::Processor, mime_type: "application/javascript")
+            sprockets_env.register_engine(".jsx", React::JSX::Processor, mime_type: "application/javascript", silence_deprecation: true)
           else
             sprockets_env.register_engine(".jsx", React::JSX::Template)
           end
