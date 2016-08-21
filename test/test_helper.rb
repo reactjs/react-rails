@@ -114,13 +114,18 @@ def when_sprockets_available
   end
 end
 
-class ActionDispatch::IntegrationTest
+def fetch_asset_body(asset_logical_path)
+  Rails.application.assets[asset_logical_path].to_s
+end
 
 # Different processors may generate slightly different outputs,
 # as some version inserts an extra "\n" at the beginning.
 # Because appraisal is used, multiple versions of coffee-script are treated
 # together. Remove all spaces to make test pass.
-  def assert_compiled_javascript_matches(javascript, expectation)
-    assert_equal expectation.gsub(/\s/, ''), javascript.gsub(/\s/, '')
-  end
+def assert_compiled_javascript_matches(javascript, expectation)
+  assert_equal expectation.gsub(/\s/, ''), javascript.gsub(/\s/, '')
+end
+
+def assert_compiled_javascript_includes(javascript, expected_part)
+  assert_includes javascript.gsub(/\s/, ''), expected_part.gsub(/\s/, '')
 end
