@@ -10,6 +10,7 @@ module React
       config.react.jsx_transform_options = {}
       config.react.jsx_transformer_class = nil # defaults to BabelTransformer
       config.react.camelize_props = false # pass in an underscored hash but get a camelized hash
+      config.react.sprockets_strategy = nil # how to attach JSX to the asset pipeline (or `false` for none)
 
       # Server rendering:
       config.react.server_renderer_pool_size  = 1   # increase if you're on JRuby
@@ -97,22 +98,13 @@ module React
       end
 
       initializer "react_rails.setup_engine", :group => :all do |app|
-        # Sprockets 3.x expects this in a different place
-        sprockets_env = app.assets || defined?(Sprockets) && Sprockets
+        if app.config.react.sprockets_strategy == false
+          # pass, sprockets opt-out
+        else
+          # Sprockets 3.x expects this in a different place
+          sprockets_env = app.assets || defined?(Sprockets) && Sprockets
 
-        if !sprockets_env.nil?
-          if Gem::Version.new(Sprockets::VERSION) >= Gem::Version.new("3.7.0")
-            sprockets_env.register_mime_type("application/jsx", extensions: [".jsx", ".js.jsx", ".es.jsx", ".es6.jsx"])
-            sprockets_env.register_mime_type("application/jsx+coffee", extensions: [".jsx.coffee", ".js.jsx.coffee"])
-            sprockets_env.register_transformer("application/jsx", "application/javascript", React::JSX::Processor)
-            sprockets_env.register_transformer("application/jsx+coffee", "application/jsx", Sprockets::CoffeeScriptProcessor)
-            sprockets_env.register_preprocessor("application/jsx", Sprockets::DirectiveProcessor.new(comments: ["//", ["/*", "*/"]]))
-            sprockets_env.register_preprocessor("application/jsx+coffee", Sprockets::DirectiveProcessor.new(comments: ["#", ["###", "###"]]))
-          elsif Gem::Version.new(Sprockets::VERSION) >= Gem::Version.new("3.0.0")
-            sprockets_env.register_engine(".jsx", React::JSX::Processor, mime_type: "application/javascript")
-          else
-            sprockets_env.register_engine(".jsx", React::JSX::Template)
-          end
+          React::JSX::SprocketsStrategy.attach_with_strategy(sprockets_env, app.config.react.sprockets_strategy)
         end
       end
     end
