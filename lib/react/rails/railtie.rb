@@ -98,13 +98,15 @@ module React
       end
 
       initializer "react_rails.setup_engine", :group => :all do |app|
-        if app.config.react.sprockets_strategy == false
-          # pass, sprockets opt-out
-        else
-          # Sprockets 3.x expects this in a different place
-          sprockets_env = app.assets || defined?(Sprockets) && Sprockets
+        # Sprockets 3.x expects this in a different place
+        sprockets_env = app.assets || defined?(Sprockets) && Sprockets
 
+        if app.config.react.sprockets_strategy == false
+          # pass, Sprockets opt-out
+        elsif sprockets_env.present?
           React::JSX::SprocketsStrategy.attach_with_strategy(sprockets_env, app.config.react.sprockets_strategy)
+        else
+          # pass, Sprockets is not preset
         end
       end
     end
