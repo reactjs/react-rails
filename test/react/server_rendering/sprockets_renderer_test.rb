@@ -48,6 +48,14 @@ when_sprockets_available do
       assert_match(/\n/, err.to_s, "it includes the multi-line backtrace")
     end
 
+    test '.new accepts additional code to add to the JS context' do
+      additional_code = File.read(File.expand_path("../../../helper_files/WithoutSprockets.js", __FILE__))
+
+      additional_renderer = React::ServerRendering::SprocketsRenderer.new(code: additional_code)
+
+      assert_match(/drink more caffeine<\/span>/, additional_renderer.render("WithoutSprockets", {label: "drink more caffeine"}, nil))
+    end
+
     test '.new accepts any filenames' do
       limited_renderer = React::ServerRendering::SprocketsRenderer.new(files: ["react-server.js", "components/Todo.js"])
       assert_match(/get a real job<\/li>/, limited_renderer.render("Todo", {todo: "get a real job"}, nil))
