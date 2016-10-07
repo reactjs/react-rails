@@ -8,6 +8,19 @@
 
 #### Bug Fixes
 
+## 1.9.0 (October 6, 2016)
+
+#### Breaking Changes
+
+#### New Features
+
+- Accept extra JS code in `code:` option for SprocketsRenderer #604
+
+#### Bug Fixes
+
+- Use `asset_prefix` for YamlContainer #598
+- Fix requiring `.js` from `.es6.jsx` #591
+
 ## 1.8.2 (August 9, 2016)
 
 #### New Features
