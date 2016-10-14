@@ -15,5 +15,8 @@
     "react-addons-update": "^15.3.0",
     "react-dom": "^15.3.0",
     "webpack": "^1.12.2"
+  },
+  "scripts": {
+    "build": "webpack && NODE_ENV=production webpack -p"
   }
 }

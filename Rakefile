@@ -19,8 +19,7 @@ namespace :react do
   desc "Build the JS bundles with Webpack"
   task :build do
     Dir.chdir("react-builds") do
-      `webpack`
-      `NODE_ENV=production webpack -p`
+      `npm run build`
     end
   end
 
