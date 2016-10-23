@@ -92,7 +92,7 @@ After installing `react-rails`, restart your server. Now, `.js.jsx` files will b
 
 #### BabelTransformer options
 
-You can use babel's [transformers](http://babeljs.io/docs/advanced/transformers/) and [custom plugins](http://babeljs.io/docs/advanced/plugins/),
+You can use babel's [transformers and plugins](http://babeljs.io/docs/plugins/)
 and pass [options](http://babeljs.io/docs/usage/options/) to the babel transpiler adding following configurations:
 
 ```ruby
