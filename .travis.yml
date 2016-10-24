@@ -1,5 +1,6 @@
 language: ruby
-sudo: false
+sudo: required
+dist: trusty
 cache: bundler
 rvm:
   - 2.3.0
@@ -17,6 +18,7 @@ gemfile:
   - gemfiles/rails_4.1.gemfile
   - gemfiles/rails_5.gemfile
   - gemfiles/rails_5_no_sprockets.gemfile
+  - gemfiles/rails_5_mini_racer.gemfile
   - gemfiles/rails_5_sprockets_4.gemfile
 
 matrix:
@@ -42,6 +44,8 @@ matrix:
       gemfile: gemfiles/rails_5_no_sprockets.gemfile
     - rvm: 2.1
       gemfile: gemfiles/rails_5_sprockets_4.gemfile
+    - rvm: 2.1
+      gemfile: gemfiles/rails_5_mini_racer.gemfile
     - rvm: jruby-9.0.1.0
       gemfile: gemfiles/rails_4.0.gemfile
     - rvm: jruby-9.0.1.0
@@ -50,6 +54,8 @@ matrix:
       gemfile: gemfiles/rails_4.1.gemfile
     - rvm: jruby-9.0.1.0
       gemfile: gemfiles/rails_4.2_sprockets_2.gemfile
+    - rvm: jruby-9.0.1.0
+      gemfile: gemfiles/rails_5_mini_racer.gemfile
 
   allow_failures:
     - rvm: jruby-9.0.1.0
