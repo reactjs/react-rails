@@ -12,11 +12,13 @@ module React
       # Reimplement console methods for replaying on the client
       CONSOLE_POLYFILL = File.read(File.join(File.dirname(__FILE__), "sprockets_renderer/console_polyfill.js"))
       CONSOLE_REPLAY   = File.read(File.join(File.dirname(__FILE__), "sprockets_renderer/console_replay.js"))
+      TIMEOUT_POLYFILL = File.read(File.join(File.dirname(__FILE__), "sprockets_renderer/timeout_polyfill.js"))
 
       def initialize(options={})
         @replay_console = options.fetch(:replay_console, true)
         filenames = options.fetch(:files, ["react-server.js", "components.js"])
         js_code = CONSOLE_POLYFILL.dup
+        js_code << TIMEOUT_POLYFILL.dup
         js_code << options.fetch(:code, '')
 
         filenames.each do |filename|

@@ -48,6 +48,16 @@ when_sprockets_available do
       assert_match(/\n/, err.to_s, "it includes the multi-line backtrace")
     end
 
+    test '#render polyfills setTimeout and clearTimeout and warn about it' do
+      result = @renderer.render("WithSetTimeout", {}, nil)
+
+      assert_match(/I am rendered!<\/span>/, result)
+
+      message = "is not defined for execJS. See https://github.com/sstephenson/execjs#faq. Note babel-polyfill may call this."
+      assert_match(/console.error.apply\(console, \["clearTimeout #{message}"\]\);$/, result)
+      assert_match(/console.error.apply\(console, \["setTimeout #{message}"\]\);$/, result)
+    end
+
     test '.new accepts additional code to add to the JS context' do
       additional_code = File.read(File.expand_path("../../../helper_files/WithoutSprockets.js", __FILE__))
 
