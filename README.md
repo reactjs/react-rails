@@ -381,7 +381,7 @@ Any subclass of `ExecJSRenderer` may use those hooks (for example, `SprocketsRen
 ### Related Projects
 
 - [react\_on\_rails Gem](https://github.com/shakacode/react_on_rails): Webpack Integration of React with Rails utilizing the modern JavaScript tooling and libraries, including Webpack, Babel, React, Redux, React-Router. You can an example of this live at [www.reactrails.com](http://www.reactrails.com).
-- [React.rb](http://reactrb.org/): Use Ruby to build reactive user interfaces with React under the covers.[github source code here](https://github.com/zetachang/react.rb).
+- [Ruby Hyperloop](http://ruby-hyperloop.io/): Use Ruby to build reactive user interfaces with React.
 - [react-rails-hot-loader](https://github.com/rmosolgo/react-rails-hot-loader) is a simple live-reloader for `react-rails`.
 - [react-rails-benchmark_renderer](https://github.com/pboling/react-rails-benchmark_renderer) adds performance instrumentation to server rendering.
 
