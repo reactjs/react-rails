@@ -1,0 +1,35 @@
+{
+  "name": "react-rails-ujs",
+  "version": "1.0.0",
+  "description": "mounting components built with webpack (compatible with react-rails)",
+  "keywords": [
+    "react-rails",
+    "react",
+    "rails",
+    "mounting",
+    "components",
+    "webpack"
+  ],
+  "author": "Tomasz Bak <t.bak@selleo.com>",
+  "license": "Apache-2.0",
+  "homepage": "https://github.com/tb/react-rails-ujs",
+  "bugs": {
+    "url": "https://github.com/tb/react-rails-ujs/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tb/react-rails-ujs.git"
+  },
+  "main": "dist/react-rails-ujs.js",
+  "scripts": {
+    "build": "babel src --out-dir dist"
+  },
+  "dependencies": {
+    "react": "*",
+    "react-dom": "*"
+  },
+  "devDependencies": {
+    "babel-cli": "^6",
+    "babel-preset-es2015": "^6"
+  }
+}
