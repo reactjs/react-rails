@@ -1,6 +1,6 @@
 if RUBY_PLATFORM != "java"
-  require "codeclimate-test-reporter"
-  CodeClimate::TestReporter.start
+  require 'simplecov'
+  SimpleCov.start
 end
 
 # Configure Rails Environment
