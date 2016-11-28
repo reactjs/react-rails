@@ -28,19 +28,14 @@ module React
         super(options.merge(code: js_code))
       end
 
+      # Prerender options are expected to be a Hash however might also be a symbol.
+      # pass prerender: :static to use renderToStaticMarkup
+      # pass prerender: true to enable default prerender
+      # pass prerender: {} to proxy some custom options
       def render(component_name, props, prerender_options)
-        # pass prerender: :static to use renderToStaticMarkup
-        react_render_method = if prerender_options == :static
-            "renderToStaticMarkup"
-          else
-            "renderToString"
-          end
-
-        if !props.is_a?(String)
-          props = props.to_json
-        end
-
-        super(component_name, props, {render_function: react_render_method})
+        t_options = prepare_options(prerender_options)
+        t_props = prepare_props(props)
+        super(component_name, t_props, t_options)
       end
 
       def after_render(component_name, props, prerender_options)
@@ -75,6 +70,32 @@ module React
 
       def assets_precompiled?
         !::Rails.application.config.assets.compile
+      end
+
+      private
+
+      def prepare_options(options)
+        r_func = render_function(options)
+        opts = case options
+          when Hash then options
+          when TrueClass then {}
+          else
+            {}
+        end
+        # This seems redundant to pass
+        opts.merge(render_function: r_func)
+      end
+
+      def render_function(opts)
+        if opts == :static
+          'renderToStaticMarkup'.freeze
+        else
+          'renderToString'.freeze
+        end
+      end
+
+      def prepare_props(props)
+        props.is_a?(String) ? props : props.to_json
       end
     end
   end
