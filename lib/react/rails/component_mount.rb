@@ -24,7 +24,7 @@ module React
       # on the client.
       def react_component(name, props = {}, options = {}, &block)
         options = {:tag => options} if options.is_a?(Symbol)
-        if camelize_props_switch
+        if camelize_props_switch || options[:camelize_props]
           props = React.camelize_props(props)
         end
 
@@ -43,7 +43,7 @@ module React
         html_tag = html_options[:tag] || :div
 
         # remove internally used properties so they aren't rendered to DOM
-        html_options.except!(:tag, :prerender)
+        html_options.except!(:tag, :prerender, :camelize_props)
 
         content_tag(html_tag, '', html_options, &block)
       end
