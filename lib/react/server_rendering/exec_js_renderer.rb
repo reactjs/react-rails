@@ -11,16 +11,10 @@ module React
       end
 
       def render(component_name, props, prerender_options)
-        render_function = prerender_options.fetch(:render_function, "renderToString")
-        js_code = <<-JS
-          (function () {
-            #{before_render(component_name, props, prerender_options)}
-            var result = ReactDOMServer.#{render_function}(React.createElement(#{component_name}, #{props}));
-            #{after_render(component_name, props, prerender_options)}
-            return result;
-          })()
-        JS
-        @context.eval(js_code).html_safe
+        js_executed_before = before_render(component_name, props, prerender_options)
+        js_executed_after = after_render(component_name, props, prerender_options)
+        js_main_section = main_render(component_name, props, prerender_options)
+        render_from_parts(js_executed_before, js_main_section, js_executed_after)
       rescue ExecJS::ProgramError => err
         raise React::ServerRendering::PrerenderError.new(component_name, props, err)
       end
@@ -36,6 +30,28 @@ module React
         var window = window || this;
       JS
 
+      private
+
+      def render_from_parts(before, main, after)
+        js_code = compose_js(before, main, after)
+        @context.eval(js_code).html_safe
+      end
+
+      def main_render(component_name, props, prerender_options)
+        render_function = prerender_options.fetch(:render_function, "renderToString")
+        "ReactDOMServer.#{render_function}(React.createElement(#{component_name}, #{props}))"
+      end
+
+      def compose_js(before, main, after)
+        <<-JS
+          (function () {
+            #{before}
+            var result = #{main};
+            #{after}
+            return result;
+          })()
+        JS
+      end
     end
   end
 end
