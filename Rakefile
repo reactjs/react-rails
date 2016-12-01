@@ -40,7 +40,7 @@ namespace :react do
   desc "Use NPM to install the JavaScript dependencies"
   task :install do
     Dir.chdir("react-builds") do
-      `npm install`
+      `yarn install`
     end
   end
 end

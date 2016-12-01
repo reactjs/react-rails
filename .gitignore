@@ -7,3 +7,4 @@ gemfiles/*.lock
 /vendor/react
 react-builds/node_modules
 react-builds/build
+coverage/
