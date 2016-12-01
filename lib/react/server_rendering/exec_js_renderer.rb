@@ -27,7 +27,6 @@ module React
       GLOBAL_WRAPPER = <<-JS
         var global = global || this;
         var self = self || this;
-        var window = window || this;
       JS
 
       private
