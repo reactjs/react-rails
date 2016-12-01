@@ -2,8 +2,27 @@ require 'test_helper'
 
 when_sprockets_available do
   class SprocketsRendererTest < ActiveSupport::TestCase
+    CALLBACKS = [:before_render, :after_render]
+
     setup do
       @renderer = React::ServerRendering::SprocketsRenderer.new({})
+    end
+
+    CALLBACKS.each do |callback_name|
+      test "#render should pass prerender options to ##{callback_name}" do
+        mocked_method = MiniTest::Mock.new
+        mocked_method.expect :call, '', [
+          "Todo",
+          "{\"todo\":\"write tests\"}",
+          { option: :value, render_function: "renderToString" }
+        ]
+
+        @renderer.stub callback_name, mocked_method do
+          @renderer.render("Todo", { todo: "write tests" }, { option: :value })
+        end
+
+        mocked_method.verify
+      end
     end
 
     test '#render returns HTML' do
