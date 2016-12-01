@@ -24,7 +24,7 @@ module React
       # on the client.
       def react_component(name, props = {}, options = {}, &block)
         options = {:tag => options} if options.is_a?(Symbol)
-        if camelize_props_switch || options[:camelize_props]
+        if options.fetch(:camelize_props, camelize_props_switch)
           props = React.camelize_props(props)
         end
 
