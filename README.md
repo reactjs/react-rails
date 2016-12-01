@@ -203,6 +203,12 @@ MyApp::Application.configure do
 end
 ```
 
+or when mounting:
+
+```erb
+<%= react_component('HelloMessage', {name: 'John'}, {camelize_props: true}) %>
+```
+
 ### Rendering components instead of views
 
 Components can also be prerendered directly from a controller action with the custom `component` renderer. For example:
