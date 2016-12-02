@@ -19,7 +19,7 @@ namespace :react do
   desc "Build the JS bundles with Webpack"
   task :build do
     Dir.chdir("react-builds") do
-      `npm run build`
+      `yarn run build`
     end
   end
 
@@ -37,10 +37,10 @@ namespace :react do
     end
   end
 
-  desc "Use NPM to install the JavaScript dependencies"
+  desc "Install the JavaScript dependencies"
   task :install do
     Dir.chdir("react-builds") do
-      `npm install`
+      `yarn install`
     end
   end
 end
