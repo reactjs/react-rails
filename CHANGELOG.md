@@ -8,6 +8,26 @@
 
 #### Bug Fixes
 
+## 1.10.0 (October 6, 2016)
+
+#### Breaking Changes
+
+- Alias `window = this;` has been removed from the default server rendering JavaScript to improve detection of the server rendering environment. To get the old behavior, you can add the alias in your own server rendering code. #615
+
+#### New Features
+
+- Calling `setTimeout` or `clearTimeout` in server rendering will raise an informative error because they aren't supported #618
+- `prerender:` options will be passed to server renderer methods #641
+- `react_component(..., camelize_props:)` option will override the application default #642, #645
+- Ship with React.js 15.4.1 #646
+
+#### Deprecation
+
+#### Bug Fixes
+
+- use `['default']` accessor to support old JavaScript versions #619
+- `react_component` with a block will correctly render the content inside the `div`
+
 ## 1.9.0 (October 6, 2016)
 
 #### Breaking Changes
