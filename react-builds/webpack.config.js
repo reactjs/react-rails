@@ -21,7 +21,9 @@ module.exports = {
   context: __dirname,
   entry: {
     "react-browser": "./react-browser.js",
+    "react-browser-with-relay": "./react-browser-with-relay.js",
     "react-browser-with-addons": "./react-browser-with-addons.js",
+    "react-browser-with-relay-with-addons": "./react-browser-with-relay-with-addons.js",
     "react-server": "./react-server.js",
     "react-server-with-addons": "./react-server-with-addons.js",
   },
