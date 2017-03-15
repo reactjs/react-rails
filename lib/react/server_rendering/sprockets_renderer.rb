@@ -53,7 +53,7 @@ module React
       # default Rails setups.
       #
       # You can provide a custom asset container
-      # with `React::ServerRendering::SprocketsRender.asset_container_class = MyAssetContainer`.
+      # with `React::ServerRendering::SprocketsRenderer.asset_container_class = MyAssetContainer`.
       #
       # @return [#find_asset(logical_path)] An object that returns asset contents by logical path
       def asset_container
