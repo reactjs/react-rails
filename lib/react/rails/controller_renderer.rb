@@ -18,15 +18,19 @@ module React
       include ActionView::Helpers::TextHelper
 
       attr_accessor :output_buffer
+      attr_reader :controller
 
       def initialize(options={})
-        controller = options[:controller]
+        @controller = options[:controller]
         @__react_component_helper = controller.__react_component_helper
       end
 
       # @return [String] Prerendered HTML for `component_name` with `options[:props]`
       def call(component_name, options, &block)
-        props = options.fetch(:props, {})
+        props = options.fetch(:props, {}).merge({
+          csrf_token: controller.send(:form_authenticity_token)
+        })
+
         options = options.slice(:data, :aria, :tag, :class, :id).merge(prerender: true)
         react_component(component_name, props, options, &block)
       end
