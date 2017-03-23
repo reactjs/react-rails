@@ -4,6 +4,8 @@ import ReactDOM from 'react-dom';
 const defaultConfig = {
   'NAME_ATTR': 'data-react-class',
   'PROPS_ATTR': 'data-react-props',
+  render: (component, props) => React.createElement(component, props),
+  strict: true,
 };
 
 export function mountComponents(components, configOverrides = {}) {
@@ -22,9 +24,11 @@ export function mountComponents(components, configOverrides = {}) {
       if (console && console.log) {
         console.log(`%c[react-rails-ujs] %c${message} for element`, "font-weight: bold", "", node);
       }
-      throw new Error(`[react-rails-ujs] ${message}`);
+      if (config.strict) {
+        throw new Error(`[react-rails-ujs] ${message}`);
+      }
     } else {
-      ReactDOM.render(React.createElement(component, props), node);
+      ReactDOM.render(config.render(component, props), node);
     }
   }
 }

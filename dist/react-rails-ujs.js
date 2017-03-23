@@ -17,7 +17,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var defaultConfig = {
   'NAME_ATTR': 'data-react-class',
-  'PROPS_ATTR': 'data-react-props'
+  'PROPS_ATTR': 'data-react-props',
+  render: function render(component, props) {
+    return _react2.default.createElement(component, props);
+  },
+  strict: true
 };
 
 function mountComponents(components) {
@@ -38,9 +42,11 @@ function mountComponents(components) {
       if (console && console.log) {
         console.log('%c[react-rails-ujs] %c' + message + ' for element', "font-weight: bold", "", node);
       }
-      throw new Error('[react-rails-ujs] ' + message);
+      if (config.strict) {
+        throw new Error('[react-rails-ujs] ' + message);
+      }
     } else {
-      _reactDom2.default.render(_react2.default.createElement(component, props), node);
+      _reactDom2.default.render(config.render(component, props), node);
     }
   }
 }
