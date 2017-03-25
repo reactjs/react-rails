@@ -19,7 +19,7 @@ in your Ruby on Rails (3.2+) application. `react-rails` can:
 - [Generate components](#component-generator) with a Rails generator
 - [Be extended](#extending-react-rails) with custom renderers, transformers and view helpers
 
-Just getting started with React? Make sure to check out the [Getting Started] (https://facebook.github.io/react/docs/getting-started.html) guide. Also, see [Related Projects](#related-projects) below.
+Just getting started with React? Make sure to check out the [Getting Started][React Getting Started]  guide. Also, see [Related Projects](#related-projects) below.
 
 ## Installation
 
@@ -396,3 +396,5 @@ Any subclass of `ExecJSRenderer` may use those hooks (for example, `SprocketsRen
 
 - Run tests with `rake test` or `appraisal rake test`
 - Update React assets with `rake react:update`
+
+[React Getting Started]: https://facebook.github.io/react/docs/getting-started.html
