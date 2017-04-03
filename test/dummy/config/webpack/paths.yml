@@ -1,0 +1,31 @@
+# Restart webpack-watcher or webpack-dev-server if you make changes here
+default: &default
+  config: config/webpack
+  entry: packs
+  output: public
+  manifest: manifest.json
+  node_modules: node_modules
+  source: app/javascript
+  extensions:
+    - .coffee
+    - .js
+    - .jsx
+    - .ts
+    - .vue
+    - .sass
+    - .scss
+    - .css
+    - .png
+    - .svg
+    - .gif
+    - .jpeg
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+  manifest: manifest-test.json
+
+production:
+  <<: *default

@@ -11,6 +11,24 @@ require "rails/test_help"
 require "rails/generators"
 require "pathname"
 require 'minitest/mock'
+require "capybara/rails"
+require "capybara/poltergeist"
+Dummy::Application.load_tasks
+
+Capybara.javascript_driver = :poltergeist
+Capybara.app = Rails.application
+
+Capybara.register_driver :poltergeist_debug do |app|
+  poltergeist_options = {
+    # `page.driver.debug` will cause Poltergeist to open a browser window
+    inspector: true,
+    # hide warnings from React.js whitespace changes:
+    js_errors: false,
+  }
+  Capybara::Poltergeist::Driver.new(app, poltergeist_options)
+end
+Capybara.javascript_driver = :poltergeist_debug
+
 
 CACHE_PATH = Pathname.new File.expand_path("../dummy/tmp/cache", __FILE__)
 
@@ -42,7 +60,6 @@ end
 def precompile_assets
   capture_io do
     ENV['RAILS_GROUPS'] = 'assets' # required for Rails 3.2
-    Dummy::Application.load_tasks
     Rake::Task['assets:precompile'].reenable
 
     if Rails::VERSION::MAJOR == 3
@@ -110,6 +127,15 @@ end
 # The block depends on sprockets, don't run it if sprockets is missing
 def when_sprockets_available
   if !SKIP_SPROCKETS
+    yield
+  end
+end
+
+def when_webpacker_available
+  if defined?(Webpacker)
+    Dir.chdir("./test/dummy") do
+      Rake::Task['webpacker:compile'].invoke
+    end
     yield
   end
 end

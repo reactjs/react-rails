@@ -8,4 +8,6 @@ Dummy::Application.routes.draw do
       get :inline_component_prerender_false
     end
   end
+
+  resource :pack_component, only: :show
 end

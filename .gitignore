@@ -2,6 +2,7 @@
 Gemfile.lock
 *.log
 test/dummy/tmp
+test/dummy/public/packs
 gemfiles/*.lock
 *.swp
 /vendor/react

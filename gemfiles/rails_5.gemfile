@@ -4,5 +4,6 @@ source "http://rubygems.org"
 
 gem "rails", "~> 5.0.0"
 gem "turbolinks", "~> 5.0.0"
+gem "webpacker", :github => "rails/webpacker"
 
 gemspec :path => "../"
