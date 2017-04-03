@@ -24,7 +24,7 @@ module React
 
     class PrerenderError < RuntimeError
       def initialize(component_name, props, js_message)
-        message = ["Encountered error \"#{js_message}\" when prerendering #{component_name} with #{props}",
+        message = ["Encountered error \"#{js_message.inspect}\" when prerendering #{component_name} with #{props}",
                     js_message.backtrace.join("\n")].join("\n")
         super(message)
       end
