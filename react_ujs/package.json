@@ -1,0 +1,12 @@
+{
+  "name": "react_ujs",
+  "version": "1.0.0",
+  "description": "ReactRailsUJS",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack"
+  },
+  "dependencies": {
+    "webpack": "^2.3.3"
+  }
+}

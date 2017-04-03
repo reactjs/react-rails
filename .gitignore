@@ -5,6 +5,6 @@ test/dummy/tmp
 gemfiles/*.lock
 *.swp
 /vendor/react
-react-builds/node_modules
+**/node_modules
 react-builds/build
 coverage/
