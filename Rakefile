@@ -69,6 +69,13 @@ namespace :ujs do
     full_destination_path = File.expand_path("../lib/assets/javascripts/react_ujs.js", __FILE__)
     FileUtils.cp(full_webpack_path, full_destination_path)
   end
+
+  desc "Publish the package in ./react_ujs/ to npm as `react_ujs`"
+  task :publish do
+    Dir.chdir("react_ujs") do
+      `npm publish`
+    end
+  end
 end
 
 require 'appraisal'
