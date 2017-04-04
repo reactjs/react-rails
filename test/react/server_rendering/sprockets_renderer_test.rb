@@ -10,7 +10,7 @@ when_sprockets_available do
 
     CALLBACKS.each do |callback_name|
       test "#render should pass prerender options to ##{callback_name}" do
-        mocked_method = MiniTest::Mock.new
+        mocked_method = Minitest::Mock.new
         mocked_method.expect :call, '', [
           "Todo",
           "{\"todo\":\"write tests\"}",
