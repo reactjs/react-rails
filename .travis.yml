@@ -57,6 +57,7 @@ matrix:
     - rvm: jruby-9.0.1.0
 
 before_install:
+  - nvm install 7.8.0 && nvm use 7.8.0
   - mkdir travis-phantomjs
   - wget https://rmosolgo.github.io/assets/phantomjs-2.1.1-linux-x86_64.tar.bz2 -O $PWD/travis-phantomjs/phantomjs-2.1.1-linux-x86_64.tar.bz2
   - tar -xvf $PWD/travis-phantomjs/phantomjs-2.1.1-linux-x86_64.tar.bz2 -C $PWD/travis-phantomjs
