@@ -96,14 +96,14 @@ when_sprockets_available do
 
     test '#render returns html when config.assets.compile is false' do
       begin
-        Rails.application.config.assets.precompile += [
-          "react-server.js", "components.js"]
+        legacy_rendering_files = ["react-server.js", "components.js"]
+        Rails.application.config.assets.precompile += legacy_rendering_files
 
         precompile_assets
 
         Rails.application.config.assets.compile = false
 
-        @renderer = React::ServerRendering::SprocketsRenderer.new({})
+        @renderer = React::ServerRendering::SprocketsRenderer.new(files: legacy_rendering_files)
 
         result = @renderer.render("Todo", {todo: "write tests"}, nil)
         assert_match(/<li.*write tests<\/li>/, result)
