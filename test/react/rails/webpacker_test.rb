@@ -2,11 +2,15 @@ require 'test_helper'
 
 
 when_webpacker_available do
-  class ReactRailsUJSTest < ActionDispatch::IntegrationTest
+  class ReactRailsWebpackerTest < ActionDispatch::IntegrationTest
     include Capybara::DSL
 
     setup do
       Capybara.current_driver = Capybara.javascript_driver
+    end
+
+    teardown do
+      clear_webpacker_packs
     end
 
     test 'it mounts pages from the pack' do
