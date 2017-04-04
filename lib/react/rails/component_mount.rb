@@ -38,6 +38,9 @@ module React
           html_options[:data].tap do |data|
             data[:react_class] = name
             data[:react_props] = (props.is_a?(String) ? props : props.to_json)
+
+            data[:react_name] = options[:react_name]
+            data[:react_dom_name] = options[:react_dom_name]
           end
         end
         html_tag = html_options[:tag] || :div
