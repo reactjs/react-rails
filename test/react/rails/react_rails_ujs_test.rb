@@ -1,23 +1,6 @@
 require 'test_helper'
 
-require 'capybara/rails'
-require 'capybara/poltergeist'
-
 when_sprockets_available do
-  Capybara.javascript_driver = :poltergeist
-  Capybara.app = Rails.application
-
-  Capybara.register_driver :poltergeist_debug do |app|
-    poltergeist_options = {
-      # `page.driver.debug` will cause Poltergeist to open a browser window
-      inspector: true,
-      # hide warnings from React.js whitespace changes:
-      js_errors: false,
-    }
-    Capybara::Poltergeist::Driver.new(app, poltergeist_options)
-  end
-  Capybara.javascript_driver = :poltergeist_debug
-
   class ReactRailsUJSTest < ActionDispatch::IntegrationTest
     include Capybara::DSL
 

@@ -12,15 +12,20 @@ def copy_react_asset(webpack_file, destination_file)
   FileUtils.cp(full_webpack_path, full_destination_path)
 end
 
+# Move to `dirname` and execute `yarn {cmd}`
+def yarn_run_in(dirname, cmd)
+  Dir.chdir(dirname) do
+    `yarn #{cmd}`
+  end
+end
+
 namespace :react do
   desc "Run the JS build process to put files in the gem source"
   task update: [:install, :build, :copy]
 
   desc "Build the JS bundles with Webpack"
   task :build do
-    Dir.chdir("react-builds") do
-      `yarn run build`
-    end
+    yarn_run_in("react-builds", "build")
   end
 
   desc "Copy browser-ready JS files to the gem's asset paths"
@@ -39,8 +44,36 @@ namespace :react do
 
   desc "Install the JavaScript dependencies"
   task :install do
-    Dir.chdir("react-builds") do
-      `yarn upgrade`
+    yarn_run_in("react-builds", "upgrade")
+  end
+end
+
+namespace :ujs do
+  desc "Run the JS build process to put files in the gem source"
+  task update: [:install, :build, :copy]
+
+  desc "Install the JavaScript dependencies"
+  task :install do
+    yarn_run_in("react_ujs", "upgrade")
+  end
+
+
+  desc "Build the JS bundles with Webpack"
+  task :build do
+    yarn_run_in("react_ujs", "build")
+  end
+
+  desc "Copy browser-ready JS files to the gem's asset paths"
+  task :copy do
+    full_webpack_path = File.expand_path("../react_ujs/dist/react_ujs.js", __FILE__)
+    full_destination_path = File.expand_path("../lib/assets/javascripts/react_ujs.js", __FILE__)
+    FileUtils.cp(full_webpack_path, full_destination_path)
+  end
+
+  desc "Publish the package in ./react_ujs/ to npm as `react_ujs`"
+  task :publish do
+    Dir.chdir("react_ujs") do
+      `npm publish`
     end
   end
 end
@@ -57,3 +90,11 @@ Rake::TestTask.new(:test) do |t|
 end
 
 task default: :test
+
+task :test_setup do
+  Dir.chdir("./test/dummy") do
+    `yarn install`
+  end
+end
+
+task test: :test_setup

@@ -2,9 +2,10 @@
 Gemfile.lock
 *.log
 test/dummy/tmp
+test/dummy/public/packs
 gemfiles/*.lock
 *.swp
 /vendor/react
-react-builds/node_modules
+**/node_modules
 react-builds/build
 coverage/

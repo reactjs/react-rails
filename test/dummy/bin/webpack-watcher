@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby
+
+ENV['RAILS_ENV'] ||= 'development'
+ENV['NODE_ENV'] ||= ENV['RAILS_ENV']
+
+BIN_PATH = File.expand_path('.', __dir__)
+
+Dir.chdir(BIN_PATH) do
+  exec "./webpack --watch --progress --color #{ARGV.join(" ")}"
+end
