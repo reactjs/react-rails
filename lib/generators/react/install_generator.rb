@@ -11,9 +11,16 @@ module React
         default: false,
         desc: 'Skip Git keeps'
 
+      class_option :skip_server_rendering,
+        type: :boolean,
+        default: false,
+        desc: "Don't generate server_rendering.js or config/initializers/react_server_rendering.rb"
+
       def create_directory
         empty_directory 'app/assets/javascripts/components'
-        create_file 'app/assets/javascripts/components/.gitkeep' unless options[:skip_git]
+        if !options[:skip_git]
+          create_file 'app/assets/javascripts/components/.gitkeep'
+        end
       end
 
       def inject_react
@@ -46,6 +53,14 @@ module React
         components_js = "//= require_tree ./components\n"
         components_file = File.join(*%w(app assets javascripts components.js))
         create_file components_file, components_js
+      end
+
+      def create_server_rendering
+        return if options[:skip_server_rendering]
+        manifest_path = "app/assets/javascripts/server_rendering.js"
+        template("server_rendering.js", manifest_path)
+        initializer_path = "config/initializers/react_server_rendering.rb"
+        template("react_server_rendering.rb", initializer_path)
       end
 
       private
