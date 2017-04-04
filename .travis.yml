@@ -9,16 +9,14 @@ rvm:
 
 gemfile:
   - gemfiles/rails_3.2.gemfile
-  - gemfiles/rails_4.0.gemfile
   - gemfiles/rails_4.0.5.gemfile
   - gemfiles/rails_4.0_with_therubyracer.gemfile
+  - gemfiles/rails_4.1.gemfile
   - gemfiles/rails_4.2_sprockets_2.gemfile
   - gemfiles/rails_4.2_sprockets_3.gemfile
   - gemfiles/rails_4.2_sprockets_4.gemfile
-  - gemfiles/rails_4.1.gemfile
   - gemfiles/rails_5.gemfile
   - gemfiles/rails_5_no_sprockets.gemfile
-  - gemfiles/rails_5_mini_racer.gemfile
   - gemfiles/rails_5_sprockets_4.gemfile
 
 matrix:
@@ -27,13 +25,13 @@ matrix:
     - rvm: 2.1
       gemfile: gemfiles/rails_3.2.gemfile
     - rvm: 2.1
-      gemfile: gemfiles/rails_4.0.gemfile
+      gemfile: rails_4.0.5.gemfile
     - rvm: 2.1
       gemfile: rails_4.0_with_therubyracer.gemfile
     - rvm: 2.1
-      gemfile: gemfiles/rails_4.1.gemfile
-    - rvm: 2.1
       gemfile: gemfiles/rails_4.2_sprockets_2.gemfile
+    - rvm: 2.1
+      gemfile: gemfiles/rails_4.2_sprockets_3.gemfile
     - rvm: 2.1
       gemfile: gemfiles/rails_4.2_sprockets_4.gemfile
     - rvm: 2.1
@@ -42,8 +40,6 @@ matrix:
       gemfile: gemfiles/rails_5_no_sprockets.gemfile
     - rvm: 2.1
       gemfile: gemfiles/rails_5_sprockets_4.gemfile
-    - rvm: 2.1
-      gemfile: gemfiles/rails_5_mini_racer.gemfile
     - rvm: jruby-9.0.1.0
       gemfile: gemfiles/rails_4.0.gemfile
     - rvm: jruby-9.0.1.0
