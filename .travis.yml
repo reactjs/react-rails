@@ -1,7 +1,9 @@
 language: ruby
 sudo: required
 dist: trusty
-cache: bundler
+cache:
+  bundler: true
+  yarn: true
 rvm:
   - 2.3.0
   - 2.1
@@ -60,3 +62,8 @@ before_install:
   - tar -xvf $PWD/travis-phantomjs/phantomjs-2.1.1-linux-x86_64.tar.bz2 -C $PWD/travis-phantomjs
   - export PATH=$PWD/travis-phantomjs/phantomjs-2.1.1-linux-x86_64/bin:$PATH
   - phantomjs --version
+  # Repo for Yarn
+  - sudo apt-key adv --fetch-keys http://dl.yarnpkg.com/debian/pubkey.gpg
+  - echo "deb http://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+  - sudo apt-get update -qq
+  - sudo apt-get install -y -qq yarn

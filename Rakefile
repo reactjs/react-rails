@@ -83,3 +83,11 @@ Rake::TestTask.new(:test) do |t|
 end
 
 task default: :test
+
+task :test_setup do
+  Dir.chdir("./test/dummy") do
+    `yarn install`
+  end
+end
+
+task test: :test_setup
