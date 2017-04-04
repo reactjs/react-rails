@@ -1,7 +1,7 @@
 require 'test_helper'
 
 
-when_webpacker_available do
+WebpackerHelpers.when_webpacker_available do
   class ReactRailsWebpackerTest < ActionDispatch::IntegrationTest
     include Capybara::DSL
 
@@ -10,7 +10,7 @@ when_webpacker_available do
     end
 
     teardown do
-      clear_webpacker_packs
+      WebpackerHelpers.clear_webpacker_packs
     end
 
     test 'it mounts pages from the pack' do

@@ -15,6 +15,11 @@ require "capybara/rails"
 require "capybara/poltergeist"
 Dummy::Application.load_tasks
 
+support_path = File.expand_path("../support/*.rb", __FILE__)
+Dir.glob(support_path).each do |f|
+  require(f)
+end
+
 Capybara.javascript_driver = :poltergeist
 Capybara.app = Rails.application
 
@@ -129,23 +134,6 @@ def when_sprockets_available
   if !SKIP_SPROCKETS
     yield
   end
-end
-
-def when_webpacker_available
-  if defined?(Webpacker)
-    clear_webpacker_packs
-    Dir.chdir("./test/dummy") do
-      Rake::Task['webpacker:compile'].invoke
-    end
-    # Reload cached JSON manifest:
-    Webpacker::Manifest.load
-    yield
-  end
-end
-
-def clear_webpacker_packs
-  packs_directory = File.expand_path("../dummy/public/packs", __FILE__)
-  FileUtils.rm_rf(packs_directory)
 end
 
 def fetch_asset_body(asset_logical_path)
