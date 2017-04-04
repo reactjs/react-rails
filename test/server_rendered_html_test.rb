@@ -53,8 +53,8 @@ when_sprockets_available do
       assert_no_match(/console.error/, response.body)
     end
 
-    test 'react inline component rendering' do
-      get '/server/inline_component'
+    test 'react inline component rendering (pre-rendered)' do
+      get '/server/inline_component_prerender_true'
       rendered_html = response.body
       assert_match(/<span.*data-react-class=\"TodoList\"/, rendered_html)
       # make sure that the items are prerendered
@@ -66,6 +66,13 @@ when_sprockets_available do
       assert_match(/class=\"custom-class\"/, rendered_html)
       assert_match(/id=\"custom-id\"/, rendered_html)
       assert_match(/data-remote=\"true\"/, rendered_html)
+    end
+
+    test 'react inline component rendering (not pre-rendered)' do
+      get '/server/inline_component_prerender_false'
+      rendered_html = response.body
+      # make sure the tag closes immediately:
+      assert_match(/<span.*data-react-class=\"TodoList\"[^<]*><\/span>/, rendered_html)
     end
   end
 end

@@ -224,7 +224,7 @@ end
 
 This custom renderer behaves the same as a normal view renderer and accepts the usual arguments - `content_type`, `layout`, `location` and `status`.
 By default, your current layout will be used and the component, rather than a view, will be rendered in place of `yield`. Custom data-* attributes
-can be passed like `data: {remote: true}`.
+can be passed like `data: {remote: true}`. Prerendering is set to `true` by default, but can be turned off like any other option: `prerender: false`.
 
 ### Component generator
 
