@@ -1,6 +1,6 @@
 module React
   module ServerRendering
-    # Get asset content by reading the compiled file from disk using the generated maniftest.yml file
+    # Get asset content by reading the compiled file from disk using the generated manifest.yml file
     #
     # This is good for Rails production when assets are compiled to public/assets
     # but sometimes, they're compiled to other directories (or other servers)
