@@ -8,6 +8,18 @@
 
 #### Bug Fixes
 
+## 1.11.0 (April 4, 2017)
+
+#### New Features
+
+- Support `prerender: false` when rendering in a controller #680
+- Update React to `15.4.2` #681
+
+#### Bug Fixes
+
+- Fix joining asset path in YamlManifestContainer #679
+- Remove `coffee-script-source` from dependencies. #667 If you have a version conflict, you should specify the proper version yourself.
+
 ## 1.10.0 (October 6, 2016)
 
 #### Breaking Changes
