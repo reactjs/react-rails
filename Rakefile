@@ -40,7 +40,7 @@ namespace :react do
   desc "Install the JavaScript dependencies"
   task :install do
     Dir.chdir("react-builds") do
-      `yarn install`
+      `yarn upgrade`
     end
   end
 end

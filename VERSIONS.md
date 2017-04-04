@@ -9,7 +9,8 @@ You can control what version of React.js (and JSXTransformer) is used by `react-
 
 | Gem      | React.js |
 |----------|----------|
-| master   | 15.4.1   |
+| master   | 15.4.2   |
+| 1.11.0   | 15.4.2   |
 | 1.10.0   | 15.4.1   |
 | 1.9.0    | 15.3.0   |
 | 1.8.2    | 15.3.0   |
