@@ -2,8 +2,8 @@
 
 source "http://rubygems.org"
 
+gem "turbolinks"
 gem "rails", "~> 4.2.1"
 gem "sprockets", "~> 2.12"
-gem "turbolinks"
 
 gemspec :path => "../"

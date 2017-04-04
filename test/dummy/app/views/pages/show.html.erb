@@ -4,7 +4,7 @@
 </ul>
 
 <div id='component-parent'>
-  <%= react_component 'GreetingMessage', { :name => @name }, { :id => 'component' } %>
+  <%= react_component 'GreetingMessage', { :name => @name }, { :id => 'component', prerender: @prerender } %>
 </div>
 
 <button onClick="ReactRailsUJS.unmountComponents('#component-parent')">Unmount by parent selector</button>

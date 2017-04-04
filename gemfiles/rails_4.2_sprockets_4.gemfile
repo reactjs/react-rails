@@ -2,9 +2,10 @@
 
 source "http://rubygems.org"
 
+gem "turbolinks", "~> 2.5.0"
 gem "rails", "~> 4.2.1"
 gem "sprockets", "~> 4.0.x"
-gem "turbolinks", "~> 2.5.0"
 gem "webpacker", :github => "rails/webpacker"
+gem "mini_racer"
 
 gemspec :path => "../"
