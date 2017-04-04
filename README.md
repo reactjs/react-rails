@@ -49,7 +49,7 @@ where you will put your components
   ```js
   //= require react
   //= require react_ujs
-  //= require components
+  //= require_tree ./components
   ```
 
 ## Usage
