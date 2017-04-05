@@ -6,10 +6,15 @@ class CoffeeComponentGeneratorTest < Rails::Generators::TestCase
   setup :prepare_destination
   tests React::Generators::ComponentGenerator
 
-  def filename
-    'app/assets/javascripts/components/generated_component.js.jsx.coffee'
+  if WebpackerHelpers.available?
+    def filename
+      "app/javascript/components/generated_component.coffee"
+    end
+  else
+    def filename
+      'app/assets/javascripts/components/generated_component.js.jsx.coffee'
+    end
   end
-
   def class_name
     'GeneratedComponent'
   end

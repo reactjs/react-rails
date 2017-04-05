@@ -4,7 +4,7 @@ module React
       source_root File.expand_path '../../templates', __FILE__
       desc <<-DESC.strip_heredoc
       Description:
-          Scaffold a react component into app/assets/javascripts/components.
+          Scaffold a React component into `components/` of your Webpacker source or asset pipeline.
           The generated component will include a basic render function and a PropTypes
           hash to help with development.
 
@@ -90,17 +90,29 @@ module React
       }
 
       def create_component_file
-        extension = case
-                      when options[:es6]
-                        'es6.jsx'
-                      when options[:coffee]
-                        'js.jsx.coffee'
-                      else
-                        'js.jsx'
-                    end
+        template_extension = case
+        when options[:es6]
+          'es6.jsx'
+        when options[:coffee]
+          'js.jsx.coffee'
+        else
+          'js.jsx'
+        end
 
-        file_path = File.join('app/assets/javascripts/components', "#{file_name}.#{extension}")
-        template("component.#{extension}", file_path)
+        # Prefer webpacker to sprockets:
+        if defined?(Webpacker)
+          extension = options[:coffee] ? "coffee" : "js"
+          target_dir = Webpacker::Configuration.source_path
+            .join("components")
+            .relative_path_from(::Rails.root)
+            .to_s
+        else
+          extension = template_extension
+          target_dir = 'app/assets/javascripts/components'
+        end
+
+        file_path = File.join(target_dir, "#{file_name}.#{extension}")
+        template("component.#{template_extension}", file_path)
       end
 
       private
