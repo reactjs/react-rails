@@ -5,9 +5,9 @@ var Todo = null
 var React = {
   createElement: function() {},
 }
-var ReactDOMServer = {
-  renderToString: function() {
-    return 'renderToString was called'
+var ReactRailsUJS = {
+  serverRender: function() {
+    return 'serverRender was called'
   },
 }
 "
@@ -15,8 +15,9 @@ var ReactDOMServer = {
 class ExecJSRendererTest < ActiveSupport::TestCase
   setup do
     react_server_source = File.read(File.expand_path("../../../../lib/assets/react-source/production/react-server.js", __FILE__))
+    react_ujs_source = File.read(File.expand_path("../../../../lib/assets/javascripts/react_ujs.js", __FILE__))
     todo_component_source = File.read(File.expand_path("../../../dummy/app/assets/javascripts/components/PlainJSTodo.js", __FILE__))
-    code = react_server_source + todo_component_source
+    code = react_server_source + react_ujs_source + todo_component_source
     @renderer = React::ServerRendering::ExecJSRenderer.new(code: code)
   end
 
@@ -70,6 +71,6 @@ class ExecJSRendererTest < ActiveSupport::TestCase
   test '.new accepts code:' do
     dummy_renderer = React::ServerRendering::ExecJSRenderer.new(code: DUMMY_IMPLEMENTATION)
     result = dummy_renderer.render("Todo", {todo: "get a real job"}.to_json, {})
-    assert_equal("renderToString was called", result)
+    assert_equal("serverRender was called", result)
   end
 end

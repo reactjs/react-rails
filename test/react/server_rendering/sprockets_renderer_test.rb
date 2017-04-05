@@ -86,7 +86,7 @@ when_sprockets_available do
     end
 
     test '.new accepts any filenames' do
-      limited_renderer = React::ServerRendering::SprocketsRenderer.new(files: ["react-server.js", "components/Todo.js"])
+      limited_renderer = React::ServerRendering::SprocketsRenderer.new(files: ["react-server.js", "react_ujs.js", "components/Todo.js"])
       assert_match(/get a real job<\/li>/, limited_renderer.render("Todo", {todo: "get a real job"}, nil))
       err = assert_raises React::ServerRendering::PrerenderError do
         limited_renderer.render("TodoList", {todos: []}, nil)
@@ -96,7 +96,7 @@ when_sprockets_available do
 
     test '#render returns html when config.assets.compile is false' do
       begin
-        legacy_rendering_files = ["react-server.js", "components.js"]
+        legacy_rendering_files = ["react-server.js", "react_ujs.js", "components.js"]
         Rails.application.config.assets.precompile += legacy_rendering_files
 
         precompile_assets
