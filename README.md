@@ -143,6 +143,16 @@ react_component(component_class_name, props={}, html_options={})
   - `prerender: true` to render the component on the server.
   - `**other` Any other arguments (eg `class:`, `id:`) are passed through to [`content_tag`](http://api.rubyonrails.org/classes/ActionView/Helpers/TagHelper.html#method-i-content_tag).
 
+### Redux Store Subription
+
+The view helper's signature is:
+
+```ruby
+react_component(component_class_name, props={ reduxStore: redux_store_name }, html_options={})
+
+- `redux_store_name` is a string which names a globally-accessible Redux Store.
+
+Make sure you have set window.Store to 'redux/store'
 
 ### Server rendering
 
