@@ -98,12 +98,12 @@ when_sprockets_available do
     end
 
     module DummyController
-      def self.__prerenderer
+      def self.react_rails_prerenderer
         DummyRenderer
       end
     end
 
-    test "it uses the controller's __prerenderer, if available" do
+    test "it uses the controller's react_rails_prerenderer, if available" do
       @helper.setup(DummyController)
       rendered_component = @helper.react_component('Foo', {"ok" => true}, prerender: :static)
       assert_equal %|<div>rendered Foo with {&quot;ok&quot;:true}</div>|, rendered_component

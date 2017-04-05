@@ -1,10 +1,10 @@
 class PagesController < ApplicationController
-  around_action :per_request_react_prerenderer
+  per_request_react_rails_prerenderer
 
   def show
     @prerender = !!params[:prerender]
     if @prerender
-      js_context = __prerenderer.context
+      js_context = react_rails_prerenderer.context
       # This isn't safe for production, we're just testing the render context:
       greeting_override = params[:greeting] || ""
       setup_code = "global.ctx = {}; global.ctx.greeting = '#{greeting_override}';"

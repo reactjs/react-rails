@@ -49,30 +49,12 @@ module React
         content_tag(html_tag, '', html_options, &block)
       end
 
-      module ControllerHelpers
-        extend ActiveSupport::Concern
-
-        included do
-          # An instance of a server renderer, for use during this request
-          attr_accessor :__prerenderer
-        end
-
-        # If you want a per-request renderer, add this method as an around-action
-        #
-        # @example Having one renderer instance for each controller action
-        #   around_action :per_request_react_prerenderer
-        def per_request_react_prerenderer
-          React::ServerRendering.with_renderer do |renderer|
-            self.__prerenderer = renderer
-            yield
-          end
-        end
-      end
-
       private
 
+      # If this controller has checked out a renderer, use that one.
+      # Otherwise, use {React::ServerRendering} directly (which will check one out for this rendering).
       def prerender_component(component_name, props, prerender_options)
-        renderer = @controller.try(:__prerenderer) || React::ServerRendering
+        renderer = @controller.try(:react_rails_prerenderer) || React::ServerRendering
         renderer.render(component_name, props, prerender_options)
       end
     end
