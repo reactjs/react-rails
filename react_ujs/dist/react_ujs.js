@@ -1,13 +1,13 @@
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory(require("react"), require("react-dom"));
+		module.exports = factory(require("react"), require("react-dom"), require("react-dom/server"));
 	else if(typeof define === 'function' && define.amd)
-		define(["react", "react-dom"], factory);
+		define(["react", "react-dom", "react-dom/server"], factory);
 	else if(typeof exports === 'object')
-		exports["ReactRailsUJS"] = factory(require("react"), require("react-dom"));
+		exports["ReactRailsUJS"] = factory(require("react"), require("react-dom"), require("react-dom/server"));
 	else
-		root["ReactRailsUJS"] = factory(root["React"], root["ReactDOM"]);
-})(this, function(__WEBPACK_EXTERNAL_MODULE_3__, __WEBPACK_EXTERNAL_MODULE_4__) {
+		root["ReactRailsUJS"] = factory(root["React"], root["ReactDOM"], root["ReactDOMServer"]);
+})(this, function(__WEBPACK_EXTERNAL_MODULE_3__, __WEBPACK_EXTERNAL_MODULE_4__, __WEBPACK_EXTERNAL_MODULE_5__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -73,18 +73,18 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 5);
+/******/ 	return __webpack_require__(__webpack_require__.s = 6);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var nativeEvents = __webpack_require__(6)
-var pjaxEvents = __webpack_require__(7)
-var turbolinksEvents = __webpack_require__(8)
-var turbolinksClassicDeprecatedEvents = __webpack_require__(10)
-var turbolinksClassicEvents = __webpack_require__(9)
+var nativeEvents = __webpack_require__(7)
+var pjaxEvents = __webpack_require__(8)
+var turbolinksEvents = __webpack_require__(9)
+var turbolinksClassicDeprecatedEvents = __webpack_require__(11)
+var turbolinksClassicEvents = __webpack_require__(10)
 
 // see what things are globally available
 // and setup event handlers to those things
@@ -127,13 +127,13 @@ module.exports = function(ujs) {
 // Also, try to gracefully import Babel 6 style default exports
 module.exports = function(className) {
   var constructor;
-
+  var topLevel = typeof window === "undefined" ? this : window;
   // Try to access the class globally first
-  constructor = window[className];
+  constructor = topLevel[className];
 
   // If that didn't work, try eval
   if (!constructor) {
-    constructor = eval.call(window, className);
+    constructor = eval.call(topLevel, className);
   }
 
   // Lastly, if there is a default attribute try that
@@ -160,7 +160,6 @@ module.exports = function(reqctx) {
     var parts = className.split(".")
     var filename = parts.shift()
     var keys = parts
-    console.log(filename, keys)
     // Load the module:
     var component = reqctx("./" + filename)
     // Then access each key:
@@ -190,10 +189,17 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_4__;
 
 /***/ }),
 /* 5 */
+/***/ (function(module, exports) {
+
+module.exports = __WEBPACK_EXTERNAL_MODULE_5__;
+
+/***/ }),
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var React = __webpack_require__(3)
 var ReactDOM = __webpack_require__(4)
+var ReactDOMServer = __webpack_require__(5)
 
 var detectEvents = __webpack_require__(0)
 var constructorFromGlobal = __webpack_require__(1)
@@ -209,7 +215,7 @@ var ReactRailsUJS = {
   PROPS_ATTR: 'data-react-props',
 
   // If jQuery is detected, save a reference to it for event handlers
-  jQuery: (typeof window.jQuery !== 'undefined') && window.jQuery,
+  jQuery: (typeof window !== 'undefined') && (typeof window.jQuery !== 'undefined') && window.jQuery,
 
   // helper method for the mount and unmount methods to find the
   // `data-react-class` DOM elements
@@ -252,6 +258,14 @@ var ReactRailsUJS = {
     this.getConstructor = constructorFromRequireContext(req)
   },
 
+  // Render `componentName` with `props` to a string,
+  // using the specified `renderFunction` from `react-dom/server`.
+  serverRender: function(renderFunction, componentName, props) {
+    var componentClass = this.getConstructor(componentName)
+    var element = React.createElement(componentClass, props)
+    return ReactDOMServer[renderFunction](element)
+  },
+
   // Within `searchSelector`, find nodes which should have React components
   // inside them, and mount them with their props.
   mountComponents: function(searchSelector) {
@@ -289,13 +303,16 @@ var ReactRailsUJS = {
   },
 }
 
-detectEvents(ReactRailsUJS)
+if (typeof window !== "undefined") {
+  // Only setup events for browser (not server-rendering)
+  detectEvents(ReactRailsUJS)
+}
 
 module.exports = ReactRailsUJS
 
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -316,7 +333,7 @@ module.exports = {
 
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -330,7 +347,7 @@ module.exports = {
 
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -343,7 +360,7 @@ module.exports = {
 
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -357,7 +374,7 @@ module.exports = {
 
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports) {
 
 module.exports = {

@@ -3,13 +3,13 @@
 // Also, try to gracefully import Babel 6 style default exports
 module.exports = function(className) {
   var constructor;
-
+  var topLevel = typeof window === "undefined" ? this : window;
   // Try to access the class globally first
-  constructor = window[className];
+  constructor = topLevel[className];
 
   // If that didn't work, try eval
   if (!constructor) {
-    constructor = eval.call(window, className);
+    constructor = eval.call(topLevel, className);
   }
 
   // Lastly, if there is a default attribute try that

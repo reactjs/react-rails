@@ -1,8 +1,11 @@
 module WebpackerHelpers
   module_function
+  def available?
+    defined?(Webpacker)
+  end
 
   def when_webpacker_available
-    if defined?(Webpacker)
+    if available?
       clear_webpacker_packs
       Dir.chdir("./test/dummy") do
         Rake::Task['webpacker:compile'].invoke

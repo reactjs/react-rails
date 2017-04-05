@@ -1,5 +1,6 @@
 var React = require("react")
 var ReactDOM = require("react-dom")
+var ReactDOMServer = require("react-dom/server")
 
 var detectEvents = require("./src/events/detect")
 var constructorFromGlobal = require("./src/getConstructor/fromGlobal")
@@ -15,7 +16,7 @@ var ReactRailsUJS = {
   PROPS_ATTR: 'data-react-props',
 
   // If jQuery is detected, save a reference to it for event handlers
-  jQuery: (typeof window.jQuery !== 'undefined') && window.jQuery,
+  jQuery: (typeof window !== 'undefined') && (typeof window.jQuery !== 'undefined') && window.jQuery,
 
   // helper method for the mount and unmount methods to find the
   // `data-react-class` DOM elements
@@ -58,6 +59,14 @@ var ReactRailsUJS = {
     this.getConstructor = constructorFromRequireContext(req)
   },
 
+  // Render `componentName` with `props` to a string,
+  // using the specified `renderFunction` from `react-dom/server`.
+  serverRender: function(renderFunction, componentName, props) {
+    var componentClass = this.getConstructor(componentName)
+    var element = React.createElement(componentClass, props)
+    return ReactDOMServer[renderFunction](element)
+  },
+
   // Within `searchSelector`, find nodes which should have React components
   // inside them, and mount them with their props.
   mountComponents: function(searchSelector) {
@@ -95,6 +104,9 @@ var ReactRailsUJS = {
   },
 }
 
-detectEvents(ReactRailsUJS)
+if (typeof window !== "undefined") {
+  // Only setup events for browser (not server-rendering)
+  detectEvents(ReactRailsUJS)
+}
 
 module.exports = ReactRailsUJS

@@ -3450,6 +3450,10 @@ react@^15.4.2:
     loose-envify "^1.1.0"
     object-assign "^4.1.0"
 
+react_ujs@^0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/react_ujs/-/react_ujs-0.1.2.tgz#8d3ff185d8a22d1b53c6e7a6b6362be3425e6f01"
+
 read-cache@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/read-cache/-/read-cache-1.0.0.tgz#e664ef31161166c9751cdbe8dbcf86b5fb58f774"
