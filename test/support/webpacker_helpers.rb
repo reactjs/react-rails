@@ -6,14 +6,17 @@ module WebpackerHelpers
 
   def when_webpacker_available
     if available?
-      clear_webpacker_packs
-      Dir.chdir("./test/dummy") do
-        Rake::Task['webpacker:compile'].invoke
-      end
-      # Reload cached JSON manifest:
-      Webpacker::Manifest.load
       yield
     end
+  end
+
+  def compile
+    clear_webpacker_packs
+    Dir.chdir("./test/dummy") do
+      Rake::Task['webpacker:compile'].invoke
+    end
+    # Reload cached JSON manifest:
+    Webpacker::Manifest.load
   end
 
   def clear_webpacker_packs

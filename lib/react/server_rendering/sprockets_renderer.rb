@@ -94,10 +94,10 @@ module React
       def asset_container_class
         if self.class.asset_container_class.present?
           self.class.asset_container_class
+        elsif WebpackerManifestContainer.compatible?
+          WebpackerManifestContainer
         elsif assets_precompiled?
-          if WebpackerManifestContainer.compatible?
-            WebpackerManifestContainer
-          elsif ManifestContainer.compatible?
+          if ManifestContainer.compatible?
             ManifestContainer
           elsif YamlManifestContainer.compatible?
             YamlManifestContainer
