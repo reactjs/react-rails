@@ -16,15 +16,60 @@ module React
         default: false,
         desc: "Don't generate server_rendering.js or config/initializers/react_server_rendering.rb"
 
+      # Make an empty `components/` directory in the right place:
       def create_directory
-        empty_directory 'app/assets/javascripts/components'
+        empty_directory File.join(javascript_dir, 'components')
         if !options[:skip_git]
-          create_file 'app/assets/javascripts/components/.gitkeep'
+          create_file File.join(javascript_dir, 'components/.gitkeep')
         end
       end
 
-      def inject_react
-        require_react = "//= require react\n"
+      # Add requires, setup UJS
+      def setup_react
+        if webpacker?
+          setup_react_webpacker
+        else
+          setup_react_sprockets
+        end
+      end
+
+      def create_server_rendering
+        if options[:skip_server_rendering]
+          return
+        elsif webpacker?
+          ssr_manifest_path = File.join(javascript_dir, "server_rendering.js")
+          template("server_rendering_pack.js", ssr_manifest_path)
+        else
+          ssr_manifest_path = File.join(javascript_dir, "server_rendering.js")
+          template("server_rendering.js", ssr_manifest_path)
+          initializer_path = "config/initializers/react_server_rendering.rb"
+          template("react_server_rendering.rb", initializer_path)
+        end
+      end
+
+      private
+
+      def webpacker?
+        !!defined?(Webpacker)
+      end
+
+      def javascript_dir
+        if webpacker?
+          Webpacker::Configuration.source_path
+            .join(Webpacker::Configuration.entry_path)
+            .relative_path_from(::Rails.root)
+            .to_s
+        else
+          'app/assets/javascripts'
+        end
+      end
+
+      def manifest
+        Pathname.new(destination_root).join(javascript_dir, 'application.js')
+      end
+
+      def setup_react_sprockets
+        require_react = "//= require react\n//= require react_ujs\n//= require components\n"
 
         if manifest.exist?
           manifest_contents = File.read(manifest)
@@ -39,34 +84,27 @@ module React
         else
           create_file manifest, require_react
         end
-      end
 
-      def inject_components
-        inject_into_file manifest, "//= require components\n", {after: "//= require react\n"}
-      end
-
-      def inject_react_ujs
-        inject_into_file manifest, "//= require react_ujs\n", {after: "//= require react\n"}
-      end
-
-      def create_components
         components_js = "//= require_tree ./components\n"
-        components_file = File.join(*%w(app assets javascripts components.js))
+        components_file = File.join(javascript_dir, "components.js")
         create_file components_file, components_js
       end
 
-      def create_server_rendering
-        return if options[:skip_server_rendering]
-        manifest_path = "app/assets/javascripts/server_rendering.js"
-        template("server_rendering.js", manifest_path)
-        initializer_path = "config/initializers/react_server_rendering.rb"
-        template("react_server_rendering.rb", initializer_path)
-      end
+      WEBPACKER_SETUP_UJS = <<-JS
+// Support component names relative to this directory:
+var componentRequireContext = require.context("components", true)
+var ReactRailsUJS = require("react_ujs")
+ReactRailsUJS.loadContext(componentRequireContext)
+JS
 
-      private
-
-      def manifest
-        Pathname.new(destination_root).join('app/assets/javascripts', 'application.js')
+      def setup_react_webpacker
+        yarn_binstub = File.expand_path("./bin/yarn", ::Rails.root)
+        `#{yarn_binstub} add react_ujs`
+        if manifest.exist?
+          append_file(manifest, WEBPACKER_SETUP_UJS)
+        else
+          create_file(manifest, WEBPACKER_SETUP_UJS)
+        end
       end
     end
   end
