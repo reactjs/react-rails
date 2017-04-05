@@ -151,3 +151,9 @@ end
 def assert_compiled_javascript_includes(javascript, expected_part)
   assert_includes javascript.gsub(/\s/, ''), expected_part.gsub(/\s/, '')
 end
+
+def when_stateful_js_context_available
+  if defined?(V8) || defined?(MiniRacer)
+    yield
+  end
+end

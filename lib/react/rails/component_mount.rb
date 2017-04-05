@@ -11,12 +11,13 @@ module React
       attr_accessor :output_buffer
       mattr_accessor :camelize_props_switch
 
-      # ControllerLifecycle calls these hooks
+      # {ControllerLifecycle} calls these hooks
       # You can use them in custom helper implementations
-      def setup(env)
+      def setup(controller)
+        @controller = controller
       end
 
-      def teardown(env)
+      def teardown(controller)
       end
 
       # Render a UJS-type HTML tag annotated with data attributes, which
@@ -30,7 +31,7 @@ module React
 
         prerender_options = options[:prerender]
         if prerender_options
-          block = Proc.new{ concat React::ServerRendering.render(name, props, prerender_options) }
+          block = Proc.new{ concat(prerender_component(name, props, prerender_options)) }
         end
 
         html_options = options.reverse_merge(:data => {})
@@ -46,6 +47,15 @@ module React
         html_options.except!(:tag, :prerender, :camelize_props)
 
         content_tag(html_tag, '', html_options, &block)
+      end
+
+      private
+
+      # If this controller has checked out a renderer, use that one.
+      # Otherwise, use {React::ServerRendering} directly (which will check one out for this rendering).
+      def prerender_component(component_name, props, prerender_options)
+        renderer = @controller.try(:react_rails_prerenderer) || React::ServerRendering
+        renderer.render(component_name, props, prerender_options)
       end
     end
   end

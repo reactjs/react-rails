@@ -1,6 +1,13 @@
 var GreetingMessage = React.createClass({
   getInitialState: function() {
-    return {greeting: 'Hello'};
+    var initialGreeting = 'Hello';
+    if (typeof global !== "undefined" && global.ctx && global.ctx.greeting) {
+      initialGreeting = global.ctx.greeting
+    }
+
+    return {
+      greeting: initialGreeting
+    }
   },
   goodbye: function() {
     this.setState({greeting: 'Goodbye'});

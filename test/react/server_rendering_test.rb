@@ -26,15 +26,6 @@ class ReactServerRenderingTest < ActiveSupport::TestCase
     React::ServerRendering.reset_pool
   end
 
-  test '.create_renderer makes a renderer with initialization options' do
-    mock_renderer = Minitest::Mock.new
-    mock_renderer.expect(:new, :fake_renderer, [{mock: true}])
-    React::ServerRendering.renderer = mock_renderer
-    React::ServerRendering.renderer_options = {mock: true}
-    renderer = React::ServerRendering.create_renderer
-    assert_equal(:fake_renderer, renderer)
-  end
-
   test '.render returns a rendered string' do
     props = {"props" => true}
     result = React::ServerRendering.render("MyComponent", props, "prerender-opts")

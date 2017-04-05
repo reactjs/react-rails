@@ -5,6 +5,9 @@ module React
     # - No Rails dependency
     # - No browser concerns
     class ExecJSRenderer
+      # @return [ExecJS::Runtime::Context] The JS context for this renderer
+      attr_reader :context
+
       def initialize(options={})
         js_code = options[:code] || raise("Pass `code:` option to instantiate a JS context!")
         @context = ExecJS.compile(GLOBAL_WRAPPER + js_code)
