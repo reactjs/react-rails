@@ -17,12 +17,22 @@ module React
       config.react.server_renderer_timeout    = 20  # seconds
       config.react.server_renderer            = nil # defaults to SprocketsRenderer
       config.react.server_renderer_options    = {}  # SprocketsRenderer provides defaults
+      # Changing files with these extensions in these directories will cause the server renderer to reload:
+      config.react.server_renderer_directories = ["/app/assets/javascripts/"]
+      config.react.server_renderer_extensions = ["jsx"]
       # View helper implementation:
       config.react.view_helper_implementation = nil # Defaults to ComponentMount
 
       # Watch .jsx files for changes in dev, so we can reload the JS VMs with the new JS code.
       initializer "react_rails.add_watchable_files", group: :all do |app|
-        app.config.watchable_files.concat Dir["#{app.root}/app/assets/javascripts/**/*.jsx*"]
+        reload_paths = config.react.server_renderer_directories.reduce({}) do |memo, dir|
+          app_dir = File.join(app.root, dir)
+          memo[app_dir] = config.react.server_renderer_extensions
+          memo
+        end
+        app.reloaders << ActiveSupport::FileUpdateChecker.new([], reload_paths) do
+          React::ServerRendering.reset_pool
+        end
       end
 
       # Include the react-rails view helper lazily

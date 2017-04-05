@@ -189,6 +189,9 @@ MyApp::Application.configure do
     files: ["server_rendering.js"],       # files to load for prerendering
     replay_console: true,                 # if true, console.* will be replayed client-side
   }
+  # Changing files matching these dirs/exts will cause the server renderer to reload:
+  config.react.server_renderer_extensions = ["jsx"]
+  config.react.server_renderer_directories = ["/app/assets/javascripts"]
 end
 ```
 

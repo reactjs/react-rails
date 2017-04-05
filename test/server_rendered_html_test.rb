@@ -37,6 +37,27 @@ when_sprockets_available do
       end
     end
 
+    test 'it reloads when new jsx files are added' do
+      begin
+        get '/server/1'
+        refute_match(/Overwritten List/, response.body)
+
+        # Make it alphabetically last so it will override the preceeding one:
+        new_file_path = File.expand_path('../dummy/app/assets/javascripts/components/ZZ_NewComponent.js.jsx', __FILE__)
+        File.write new_file_path, <<-JS
+        var TodoList = function() { return <span>"Overwritten List"</span> }
+        JS
+
+        wait_to_ensure_asset_pipeline_detects_changes
+
+        get '/server/1'
+        assert_match(/Overwritten List/, response.body)
+      ensure
+        FileUtils.rm_rf(new_file_path)
+        wait_to_ensure_asset_pipeline_detects_changes
+      end
+    end
+
     test 'react server rendering shows console output as html comment' do
       # Make sure console messages are replayed when requested
       get '/server/console_example'
