@@ -1,5 +1,7 @@
 class PagesController < ApplicationController
-  per_request_react_rails_prerenderer
+  if !SKIP_SPROCKETS
+    per_request_react_rails_prerenderer
+  end
 
   def show
     @prerender = !!params[:prerender]
