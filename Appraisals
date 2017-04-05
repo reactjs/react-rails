@@ -59,6 +59,10 @@ appraise "rails-5" do
 end
 
 appraise "rails-5-no_sprockets" do
+  # Appraisal adds `turbolinks` to this gemfile because it is
+  # present in `./Gemfile`.
+  # But it causes this gemfile to break, so it must be removed
+  # from `./gemfiles/rails_5_no_sprockets.gemfile` manually.
   gem 'rails', '~> 5.0.0'
 end
 
