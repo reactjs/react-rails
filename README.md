@@ -8,7 +8,7 @@
 
 `react-rails` makes it easy to use [React](http://facebook.github.io/react/) and [JSX](http://facebook.github.io/react/docs/jsx-in-depth.html) in your Ruby on Rails (3.2+) application. Learn more:
 
-- React's [Getting Started guide][https://facebook.github.io/react/docs/getting-started.html]
+- React's [Getting Started guide](https://facebook.github.io/react/docs/getting-started.html)
 - Use React & JSX [with webpacker](#use-with-webpacker) or [with the asset pipeline](#use-with-asset-pipeline)
 - Rendering [components in views](#view-helper) or [in controller actions](#controller-actions)
 - [Server-side rendering](#server-side-rendering)
