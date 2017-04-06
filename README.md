@@ -1,66 +1,155 @@
+# react-rails
+
 [![Gem](https://img.shields.io/gem/v/react-rails.svg?style=flat-square)](http://rubygems.org/gems/react-rails)
 [![Build Status](https://img.shields.io/travis/reactjs/react-rails/master.svg?style=flat-square)](https://travis-ci.org/reactjs/react-rails)
 [![Gemnasium](https://img.shields.io/gemnasium/reactjs/react-rails.svg?style=flat-square)](https://gemnasium.com/reactjs/react-rails)
 [![Code Climate](https://img.shields.io/codeclimate/github/reactjs/react-rails.svg?style=flat-square)](https://codeclimate.com/github/reactjs/react-rails)
 [![Test Coverage](https://img.shields.io/codeclimate/coverage/github/reactjs/react-rails.svg?style=flat-square)](https://codeclimate.com/github/reactjs/react-rails/coverage)
 
-* * *
+`react-rails` makes it easy to use [React](http://facebook.github.io/react/) and [JSX](http://facebook.github.io/react/docs/jsx-in-depth.html) in your Ruby on Rails (3.2+) application. Learn more:
 
-# react-rails
-
-
-`react-rails` makes it easy to use [React](http://facebook.github.io/react/) and [JSX](http://facebook.github.io/react/docs/jsx-in-depth.html)
-in your Ruby on Rails (3.2+) application. `react-rails` can:
-
-- Provide [various `react` builds](#reactjs-builds) to your asset bundle
-- Transform [`.jsx` in the asset pipeline](#jsx)
-- [Render components into views and mount them](#rendering--mounting) via view helper & `react_ujs`
-- [Render components server-side](#server-rendering) with `prerender: true`
-- [Generate components](#component-generator) with a Rails generator
-- [Be extended](#extending-react-rails) with custom renderers, transformers and view helpers
-
-Just getting started with React? Make sure to check out the [Getting Started][React Getting Started]  guide. Also, see [Related Projects](#related-projects) below.
+- React's [Getting Started guide](https://facebook.github.io/react/docs/getting-started.html)
+- Use React & JSX [with webpacker](#use-with-webpacker) or [with the asset pipeline](#use-with-asset-pipeline)
+- Rendering [components in views](#view-helper) or [in controller actions](#controller-actions)
+- [Server-side rendering](#server-side-rendering)
+- [Generating components](#component-generator) in various formats
+- [`ReactRailsUJS`](#ujs) for mounting and unmounting components
+- Automatically [camelizing props](#camelize-props)
+- [Related Projects](#related-projects)
+- [Developing](#development) the gem
 
 ## Installation
 
-Add `react-rails` to your gemfile:
+Install from Rubygems as `react-rails`.
 
 ```ruby
-gem 'react-rails'
+gem "react-rails"
 ```
 
-And install:
+Get started with `rails g react:install`:
 
 ```
-bundle install
+$ rails g react:install
 ```
 
-Next, run the installation script:
+## Use with Webpacker
 
-```bash
-rails g react:install
+[webpacker](https://github.com/rails/webpacker) integrates modern JS tooling with Rails. Get started by adding `webpacker` to your gemfile and installing `webpacker` and `react-rails`:
+
 ```
+$ rails webpacker:install
+$ rails webpacker:install:react
+$ rails generate react:install
+```
+
+This gives you:
+
+- `components/` directory for your React components
+- [`ReactRailsUJS`](#ujs) setup in `packs/application.js`
+- `packs/server_rendering.js` for [server-side rendering](#server-side-rendering)
+
+When you add a component to `components/`, you can [render it in a Rails view](#view-helper):
+
+```erb
+<%= react_component("HelloWorld", { greeting: "Hello" }) %>
+```
+
+The component name tells `react-rails` where to load the component. For example:
+
+`react_component` call | component `require`
+=======================|======================
+`react_component("Item")` | `require("Item")`
+`react_component("items/index")` | `require("items/index")`
+`react_component("items.Index")` | `require("items").Index`
+`react_component("items.Index.Header")` | `require("items").Index.Header`
+
+This way, you can access top-level, default, or named exports.
+
+The `require.context` inserted into `packs/application.js` is used to load components. If you want to load components from a different directory, override it by calling `ReactRailsUJS.loadContext`:
+
+```js
+var myCustomContext = require.context("custom_components", true)
+var ReactRailsUJS = require("react_ujs")
+// use `custom_components/` for <%= react_component(...) %> calls
+ReactRailsUJS.loadContext(myCustomContext)
+```
+
+Alternatively, you can bypass `ReactRailsUJS.loadContext` altogether and use the global namespace approach described in [Use with Asset Pipeline](#use-with-asset-pipeline)
+
+## Use with Asset Pipeline
+
+`react-rails` provides React.js & a UJS driver to the Rails asset pipeline. Get started by installing:
+
+```
+$ rails g react:install
+```
+
+Then restart your development server.
 
 This will:
-- create a `components.js` manifest file and a `app/assets/javascripts/components/` directory,
-where you will put your components
-- place the following in your `application.js`:
 
-  ```js
-  //= require react
-  //= require react_ujs
-  //= require components
-  ```
-- create a `server_rendering.js` manifest file and precompile it with `config/initializers/react_server_rendering.rb`. (Use `--skip-server-rendering` if you don't want this.)
+- add some `//= require`s to `application.js`  
+- add a `components/` directory for React components
+- add `server_rendering.js` for [server-side rendering](#server-side-rendering)
 
-## Usage
+Now, you can create React components in `.jsx` files:
 
-### React.js builds
+```js
+// app/assets/javascripts/components/post.jsx
 
-You can pick which React.js build (development, production, with or without [add-ons]((http://facebook.github.io/react/docs/addons.html)))
-to serve in each environment by adding a config. Here are the defaults:
+window.Post = React.createClass({
+  render: function() {
+    return <h1>{this.props.title}</h1>
+  }
+})
+
+// or, equivalent:
+class Post extends React.Component {
+  render() {
+    return <h1>{this.props.title}</h1>    
+  }
+}
+```
+
+Then, you can render those [components in views](#view-helper):
+
+```erb
+<%= react_component("Post", {title: "Hello World"}) %>
+```
+
+Components must be accessible from the top level, but they may be namespaced, for example:
+
+```erb
+<%= react_component("Comments.NewForm", {post_id: @post.id}) %>
+<!-- looks for `window.Comments.NewForm` -->
+```
+
+### Custom JSX Transformer
+
+`react-rails` uses a transformer class to transform JSX in the asset pipeline. The transformer is initialized once, at boot. You can provide a custom transformer to `config.react.jsx_transformer_class`. The transformer must implement:
+
+- `#initialize(options)`, where options is the value passed to `config.react.jsx_transform_options`
+- `#transform(code_string)` to return a string of transformed code
+
+`react-rails` provides two transformers, `React::JSX::BabelTransformer` (which uses [ruby-babel-transpiler](https://github.com/babel/ruby-babel-transpiler)) and `React::JSX::JSXTransformer` (which uses the deprecated `JSXTransformer.js`).
+
+### React.js versions
+
+`//= require react` brings `React` into your project.
+
+To include `React.addons`, add this config:
 
 ```ruby
+# config/application.rb
+MyApp::Application.configure do
+  config.react.addons = true # defaults to false
+end
+```
+
+By default, React's [development version] is provided to `Rails.env.development`. You can override the React build with a config:
+
+```ruby
+# Here are the defaults:
 # config/environments/development.rb
 MyApp::Application.configure do
   config.react.variant = :development
@@ -72,46 +161,14 @@ MyApp::Application.configure do
 end
 ```
 
-To include add-ons, use this config:
+Be sure to restart your Rails server after changing these files. See [VERSIONS.md](https://github.com/reactjs/react-rails/blob/master/VERSIONS.md) to learn which version of React.js is included with your `react-rails` version.
 
-```ruby
-MyApp::Application.configure do
-  config.react.addons = true # defaults to false
-end
-```
 
-After restarting your Rails server, `//= require react`  will provide the build of React.js which
-was specified by the configurations.
+## View Helper
 
-`react-rails` offers a few other options for versions & builds of React.js.
-See [VERSIONS.md](https://github.com/reactjs/react-rails/blob/master/VERSIONS.md) for more info about
- using the `react-source` gem or dropping in your own copies of React.js.
+`react-rails` includes a view helper and an [unobtrusive JavaScript driver](#ujs) which work together to put React components on the page.
 
-### JSX
-
-After installing `react-rails`, restart your server. Now, `.js.jsx` files will be transformed in the asset pipeline.
-
-#### BabelTransformer options
-
-You can use babel's [transformers](http://henryzoo.com/babel.github.io/docs/advanced/transformers/) and [custom plugins](http://henryzoo.com/babel.github.io/docs/advanced/plugins/),
-and pass [options](http://babeljs.io/docs/usage/options/) to the babel transpiler adding following configurations:
-
-```ruby
-config.react.jsx_transform_options = {
-  blacklist: ['spec.functionName', 'validation.react', 'strict'], # default options
-  optional: ["transformerName"],  # pass extra babel options
-  whitelist: ["useStrict"] # even more options
-}
-```
-Under the hood, `react-rails` uses [ruby-babel-transpiler](https://github.com/babel/ruby-babel-transpiler), for transformation.
-
-### Rendering & mounting
-
-`react-rails` includes a view helper (`react_component`) and an unobtrusive JavaScript driver (`react_ujs`)
-which work together to put React components on the page. You should require the UJS driver
- in your manifest after `react` (and after `turbolinks` if you use [Turbolinks](https://github.com/rails/turbolinks)).
-
-The __view helper__ puts a `div` on the page with the requested component class & props. For example:
+The view helper (`react_component`) puts a `div` on the page with the requested component class & props. For example:
 
 ```erb
 <%= react_component('HelloMessage', name: 'John') %>
@@ -119,17 +176,8 @@ The __view helper__ puts a `div` on the page with the requested component class 
 <div data-react-class="HelloMessage" data-react-props="{&quot;name&quot;:&quot;John&quot;}"></div>
 ```
 
-On page load, the __`react_ujs` driver__ will scan the page and mount components using `data-react-class`
+On page load, the [`react_ujs` driver](#ujs) will scan the page and mount components using `data-react-class`
 and `data-react-props`.
-
-If Turbolinks is present components are mounted on the `page:change` event, and unmounted on `page:before-unload`.
- __Turbolinks >= 2.4.0__ is recommended because it exposes better events.
-
-In case of __Ajax calls__, the UJS mounting can be triggered manually by calling from javascript:
-
-```javascript
-ReactRailsUJS.mountComponents()
-```
 
 The view helper's signature is:
 
@@ -137,17 +185,78 @@ The view helper's signature is:
 react_component(component_class_name, props={}, html_options={})
 ```
 
-- `component_class_name` is a string which names a globally-accessible component class. It may have dots (eg, `"MyApp.Header.MenuItem"`).
-- `props` is either an object that responds to `#to_json` or an already-stringified JSON object (eg, made with Jbuilder, see note below).
+- `component_class_name` is a string which identifies a component. See [getConstructor](#getconstructor) for details.
+- `props` is either:
+  - an object that responds to `#to_json`; or
+  - an already-stringified JSON object (see [JBuilder note](#use-with-jbuilder) below).
 - `html_options` may include:
   - `tag:` to use an element other than a `div` to embed `data-react-class` and `data-react-props`.
   - `prerender: true` to render the component on the server.
+  - `camelize_props` to [transform a props hash](#camelize_props)
   - `**other` Any other arguments (eg `class:`, `id:`) are passed through to [`content_tag`](http://api.rubyonrails.org/classes/ActionView/Helpers/TagHelper.html#method-i-content_tag).
 
 
-### Server rendering
+#### Custom View Helper
 
-To render components on the server, pass `prerender: true` to `react_component`:
+`react-rails` uses a "helper implementation" class to generate the output of the `react_component` helper. The helper is initialized once per request and used for each `react_component` call during that request. You can provide a custom helper class to `config.react.view_helper_implementation`. The class must implement:
+
+- `#react_component(name, props = {}, options = {}, &block)` to return a string to inject into the Rails view
+- `#setup(controller_instance)`, called when the helper is initialized at the start of the request
+- `#teardown(controller_instance)`, called at the end of the request
+
+`react-rails` provides one implementation, `React::Rails::ComponentMount`.
+
+## UJS
+
+`react-rails`'s JavaScript is available as `"react_ujs"` in the asset pipeline or from NPM. It attaches itself to the window as `ReactRailsUJS`.
+
+### Mounting & Unmounting
+
+Usually, `react-rails` mounts & unmounts components automatically as described in [Event Handling](#event-handling) below.
+
+You can also mount & unmount components from `<%= react_component(...) %>` tags using UJS:
+
+```js
+// Mount all components on the page:
+ReactRailsUJS.mountComponents()
+// Mount components within a selector:
+ReactRailsUJS.mountComponents(".my-class")
+// Mount components within a specific node:
+ReactRailsUJS.mountComponents(specificDOMnode)
+
+// Unmounting works the same way:
+ReactRailsUJS.unmountComponents()
+ReactRailsUJS.unmountComponents(".my-class")
+ReactRailsUJS.unmountComponents(specificDOMnode)
+```
+
+You can use this when the DOM is modified by AJAX calls or modal windows.
+
+### Event Handling
+
+`ReactRailsUJS` checks for various libraries to support their page change events:
+
+- `Turbolinks`
+- `pjax`
+- `jQuery`
+- Native DOM events
+
+`ReactRailsUJS` will automatically mount components on `<%= react_component(...) %>` tags and unmount them when appropriate.
+
+Be sure to load `react_ujs` _after_ these libraries so that it can detect them.
+
+### `getConstructor`
+
+Components are loaded with `ReactRailsUJS.getConstructor(className)`. This function has two built-in implementations:
+
+- On the asset pipeline, it looks up `className` in the global namespace.
+- On webpacker, it `require`s files and accesses named exports, as described in [Use with Webpacker](#use-with-webpacker).
+
+You can override this function to customize the mapping of name-to-constructor. [Server-side rendering](#server-side-rendering) also uses this function.
+
+## Server-Side Rendering
+
+You can render React components inside your Rails server with `prerender: true`:
 
 ```erb
 <%= react_component('HelloMessage', {name: 'John'}, {prerender: true}) %>
@@ -157,25 +266,20 @@ To render components on the server, pass `prerender: true` to `react_component`:
 </div>
 ```
 
-_(It will also be mounted by the UJS on page load.)_
+_(It will also be mounted by the [UJS](#ujs) on page load.)_
 
-There are some requirements for this to work:
+Server rendering is powered by [`ExecJS`](https://github.com/rails/execjs) and subject to some requiments:
 
 - `react-rails` must load your code. By convention, it uses `server_rendering.js`, which was created
-by the install task. This file must include React, ReactDOMServer, your components _and_ their dependencies (eg, Underscore.js).
-- Your components must be accessible in the global scope.
-If you are using `.js.jsx.coffee` files then the wrapper function needs to be taken into account:
-
-  ```coffee
-  # @ is `window`:
-  @Component = React.createClass
-    render: ->
-      `<ExampleComponent videos={this.props.videos} />`
-  ```
-- Your code can't reference `document`. Prerender processes don't have access to `document`,
+by the install task. This file must include your components _and_ their dependencies (eg, Underscore.js).
+- Your code can't reference `document` or `window`. Prerender processes don't have access to `document` or `window`,
 so jQuery and some other libs won't work in this environment :(
 
-You can configure your pool of JS virtual machines and specify where it should load code:
+`ExecJS` supports many backends. CRuby users will get the best performance from [`mini_racer`](https://github.com/discourse/mini_racer#performance).
+
+Server renderers are stored in a pool and reused between requests. Threaded Rubies (eg jRuby) may see a benefit to increasing the pool size beyond the default `0`.
+
+These are the default configurations:
 
 ```ruby
 # config/environments/application.rb
@@ -190,32 +294,30 @@ MyApp::Application.configure do
     replay_console: true,                 # if true, console.* will be replayed client-side
   }
   # Changing files matching these dirs/exts will cause the server renderer to reload:
-  config.react.server_renderer_extensions = ["jsx"]
-  config.react.server_renderer_directories = ["/app/assets/javascripts"]
+  config.react.server_renderer_extensions = ["jsx", "js"]
+  config.react.server_renderer_directories = ["/app/assets/javascripts", "/app/javascripts/"]
 end
 ```
 
-- On MRI, use `therubyracer` for the best performance (see [discussion](https://github.com/reactjs/react-rails/pull/290))
-- On MRI, you'll get a deadlock with `pool_size` > 1
-- If you're using JRuby, you can increase `pool_size` to have real multi-threaded rendering.
+#### Custom Server Renderer
 
-You can configure camelize_props option and pass props with an underscored hash from rails but get a camelized hash in jsx :
+`react-rails` depends on a renderer class for rendering components on the server. You can provide a custom renderer class to `config.react.server_renderer`. The class must implement:
 
-```ruby
-MyApp::Application.configure do
-  config.react.camelize_props = true #default false
-end
-```
+- `#initialize(options={})`, which accepts the hash from `config.react.server_renderer_options`
+- `#render(component_name, props, prerender_options)` to return a string of HTML
 
-or when mounting:
+`react-rails` provides two renderer classes: `React::ServerRendering::ExecJSRenderer` and `React::ServerRendering::SprocketsRenderer`.
 
-```erb
-<%= react_component('HelloMessage', {name: 'John'}, {camelize_props: true}) %>
-```
+`ExecJSRenderer` offers two other points for extension:
 
-### Rendering components instead of views
+- `#before_render(component_name, props, prerender_options)` to return a string of JavaScript to execute _before_ calling `React.render`
+- `#after_render(component_name, props, prerender_options)` to return a string of JavaScript to execute _after_ calling `React.render`
 
-Components can also be prerendered directly from a controller action with the custom `component` renderer. For example:
+Any subclass of `ExecJSRenderer` may use those hooks (for example, `SprocketsRenderer` uses them to handle `console.*` on the server).
+
+## Controller Actions
+
+Components can also be server-rendered directly from a controller action with the custom `component` renderer. For example:
 
 ```ruby
 class TodoController < ApplicationController
@@ -226,31 +328,30 @@ class TodoController < ApplicationController
 end
 ```
 
-This custom renderer behaves the same as a normal view renderer and accepts the usual arguments - `content_type`, `layout`, `location` and `status`.
-By default, your current layout will be used and the component, rather than a view, will be rendered in place of `yield`. Custom data-* attributes
-can be passed like `data: {remote: true}`. Prerendering is set to `true` by default, but can be turned off like any other option: `prerender: false`.
+You can also provide the "usual" `render` arguments: `content_type`, `layout`, `location` and `status`. By default, your current layout will be used and the component, rather than a view, will be rendered in place of `yield`. Custom data-* attributes can be passed like `data: {remote: true}`.
 
-### Component generator
+Prerendering is set to `true` by default, but can be turned off with `prerender: false`.
 
-`react-rails` ships with a Rails generator to help you get started with a simple component scaffold.
-You can run it using `rails generate react:component ComponentName (--es6)`.
-The generator takes an optional list of arguments for default propTypes,
-which follow the conventions set in the [Reusable Components](http://facebook.github.io/react/docs/reusable-components.html)
-section of the React documentation.
+## Component Generator
 
-For example:
+You can generate a new component file with:
 
-```shell
-rails generate react:component Post title:string body:string published:bool published_by:instanceOf{Person}
+```sh
+rails g react:component ComponentName prop1:type prop2:type ...
 ```
 
-would generate the following in `app/assets/javascripts/components/post.js.jsx`:
+For example,
 
-```jsx
+```sh
+rails g react:component Post title:string published:bool published_by:instanceOf{Person}
+```
+
+would generate:
+
+```js
 var Post = React.createClass({
   propTypes: {
     title: React.PropTypes.string,
-    body: React.PropTypes.string,
     published: React.PropTypes.bool,
     publishedBy: React.PropTypes.instanceOf(Person)
   },
@@ -259,7 +360,6 @@ var Post = React.createClass({
     return (
       <div>
         <div>Title: {this.props.title}</div>
-        <div>Body: {this.props.body}</div>
         <div>Published: {this.props.published}</div>
         <div>Published By: {this.props.publishedBy}</div>
       </div>
@@ -268,49 +368,22 @@ var Post = React.createClass({
 });
 ```
 
-#### Options
+The generator also accepts options:
 
-**--es6** : Generate the same component but using cutting edge es6 class
+- `--es6`: use `class ComponentName extends React.Component`
+- `--coffee`: use CoffeeScript
 
-For example:
+Accepted PropTypes are:
 
-```shell
-rails generate react:component Label label:string --es6
-```
-
-**--coffee** : Generate the component using CoffeeScript syntax
-
-For example:
-
-```shell
-rails generate react:component Label label:string --coffee
-```
-
-#### Arguments
-
-The generator can use the following arguments to create basic propTypes:
-
-  * any
-  * array
-  * bool
-  * element
-  * func
-  * number
-  * object
-  * node
-  * shape
-  * string
-
-The following additional arguments have special behavior:
-
-  * `instanceOf` takes an optional class name in the form of {className}.
-  * `oneOf` behaves like an enum, and takes an optional list of strings in the form of `'name:oneOf{one,two,three}'`.
-  * `oneOfType` takes an optional list of react and custom types in the form of `'model:oneOfType{string,number,OtherType}'`.
+- Plain types: `any`, `array`, `bool`, `element`, `func`, `number`, `object`, `node`, `shape`, `string`
+- `instanceOf` takes an optional class name in the form of `instanceOf{className}`.
+- `oneOf` behaves like an enum, and takes an optional list of strings in the form of `'name:oneOf{one,two,three}'`.
+- `oneOfType` takes an optional list of react and custom types in the form of `'model:oneOfType{string,number,OtherType}'`.
 
 Note that the arguments for `oneOf` and `oneOfType` must be enclosed in single quotes
  to prevent your terminal from expanding them into an argument list.
 
-### Jbuilder & react-rails
+#### Use with JBuilder
 
 If you use Jbuilder to pass a JSON string to `react_component`, make sure your JSON is a stringified hash,
 not an array. This is not the Rails default -- you should add the root node yourself. For example:
@@ -329,68 +402,33 @@ json.messages(@messages) do |message|
 end
 ```
 
-## CoffeeScript
+### Camelize Props
 
-It is possible to use JSX with CoffeeScript. To use CoffeeScript, create files with an extension `.js.jsx.coffee`.
-We also need to embed JSX code inside backticks so that CoffeeScript ignores the syntax it doesn't understand.
-Here's an example:
+You can configure `camelize_props` option:
 
-```coffee
-Component = React.createClass
-  render: ->
-    `<ExampleComponent videos={this.props.videos} />`
+```ruby
+MyApp::Application.configure do
+  config.react.camelize_props = true # default false
+end
 ```
 
-Alternatively, the newer ES6 style class based syntax can be used like this:
+Now, Ruby hashes given to `react_component(...)` as props will have their keys transformed from _underscore_- to _camel_-case, for example:
 
-```coffee
-class Component extends React.Component
-  render: ->
-    `<ExampleComponent videos={this.props.videos} />`
+```ruby
+{ all_todos: @todos, current_status: @status }
+# becomes:
+{ "allTodos" => @todos, "currentStatus" => @status }
 ```
 
-## Extending `react-rails`
+You can also specify this option in `react_component`:
 
-You can extend some of the core functionality of `react-rails` by injecting new implementations during configuration.
+```erb
+<%= react_component('HelloMessage', {name: 'John'}, {camelize_props: true}) %>
+```
 
-### Custom Server Renderer
+## Related Projects
 
-`react-rails` depends on a renderer class for rendering components on the server. You can provide a custom renderer class to `config.react.server_renderer`. The class must implement:
-
-- `#initialize(options={})`, which accepts the hash from `config.react.server_renderer_options`
-- `#render(component_name, props, prerender_options)` to return a string of HTML
-
-`react-rails` provides two renderer classes: `React::ServerRendering::ExecJSRenderer` and `React::ServerRendering::SprocketsRenderer`.
-
-`ExecJSRenderer` offers two other points for extension:
-
-- `#before_render(component_name, props, prerender_options)` to return a string of JavaScript to execute _before_ calling `React.render`
-- `#after_render(component_name, props, prerender_options)` to return a string of JavaScript to execute _after_ calling `React.render`
-
-Any subclass of `ExecJSRenderer` may use those hooks (for example, `SprocketsRenderer` uses them to handle `console.*` on the server).
-
-### Custom View Helper
-
-`react-rails` uses a "helper implementation" class to generate the output of the `react_component` helper. The helper is initialized once per request and used for each `react_component` call during that request. You can provide a custom helper class to `config.react.view_helper_implementation`. The class must implement:
-
-- `#react_component(name, props = {}, options = {}, &block)` to return a string to inject into the Rails view
-- `#setup(controller_instance)`, called when the helper is initialized at the start of the request
-- `#teardown(controller_instance)`, called at the end of the request
-
-`react-rails` provides one implementation, `React::Rails::ComponentMount`.
-
-### Custom JSX Transformer
-
-`react-rails` uses a transformer class to transform JSX for the browser. The transformer is initialized once, at boot. You can provide a custom transformer to `config.react.jsx_transformer_class`. The transformer must implement:
-
-- `#initialize(options)`, where options is the value passed to `config.react.jsx_transform_options`
-- `#transform(code_string)` to return a string of transformed code
-
-`react-rails` provides two transformers, `React::JSX::JSXTransformer` and `React::JSX::BabelTransformer`.
-
-### Related Projects
-
-- [react\_on\_rails Gem](https://github.com/shakacode/react_on_rails): Webpack Integration of React with Rails utilizing the modern JavaScript tooling and libraries, including Webpack, Babel, React, Redux, React-Router. You can an example of this live at [www.reactrails.com](http://www.reactrails.com).
+- [react\_on\_rails Gem](https://github.com/shakacode/react_on_rails): Integration of React with Rails utilizing Webpack, Babel, React, Redux, React-Router.
 - [Ruby Hyperloop](http://ruby-hyperloop.io/): Use Ruby to build reactive user interfaces with React.
 - [react-rails-hot-loader](https://github.com/rmosolgo/react-rails-hot-loader) is a simple live-reloader for `react-rails`.
 - [react-rails-benchmark_renderer](https://github.com/pboling/react-rails-benchmark_renderer) adds performance instrumentation to server rendering.
@@ -400,5 +438,4 @@ Any subclass of `ExecJSRenderer` may use those hooks (for example, `SprocketsRen
 
 - Run tests with `rake test` or `appraisal rake test`
 - Update React assets with `rake react:update`
-
-[React Getting Started]: https://facebook.github.io/react/docs/getting-started.html
+- Update the UJS with `rake ujs:update`
