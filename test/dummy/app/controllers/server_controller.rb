@@ -1,5 +1,6 @@
 class ServerController < ApplicationController
   def show
+    @component_name = params[:component_name] || "TodoList"
     @todos = %w{todo1 todo2 todo3}
   end
 

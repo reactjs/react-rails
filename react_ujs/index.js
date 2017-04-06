@@ -109,4 +109,10 @@ if (typeof window !== "undefined") {
   detectEvents(ReactRailsUJS)
 }
 
+// It's a bit of a no-no to populate the global namespace,
+// but we really need it!
+// We need access to this object for server rendering, and
+// we can't do a dynamic `require`, so we'll grab it from here:
+this.ReactRailsUJS = ReactRailsUJS
+
 module.exports = ReactRailsUJS

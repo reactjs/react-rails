@@ -10,10 +10,22 @@ when_sprockets_available do
       sleep(1)
     end
 
+    setup do
+      if WebpackerHelpers.available?
+        WebpackerHelpers.compile
+      end
+    end
+
     test 'react server rendering reloads jsx after changes to the jsx files' do
-      file_with_updates = File.expand_path('../helper_files/TodoListWithUpdates.js.jsx', __FILE__)
-      file_without_updates = File.expand_path('../helper_files/TodoListWithoutUpdates.js.jsx', __FILE__)
-      app_file = File.expand_path('../dummy/app/assets/javascripts/components/TodoList.js.jsx', __FILE__)
+      if WebpackerHelpers.available?
+        file_with_updates = File.expand_path('../helper_files/TodoListWithUpdates.js', __FILE__)
+        file_without_updates = File.expand_path('../helper_files/TodoListWithoutUpdates.js', __FILE__)
+        app_file = File.expand_path('../dummy/app/javascript/components/TodoList.js', __FILE__)
+      else
+        file_with_updates = File.expand_path('../helper_files/TodoListWithUpdates.js.jsx', __FILE__)
+        file_without_updates = File.expand_path('../helper_files/TodoListWithoutUpdates.js.jsx', __FILE__)
+        app_file = File.expand_path('../dummy/app/assets/javascripts/components/TodoList.js.jsx', __FILE__)
+      end
 
       FileUtils.cp app_file, file_without_updates
       FileUtils.touch app_file
@@ -25,7 +37,11 @@ when_sprockets_available do
 
         FileUtils.cp file_with_updates, app_file
         FileUtils.touch app_file
-        wait_to_ensure_asset_pipeline_detects_changes
+        if WebpackerHelpers.available?
+          WebpackerHelpers.compile
+        else
+          wait_to_ensure_asset_pipeline_detects_changes
+        end
 
         get '/server/1'
         assert_match(/Updated/, response.body)
@@ -37,21 +53,36 @@ when_sprockets_available do
       end
     end
 
-    test 'it reloads when new jsx files are added' do
+    test 'it reloads when new jsx files are added to the asset pipeline' do
       begin
-        get '/server/1'
-        refute_match(/Overwritten List/, response.body)
+        assert_raises(ActionView::Template::Error) {
+          get '/server/1?component_name=NewList'
+        }
 
-        # Make it alphabetically last so it will override the preceeding one:
-        new_file_path = File.expand_path('../dummy/app/assets/javascripts/components/ZZ_NewComponent.js.jsx', __FILE__)
-        File.write new_file_path, <<-JS
-        var TodoList = function() { return <span>"Overwritten List"</span> }
-        JS
+        if WebpackerHelpers.available?
+          new_file_path = '../dummy/app/javascript/components/NewList.js'
+          new_file_contents = <<-JS
+          var React = require("react")
+          module.exports = function() { return <span>"New List"</span> }
+          JS
+        else
+          new_file_path = '../dummy/app/assets/javascripts/components/ZZ_NewComponent.js.jsx'
+          new_file_contents = <<-JS
+          var NewList = function() { return <span>"New List"</span> }
+          JS
+        end
 
-        wait_to_ensure_asset_pipeline_detects_changes
+        new_file_path = File.expand_path(new_file_path, __FILE__)
+        File.write new_file_path, new_file_contents
 
-        get '/server/1'
-        assert_match(/Overwritten List/, response.body)
+        if WebpackerHelpers.available?
+          WebpackerHelpers.compile
+        else
+          wait_to_ensure_asset_pipeline_detects_changes
+        end
+
+        get '/server/1?component_name=NewList'
+        assert_match(/New List/, response.body)
       ensure
         FileUtils.rm_rf(new_file_path)
         wait_to_ensure_asset_pipeline_detects_changes

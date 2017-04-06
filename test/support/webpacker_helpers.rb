@@ -13,7 +13,10 @@ module WebpackerHelpers
   def compile
     clear_webpacker_packs
     Dir.chdir("./test/dummy") do
-      Rake::Task['webpacker:compile'].invoke
+      capture_io do
+        Rake::Task['webpacker:compile'].reenable
+        Rake::Task['webpacker:compile'].invoke
+      end
     end
     # Reload cached JSON manifest:
     Webpacker::Manifest.load

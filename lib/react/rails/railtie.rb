@@ -20,6 +20,10 @@ module React
       # Changing files with these extensions in these directories will cause the server renderer to reload:
       config.react.server_renderer_directories = ["/app/assets/javascripts/"]
       config.react.server_renderer_extensions = ["jsx"]
+      if defined?(Webpacker)
+        config.react.server_renderer_directories << "app/javascript"
+        config.react.server_renderer_extensions << "js"
+      end
       # View helper implementation:
       config.react.view_helper_implementation = nil # Defaults to ComponentMount
 
@@ -30,6 +34,7 @@ module React
           memo[app_dir] = config.react.server_renderer_extensions
           memo
         end
+
         app.reloaders << ActiveSupport::FileUpdateChecker.new([], reload_paths) do
           React::ServerRendering.reset_pool
         end

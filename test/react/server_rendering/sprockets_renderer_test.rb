@@ -77,12 +77,15 @@ when_sprockets_available do
       assert_match(/console.error.apply\(console, \["setTimeout #{message}"\]\);$/, result)
     end
 
-    test '.new accepts additional code to add to the JS context' do
-      additional_code = File.read(File.expand_path("../../../helper_files/WithoutSprockets.js", __FILE__))
+    if !WebpackerHelpers.available?
+      # This doesn't work with webpacker since finding components is based on filename
+      test '.new accepts additional code to add to the JS context' do
+        additional_code = File.read(File.expand_path("../../../helper_files/WithoutSprockets.js", __FILE__))
 
-      additional_renderer = React::ServerRendering::SprocketsRenderer.new(code: additional_code)
+        additional_renderer = React::ServerRendering::SprocketsRenderer.new(code: additional_code)
 
-      assert_match(/drink more caffeine<\/span>/, additional_renderer.render("WithoutSprockets", {label: "drink more caffeine"}, nil))
+        assert_match(/drink more caffeine<\/span>/, additional_renderer.render("WithoutSprockets", {label: "drink more caffeine"}, nil))
+      end
     end
 
     test '.new accepts any filenames' do
