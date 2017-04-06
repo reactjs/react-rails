@@ -113,6 +113,6 @@ if (typeof window !== "undefined") {
 // but we really need it!
 // We need access to this object for server rendering, and
 // we can't do a dynamic `require`, so we'll grab it from here:
-this.ReactRailsUJS = ReactRailsUJS
+self.ReactRailsUJS = ReactRailsUJS
 
 module.exports = ReactRailsUJS
