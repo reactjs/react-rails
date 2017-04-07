@@ -88,9 +88,11 @@ module WebpackerHelpers
     yield
   ensure
     # Kill the server process
-    Process.kill(9, webpack_dev_server)
+    puts "Killing webpack dev server"
+    puts Process.kill("KILL", webpack_dev_server)
     Process.wait
     # Remove the dev-server packs:
     WebpackerHelpers.clear_webpacker_packs
+    puts "Killed."
   end
 end
