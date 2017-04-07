@@ -28,7 +28,7 @@ module.exports = function(ujs) {
     } else {
       turbolinksClassicDeprecatedEvents.setup(ujs);
     }
-  } else if ($ && typeof $.pjax === 'function') {
+  } else if (typeof $ !== "undefined" && typeof $.pjax === 'function') {
     pjaxEvents.setup(ujs);
   } else {
     nativeEvents.setup(ujs);

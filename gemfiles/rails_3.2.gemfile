@@ -2,8 +2,8 @@
 
 source "http://rubygems.org"
 
+gem "turbolinks", "~> 2.0"
 gem "rails", "~> 3.2.21"
 gem "rack-cache", "~> 1.6.1"
-gem "turbolinks", "~> 2.0"
 
 gemspec :path => "../"
