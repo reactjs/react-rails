@@ -65,6 +65,8 @@ WebpackerHelpers.when_webpacker_available do
     ensure
       Process.kill(9, webpack_dev_server)
       Process.wait
+      # Remove the dev-server packs:
+      WebpackerHelpers.clear_webpacker_packs
     end
   end
 end
