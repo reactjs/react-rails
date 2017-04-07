@@ -13,7 +13,7 @@ WebpackerHelpers.when_webpacker_available do
       WebpackerHelpers.clear_webpacker_packs
     end
 
-    test 'it mounts pages from the pack' do
+    test 'it mounts components from the pack' do
       visit '/pack_component'
       assert page.has_content?('Export Default')
       assert page.has_content?('Named Export')

@@ -34,4 +34,63 @@ module WebpackerHelpers
   def clear_webpacker_packs
     FileUtils.rm_rf(PACKS_DIRECTORY)
   end
+
+  # Start a webpack-dev-server
+  # Call the block
+  # Make sure to clean up the server
+  def with_dev_server
+    # Start the server in a forked process:
+    webpack_dev_server = Dir.chdir("test/dummy") do
+      spawn "RAILS_ENV=development ./bin/webpack-dev-server "
+    end
+
+    detected_dev_server = false
+
+    # Wait for it to start up, make sure it's there by connecting to it:
+    30.times do |i|
+      begin
+        # Make sure that the manifest has been updated:
+        Webpacker::Manifest.load("./test/dummy/public/packs/manifest.json")
+        webpack_manifest = Webpacker::Manifest.instance.data
+        example_asset_path = webpack_manifest.values.first
+        if example_asset_path.nil?
+          # Debug helper
+          # puts "Manifest is blank, all manifests:"
+          # Dir.glob("./test/dummy/public/packs/*.json").each do |f|
+          #   puts f
+          #   puts File.read(f)
+          # end
+          next
+        end
+        # Make sure the dev server is up:
+        open("http://localhost:8080/application.js")
+        if !example_asset_path.start_with?("http://localhost:8080")
+          raise "Manifest doesn't include absolute path to dev server"
+        end
+
+        detected_dev_server = true
+        break
+      rescue StandardError => err
+        puts err.message
+      ensure
+        sleep 0.5
+        # debug counter
+        # puts i
+      end
+    end
+
+    # If we didn't hook up with a dev server after waiting, fail loudly.
+    if !detected_dev_server
+      raise "Failed to start dev server"
+    end
+
+    # Call the test block:
+    yield
+  ensure
+    # Kill the server process
+    Process.kill(9, webpack_dev_server)
+    Process.wait
+    # Remove the dev-server packs:
+    WebpackerHelpers.clear_webpacker_packs
+  end
 end

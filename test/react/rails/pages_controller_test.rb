@@ -25,4 +25,15 @@ class PagesControllerTest < ActionController::TestCase
       assert_includes(response.body, "Hello")
     end
   end
+
+  WebpackerHelpers.when_webpacker_available do
+    test "it mounts components from the dev server" do
+      WebpackerHelpers.with_dev_server do
+        get :show, id: 1, prerender: true
+        assert_match /Hello<!--.*--> from Webpacker/, response.body
+        get :show, id: 1, prerender: true, greeting: "Howdy"
+        assert_match /Howdy<!--.*--> from Webpacker/, response.body
+      end
+    end
+  end
 end
