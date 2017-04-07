@@ -1,6 +1,6 @@
 require 'test_helper'
 
-when_sprockets_available do
+if SprocketsHelpers.available? || WebpackerHelpers.available?
   class SprocketsRendererTest < ActiveSupport::TestCase
     CALLBACKS = [:before_render, :after_render]
 
@@ -113,7 +113,7 @@ when_sprockets_available do
           legacy_rendering_files = ["react-server.js", "react_ujs.js", "components.js"]
           Rails.application.config.assets.precompile += legacy_rendering_files
 
-          precompile_assets
+          SprocketsHelpers.precompile_assets
 
           Rails.application.config.assets.compile = false
 
@@ -125,7 +125,7 @@ when_sprockets_available do
         ensure
           Rails.application.config.assets.compile = true
 
-          clear_precompiled_assets
+          SprocketsHelpers.clear_precompiled_assets
         end
       end
     end

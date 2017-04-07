@@ -1,20 +1,20 @@
 require 'test_helper'
 
-when_sprockets_available do
+SprocketsHelpers.when_available do
   class ReactAssetTest < ActionDispatch::IntegrationTest
     setup do
-      clear_sprockets_cache
+      SprocketsHelpers.clear_sprockets_cache
     end
 
     teardown do
-      clear_sprockets_cache
+      SprocketsHelpers.clear_sprockets_cache
     end
 
     test 'asset pipeline should deliver drop-in react file replacement' do
       app_react_file_path = File.expand_path("../dummy/vendor/assets/javascripts/react.js",  __FILE__)
       react_file_token = "'test_confirmation_token_react_content_non_production';\n"
       File.write(app_react_file_path, react_file_token)
-      manually_expire_asset("react.js")
+      SprocketsHelpers.manually_expire_asset("react.js")
       react_asset = Rails.application.assets['react.js']
 
       get '/assets/react.js'
@@ -28,9 +28,9 @@ when_sprockets_available do
 
     test 'precompiling assets works' do
       begin
-        precompile_assets
+        SprocketsHelpers.precompile_assets
       ensure
-        clear_precompiled_assets
+        SprocketsHelpers.clear_precompiled_assets
       end
     end
 

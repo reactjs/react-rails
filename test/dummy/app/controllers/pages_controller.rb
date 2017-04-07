@@ -1,5 +1,5 @@
 class PagesController < ApplicationController
-  if WebpackerHelpers.available? || !SKIP_SPROCKETS
+  if WebpackerHelpers.available? || SprocketsHelpers.available?
     per_request_react_rails_prerenderer
   end
 

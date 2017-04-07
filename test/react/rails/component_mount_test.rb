@@ -1,6 +1,6 @@
 require 'test_helper'
 
-when_sprockets_available do
+SprocketsHelpers.when_available do
   class ComponentMountTest < ActionDispatch::IntegrationTest
     setup do
       WebpackerHelpers.compile_if_missing

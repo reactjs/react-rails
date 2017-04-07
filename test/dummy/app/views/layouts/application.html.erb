@@ -2,7 +2,7 @@
 <html>
 <head>
   <title>Dummy</title>
-  <% if !SKIP_SPROCKETS %>
+  <% if SprocketsHelpers.available? %>
     <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   <% end %>
   <%= csrf_meta_tags %>

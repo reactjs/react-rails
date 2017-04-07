@@ -1,7 +1,7 @@
 require 'test_helper'
 require 'fileutils'
 
-when_sprockets_available do
+SprocketsHelpers.when_available do
   class ServerRenderedHtmlTest  < ActionDispatch::IntegrationTest
     # Rails' asset pipeline has trouble picking up changes to files if they happen too fast.
     # By sleeping for a little bit at certain points, we can make sure that rails notices the
