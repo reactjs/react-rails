@@ -64,16 +64,22 @@ end
 
 def precompile_assets
   capture_io do
-    ENV['RAILS_GROUPS'] = 'assets' # required for Rails 3.2
-    Rake::Task['assets:precompile'].reenable
+    # Changing directories is required because:
+    # - assets:precompile runs webpacker:compile when availabled
+    # - webpacker:compile depends on `./bin/webpack`, so `.` must be the app root
+    Dir.chdir("./test/dummy") do
 
-    if Rails::VERSION::MAJOR == 3
-      Rake::Task['assets:precompile:all'].reenable
-      Rake::Task['assets:precompile:primary'].reenable
-      Rake::Task['assets:precompile:nondigest'].reenable
+      ENV['RAILS_GROUPS'] = 'assets' # required for Rails 3.2
+      Rake::Task['assets:precompile'].reenable
+
+      if Rails::VERSION::MAJOR == 3
+        Rake::Task['assets:precompile:all'].reenable
+        Rake::Task['assets:precompile:primary'].reenable
+        Rake::Task['assets:precompile:nondigest'].reenable
+      end
+
+      Rake::Task['assets:precompile'].invoke
     end
-
-    Rake::Task['assets:precompile'].invoke
   end
 
   if Rails.application.respond_to?(:assets_manifest)
