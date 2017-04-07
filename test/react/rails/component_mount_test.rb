@@ -2,8 +2,12 @@ require 'test_helper'
 
 SprocketsHelpers.when_available do
   class ComponentMountTest < ActionDispatch::IntegrationTest
+    compiled_once = false
     setup do
-      WebpackerHelpers.compile_if_missing
+      if !compiled_once
+        WebpackerHelpers.clear_webpacker_packs
+        WebpackerHelpers.compile
+      end
       @helper = React::Rails::ComponentMount.new
     end
 
