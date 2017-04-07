@@ -31,13 +31,19 @@ WebpackerHelpers.when_webpacker_available do
           Webpacker::Manifest.load("./test/dummy/public/packs/manifest.json")
           webpack_manifest = Webpacker::Manifest.instance.data
           example_asset_path = webpack_manifest.values.first
+          if example_asset_path.nil?
+            next
+          end
           assert_includes example_asset_path, "http://localhost:8080"
           # Make sure the dev server is up:
           open("http://localhost:8080/application.js")
           detected_dev_server = true
           break
         rescue StandardError => err
+          puts err.message
+        ensure
           sleep 0.5
+          puts i
         end
       end
 

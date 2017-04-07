@@ -20,6 +20,8 @@ Dir.glob(support_path).each do |f|
   require(f)
 end
 
+WebpackerHelpers.clear_webpacker_packs
+
 Capybara.javascript_driver = :poltergeist
 Capybara.app = Rails.application
 

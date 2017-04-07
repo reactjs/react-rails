@@ -6,6 +6,7 @@ when_sprockets_available do
 
     setup do
       Capybara.current_driver = Capybara.javascript_driver
+      WebpackerHelpers.compile_if_missing
     end
 
     test 'ujs object present on the global React object and has our methods' do

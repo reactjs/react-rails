@@ -1,4 +1,6 @@
 module WebpackerHelpers
+  PACKS_DIRECTORY =  File.expand_path("../dummy/public/packs", __FILE__)
+
   module_function
   def available?
     defined?(Webpacker)
@@ -11,6 +13,7 @@ module WebpackerHelpers
   end
 
   def compile
+    return if !available?
     clear_webpacker_packs
     Dir.chdir("./test/dummy") do
       capture_io do
@@ -22,8 +25,13 @@ module WebpackerHelpers
     Webpacker::Manifest.load
   end
 
+  def compile_if_missing
+    if !File.exist?(PACKS_DIRECTORY)
+      compile
+    end
+  end
+
   def clear_webpacker_packs
-    packs_directory = File.expand_path("../dummy/public/packs", __FILE__)
-    FileUtils.rm_rf(packs_directory)
+    FileUtils.rm_rf(PACKS_DIRECTORY)
   end
 end
