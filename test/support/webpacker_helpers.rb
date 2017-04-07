@@ -1,5 +1,5 @@
 module WebpackerHelpers
-  PACKS_DIRECTORY =  File.expand_path("../dummy/public/packs", __FILE__)
+  PACKS_DIRECTORY =  File.expand_path("../../dummy/public/packs", __FILE__)
 
   module_function
   def available?

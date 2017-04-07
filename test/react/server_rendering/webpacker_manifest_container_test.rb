@@ -20,7 +20,7 @@ WebpackerHelpers.when_webpacker_available do
     def test_it_loads_from_webpack_dev_server
       webpack_dev_server = fork do
         Dir.chdir("test/dummy") do
-          exec "./bin/webpack-dev-server RAILS_ENV=development"
+          exec "RAILS_ENV=development ./bin/webpack-dev-server "
         end
       end
 
