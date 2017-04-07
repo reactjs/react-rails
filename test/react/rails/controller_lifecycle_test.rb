@@ -24,6 +24,7 @@ end
 
 class ControllerLifecycleTest < ActionDispatch::IntegrationTest
   def setup
+    WebpackerHelpers.compile_if_missing
     @previous_helper_implementation = React::Rails::ViewHelper.helper_implementation_class
     React::Rails::ViewHelper.helper_implementation_class = DummyHelperImplementation
   end

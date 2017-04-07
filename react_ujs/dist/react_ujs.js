@@ -125,15 +125,16 @@ module.exports = function(ujs) {
 // Assume className is simple and can be found at top-level (window).
 // Fallback to eval to handle cases like 'My.React.ComponentName'.
 // Also, try to gracefully import Babel 6 style default exports
+var topLevel = typeof window === "undefined" ? this : window;
+
 module.exports = function(className) {
   var constructor;
-  var topLevel = typeof window === "undefined" ? this : window;
   // Try to access the class globally first
   constructor = topLevel[className];
 
   // If that didn't work, try eval
   if (!constructor) {
-    constructor = eval.call(topLevel, className);
+    constructor = eval(className);
   }
 
   // Lastly, if there is a default attribute try that
@@ -307,6 +308,12 @@ if (typeof window !== "undefined") {
   // Only setup events for browser (not server-rendering)
   detectEvents(ReactRailsUJS)
 }
+
+// It's a bit of a no-no to populate the global namespace,
+// but we really need it!
+// We need access to this object for server rendering, and
+// we can't do a dynamic `require`, so we'll grab it from here:
+this.ReactRailsUJS = ReactRailsUJS
 
 module.exports = ReactRailsUJS
 

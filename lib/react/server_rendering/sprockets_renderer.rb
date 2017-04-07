@@ -1,5 +1,6 @@
 require "react/server_rendering/environment_container"
 require "react/server_rendering/manifest_container"
+require "react/server_rendering/webpacker_manifest_container"
 require "react/server_rendering/yaml_manifest_container"
 
 module React
@@ -57,19 +58,7 @@ module React
       #
       # @return [#find_asset(logical_path)] An object that returns asset contents by logical path
       def asset_container
-        @asset_container ||= if self.class.asset_container_class.present?
-          self.class.asset_container_class.new
-        elsif assets_precompiled? && ManifestContainer.compatible?
-          ManifestContainer.new
-        elsif assets_precompiled? && YamlManifestContainer.compatible?
-          YamlManifestContainer.new
-        else
-          EnvironmentContainer.new
-        end
-      end
-
-      def assets_precompiled?
-        !::Rails.application.config.assets.compile
+        @asset_container ||= asset_container_class.new
       end
 
       private
@@ -96,6 +85,29 @@ module React
 
       def prepare_props(props)
         props.is_a?(String) ? props : props.to_json
+      end
+
+      def assets_precompiled?
+        !::Rails.application.config.assets.compile
+      end
+
+      def asset_container_class
+        if self.class.asset_container_class.present?
+          self.class.asset_container_class
+        elsif WebpackerManifestContainer.compatible?
+          WebpackerManifestContainer
+        elsif assets_precompiled?
+          if ManifestContainer.compatible?
+            ManifestContainer
+          elsif YamlManifestContainer.compatible?
+            YamlManifestContainer
+          else
+            # Even though they are precompiled, we can't find them :S
+            EnvironmentContainer
+          end
+        else
+          EnvironmentContainer
+        end
       end
     end
   end

@@ -5,7 +5,7 @@ var Todo = null
 var React = {
   createElement: function() {},
 }
-var ReactRailsUJS = {
+this.ReactRailsUJS = {
   serverRender: function() {
     return 'serverRender was called'
   },
@@ -49,7 +49,6 @@ class ExecJSRendererTest < ActiveSupport::TestCase
     assert_match(/before_render/, error.message)
     assert_no_match(/assigned_after_render/, error.message)
   end
-
 
   test '#after_render is called after #before_render' do
     def @renderer.before_render(name, props, opts)

@@ -1,6 +1,10 @@
 require 'test_helper'
 
 class PagesControllerTest < ActionController::TestCase
+  setup do
+    WebpackerHelpers.compile_if_missing
+  end
+
   test 'renders successfully' do
     get :show, id: 1
     assert_equal(200, response.status)

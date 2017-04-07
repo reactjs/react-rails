@@ -41,7 +41,7 @@ module React
 
       def main_render(component_name, props, prerender_options)
         render_function = prerender_options.fetch(:render_function, "renderToString")
-        "ReactRailsUJS.serverRender('#{render_function}', #{component_name}, #{props})"
+        "this.ReactRailsUJS.serverRender('#{render_function}', '#{component_name}', #{props})"
       end
 
       def compose_js(before, main, after)

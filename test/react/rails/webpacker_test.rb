@@ -1,12 +1,12 @@
 require 'test_helper'
 
-
 WebpackerHelpers.when_webpacker_available do
   class ReactRailsWebpackerTest < ActionDispatch::IntegrationTest
     include Capybara::DSL
 
     setup do
       Capybara.current_driver = Capybara.javascript_driver
+      WebpackerHelpers.compile
     end
 
     teardown do

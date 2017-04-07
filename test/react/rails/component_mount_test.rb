@@ -3,6 +3,7 @@ require 'test_helper'
 when_sprockets_available do
   class ComponentMountTest < ActionDispatch::IntegrationTest
     setup do
+      WebpackerHelpers.compile_if_missing
       @helper = React::Rails::ComponentMount.new
     end
 
