@@ -288,7 +288,7 @@ MyApp::Application.configure do
   # Settings for the pool of renderers:
   config.react.server_renderer_pool_size  ||= 1  # ExecJS doesn't allow more than one on MRI
   config.react.server_renderer_timeout    ||= 20 # seconds
-  config.react.server_renderer = React::ServerRendering::SprocketsRenderer
+  config.react.server_renderer = React::ServerRendering::BundleRenderer
   config.react.server_renderer_options = {
     files: ["server_rendering.js"],       # files to load for prerendering
     replay_console: true,                 # if true, console.* will be replayed client-side
@@ -306,14 +306,14 @@ end
 - `#initialize(options={})`, which accepts the hash from `config.react.server_renderer_options`
 - `#render(component_name, props, prerender_options)` to return a string of HTML
 
-`react-rails` provides two renderer classes: `React::ServerRendering::ExecJSRenderer` and `React::ServerRendering::SprocketsRenderer`.
+`react-rails` provides two renderer classes: `React::ServerRendering::ExecJSRenderer` and `React::ServerRendering::BundleRenderer`.
 
 `ExecJSRenderer` offers two other points for extension:
 
 - `#before_render(component_name, props, prerender_options)` to return a string of JavaScript to execute _before_ calling `React.render`
 - `#after_render(component_name, props, prerender_options)` to return a string of JavaScript to execute _after_ calling `React.render`
 
-Any subclass of `ExecJSRenderer` may use those hooks (for example, `SprocketsRenderer` uses them to handle `console.*` on the server).
+Any subclass of `ExecJSRenderer` may use those hooks (for example, `BundleRenderer` uses them to handle `console.*` on the server).
 
 ## Controller Actions
 

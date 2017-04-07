@@ -6,14 +6,14 @@ require "react/server_rendering/yaml_manifest_container"
 module React
   module ServerRendering
     # Extends ExecJSRenderer for the Rails environment
-    # - builds JS code out of the asset pipeline
+    # - fetches JS code from the Rails app (webpacker or sprockets)
     # - stringifies props
     # - implements console replay
-    class SprocketsRenderer < ExecJSRenderer
+    class BundleRenderer < ExecJSRenderer
       # Reimplement console methods for replaying on the client
-      CONSOLE_POLYFILL = File.read(File.join(File.dirname(__FILE__), "sprockets_renderer/console_polyfill.js"))
-      CONSOLE_REPLAY   = File.read(File.join(File.dirname(__FILE__), "sprockets_renderer/console_replay.js"))
-      TIMEOUT_POLYFILL = File.read(File.join(File.dirname(__FILE__), "sprockets_renderer/timeout_polyfill.js"))
+      CONSOLE_POLYFILL = File.read(File.join(File.dirname(__FILE__), "bundle_renderer/console_polyfill.js"))
+      CONSOLE_REPLAY   = File.read(File.join(File.dirname(__FILE__), "bundle_renderer/console_replay.js"))
+      TIMEOUT_POLYFILL = File.read(File.join(File.dirname(__FILE__), "bundle_renderer/timeout_polyfill.js"))
 
       def initialize(options={})
         @replay_console = options.fetch(:replay_console, true)
@@ -54,7 +54,7 @@ module React
       # default Rails setups.
       #
       # You can provide a custom asset container
-      # with `React::ServerRendering::SprocketsRenderer.asset_container_class = MyAssetContainer`.
+      # with `React::ServerRendering::BundleRenderer.asset_container_class = MyAssetContainer`.
       #
       # @return [#find_asset(logical_path)] An object that returns asset contents by logical path
       def asset_container

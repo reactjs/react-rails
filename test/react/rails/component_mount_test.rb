@@ -72,7 +72,7 @@ SprocketsHelpers.when_available do
       assert(html.include?('data-reactid'), "it includes React properties")
     end
 
-    test '#react_component passes :static to SprocketsRenderer' do
+    test '#react_component passes :static to BundleRenderer' do
       html = @helper.react_component('Todo', {todo: 'render on the server'}.to_json, prerender: :static)
       assert(html.include?('>render on the server</li>'), "it includes rendered HTML")
       assert(!html.include?('data-reactid'), "it DOESNT INCLUDE React properties")

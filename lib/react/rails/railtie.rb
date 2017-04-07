@@ -15,8 +15,8 @@ module React
       # Server rendering:
       config.react.server_renderer_pool_size  = 1   # increase if you're on JRuby
       config.react.server_renderer_timeout    = 20  # seconds
-      config.react.server_renderer            = nil # defaults to SprocketsRenderer
-      config.react.server_renderer_options    = {}  # SprocketsRenderer provides defaults
+      config.react.server_renderer            = nil # defaults to BundleRenderer
+      config.react.server_renderer_options    = {}  # BundleRenderer provides defaults
       # Changing files with these extensions in these directories will cause the server renderer to reload:
       config.react.server_renderer_directories = ["/app/assets/javascripts/"]
       config.react.server_renderer_extensions = ["jsx"]
@@ -96,7 +96,7 @@ module React
 
       config.after_initialize do |app|
         # The class isn't accessible in the configure block, so assign it here if it wasn't overridden:
-        app.config.react.server_renderer ||= React::ServerRendering::SprocketsRenderer
+        app.config.react.server_renderer ||= React::ServerRendering::BundleRenderer
 
         React::ServerRendering.pool_size        = app.config.react.server_renderer_pool_size
         React::ServerRendering.pool_timeout     = app.config.react.server_renderer_timeout
