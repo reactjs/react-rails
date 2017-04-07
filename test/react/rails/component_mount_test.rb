@@ -1,9 +1,13 @@
 require 'test_helper'
 
-when_sprockets_available do
+SprocketsHelpers.when_available do
   class ComponentMountTest < ActionDispatch::IntegrationTest
+    compiled_once = false
     setup do
-      WebpackerHelpers.compile_if_missing
+      if !compiled_once
+        WebpackerHelpers.clear_webpacker_packs
+        WebpackerHelpers.compile
+      end
       @helper = React::Rails::ComponentMount.new
     end
 
@@ -72,7 +76,7 @@ when_sprockets_available do
       assert(html.include?('data-reactid'), "it includes React properties")
     end
 
-    test '#react_component passes :static to SprocketsRenderer' do
+    test '#react_component passes :static to BundleRenderer' do
       html = @helper.react_component('Todo', {todo: 'render on the server'}.to_json, prerender: :static)
       assert(html.include?('>render on the server</li>'), "it includes rendered HTML")
       assert(!html.include?('data-reactid'), "it DOESNT INCLUDE React properties")

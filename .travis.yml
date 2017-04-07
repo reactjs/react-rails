@@ -17,7 +17,7 @@ gemfile:
   - gemfiles/rails_4.2_sprockets_2.gemfile
   - gemfiles/rails_4.2_sprockets_3.gemfile
   - gemfiles/rails_4.2_sprockets_4.gemfile
-  - gemfiles/rails_5.gemfile
+  - gemfiles/rails_5_no_sprockets_webpacker.gemfile
   - gemfiles/rails_5_no_sprockets.gemfile
   - gemfiles/rails_5_sprockets_4.gemfile
 
@@ -37,7 +37,7 @@ matrix:
     - rvm: 2.1
       gemfile: gemfiles/rails_4.2_sprockets_4.gemfile
     - rvm: 2.1
-      gemfile: gemfiles/rails_5.gemfile
+      gemfile: gemfiles/rails_5_no_sprockets_webpacker.gemfile
     - rvm: 2.1
       gemfile: gemfiles/rails_5_no_sprockets.gemfile
     - rvm: 2.1
@@ -51,7 +51,7 @@ matrix:
     - rvm: jruby-9.0.1.0
       gemfile: gemfiles/rails_4.2_sprockets_2.gemfile
     - rvm: jruby-9.0.1.0
-      gemfile: gemfiles/rails_5_mini_racer.gemfile
+      gemfile: gemfiles/rails_5_no_sprockets_webpacker.gemfile
 
   allow_failures:
     - rvm: jruby-9.0.1.0

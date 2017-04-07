@@ -1,7 +1,7 @@
 require 'test_helper'
 
-when_sprockets_available do
-  class SprocketsRendererTest < ActiveSupport::TestCase
+if SprocketsHelpers.available? || WebpackerHelpers.available?
+  class BundleRendererTest < ActiveSupport::TestCase
     CALLBACKS = [:before_render, :after_render]
 
     webpacker_compiled = false
@@ -10,7 +10,7 @@ when_sprockets_available do
         WebpackerHelpers.compile
         webpacker_compiled = true
       end
-      @renderer = React::ServerRendering::SprocketsRenderer.new({})
+      @renderer = React::ServerRendering::BundleRenderer.new({})
     end
 
     CALLBACKS.each do |callback_name|
@@ -56,7 +56,7 @@ when_sprockets_available do
     end
 
     test '#render console messages can be disabled' do
-      no_log_renderer = React::ServerRendering::SprocketsRenderer.new({replay_console: false})
+      no_log_renderer = React::ServerRendering::BundleRenderer.new({replay_console: false})
       result = no_log_renderer.render("TodoListWithConsoleLog", {todos: ["log some messages"]}, nil)
       assert_no_match(/console.log.apply\(console, \["got initial state"\]\)/, result)
       assert_no_match(/console.warn.apply\(console, \["mounted component"\]\)/, result)
@@ -93,14 +93,14 @@ when_sprockets_available do
       test '.new accepts additional code to add to the JS context' do
         additional_code = File.read(File.expand_path("../../../helper_files/WithoutSprockets.js", __FILE__))
 
-        additional_renderer = React::ServerRendering::SprocketsRenderer.new(code: additional_code)
+        additional_renderer = React::ServerRendering::BundleRenderer.new(code: additional_code)
 
         assert_match(/drink more caffeine<\/span>/, additional_renderer.render("WithoutSprockets", {label: "drink more caffeine"}, nil))
       end
 
       # These use cases don't apply to Webpacker since the require.context comes from a pack:
       test '.new accepts any filenames' do
-        limited_renderer = React::ServerRendering::SprocketsRenderer.new(files: ["react-server.js", "react_ujs.js", "components/Todo.js"])
+        limited_renderer = React::ServerRendering::BundleRenderer.new(files: ["react-server.js", "react_ujs.js", "components/Todo.js"])
         assert_match(/get a real job<\/li>/, limited_renderer.render("Todo", {todo: "get a real job"}, nil))
         err = assert_raises React::ServerRendering::PrerenderError do
           limited_renderer.render("TodoList", {todos: []}, nil)
@@ -113,11 +113,11 @@ when_sprockets_available do
           legacy_rendering_files = ["react-server.js", "react_ujs.js", "components.js"]
           Rails.application.config.assets.precompile += legacy_rendering_files
 
-          precompile_assets
+          SprocketsHelpers.precompile_assets
 
           Rails.application.config.assets.compile = false
 
-          @renderer = React::ServerRendering::SprocketsRenderer.new(files: legacy_rendering_files)
+          @renderer = React::ServerRendering::BundleRenderer.new(files: legacy_rendering_files)
 
           result = @renderer.render("Todo", {todo: "write tests"}, nil)
           assert_match(/<li.*write tests<\/li>/, result)
@@ -125,7 +125,7 @@ when_sprockets_available do
         ensure
           Rails.application.config.assets.compile = true
 
-          clear_precompiled_assets
+          SprocketsHelpers.clear_precompiled_assets
         end
       end
     end
