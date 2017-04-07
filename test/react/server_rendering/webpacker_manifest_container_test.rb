@@ -25,7 +25,7 @@ WebpackerHelpers.when_webpacker_available do
       end
 
       detected_dev_server = false
-      20.times do |i|
+      60.times do |i|
         begin
           # Make sure that the manifest has been updated:
           Webpacker::Manifest.load("./test/dummy/public/packs/manifest.json")
@@ -34,6 +34,7 @@ WebpackerHelpers.when_webpacker_available do
           if example_asset_path.nil?
             puts "Manifest is blank, all manifests:"
             Dir.glob("./test/dummy/public/packs/*.json").each do |f|
+              puts f
               puts File.read(f)
             end
             next
