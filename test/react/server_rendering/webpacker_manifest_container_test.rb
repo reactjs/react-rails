@@ -32,6 +32,10 @@ WebpackerHelpers.when_webpacker_available do
           webpack_manifest = Webpacker::Manifest.instance.data
           example_asset_path = webpack_manifest.values.first
           if example_asset_path.nil?
+            puts "Manifest is blank, all manifests:"
+            Dir.glob("./test/dummy/public/packs/*.json").each do |f|
+              puts File.read(f)
+            end
             next
           end
           assert_includes example_asset_path, "http://localhost:8080"
