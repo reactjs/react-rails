@@ -89,11 +89,9 @@ module WebpackerHelpers
   ensure
     # Kill the server process
     puts "Killing webpack dev server"
-    puts Process.kill("INT", webpack_dev_server)
-    Process.wait(webpack_dev_server)
-    puts $?
     check_cmd = "lsof -i :8080 -S"
     kill_cmd = "kill -9 #{webpack_dev_server}"
+    `#{kill_cmd}`
     30.times do
       puts check_cmd
       status = `#{check_cmd}`
@@ -101,6 +99,8 @@ module WebpackerHelpers
       still_alive = status.include?(webpack_dev_server.to_s)
       puts "Still alive? #{still_alive} (#{webpack_dev_server.to_s})"
       if still_alive
+        remaining_pid = status.match(/\n[a-z]+\s+(\d+)/)[1]
+        kill_cmd = "kill -9 #{remaining_pid}"
         puts kill_cmd
         puts `#{kill_cmd}`
         sleep 0.5
