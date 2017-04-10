@@ -26,6 +26,7 @@ ReactRailsUJS.loadContext(componentRequireContext)
     test "adds requires to `application.js`" do
       run_generator
       assert_file "app/javascript/packs/application.js", EXPECTED_SETUP
+      assert_file "app/javascript/components"
     end
 
     test "creates server_rendering.js with default requires" do

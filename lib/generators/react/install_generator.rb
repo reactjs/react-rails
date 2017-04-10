@@ -18,9 +18,14 @@ module React
 
       # Make an empty `components/` directory in the right place:
       def create_directory
-        empty_directory File.join(javascript_dir, 'components')
+        components_dir = if webpacker?
+          Pathname.new(javascript_dir).parent.to_s
+        else
+          javascript_dir
+        end
+        empty_directory File.join(components_dir, 'components')
         if !options[:skip_git]
-          create_file File.join(javascript_dir, 'components/.gitkeep')
+          create_file File.join(components_dir, 'components/.gitkeep')
         end
       end
 
