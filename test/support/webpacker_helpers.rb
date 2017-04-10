@@ -89,7 +89,7 @@ module WebpackerHelpers
   ensure
     # Kill the server process
     puts "Killing webpack dev server"
-    puts Process.kill("HUP", webpack_dev_server)
+    puts Process.kill("INT", webpack_dev_server)
     Process.wait(webpack_dev_server)
     puts $?
     check_cmd = "lsof -i :8080 -S"
