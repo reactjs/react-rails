@@ -93,9 +93,20 @@ module WebpackerHelpers
     Process.wait(webpack_dev_server)
     puts $?
     check_cmd = "lsof -i :8080 -S"
-    puts check_cmd
-    puts `#{check_cmd}`
-    puts `kill -9 #{webpack_dev_server}`
+    kill_cmd = "kill -9 #{webpack_dev_server}"
+    30.times do
+      puts check_cmd
+      status = `#{check_cmd}`
+      puts status
+      if status.include?(webpack_dev_server.to_s)
+        puts kill_cmd
+        puts `#{kill_cmd}`
+        sleep 0.5
+      else
+        break
+      end
+    end
+
     # Remove the dev-server packs:
     WebpackerHelpers.clear_webpacker_packs
     puts "Killed."
