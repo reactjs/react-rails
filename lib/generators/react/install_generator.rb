@@ -99,7 +99,7 @@ module React
 // Support component names relative to this directory:
 var componentRequireContext = require.context("components", true)
 var ReactRailsUJS = require("react_ujs")
-ReactRailsUJS.loadContext(componentRequireContext)
+ReactRailsUJS.useContext(componentRequireContext)
 JS
 
       def setup_react_webpacker

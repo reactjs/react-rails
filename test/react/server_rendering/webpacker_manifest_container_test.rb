@@ -12,7 +12,7 @@ WebpackerHelpers.when_webpacker_available do
       container = React::ServerRendering::WebpackerManifestContainer.new
       js_file = container.find_asset("application.js")
       # Main file:
-      assert_includes js_file, "ReactRailsUJS.loadContext(ctx)"
+      assert_includes js_file, "ReactRailsUJS.useContext(ctx)"
       # Bundled dependencies:
       assert_includes js_file, "ExportDefaultComponent"
     end
@@ -22,7 +22,7 @@ WebpackerHelpers.when_webpacker_available do
         container = React::ServerRendering::WebpackerManifestContainer.new
         js_file = container.find_asset("application.js")
         # Main file:
-        assert_includes js_file, "ReactRailsUJS.loadContext(ctx)"
+        assert_includes js_file, "ReactRailsUJS.useContext(ctx)"
         # Bundled dependencies:
         assert_includes js_file, "ExportDefaultComponent"
       end

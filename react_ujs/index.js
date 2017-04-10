@@ -4,7 +4,7 @@ var ReactDOMServer = require("react-dom/server")
 
 var detectEvents = require("./src/events/detect")
 var constructorFromGlobal = require("./src/getConstructor/fromGlobal")
-var constructorFromRequireContext = require("./src/getConstructor/fromRequireContext")
+var constructorFromRequireContextWithGlobalFallback = require("./src/getConstructor/fromRequireContextWithGlobalFallback")
 
 var ReactRailsUJS = {
   // This attribute holds the name of component which should be mounted
@@ -55,8 +55,8 @@ var ReactRailsUJS = {
   // the default is ReactRailsUJS.ComponentGlobal
   getConstructor: constructorFromGlobal,
 
-  loadContext: function(req) {
-    this.getConstructor = constructorFromRequireContext(req)
+  useContext: function(req) {
+    this.getConstructor = constructorFromRequireContextWithGlobalFallback(req)
   },
 
   // Render `componentName` with `props` to a string,

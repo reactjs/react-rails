@@ -65,16 +65,16 @@ The component name tells `react-rails` where to load the component. For example:
 
 This way, you can access top-level, default, or named exports.
 
-The `require.context` inserted into `packs/application.js` is used to load components. If you want to load components from a different directory, override it by calling `ReactRailsUJS.loadContext`:
+The `require.context` inserted into `packs/application.js` is used to load components. If you want to load components from a different directory, override it by calling `ReactRailsUJS.useContext`:
 
 ```js
 var myCustomContext = require.context("custom_components", true)
 var ReactRailsUJS = require("react_ujs")
 // use `custom_components/` for <%= react_component(...) %> calls
-ReactRailsUJS.loadContext(myCustomContext)
+ReactRailsUJS.useContext(myCustomContext)
 ```
 
-Alternatively, you can bypass `ReactRailsUJS.loadContext` altogether and use the global namespace approach described in [Use with Asset Pipeline](#use-with-asset-pipeline)
+Alternatively, you can bypass `ReactRailsUJS.useContext` altogether and use the global namespace approach described in [Use with Asset Pipeline](#use-with-asset-pipeline)
 
 ## Use with Asset Pipeline
 

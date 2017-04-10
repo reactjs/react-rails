@@ -18,6 +18,7 @@ WebpackerHelpers.when_webpacker_available do
       assert page.has_content?('Export Default')
       assert page.has_content?('Named Export')
       assert page.has_content?('Exports')
+      assert page.has_content?('Global Component')
     end
   end
 end
