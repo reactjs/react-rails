@@ -95,6 +95,7 @@ module WebpackerHelpers
     check_cmd = "lsof -i :8080 -S"
     puts check_cmd
     puts `#{check_cmd}`
+    puts `kill -9 #{webpack_dev_server}`
     # Remove the dev-server packs:
     WebpackerHelpers.clear_webpacker_packs
     puts "Killed."
