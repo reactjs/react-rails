@@ -34,7 +34,9 @@ $ rails g react:install
 
 ## Use with Webpacker
 
-[webpacker](https://github.com/rails/webpacker) integrates modern JS tooling with Rails. Get started by adding `webpacker` to your gemfile and installing `webpacker` and `react-rails`:
+[webpacker](https://github.com/rails/webpacker) integrates modern JS tooling with Rails. `ReactRailsUJS` allows you to gradually migrate to webpacker.
+
+Get started by adding `webpacker` to your gemfile and installing `webpacker` and `react-rails`:
 
 ```
 $ rails webpacker:install
@@ -65,6 +67,8 @@ The component name tells `react-rails` where to load the component. For example:
 
 This way, you can access top-level, default, or named exports.
 
+If `require` fails, `react-rails` falls back to the global namespace approach described in [Use with Asset Pipeline](#use-with-asset-pipeline).
+
 The `require.context` inserted into `packs/application.js` is used to load components. If you want to load components from a different directory, override it by calling `ReactRailsUJS.useContext`:
 
 ```js
@@ -73,8 +77,6 @@ var ReactRailsUJS = require("react_ujs")
 // use `custom_components/` for <%= react_component(...) %> calls
 ReactRailsUJS.useContext(myCustomContext)
 ```
-
-Alternatively, you can bypass `ReactRailsUJS.useContext` altogether and use the global namespace approach described in [Use with Asset Pipeline](#use-with-asset-pipeline)
 
 ## Use with Asset Pipeline
 
