@@ -88,30 +88,27 @@ module WebpackerHelpers
     yield
   ensure
     # Kill the server process
-    puts "Killing webpack dev server"
+    # puts "Killing webpack dev server"
     check_cmd = "lsof -i :8080 -S"
-    kill_cmd = "kill -9 #{webpack_dev_server}"
-    `#{kill_cmd}`
-    30.times do
-      puts check_cmd
+    10.times do
+      # puts check_cmd
       status = `#{check_cmd}`
-      puts status
+      # puts status
       remaining_pid_match = status.match(/\n[a-z]+\s+(\d+)/)
       if remaining_pid_match
         remaining_pid = remaining_pid_match[1]
-        puts "Remaining #{remaining_pid}"
+        # puts "Remaining #{remaining_pid}"
         kill_cmd = "kill -9 #{remaining_pid}"
-        puts kill_cmd
-        puts `#{kill_cmd}`
+        # puts kill_cmd
+        `#{kill_cmd}`
         sleep 0.5
       else
-        puts "Break"
         break
       end
     end
 
     # Remove the dev-server packs:
     WebpackerHelpers.clear_webpacker_packs
-    puts "Killed."
+    # puts "Killed."
   end
 end
