@@ -96,10 +96,10 @@ module WebpackerHelpers
       puts check_cmd
       status = `#{check_cmd}`
       puts status
-      still_alive = status.include?(webpack_dev_server.to_s)
-      puts "Still alive? #{still_alive} (#{webpack_dev_server.to_s})"
-      if still_alive
-        remaining_pid = status.match(/\n[a-z]+\s+(\d+)/)[1]
+      remaining_pid_match = status.match(/\n[a-z]+\s+(\d+)/)
+      if remaining_pid_match
+        remaining_pid = remaining_pid_match[1]
+        puts "Remaining #{remaining_pid}"
         kill_cmd = "kill -9 #{remaining_pid}"
         puts kill_cmd
         puts `#{kill_cmd}`
