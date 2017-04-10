@@ -89,8 +89,11 @@ module WebpackerHelpers
   ensure
     # Kill the server process
     puts "Killing webpack dev server"
-    puts Process.kill("KILL", webpack_dev_server)
+    puts Process.kill("HUP", webpack_dev_server)
     Process.wait
+    check_cmd = "lsof -i :8080 -S"
+    puts check_cmd
+    puts `#{check_cmd}`
     # Remove the dev-server packs:
     WebpackerHelpers.clear_webpacker_packs
     puts "Killed."
