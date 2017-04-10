@@ -98,11 +98,14 @@ module WebpackerHelpers
       puts check_cmd
       status = `#{check_cmd}`
       puts status
-      if status.include?(webpack_dev_server.to_s)
+      still_alive = status.include?(webpack_dev_server.to_s)
+      puts "Still alive? #{still_alive} (#{webpack_dev_server.to_s})"
+      if still_alive
         puts kill_cmd
         puts `#{kill_cmd}`
         sleep 0.5
       else
+        puts "Break"
         break
       end
     end
