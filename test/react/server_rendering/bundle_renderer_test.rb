@@ -68,12 +68,8 @@ if SprocketsHelpers.available? || WebpackerHelpers.available?
         @renderer.render("NonExistentComponent", {}, nil)
       end
 
-      if WebpackerHelpers.available?
-        assert_includes err.message, "Cannot find module './NonExistentComponent'"
-      else
-        assert_match(/ReferenceError/, err.to_s)
-        assert_match(/NonExistentComponent/, err.to_s, "it names the component")
-      end
+      assert_match(/ReferenceError/, err.to_s)
+      assert_match(/NonExistentComponent/, err.to_s, "it names the component")
 
       assert_match(/\n/, err.to_s, "it includes the multi-line backtrace")
     end

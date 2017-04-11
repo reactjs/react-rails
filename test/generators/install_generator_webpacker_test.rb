@@ -10,7 +10,7 @@ WebpackerHelpers.when_webpacker_available do
     EXPECTED_SETUP = %|// Support component names relative to this directory:
 var componentRequireContext = require.context("components", true)
 var ReactRailsUJS = require("react_ujs")
-ReactRailsUJS.loadContext(componentRequireContext)
+ReactRailsUJS.useContext(componentRequireContext)
 |
 
     DEFAULT_SERVER_RENDERING_PACK_PATH = "app/javascript/packs/server_rendering.js"
@@ -34,7 +34,7 @@ ReactRailsUJS.loadContext(componentRequireContext)
       assert_file DEFAULT_SERVER_RENDERING_PACK_PATH do |contents|
         assert_includes contents, "var componentRequireContext = require.context(\"components\", true)\n"
         assert_includes contents, "var ReactRailsUJS = require(\"react_ujs\")\n"
-        assert_includes contents, "ReactRailsUJS.loadContext(componentRequireContext)\n"
+        assert_includes contents, "ReactRailsUJS.useContext(componentRequireContext)\n"
       end
     end
 
