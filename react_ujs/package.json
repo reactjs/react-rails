@@ -1,6 +1,6 @@
 {
   "name": "react_ujs",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Rails UJS for the react-rails gem",
   "main": "index.js",
   "repository": "reactjs/react-rails",

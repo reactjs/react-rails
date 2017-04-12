@@ -91,6 +91,9 @@ module React
         !::Rails.application.config.assets.compile
       end
 
+      # Detect what kind of asset system is in use and choose that container.
+      # Or, if the user has provided {.asset_container_class}, use that.
+      # @return [Class] suitable for {#asset_container}
       def asset_container_class
         if self.class.asset_container_class.present?
           self.class.asset_container_class

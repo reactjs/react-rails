@@ -55,8 +55,11 @@ var ReactRailsUJS = {
   // the default is ReactRailsUJS.ComponentGlobal
   getConstructor: constructorFromGlobal,
 
-  useContext: function(req) {
-    this.getConstructor = constructorFromRequireContextWithGlobalFallback(req)
+  // Given a Webpack `require.context`,
+  // try finding components with `require`,
+  // then falling back to global lookup.
+  useContext: function(requireContext) {
+    this.getConstructor = constructorFromRequireContextWithGlobalFallback(requireContext)
   },
 
   // Render `componentName` with `props` to a string,

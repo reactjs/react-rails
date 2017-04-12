@@ -21,7 +21,7 @@
     "rails-erb-loader": "^4.0.0",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
-    "react_ujs": "^0.2.0",
+    "react_ujs": "^0.3.0",
     "sass-loader": "^6.0.3",
     "style-loader": "^0.16.1",
     "webpack": "^2.3.3",
