@@ -32,6 +32,10 @@ module Dummy
     # config.i18n.default_locale = :de
     config.react.variant = :production
     config.react.addons = false
+    config.react.server_renderer_options = {
+      replay_console: true,
+    }
+
     if SprocketsHelpers.available?
       config.assets.enabled = true
     end

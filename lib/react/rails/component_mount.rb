@@ -46,7 +46,15 @@ module React
         # remove internally used properties so they aren't rendered to DOM
         html_options.except!(:tag, :prerender, :camelize_props)
 
-        content_tag(html_tag, '', html_options, &block)
+        rendered_tag = content_tag(html_tag, '', html_options, &block)
+        if React::ServerRendering.renderer_options[:replay_console]
+          # Grab the server-rendered console replay script
+          # and move it _outside_ the container div
+          rendered_tag.sub!(/\n(<script class="react-rails-console-replay">.*<\/script>)<\/(\w+)>$/m,'</\2>\1')
+          rendered_tag.html_safe
+        else
+          rendered_tag
+        end
       end
 
       private

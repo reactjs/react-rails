@@ -8,6 +8,7 @@ module.exports = React.createClass({
     this.setState({mounted: 'yep'});
   },
   render: function() {
+    console.log("Test Console Replay")
     return (
       <ul>
         <li id='status'>{this.state.mounted}</li>
