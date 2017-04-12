@@ -7,6 +7,8 @@ module React
     mattr_accessor :renderer, :renderer_options,
       :pool_size, :pool_timeout
 
+    self.renderer_options = {}
+
     # Discard the old ConnectionPool & create a new one
     def self.reset_pool
       options = {size: pool_size, timeout: pool_timeout}
