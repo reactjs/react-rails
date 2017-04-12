@@ -35,11 +35,7 @@ module React
         # Rails checks these objects for changes:
         app.reloaders << ActiveSupport::FileUpdateChecker.new([], reload_paths)
         # Reload renderers in dev when files change
-        if Gem::Version.new(::Rails::VERSION::STRING) >= Gem::Version.new("5.x")
-          ActiveSupport::Reloader.to_prepare { React::ServerRendering.reset_pool }
-        else
-          ActionDispatch::Reloader.to_prepare { React::ServerRendering.reset_pool }
-        end
+        config.to_prepare { React::ServerRendering.reset_pool }
       end
 
       # Include the react-rails view helper lazily
