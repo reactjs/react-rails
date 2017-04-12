@@ -4,14 +4,37 @@ SprocketsHelpers.when_available do
   class ReactRailsUJSTest < ActionDispatch::IntegrationTest
     include Capybara::DSL
 
+    compiled = false
     setup do
-      Capybara.current_driver = Capybara.javascript_driver
-      WebpackerHelpers.compile_if_missing
+      if !compiled
+        React::ServerRendering.reset_pool
+        WebpackerHelpers.compile
+      end
+    end
+
+    # Normalize for webpacker check:
+    def assert_greeting(page, plain_greeting, refute: false)
+      normalized_greeting = if WebpackerHelpers.available?
+        greeting, name = plain_greeting.split(" ")
+        "#{greeting} from Webpacker #{name}"
+      else
+        plain_greeting
+      end
+
+      if refute
+        assert page.has_no_content?(normalized_greeting), page.body
+      else
+        assert page.has_content?(normalized_greeting), page.body
+      end
+    end
+
+    def refute_greeting(page, greeting)
+      assert_greeting(page, greeting, refute: true)
     end
 
     test 'ujs object present on the global React object and has our methods' do
       visit '/pages/1'
-      assert page.has_content?('Hello Bob')
+      assert_greeting(page, 'Hello Bob')
 
       # the exposed ujs object is present
       ujs_present = page.evaluate_script('typeof ReactRailsUJS === "object";')
@@ -34,82 +57,82 @@ SprocketsHelpers.when_available do
 
     test 'react_ujs works with rendered HTML' do
       visit '/pages/1'
-      assert page.has_content?('Hello Bob')
+      assert_greeting(page, 'Hello Bob')
 
       page.click_button 'Goodbye'
-      assert page.has_no_content?('Hello Bob')
-      assert page.has_content?('Goodbye Bob')
+      refute_greeting(page, 'Hello Bob')
+      assert_greeting(page, 'Goodbye Bob')
     end
 
     test 'react_ujs works with Turbolinks' do
       visit '/pages/1'
-      assert page.has_content?('Hello Bob')
+      assert_greeting(page, 'Hello Bob')
       assert page.evaluate_script("Turbolinks.supported")
 
       # Try clicking links.
       page.click_link('Alice')
       wait_for_turbolinks_to_be_available
-      assert page.has_content?('Hello Alice')
+      assert_greeting(page, 'Hello Alice')
 
       page.click_link('Bob')
       wait_for_turbolinks_to_be_available
-      assert page.has_content?('Hello Bob')
+      assert_greeting(page, 'Hello Bob')
 
       # Try going back.
       page.execute_script('history.back();')
       wait_for_turbolinks_to_be_available
-      assert page.has_content?('Hello Alice')
+      assert_greeting(page, 'Hello Alice')
 
       # Try Turbolinks javascript API.
       page.execute_script('Turbolinks.visit("/pages/2");')
       wait_for_turbolinks_to_be_available
-      assert page.has_content?('Hello Alice')
+      assert_greeting(page, 'Hello Alice')
 
 
       page.execute_script('Turbolinks.visit("/pages/1");')
       wait_for_turbolinks_to_be_available
-      assert page.has_content?('Hello Bob')
+      assert_greeting(page, 'Hello Bob')
 
       # Component state is not persistent after clicking current page link.
       page.click_button 'Goodbye'
-      assert page.has_content?('Goodbye Bob')
+      assert_greeting(page, 'Goodbye Bob')
 
       page.click_link('Bob')
       wait_for_turbolinks_to_be_available
-      assert page.has_content?('Hello Bob')
+      assert_greeting(page, 'Hello Bob')
     end
 
     test 'react_ujs can unmount/mount using a selector reference for a component parent' do
       visit '/pages/1'
-      assert page.has_content?('Hello Bob'), page.body
+      assert_greeting(page, 'Hello Bob')
 
       page.click_button "Unmount by parent selector"
-      assert page.has_no_content?('Hello Bob'), page.body
+      refute_greeting(page, 'Hello Bob')
 
       page.click_button "Mount by parent selector"
-      assert page.has_content?('Hello Bob'), page.body
+      assert_greeting(page, 'Hello Bob')
     end
 
     test 'react_ujs can unmount/mount using a selector reference for the component' do
       visit '/pages/1'
-      assert page.has_content?('Hello Bob'), page.body
+      assert_greeting(page, 'Hello Bob')
 
       page.click_button "Unmount by own selector"
-      assert page.has_no_content?('Hello Bob'), page.body
+      refute_greeting(page, 'Hello Bob')
 
       page.click_button "Mount by own selector"
-      assert page.has_content?('Hello Bob'), page.body
+      assert_greeting(page, 'Hello Bob')
     end
 
     test 'react_ujs can unmount/mount using a dom node context' do
       visit '/pages/1'
-      assert page.has_content?('Hello Bob'), page.body
+      assert_greeting(page, 'Hello Bob')
 
       page.click_button "Unmount by parent node"
-      assert page.has_no_content?('Hello Bob'), page.body
+      refute_greeting(page, 'Hello Bob')
 
       page.click_button "Mount by parent node"
-      assert page.has_content?('Hello Bob'), page.body
+      assert_greeting(page, 'Hello Bob')
     end
 
     test 'react server rendering also gets mounted on client' do

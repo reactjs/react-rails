@@ -78,6 +78,34 @@ return /******/ (function(modules) { // webpackBootstrap
 /************************************************************************/
 /******/ ([
 /* 0 */
+/***/ (function(module, exports) {
+
+// Assume className is simple and can be found at top-level (window).
+// Fallback to eval to handle cases like 'My.React.ComponentName'.
+// Also, try to gracefully import Babel 6 style default exports
+var topLevel = typeof window === "undefined" ? this : window;
+
+module.exports = function(className) {
+  var constructor;
+  // Try to access the class globally first
+  constructor = topLevel[className];
+
+  // If that didn't work, try eval
+  if (!constructor) {
+    constructor = eval(className);
+  }
+
+  // Lastly, if there is a default attribute try that
+  if (constructor && constructor['default']) {
+    constructor = constructor['default'];
+  }
+
+  return constructor;
+}
+
+
+/***/ }),
+/* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var nativeEvents = __webpack_require__(7)
@@ -119,57 +147,25 @@ module.exports = function(ujs) {
 
 
 /***/ }),
-/* 1 */
-/***/ (function(module, exports) {
-
-// Assume className is simple and can be found at top-level (window).
-// Fallback to eval to handle cases like 'My.React.ComponentName'.
-// Also, try to gracefully import Babel 6 style default exports
-var topLevel = typeof window === "undefined" ? this : window;
-
-module.exports = function(className) {
-  var constructor;
-  // Try to access the class globally first
-  constructor = topLevel[className];
-
-  // If that didn't work, try eval
-  if (!constructor) {
-    constructor = eval(className);
-  }
-
-  // Lastly, if there is a default attribute try that
-  if (constructor && constructor['default']) {
-    constructor = constructor['default'];
-  }
-
-  return constructor;
-}
-
-
-/***/ }),
 /* 2 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-// Load React components by requiring them from "components/", for example:
-//
-// - "pages/index" -> `require("components/pages/index")`
-// - "pages/show.Header" -> `require("components/pages/show").Header`
-// - "pages/show.Body.Content" -> `require("components/pages/show").Body.Content`
-//
+// Make a function which:
+// - First tries to require the name
+// - Then falls back to global lookup
+var fromGlobal = __webpack_require__(0)
+var fromRequireContext = __webpack_require__(12)
+
 module.exports = function(reqctx) {
+  var fromCtx = fromRequireContext(reqctx)
   return function(className) {
-    var parts = className.split(".")
-    var filename = parts.shift()
-    var keys = parts
-    // Load the module:
-    var component = reqctx("./" + filename)
-    // Then access each key:
-    keys.forEach(function(k) {
-      component = component[k]
-    })
-    // support `export default`
-    if (component.__esModule) {
-      component = component["default"]
+    var component;
+    try {
+      // `require` will raise an error if this className isn't found:
+      component = fromCtx(className)
+    } catch (err) {
+      // fallback to global:
+      component = fromGlobal(className)
     }
     return component
   }
@@ -202,9 +198,9 @@ var React = __webpack_require__(3)
 var ReactDOM = __webpack_require__(4)
 var ReactDOMServer = __webpack_require__(5)
 
-var detectEvents = __webpack_require__(0)
-var constructorFromGlobal = __webpack_require__(1)
-var constructorFromRequireContext = __webpack_require__(2)
+var detectEvents = __webpack_require__(1)
+var constructorFromGlobal = __webpack_require__(0)
+var constructorFromRequireContextWithGlobalFallback = __webpack_require__(2)
 
 var ReactRailsUJS = {
   // This attribute holds the name of component which should be mounted
@@ -255,8 +251,8 @@ var ReactRailsUJS = {
   // the default is ReactRailsUJS.ComponentGlobal
   getConstructor: constructorFromGlobal,
 
-  loadContext: function(req) {
-    this.getConstructor = constructorFromRequireContext(req)
+  useContext: function(req) {
+    this.getConstructor = constructorFromRequireContextWithGlobalFallback(req)
   },
 
   // Render `componentName` with `props` to a string,
@@ -360,8 +356,9 @@ module.exports = {
 module.exports = {
   // Turbolinks 5+ got rid of named events (?!)
   setup: function(ujs) {
-    ujs.handleEvent('turbolinks:load', function() { ujs.mountComponents() });
-    ujs.handleEvent('turbolinks:before-render', function() { ujs.unmountComponents() });
+    ujs.handleEvent('DOMContentLoaded', function() { ujs.mountComponents() })
+    ujs.handleEvent('turbolinks:render', function() { ujs.mountComponents() })
+    ujs.handleEvent('turbolinks:before-render', function() { ujs.unmountComponents() })
   },
 }
 
@@ -393,6 +390,36 @@ module.exports = {
     Turbolinks.pagesCached(0)
     ujs.handleEvent('page:change', function() { ujs.mountComponents() });
     ujs.handleEvent('page:receive', function() { ujs.unmountComponents() });
+  }
+}
+
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports) {
+
+// Load React components by requiring them from "components/", for example:
+//
+// - "pages/index" -> `require("components/pages/index")`
+// - "pages/show.Header" -> `require("components/pages/show").Header`
+// - "pages/show.Body.Content" -> `require("components/pages/show").Body.Content`
+//
+module.exports = function(reqctx) {
+  return function(className) {
+    var parts = className.split(".")
+    var filename = parts.shift()
+    var keys = parts
+    // Load the module:
+    var component = reqctx("./" + filename)
+    // Then access each key:
+    keys.forEach(function(k) {
+      component = component[k]
+    })
+    // support `export default`
+    if (component.__esModule) {
+      component = component["default"]
+    }
+    return component
   }
 }
 

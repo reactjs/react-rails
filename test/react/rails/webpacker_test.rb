@@ -7,6 +7,7 @@ WebpackerHelpers.when_webpacker_available do
     setup do
       Capybara.current_driver = Capybara.javascript_driver
       WebpackerHelpers.compile
+      React::ServerRendering.reset_pool
     end
 
     teardown do
