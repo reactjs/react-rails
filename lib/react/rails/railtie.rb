@@ -33,7 +33,7 @@ module React
         end
 
         # Rails checks these objects for changes:
-        app.reloaders << ActiveSupport::FileUpdateChecker.new([], reload_paths)
+        app.reloaders << app.config.file_watcher.new([], reload_paths)
         # Reload renderers in dev when files change
         config.to_prepare { React::ServerRendering.reset_pool }
       end
