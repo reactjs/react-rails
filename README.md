@@ -270,7 +270,7 @@ You can render React components inside your Rails server with `prerender: true`:
 
 _(It will also be mounted by the [UJS](#ujs) on page load.)_
 
-Server rendering is powered by [`ExecJS`](https://github.com/rails/execjs) and subject to some requiments:
+Server rendering is powered by [`ExecJS`](https://github.com/rails/execjs) and subject to some requirements:
 
 - `react-rails` must load your code. By convention, it uses `server_rendering.js`, which was created
 by the install task. This file must include your components _and_ their dependencies (eg, Underscore.js).
@@ -278,6 +278,8 @@ by the install task. This file must include your components _and_ their dependen
 so jQuery and some other libs won't work in this environment :(
 
 `ExecJS` supports many backends. CRuby users will get the best performance from [`mini_racer`](https://github.com/discourse/mini_racer#performance).
+
+#### Configuration
 
 Server renderers are stored in a pool and reused between requests. Threaded Rubies (eg jRuby) may see a benefit to increasing the pool size beyond the default `0`.
 
@@ -300,6 +302,41 @@ MyApp::Application.configure do
   config.react.server_renderer_directories = ["/app/assets/javascripts", "/app/javascripts/"]
 end
 ```
+
+#### JavaScript State
+
+Some of ExecJS's backends are stateful (eg, mini_racer, therubyracer). This means that any side-effects of a prerender will affect later renders with that renderer.
+
+To manage state, you have a couple options:
+
+- Make a custom renderer with `#before_render` / `#after_render` hooks as [described below](#custom-server-renderer)
+- Use `per_request_react_rails_prerenderer` to manage state for a whole controller action.
+
+To check out a renderer for the duration of a controller action, call the `per_request_react_rails_prerenderer` helper in the controller class:
+
+```ruby
+class PagesController < ApplicationController
+  # Use the same React server renderer for the entire request:
+  per_request_react_rails_prerenderer
+end
+```
+
+Then, you can access the ExecJS context directly with `react_rails_prerenderer.context`:
+
+```ruby
+def show
+  react_rails_prerenderer           # => #<React::ServerRendering::BundleRenderer>
+  react_rails_prerenderer.context   # => #<ExecJS::Context>
+
+  # Execute arbitrary JavaScript code
+  # `self` is the global context
+  react_rails_prerenderer.context.exec("self.Store.setup()")
+  render :show
+  react_rails_prerenderer.context.exec("self.Store.teardown()")
+end
+```
+
+`react_rails_prerenderer` may also be accessed in before- or after-actions.
 
 #### Custom Server Renderer
 
