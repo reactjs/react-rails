@@ -13,6 +13,7 @@ module React
       # Reimplement console methods for replaying on the client
       CONSOLE_POLYFILL = File.read(File.join(File.dirname(__FILE__), "bundle_renderer/console_polyfill.js"))
       CONSOLE_REPLAY   = File.read(File.join(File.dirname(__FILE__), "bundle_renderer/console_replay.js"))
+      CONSOLE_RESET    = File.read(File.join(File.dirname(__FILE__), "bundle_renderer/console_reset.js"))
       TIMEOUT_POLYFILL = File.read(File.join(File.dirname(__FILE__), "bundle_renderer/timeout_polyfill.js"))
 
       def initialize(options={})
@@ -37,6 +38,10 @@ module React
         t_options = prepare_options(prerender_options)
         t_props = prepare_props(props)
         super(component_name, t_props, t_options)
+      end
+
+      def before_render(component_name, props, prerender_options)
+        @replay_console ? CONSOLE_RESET : ""
       end
 
       def after_render(component_name, props, prerender_options)
