@@ -24,7 +24,6 @@ Dummy::Application.load_tasks
 
 WebpackerHelpers.clear_webpacker_packs
 
-Capybara.javascript_driver = :poltergeist
 Capybara.app = Rails.application
 
 Capybara.register_driver :poltergeist_debug do |app|
@@ -37,6 +36,7 @@ Capybara.register_driver :poltergeist_debug do |app|
   Capybara::Poltergeist::Driver.new(app, poltergeist_options)
 end
 Capybara.javascript_driver = :poltergeist_debug
+Capybara.current_driver = Capybara.javascript_driver
 
 
 CACHE_PATH = Pathname.new File.expand_path("../dummy/tmp/cache", __FILE__)
