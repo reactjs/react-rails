@@ -59,7 +59,7 @@ When you add a component to `components/`, you can [render it in a Rails view](#
 The component name tells `react-rails` where to load the component. For example:
 
 `react_component` call | component `require`
-=======================|======================
+-----|-----
 `react_component("Item")` | `require("Item")`
 `react_component("items/index")` | `require("items/index")`
 `react_component("items.Index")` | `require("items").Index`
