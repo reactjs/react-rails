@@ -7,13 +7,36 @@ var turbolinksClassicEvents = require("./turbolinksClassic")
 // see what things are globally available
 // and setup event handlers to those things
 module.exports = function(ujs) {
+  console.log(ujs.handleEvent)
+  if (ujs.handleEvent) {
+    // We're calling this a second time -- remove previous handlers
+    turbolinksClassicEvents.teardown(ujs)
+    turbolinksEvents.teardown(ujs);
+    turbolinksClassicDeprecatedEvents.teardown(ujs);
+    pjaxEvents.teardown(ujs);
+    nativeEvents.teardown(ujs);
+  }
+
   if (ujs.jQuery) {
     ujs.handleEvent = function(eventName, callback) {
       ujs.jQuery(document).on(eventName, callback);
     };
-  } else {
+    ujs.removeEvent = function(eventName, callback) {
+      ujs.jQuery(document).off(eventName, callback);
+    }
+  } else if ('addEventListener' in window) {
     ujs.handleEvent = function(eventName, callback) {
       document.addEventListener(eventName, callback);
+    };
+    ujs.removeEvent = function(eventName, callback) {
+      document.removeEventListener(eventName, callback);
+    };
+  } else {
+    ujs.handleEvent = function(eventName, callback) {
+      window.attachEvent(eventName, callback);
+    };
+    ujs.removeEvent = function(eventName, callback) {
+      window.detachEvent(eventName, callback);
     };
   }
 

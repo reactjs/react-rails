@@ -117,13 +117,36 @@ var turbolinksClassicEvents = __webpack_require__(10)
 // see what things are globally available
 // and setup event handlers to those things
 module.exports = function(ujs) {
+
+  if (ujs.handleEvent) {
+    // We're calling this a second time -- remove previous handlers
+    turbolinksClassicEvents.teardown(ujs)
+    turbolinksEvents.teardown(ujs);
+    turbolinksClassicDeprecatedEvents.teardown(ujs);
+    pjaxEvents.teardown(ujs);
+    nativeEvents.teardown(ujs);
+  }
+
   if (ujs.jQuery) {
     ujs.handleEvent = function(eventName, callback) {
       ujs.jQuery(document).on(eventName, callback);
     };
-  } else {
+    ujs.removeEvent = function(eventName, callback) {
+      ujs.jQuery(document).off(eventName, callback);
+    }
+  } else if ('addEventListener' in window) {
     ujs.handleEvent = function(eventName, callback) {
       document.addEventListener(eventName, callback);
+    };
+    ujs.removeEvent = function(eventName, callback) {
+      document.removeEventListener(eventName, callback);
+    };
+  } else {
+    ujs.handleEvent = function(eventName, callback) {
+      window.attachEvent(eventName, callback);
+    };
+    ujs.removeEvent = function(eventName, callback) {
+      window.detachEvent(eventName, callback);
     };
   }
 
@@ -251,8 +274,11 @@ var ReactRailsUJS = {
   // the default is ReactRailsUJS.ComponentGlobal
   getConstructor: constructorFromGlobal,
 
-  useContext: function(req) {
-    this.getConstructor = constructorFromRequireContextWithGlobalFallback(req)
+  // Given a Webpack `require.context`,
+  // try finding components with `require`,
+  // then falling back to global lookup.
+  useContext: function(requireContext) {
+    this.getConstructor = constructorFromRequireContextWithGlobalFallback(requireContext)
   },
 
   // Render `componentName` with `props` to a string,
@@ -298,11 +324,36 @@ var ReactRailsUJS = {
       ReactDOM.unmountComponentAtNode(node);
     }
   },
+
+  // Check the global context for installed libraries
+  // and figure out which library to hook up to (pjax, Turbolinks, jQuery)
+  // This is called on load, but you can call it again if needed
+  // (It will unmount itself)
+  detectEvents: function() {
+    detectEvents(this)
+  },
 }
+
+// These stable references are so that handlers can be added and removed:
+ReactRailsUJS.handleMount = function(e) {
+  var target = undefined;
+  if (e && e.target) {
+    target = e.target;
+  }
+  ReactRailsUJS.mountComponents(target);
+}
+ReactRailsUJS.handleUnmount = function(e) {
+  var target = undefined;
+  if (e && e.target) {
+    target = e.target;
+  }
+  ReactRailsUJS.unmountComponents(target);
+}
+
 
 if (typeof window !== "undefined") {
   // Only setup events for browser (not server-rendering)
-  detectEvents(ReactRailsUJS)
+  ReactRailsUJS.detectEvents()
 }
 
 // It's a bit of a no-no to populate the global namespace,
@@ -324,12 +375,22 @@ module.exports = {
   setup: function(ujs) {
     if (ujs.jQuery) {
       // Use jQuery if it's present:
-      ujs.jQuery(function() { ujs.mountComponents() });
+      ujs.handleEvent("ready", ujs.handleMount);
     } else if ('addEventListener' in window) {
-      document.addEventListener('DOMContentLoaded', function() { ujs.mountComponents() });
+      ujs.handleEvent('DOMContentLoaded', ujs.handleMount);
     } else {
       // add support to IE8 without jQuery
-      window.attachEvent('onload', function() { ujs.mountComponents() });
+      ujs.handleEvent('onload', ujs.handleMount);
+    }
+  },
+
+  teardown: function(ujs) {
+    if (ujs.jQuery) {
+      ujs.removeEvent("ready", ujs.handleMount);
+    } else if ('addEventListener' in window) {
+      ujs.removeEvent('DOMContentLoaded', ujs.handleMount);
+    } else {
+      ujs.removeEvent('onload', ujs.handleMount);
     }
   }
 }
@@ -342,10 +403,16 @@ module.exports = {
 module.exports = {
   // pjax support
   setup: function(ujs) {
-    ujs.handleEvent('ready', function() { ujs.mountComponents() });
-    ujs.handleEvent('pjax:end', function(e) { ujs.mountComponents(e.target) });
-    ujs.handleEvent('pjax:beforeReplace', function(e) { ujs.unmountComponents(e.target) });
-  }
+    ujs.handleEvent('ready', ujs.handleMount);
+    ujs.handleEvent('pjax:end', ujs.handleMount);
+    ujs.handleEvent('pjax:beforeReplace', ujs.handleUnmount);
+  },
+
+  teardown: function() {
+    ujs.removeEvent('ready', ujs.handleMount);
+    ujs.removeEvent('pjax:end', ujs.handleMount);
+    ujs.removeEvent('pjax:beforeReplace', ujs.handleUnmount);
+  },
 }
 
 
@@ -356,9 +423,15 @@ module.exports = {
 module.exports = {
   // Turbolinks 5+ got rid of named events (?!)
   setup: function(ujs) {
-    ujs.handleEvent('DOMContentLoaded', function() { ujs.mountComponents() })
-    ujs.handleEvent('turbolinks:render', function() { ujs.mountComponents() })
-    ujs.handleEvent('turbolinks:before-render', function() { ujs.unmountComponents() })
+    ujs.handleEvent('DOMContentLoaded', ujs.handleMount)
+    ujs.handleEvent('turbolinks:render', ujs.handleMount)
+    ujs.handleEvent('turbolinks:before-render', ujs.handleUnmount)
+  },
+
+  teardown: function(ujs) {
+    ujs.removeEvent('DOMContentLoaded', ujs.handleMount)
+    ujs.removeEvent('turbolinks:render', ujs.handleMount)
+    ujs.removeEvent('turbolinks:before-render', ujs.handleUnmount)
   },
 }
 
@@ -371,8 +444,12 @@ module.exports = {
   // Attach handlers to Turbolinks-Classic events
   // for mounting and unmounting components
   setup: function(ujs) {
-    ujs.handleEvent(Turbolinks.EVENTS.CHANGE, function() { ujs.mountComponents() });
-    ujs.handleEvent(Turbolinks.EVENTS.BEFORE_UNLOAD, function() { ujs.unmountComponents() });
+    ujs.handleEvent(Turbolinks.EVENTS.CHANGE, ujs.handleMount);
+    ujs.handleEvent(Turbolinks.EVENTS.BEFORE_UNLOAD, ujs.handleUnmount);
+  },
+  teardown: function(ujs) {
+    ujs.removeEvent(Turbolinks.EVENTS.CHANGE, ujs.handleMount);
+    ujs.removeEvent(Turbolinks.EVENTS.BEFORE_UNLOAD, ujs.handleUnmount);
   }
 }
 
@@ -388,8 +465,12 @@ module.exports = {
   // https://github.com/reactjs/react-rails/issues/87
   setup: function(ujs) {
     Turbolinks.pagesCached(0)
-    ujs.handleEvent('page:change', function() { ujs.mountComponents() });
-    ujs.handleEvent('page:receive', function() { ujs.unmountComponents() });
+    ujs.handleEvent('page:change', ujs.handleMount);
+    ujs.handleEvent('page:receive', ujs.handleUnmount);
+  },
+  teardown: function(ujs) {
+    ujs.removeEvent('page:change', ujs.handleMount);
+    ujs.removeEvent('page:receive', ujs.handleUnmount);
   }
 }
 

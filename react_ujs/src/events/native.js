@@ -4,12 +4,18 @@ module.exports = {
   setup: function(ujs) {
     if (ujs.jQuery) {
       // Use jQuery if it's present:
-      ujs.jQuery(function() { ujs.mountComponents() });
+      ujs.handleEvent("ready", ujs.handleMount);
     } else if ('addEventListener' in window) {
-      document.addEventListener('DOMContentLoaded', function() { ujs.mountComponents() });
+      ujs.handleEvent('DOMContentLoaded', ujs.handleMount);
     } else {
       // add support to IE8 without jQuery
-      window.attachEvent('onload', function() { ujs.mountComponents() });
+      ujs.handleEvent('onload', ujs.handleMount);
     }
+  },
+
+  teardown: function(ujs) {
+    ujs.removeEvent("ready", ujs.handleMount);
+    ujs.removeEvent('DOMContentLoaded', ujs.handleMount);
+    ujs.removeEvent('onload', ujs.handleMount);
   }
 }
