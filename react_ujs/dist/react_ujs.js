@@ -117,7 +117,6 @@ var turbolinksClassicEvents = __webpack_require__(10)
 // see what things are globally available
 // and setup event handlers to those things
 module.exports = function(ujs) {
-
   if (ujs.handleEvent) {
     // We're calling this a second time -- remove previous handlers
     turbolinksClassicEvents.teardown(ujs)
@@ -385,13 +384,9 @@ module.exports = {
   },
 
   teardown: function(ujs) {
-    if (ujs.jQuery) {
-      ujs.removeEvent("ready", ujs.handleMount);
-    } else if ('addEventListener' in window) {
-      ujs.removeEvent('DOMContentLoaded', ujs.handleMount);
-    } else {
-      ujs.removeEvent('onload', ujs.handleMount);
-    }
+    ujs.removeEvent("ready", ujs.handleMount);
+    ujs.removeEvent('DOMContentLoaded', ujs.handleMount);
+    ujs.removeEvent('onload', ujs.handleMount);
   }
 }
 
@@ -408,7 +403,7 @@ module.exports = {
     ujs.handleEvent('pjax:beforeReplace', ujs.handleUnmount);
   },
 
-  teardown: function() {
+  teardown: function(ujs) {
     ujs.removeEvent('ready', ujs.handleMount);
     ujs.removeEvent('pjax:end', ujs.handleMount);
     ujs.removeEvent('pjax:beforeReplace', ujs.handleUnmount);

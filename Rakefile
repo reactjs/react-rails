@@ -71,7 +71,7 @@ namespace :ujs do
   end
 
   desc "Publish the package in ./react_ujs/ to npm as `react_ujs`"
-  task :publish do
+  task publish: :update do
     Dir.chdir("react_ujs") do
       `npm publish`
     end

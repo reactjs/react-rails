@@ -8,6 +8,15 @@
 
 #### Bug Fixes
 
+## 2.0.2 (April 13, 2017)
+
+#### New Features
+
+- Rerun events detection at any time with `ReactRailsUJS.detectEvents()` #693
+- Make the NPM version of `react_ujs` match the Rubygem version
+
+`2.0.1` was skipped because a bad version of `react_ujs` was published to NPM.
+
 ## 2.0.0 (April 13, 2017)
 
 #### Breaking Changes

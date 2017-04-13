@@ -7,7 +7,6 @@ var turbolinksClassicEvents = require("./turbolinksClassic")
 // see what things are globally available
 // and setup event handlers to those things
 module.exports = function(ujs) {
-  console.log(ujs.handleEvent)
   if (ujs.handleEvent) {
     // We're calling this a second time -- remove previous handlers
     turbolinksClassicEvents.teardown(ujs)
