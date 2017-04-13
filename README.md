@@ -245,7 +245,14 @@ You can use this when the DOM is modified by AJAX calls or modal windows.
 
 `ReactRailsUJS` will automatically mount components on `<%= react_component(...) %>` tags and unmount them when appropriate.
 
-Be sure to load `react_ujs` _after_ these libraries so that it can detect them.
+If you need to re-detect events, you can call `detectEvents`:
+
+```js
+// Remove previous event handlers and add new ones:
+ReactRailsUJS.detectEvents()
+```
+
+For example, if `Turbolinks` is loaded _after_ `ReactRailsUJS`, you'll need to call this again. This function removes previous handlers before adding new ones, so it's safe to call as often as needed.
 
 ### `getConstructor`
 

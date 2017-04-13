@@ -105,11 +105,36 @@ var ReactRailsUJS = {
       ReactDOM.unmountComponentAtNode(node);
     }
   },
+
+  // Check the global context for installed libraries
+  // and figure out which library to hook up to (pjax, Turbolinks, jQuery)
+  // This is called on load, but you can call it again if needed
+  // (It will unmount itself)
+  detectEvents: function() {
+    detectEvents(this)
+  },
 }
+
+// These stable references are so that handlers can be added and removed:
+ReactRailsUJS.handleMount = function(e) {
+  var target = undefined;
+  if (e && e.target) {
+    target = e.target;
+  }
+  ReactRailsUJS.mountComponents(target);
+}
+ReactRailsUJS.handleUnmount = function(e) {
+  var target = undefined;
+  if (e && e.target) {
+    target = e.target;
+  }
+  ReactRailsUJS.unmountComponents(target);
+}
+
 
 if (typeof window !== "undefined") {
   // Only setup events for browser (not server-rendering)
-  detectEvents(ReactRailsUJS)
+  ReactRailsUJS.detectEvents()
 }
 
 // It's a bit of a no-no to populate the global namespace,

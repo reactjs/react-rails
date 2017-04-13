@@ -5,7 +5,11 @@ module.exports = {
   // https://github.com/reactjs/react-rails/issues/87
   setup: function(ujs) {
     Turbolinks.pagesCached(0)
-    ujs.handleEvent('page:change', function() { ujs.mountComponents() });
-    ujs.handleEvent('page:receive', function() { ujs.unmountComponents() });
+    ujs.handleEvent('page:change', ujs.handleMount);
+    ujs.handleEvent('page:receive', ujs.handleUnmount);
+  },
+  teardown: function(ujs) {
+    ujs.removeEvent('page:change', ujs.handleMount);
+    ujs.removeEvent('page:receive', ujs.handleUnmount);
   }
 }
