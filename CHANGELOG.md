@@ -8,6 +8,35 @@
 
 #### Bug Fixes
 
+## 2.0.0 (April 13, 2017)
+
+#### Breaking Changes
+
+- Server rendering loads `server_rendering.js` by default #471 . Upgrade by adding a new file which requires the previous defaults:
+
+  ```js
+  // app/assets/javascripts/server_rendering.js
+  // = require react-server
+  // = require components
+  ```
+
+
+#### New Features
+
+- Webpacker support:
+  - `react_component` can find components via `require.context` + `ReactRailsUJS.useContext` #678
+  - Server rendering detects Webpacker and uses packs #683, #687
+  - `ReactRailsUJS` is available from `npm` with `yarn add react_ujs` or `npm install react_ujs` #678
+- `per_request_react_rails_prerenderer` Allows you to check out a renderer for the _whole request_ instead of once-per-`react_component` #559
+
+#### Bug Fixes
+
+- Improved watching of server-rendering JS files #687
+- Fix console replay:
+  - Put the `<script>` tag outside the React.js container to avoid React warnings #691
+  - Clear console history between renders #692
+- Use better Turbolinks events #690
+
 ## 1.11.0 (April 4, 2017)
 
 #### New Features

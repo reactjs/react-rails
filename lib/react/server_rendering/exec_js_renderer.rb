@@ -5,6 +5,9 @@ module React
     # - No Rails dependency
     # - No browser concerns
     class ExecJSRenderer
+      # @return [ExecJS::Runtime::Context] The JS context for this renderer
+      attr_reader :context
+
       def initialize(options={})
         js_code = options[:code] || raise("Pass `code:` option to instantiate a JS context!")
         @context = ExecJS.compile(GLOBAL_WRAPPER + js_code)
@@ -38,7 +41,7 @@ module React
 
       def main_render(component_name, props, prerender_options)
         render_function = prerender_options.fetch(:render_function, "renderToString")
-        "ReactDOMServer.#{render_function}(React.createElement(#{component_name}, #{props}))"
+        "this.ReactRailsUJS.serverRender('#{render_function}', '#{component_name}', #{props})"
       end
 
       def compose_js(before, main, after)

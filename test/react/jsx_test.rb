@@ -26,7 +26,7 @@ class NullTransformer
   end
 end
 
-when_sprockets_available do
+SprocketsHelpers.when_available do
   class JSXTransformTest < ActionDispatch::IntegrationTest
     setup do
       reset_transformer
@@ -37,14 +37,14 @@ when_sprockets_available do
     end
 
     test 'asset pipeline should transform JSX' do
-      manually_expire_asset('example.js')
+      SprocketsHelpers.manually_expire_asset('example.js')
       get '/assets/example.js'
       assert_response :success
       assert_compiled_javascript_matches(EXPECTED_JS, @response.body)
     end
 
     test 'asset pipeline should transform JSX + Coffeescript' do
-      manually_expire_asset('example2.js')
+      SprocketsHelpers.manually_expire_asset('example2.js')
       get '/assets/example2.js'
       assert_response :success
       assert_compiled_javascript_matches(EXPECTED_JS_2, @response.body)
@@ -52,7 +52,7 @@ when_sprockets_available do
 
     test 'use a custom transformer' do
       React::JSX.transformer_class = NullTransformer
-      manually_expire_asset('example2.js')
+      SprocketsHelpers.manually_expire_asset('example2.js')
       get '/assets/example2.js'
 
       assert_equal "TRANSFORMED CODE!;\n", @response.body
@@ -60,7 +60,7 @@ when_sprockets_available do
 
     def test_babel_transformer_accepts_babel_transformation_options
       React::JSX.transform_options = {blacklist: ['spec.functionName', 'validation.react', "strict"]}
-      manually_expire_asset('example.js')
+      SprocketsHelpers.manually_expire_asset('example.js')
       get '/assets/example.js'
       assert_response :success
 

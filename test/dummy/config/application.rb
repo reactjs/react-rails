@@ -6,8 +6,7 @@ require "action_controller/railtie"
 require "action_mailer/railtie"
 
 # Test no-sprockets environment by testing the gemfile name
-SKIP_SPROCKETS = ENV["BUNDLE_GEMFILE"] =~ /no_sprockets/
-if !SKIP_SPROCKETS
+if SprocketsHelpers.available?
   require "sprockets/railtie"
 end
 
@@ -33,7 +32,11 @@ module Dummy
     # config.i18n.default_locale = :de
     config.react.variant = :production
     config.react.addons = false
-    if !SKIP_SPROCKETS
+    config.react.server_renderer_options = {
+      replay_console: true,
+    }
+
+    if SprocketsHelpers.available?
       config.assets.enabled = true
     end
   end

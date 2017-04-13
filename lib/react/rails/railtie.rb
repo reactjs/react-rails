@@ -15,14 +15,27 @@ module React
       # Server rendering:
       config.react.server_renderer_pool_size  = 1   # increase if you're on JRuby
       config.react.server_renderer_timeout    = 20  # seconds
-      config.react.server_renderer            = nil # defaults to SprocketsRenderer
-      config.react.server_renderer_options    = {}  # SprocketsRenderer provides defaults
+      config.react.server_renderer            = nil # defaults to BundleRenderer
+      config.react.server_renderer_options    = {}  # BundleRenderer provides defaults
+      # Changing files with these extensions in these directories will cause the server renderer to reload:
+      config.react.server_renderer_directories = ["/app/assets/javascripts/", "app/javascript"]
+      config.react.server_renderer_extensions = ["jsx", "js"]
       # View helper implementation:
       config.react.view_helper_implementation = nil # Defaults to ComponentMount
 
       # Watch .jsx files for changes in dev, so we can reload the JS VMs with the new JS code.
       initializer "react_rails.add_watchable_files", group: :all do |app|
-        app.config.watchable_files.concat Dir["#{app.root}/app/assets/javascripts/**/*.jsx*"]
+        # Watch files ending in `server_renderer_extensions` in each of `server_renderer_directories`
+        reload_paths = config.react.server_renderer_directories.reduce({}) do |memo, dir|
+          app_dir = File.join(app.root, dir)
+          memo[app_dir] = config.react.server_renderer_extensions
+          memo
+        end
+
+        # Rails checks these objects for changes:
+        app.reloaders << app.config.file_watcher.new([], reload_paths)
+        # Reload renderers in dev when files change
+        config.to_prepare { React::ServerRendering.reset_pool }
       end
 
       # Include the react-rails view helper lazily
@@ -81,20 +94,13 @@ module React
 
       config.after_initialize do |app|
         # The class isn't accessible in the configure block, so assign it here if it wasn't overridden:
-        app.config.react.server_renderer ||= React::ServerRendering::SprocketsRenderer
+        app.config.react.server_renderer ||= React::ServerRendering::BundleRenderer
 
         React::ServerRendering.pool_size        = app.config.react.server_renderer_pool_size
         React::ServerRendering.pool_timeout     = app.config.react.server_renderer_timeout
         React::ServerRendering.renderer_options = app.config.react.server_renderer_options
         React::ServerRendering.renderer         = app.config.react.server_renderer
-
         React::ServerRendering.reset_pool
-        # Reload renderers in dev when files change
-        if Gem::Version.new(::Rails::VERSION::STRING) >= Gem::Version.new("5.x")
-          ActiveSupport::Reloader.to_prepare { React::ServerRendering.reset_pool }
-        else
-          ActionDispatch::Reloader.to_prepare { React::ServerRendering.reset_pool }
-        end
       end
 
       initializer "react_rails.setup_engine", :group => :all do |app|

@@ -9,7 +9,7 @@ Dummy::Application.configure do
   # we need this to reload the jsx transformer when different version is dropped in
   config.cache_classes = false
   config.reload_plugins = true
-  if !SKIP_SPROCKETS
+  if SprocketsHelpers.available?
     config.assets.cache_store = :null_store
   end
 

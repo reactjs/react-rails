@@ -1,8 +1,13 @@
 require 'test_helper'
 
-when_sprockets_available do
+SprocketsHelpers.when_available do
   class ComponentMountTest < ActionDispatch::IntegrationTest
+    compiled_once = false
     setup do
+      if !compiled_once
+        WebpackerHelpers.clear_webpacker_packs
+        WebpackerHelpers.compile
+      end
       @helper = React::Rails::ComponentMount.new
     end
 
@@ -71,7 +76,7 @@ when_sprockets_available do
       assert(html.include?('data-reactid'), "it includes React properties")
     end
 
-    test '#react_component passes :static to SprocketsRenderer' do
+    test '#react_component passes :static to BundleRenderer' do
       html = @helper.react_component('Todo', {todo: 'render on the server'}.to_json, prerender: :static)
       assert(html.include?('>render on the server</li>'), "it includes rendered HTML")
       assert(!html.include?('data-reactid'), "it DOESNT INCLUDE React properties")
@@ -89,6 +94,24 @@ when_sprockets_available do
       assert html.match(/<span\s.*><\/span>/)
       assert html.include?('class="test"')
       assert html.include?('data-foo="1"')
+    end
+
+    module DummyRenderer
+      def self.render(component_name, props, prerender_options)
+        "rendered #{component_name} with #{props.to_json}"
+      end
+    end
+
+    module DummyController
+      def self.react_rails_prerenderer
+        DummyRenderer
+      end
+    end
+
+    test "it uses the controller's react_rails_prerenderer, if available" do
+      @helper.setup(DummyController)
+      rendered_component = @helper.react_component('Foo', {"ok" => true}, prerender: :static)
+      assert_equal %|<div>rendered Foo with {&quot;ok&quot;:true}</div>|, rendered_component
     end
   end
 end
