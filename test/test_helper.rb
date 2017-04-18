@@ -101,3 +101,14 @@ def when_stateful_js_context_available
     yield
   end
 end
+
+module ParamsHelper
+  # Normalize params for Rails 5.1+
+  def query_params(params)
+    if Rails::VERSION.to_s > "5.0"
+      {params: params}
+    else
+      params
+    end
+  end
+end
