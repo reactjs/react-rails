@@ -46,7 +46,7 @@ class ControllerLifecycleTest < ActionDispatch::IntegrationTest
   test "it calls setup and teardown methods" do
     get '/pages/1?param_test=123'
     helper_obj = controller.__react_component_helper
-    lifecycle_steps = ["123", :react_component, :teardown]
+    lifecycle_steps = ["123", :react_component, :react_component, :teardown]
     assert_equal(lifecycle_steps, helper_obj.events)
   end
 

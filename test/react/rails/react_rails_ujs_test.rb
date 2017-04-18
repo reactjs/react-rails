@@ -124,6 +124,21 @@ SprocketsHelpers.when_available do
       assert_greeting(page, 'Hello Bob')
     end
 
+    test 'react_ujs does not unmount components that do not match a selector reference for the component' do
+      visit '/pages/1'
+      assert_greeting page, 'Hello Bob'
+      assert page.has_content?('Another Component'), page.body
+
+      page.click_button "Unmount by own selector"
+      refute_greeting(page, 'Hello Bob')
+      assert page.has_content?('Another Component'), page.body
+
+      page.click_button "Mount by own selector"
+      assert_greeting(page, 'Hello Bob')
+      assert page.has_content?('Another Component'), page.body
+    end
+
+
     test 'react_ujs can unmount/mount using a dom node context' do
       visit '/pages/1'
       assert_greeting(page, 'Hello Bob')
