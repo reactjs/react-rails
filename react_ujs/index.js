@@ -20,7 +20,7 @@ var ReactRailsUJS = {
 
   // helper method for the mount and unmount methods to find the
   // `data-react-class` DOM elements
-  findDOMNodes: function(selector) {
+  findDOMNodes: function(searchSelector) {
     var classNameAttr = ReactRailsUJS.CLASS_NAME_ATTR
     // we will use fully qualified paths as we do not bind the callbacks
     var selector, parent;
