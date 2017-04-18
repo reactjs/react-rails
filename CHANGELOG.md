@@ -8,6 +8,16 @@
 
 #### Bug Fixes
 
+## 2.0.2 (April 18, 2017)
+
+#### New Features
+
+- Support Rails 5.1 #697
+
+#### Bug Fixes
+
+- Fix UJS unmounting by selector #696
+
 ## 2.0.2 (April 13, 2017)
 
 #### New Features
