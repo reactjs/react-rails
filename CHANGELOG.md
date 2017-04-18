@@ -8,7 +8,7 @@
 
 #### Bug Fixes
 
-## 2.0.2 (April 18, 2017)
+## 2.1.0 (April 18, 2017)
 
 #### New Features
 
