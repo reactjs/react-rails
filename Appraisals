@@ -65,8 +65,8 @@ appraise "rails-5-no_sprockets" do
   gem 'rails', '~> 5.0.0'
 end
 
-appraise "rails-5-sprockets_4" do
-  gem "rails", "~> 5.0.0"
+appraise "rails-5.1-sprockets_4" do
+  gem "rails", "5.1.0.rc1"
   gem "sprockets", "~> 4.0.x"
   gem "turbolinks", "~> 5.0.0"
 end
