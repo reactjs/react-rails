@@ -105,7 +105,7 @@ end
 module ParamsHelper
   # Normalize params for Rails 5.1+
   def query_params(params)
-    if Rails::VERSION.to_s > "5.0"
+    if Rails.gem_version.to_s > "5.0"
       {params: params}
     else
       params
