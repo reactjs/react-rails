@@ -99,13 +99,6 @@ Now, you can create React components in `.jsx` files:
 ```js
 // app/assets/javascripts/components/post.jsx
 
-window.Post = React.createClass({
-  render: function() {
-    return <h1>{this.props.title}</h1>
-  }
-})
-
-// or, equivalent:
 class Post extends React.Component {
   render() {
     return <h1>{this.props.title}</h1>    
@@ -395,7 +388,7 @@ rails g react:component Post title:string published:bool published_by:instanceOf
 would generate:
 
 ```js
-var Post = React.createClass({
+class Post extends React.Component{
   propTypes: {
     title: React.PropTypes.string,
     published: React.PropTypes.bool,
@@ -411,7 +404,7 @@ var Post = React.createClass({
       </div>
     );
   }
-});
+};
 ```
 
 The generator also accepts options:
