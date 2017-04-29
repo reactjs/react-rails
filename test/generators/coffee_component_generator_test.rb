@@ -8,7 +8,7 @@ class CoffeeComponentGeneratorTest < Rails::Generators::TestCase
 
   if WebpackerHelpers.available?
     def filename
-      "app/javascript/components/generated_component.coffee"
+      "app/javascript/components/GeneratedComponent.coffee"
     end
   else
     def filename

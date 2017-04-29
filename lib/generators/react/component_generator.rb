@@ -101,17 +101,19 @@ module React
 
         # Prefer webpacker to sprockets:
         if defined?(Webpacker)
+          new_file_name = file_name.camelize
           extension = options[:coffee] ? "coffee" : "js"
           target_dir = Webpacker::Configuration.source_path
             .join("components")
             .relative_path_from(::Rails.root)
             .to_s
         else
+          new_file_name = file_name
           extension = template_extension
           target_dir = 'app/assets/javascripts/components'
         end
 
-        file_path = File.join(target_dir, "#{file_name}.#{extension}")
+        file_path = File.join(target_dir, "#{new_file_name}.#{extension}")
         template("component.#{template_extension}", file_path)
       end
 
