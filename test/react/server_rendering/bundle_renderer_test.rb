@@ -68,7 +68,13 @@ if SprocketsHelpers.available? || WebpackerHelpers.available?
         @renderer.render("NonExistentComponent", {}, nil)
       end
 
-      assert_match(/ReferenceError/, err.to_s)
+      if WebpackerHelpers.available?
+        # require() failed:
+        assert_match(/Invariant Violation: Element type is invalid: expected a string/, err.to_s)
+      else
+        # eval() failed:
+        assert_match(/ReferenceError/, err.to_s)
+      end
       assert_match(/NonExistentComponent/, err.to_s, "it names the component")
 
       assert_match(/\n/, err.to_s, "it includes the multi-line backtrace")
