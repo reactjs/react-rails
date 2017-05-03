@@ -46,11 +46,11 @@ $ rails generate react:install
 
 This gives you:
 
-- `components/` directory for your React components
-- [`ReactRailsUJS`](#ujs) setup in `packs/application.js`
-- `packs/server_rendering.js` for [server-side rendering](#server-side-rendering)
+- `app/javascript/components/` directory for your React components
+- [`ReactRailsUJS`](#ujs) setup in `app/javascript/packs/application.js`
+- `app/javascript/packs/server_rendering.js` for [server-side rendering](#server-side-rendering)
 
-When you add a component to `components/`, you can [render it in a Rails view](#view-helper):
+When you add a component to `app/javascript/components/`, you can [render it in a Rails view](#view-helper):
 
 ```erb
 <%= react_component("HelloWorld", { greeting: "Hello" }) %>
@@ -77,6 +77,16 @@ var ReactRailsUJS = require("react_ujs")
 // use `custom_components/` for <%= react_component(...) %> calls
 ReactRailsUJS.useContext(myCustomContext)
 ```
+
+### Gotcha: Capitalization
+
+Component File Name | `react_component` call
+-----|-----
+`app/javascript/components/samplecomponent.js` | `react_component("samplecomponent")`
+`app/javascript/components/sample_component.js` | `react_component("sample_component")`
+`app/javascript/components/SampleComponent.js` | `react_component("SampleComponent")`
+`app/javascript/components/SampleComponent.js.jsx` | Has to be renamed to SampleComponent.jsx, then use `react_component("SampleComponent")`
+
 
 ## Use with Asset Pipeline
 
