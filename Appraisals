@@ -70,3 +70,10 @@ appraise "rails-5.1-sprockets_4" do
   gem "sprockets", "~> 4.0.x"
   gem "turbolinks", "~> 5.0.0"
 end
+
+
+appraise "rails-master" do
+  gem 'sprockets-rails', github: 'rails/sprockets-rails'
+  gem 'rails', github: 'rails/rails'
+  gem 'arel', github: 'rails/arel'
+end
