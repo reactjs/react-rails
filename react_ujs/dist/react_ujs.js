@@ -119,7 +119,9 @@ var turbolinksClassicEvents = __webpack_require__(10)
 module.exports = function(ujs) {
   if (ujs.handleEvent) {
     // We're calling this a second time -- remove previous handlers
-    turbolinksClassicEvents.teardown(ujs)
+    if (typeof Turbolinks.EVENTS !== "undefined") {
+      turbolinksClassicEvents.teardown(ujs);
+    }
     turbolinksEvents.teardown(ujs);
     turbolinksClassicDeprecatedEvents.teardown(ujs);
     pjaxEvents.teardown(ujs);

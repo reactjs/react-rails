@@ -8,6 +8,18 @@
 
 #### Bug Fixes
 
+## 2.2.0
+
+#### New Features
+
+- Improve error handling when components aren't found #704
+
+#### Bug Fixes
+
+- Camelize filename when generating for webpack #703
+- Include node module boilerplate when generating for webpack #710
+- Don't look for non-existent `Turbolinks.EVENTS` #708
+
 ## 2.1.0 (April 18, 2017)
 
 #### New Features
