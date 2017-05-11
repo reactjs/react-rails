@@ -19,7 +19,12 @@ class ComponentGeneratorTest < Rails::Generators::TestCase
   test "creates the component file" do
     run_generator %w(GeneratedComponent)
 
-    assert_file filename
+    assert_file filename do |contents|
+      if WebpackerHelpers.available?
+        assert_match /^var React = require\("react"\)/, contents
+        assert_match /module\.exports = GeneratedComponent\n$/m, contents
+      end
+    end
   end
 
   test "creates the component file with a node argument" do

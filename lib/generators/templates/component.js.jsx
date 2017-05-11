@@ -1,4 +1,4 @@
-var <%= file_name.camelize %> = React.createClass({
+<%= file_header %>var <%= component_name %> = React.createClass({
 <% if attributes.size > 0 -%>
   propTypes: {
 <% attributes.each_with_index do |attribute, idx| -%>
@@ -21,3 +21,4 @@ var <%= file_name.camelize %> = React.createClass({
 <% end -%>
   }
 });
+<%= file_footer %>

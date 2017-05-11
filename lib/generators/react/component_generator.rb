@@ -100,7 +100,7 @@ module React
         end
 
         # Prefer webpacker to sprockets:
-        if defined?(Webpacker)
+        if webpacker?
           new_file_name = file_name.camelize
           extension = options[:coffee] ? "coffee" : "js"
           target_dir = Webpacker::Configuration.source_path
@@ -118,6 +118,30 @@ module React
       end
 
       private
+
+      def component_name
+        file_name.camelize
+      end
+
+      def file_header
+        if webpacker?
+          %|var React = require("react")\n|
+        else
+          ""
+        end
+      end
+
+      def file_footer
+        if webpacker?
+          %|module.exports = #{component_name}|
+        else
+          ""
+        end
+      end
+
+      def webpacker?
+        defined?(Webpacker)
+      end
 
        def parse_attributes!
          self.attributes = (attributes || []).map do |attr|

@@ -1,4 +1,4 @@
-class <%= file_name.camelize %> extends React.Component {
+<%= file_header %>class <%= component_name %> extends React.Component {
   render () {
 <% if attributes.size > 0 -%>
     return (
@@ -21,3 +21,4 @@ class <%= file_name.camelize %> extends React.Component {
 <% end -%>
 };
 <% end -%>
+<%= file_footer %>
