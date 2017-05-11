@@ -8,7 +8,7 @@ class Es6ComponentGeneratorTest < Rails::Generators::TestCase
 
   if WebpackerHelpers.available?
     def filename
-      "app/javascript/components/generated_component.js"
+      "app/javascript/components/GeneratedComponent.js"
     end
   else
     def filename
