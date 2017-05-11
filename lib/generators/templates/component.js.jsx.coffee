@@ -1,4 +1,4 @@
-class @<%= file_name.camelize %> extends React.Component
+class @<%= component_name %> extends React.Component
 <% if attributes.size > 0 -%>
   @propTypes =
 <% attributes.each do |attribute| -%>
