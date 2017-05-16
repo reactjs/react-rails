@@ -103,8 +103,7 @@ ReactRailsUJS.useContext(componentRequireContext)
 JS
 
       def setup_react_webpacker
-        yarn_binstub = File.expand_path("./bin/yarn", ::Rails.root)
-        `#{yarn_binstub} add react_ujs`
+        `yarn add react_ujs`
         if manifest.exist?
           append_file(manifest, WEBPACKER_SETUP_UJS)
         else
