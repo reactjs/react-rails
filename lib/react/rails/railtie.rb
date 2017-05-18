@@ -33,9 +33,13 @@ module React
         end
 
         # Rails checks these objects for changes:
-        app.reloaders << app.config.file_watcher.new([], reload_paths) {}
+        react_reloader = app.config.file_watcher.new([], reload_paths) do
+          React::ServerRendering.reset_pool
+        end
+        app.reloaders << react_reloader
+
         # Reload renderers in dev when files change
-        config.to_prepare { React::ServerRendering.reset_pool }
+        config.to_prepare { react_reloader.execute_if_updated }
       end
 
       # Include the react-rails view helper lazily
