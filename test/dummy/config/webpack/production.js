@@ -1,5 +1,6 @@
+// Note: You must restart bin/webpack-dev-server for changes to take effect
+
 /* eslint global-require: 0 */
-// Note: You must run bin/webpack for changes to take effect
 
 const webpack = require('webpack')
 const merge = require('webpack-merge')
@@ -14,7 +15,7 @@ module.exports = merge(sharedConfig, {
     new CompressionPlugin({
       asset: '[path].gz[query]',
       algorithm: 'gzip',
-      test: /\.(js|css|svg|eot|ttf|woff|woff2)$/
+      test: /\.(js|css|html|json|ico|svg|eot|otf|ttf)$/
     })
   ]
 })
