@@ -24,7 +24,7 @@ module React
       config.react.view_helper_implementation = nil # Defaults to ComponentMount
 
       # Watch .jsx files for changes in dev, so we can reload the JS VMs with the new JS code.
-      initializer "react_rails.add_watchable_files", group: :all do |app|
+      initializer "react_rails.add_watchable_files", after: :load_config_initializers, group: :all do |app|
         # Watch files ending in `server_renderer_extensions` in each of `server_renderer_directories`
         reload_paths = config.react.server_renderer_directories.reduce({}) do |memo, dir|
           app_dir = File.join(app.root, dir)
