@@ -5,5 +5,10 @@ end
 Dummy::Application.configure do
   config.react.addons = true
   config.react.view_helper_implementation = CustomComponentMount
+  # Add "app/pants" to the array we can test that file watchers are setup after
+  # rails initializers are loaded
+  config.react.server_renderer_directories = ["/app/assets/javascripts/",
+                                              "app/javascript",
+                                              "app/pants"]
 end
 
