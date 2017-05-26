@@ -34,10 +34,12 @@ namespace :react do
     environments.each do |environment|
       # Without addons:
       copy_react_asset("#{environment}/react-browser.js", "#{environment}/react.js")
+      copy_react_asset("#{environment}/react-browser-with-relay.js", "#{environment}/react-relay.js")
       copy_react_asset("#{environment}/react-server.js", "#{environment}/react-server.js")
 
       # With addons:
       copy_react_asset("#{environment}/react-browser-with-addons.js", "#{environment}-with-addons/react.js")
+      copy_react_asset("#{environment}/react-browser-with-relay-with-addons.js", "#{environment}-with-addons/react-relay.js")
       copy_react_asset("#{environment}/react-server-with-addons.js", "#{environment}-with-addons/react-server.js")
     end
   end
