@@ -31,7 +31,8 @@ Capybara.register_driver :poltergeist_debug do |app|
     # `page.driver.debug` will cause Poltergeist to open a browser window
     inspector: true,
     # hide warnings from React.js whitespace changes:
-    # js_errors: false,
+    # and from React.createClass deprecation
+    js_errors: false,
   }
   Capybara::Poltergeist::Driver.new(app, poltergeist_options)
 end

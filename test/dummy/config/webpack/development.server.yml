@@ -1,4 +1,5 @@
-# Restart webpack-dev-server if you make changes here
+# Note: You must restart bin/webpack-dev-server for changes to take effect
+
 default: &default
   enabled: true
   host: localhost

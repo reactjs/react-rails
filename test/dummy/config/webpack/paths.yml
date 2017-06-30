@@ -1,11 +1,12 @@
-# Restart webpack-watcher or webpack-dev-server if you make changes here
-default: &default
-  config: config/webpack
-  entry: packs
-  output: public
-  manifest: manifest.json
-  node_modules: node_modules
-  source: app/javascript
+# Note: You must restart bin/webpack-dev-server for changes to take effect
+
+default: &default            # ~ = Rails.root
+  source: app/javascript     # ~/:source
+  entry: packs               # ~/:source/:entry
+  output: packs              # ~/public/:output
+  manifest: manifest.json    # ~/public/:output/:manifest
+  config: config/webpack     # ~/:config
+  node_modules: node_modules # ~/:node_modules
   extensions:
     - .coffee
     - .js
@@ -19,6 +20,7 @@ default: &default
     - .svg
     - .gif
     - .jpeg
+    - .jpg
 
 development:
   <<: *default
