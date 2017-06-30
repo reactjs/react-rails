@@ -8,6 +8,17 @@
 
 #### Bug Fixes
 
+## 2.2.1
+
+#### New Features
+
+- Support `config.react.server_renderer_directories` in initializers #729
+
+#### Bug Fixes
+
+- Fix Railtie watcher to update its timestamp when files change #722
+- Don't use `yarn` binstub because webpacker doesn't provide it anymore #717
+
 ## 2.2.0
 
 #### New Features
