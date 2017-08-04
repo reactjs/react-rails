@@ -194,7 +194,7 @@ react_component(component_class_name, props={}, html_options={})
 - `html_options` may include:
   - `tag:` to use an element other than a `div` to embed `data-react-class` and `data-react-props`.
   - `prerender: true` to render the component on the server.
-  - `camelize_props` to [transform a props hash](#camelize_props)
+  - `camelize_props` to [transform a props hash](#camelize-props)
   - `**other` Any other arguments (eg `class:`, `id:`) are passed through to [`content_tag`](http://api.rubyonrails.org/classes/ActionView/Helpers/TagHelper.html#method-i-content_tag).
 
 
