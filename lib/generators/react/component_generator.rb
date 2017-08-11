@@ -125,7 +125,11 @@ module React
 
       def file_header
         if webpacker?
-          %|var React = require("react")\n|
+          if options[:coffee]
+            %|React = require('react')\n|
+          else
+            %|var React = require("react")\n|
+          end
         else
           ""
         end
@@ -133,7 +137,11 @@ module React
 
       def file_footer
         if webpacker?
-          %|module.exports = #{component_name}|
+          if options[:coffee]            
+            %|module.exports = @#{component_name}|
+          else
+            %|module.exports = #{component_name}|
+          end
         else
           ""
         end
