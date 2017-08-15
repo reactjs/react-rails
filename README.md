@@ -39,8 +39,8 @@ $ rails g react:install
 Get started by adding `webpacker` to your gemfile and installing `webpacker` and `react-rails`:
 
 ```
-$ rails webpacker:install
-$ rails webpacker:install:react
+$ rake webpacker:install
+$ rake webpacker:install:react
 $ rails generate react:install
 ```
 
