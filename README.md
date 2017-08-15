@@ -41,7 +41,7 @@ Get started by adding `webpacker` to your gemfile and installing `webpacker` and
 ```
 $ rake webpacker:install
 $ rake webpacker:install:react
-$ rake generate react:install
+$ rails generate react:install
 ```
 
 This gives you:
