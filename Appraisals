@@ -59,7 +59,7 @@ end
 
 appraise "rails-5_no_sprockets_webpacker_3" do
   gem 'rails', '~> 5.0.0'
-  gem 'webpacker'
+  gem 'webpacker', '>= 3.0 '
   # This ExecJS backend provides stateful context
   # which the default nodejs backend does not
   gem "therubyracer"
