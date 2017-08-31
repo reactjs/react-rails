@@ -12,7 +12,8 @@ rvm:
 gemfile:
   # These have webpacker:
   - gemfiles/rails_4.2_sprockets_4.gemfile
-  - gemfiles/rails_5_no_sprockets_webpacker.gemfile
+  - gemfiles/rails_5_no_sprockets_webpacker_1.gemfile
+  - gemfiles/rails_5_no_sprockets_webpacker_3.gemfile
   # These don't have webpacker:
   - gemfiles/rails_3.2.gemfile
   - gemfiles/rails_4.0.5.gemfile
