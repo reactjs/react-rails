@@ -22,7 +22,7 @@ module WebpackerHelpers
       end
     end
     # Reload cached JSON manifest:
-    Webpacker::Manifest.load
+    manifest.load
   end
 
   def compile_if_missing
@@ -33,6 +33,10 @@ module WebpackerHelpers
 
   def clear_webpacker_packs
     FileUtils.rm_rf(PACKS_DIRECTORY)
+  end
+
+  def manifest
+    Webpacker.respond_to?(:manifest) ? Webpacker.manifest : Webpacker::Manifest
   end
 
   # Start a webpack-dev-server
@@ -50,8 +54,8 @@ module WebpackerHelpers
     30.times do |i|
       begin
         # Make sure that the manifest has been updated:
-        Webpacker::Manifest.load("./test/dummy/public/packs/manifest.json")
-        webpack_manifest = Webpacker::Manifest.instance.data
+        manifest.load("./test/dummy/public/packs/manifest.json")
+        webpack_manifest = manifest.instance.data
         example_asset_path = webpack_manifest.values.first
         if example_asset_path.nil?
           # Debug helper
