@@ -49,9 +49,17 @@ appraise "rails-4.2-sprockets_4" do
   gem "mini_racer"
 end
 
-appraise "rails-5_no_sprockets_webpacker" do
+appraise "rails-5_no_sprockets_webpacker_1" do
   gem 'rails', '~> 5.0.0'
-  gem "webpacker", github: "rails/webpacker"
+  gem "webpacker", '~> 1.0'
+  # This ExecJS backend provides stateful context
+  # which the default nodejs backend does not
+  gem "therubyracer"
+end
+
+appraise "rails-5_no_sprockets_webpacker_3" do
+  gem 'rails', '~> 5.0.0'
+  gem "webpacker", '~> 3.0.0'
   # This ExecJS backend provides stateful context
   # which the default nodejs backend does not
   gem "therubyracer"
