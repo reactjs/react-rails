@@ -60,8 +60,8 @@ module React
 
       def javascript_dir
         if webpacker?
-          Webpacker::Configuration.source_path
-            .join(Webpacker::Configuration.entry_path)
+          webpack_configuration.source_path
+            .join(webpack_configuration.entry_path)
             .relative_path_from(::Rails.root)
             .to_s
         else
@@ -109,6 +109,12 @@ JS
         else
           create_file(manifest, WEBPACKER_SETUP_UJS)
         end
+      end
+
+      private
+
+      def webpack_configuration
+        Webpacker.respond_to?(:config) ? Webpacker.config : webpack_configuration
       end
     end
   end
