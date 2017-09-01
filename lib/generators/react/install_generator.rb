@@ -114,7 +114,7 @@ JS
       private
 
       def webpack_configuration
-        Webpacker.respond_to?(:config) ? Webpacker.config : webpack_configuration
+        Webpacker.respond_to?(:config) ? Webpacker.config : Webpacker::Configuration
       end
     end
   end
