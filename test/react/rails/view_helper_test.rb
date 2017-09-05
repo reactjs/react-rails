@@ -40,7 +40,7 @@ HTML
   end
 
 
-  def test_view helper uses the implementation class set in the initializer" do
+  def test_view_helper_uses_the_implementation_class_set_in_the_initializer
     assert_equal(
       React::Rails::ViewHelper.helper_implementation_class.to_s,
       "CustomComponentMount"
