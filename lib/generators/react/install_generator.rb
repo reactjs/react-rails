@@ -60,8 +60,7 @@ module React
 
       def javascript_dir
         if webpacker?
-          webpack_configuration.source_path
-            .join(webpack_configuration.entry_path)
+          webpack_source_path
             .relative_path_from(::Rails.root)
             .to_s
         else
@@ -113,8 +112,12 @@ JS
 
       private
 
-      def webpack_configuration
-        Webpacker.respond_to?(:config) ? Webpacker.config : Webpacker::Configuration
+      def webpack_source_path
+        if Webpacker.respond_to?(:config)
+          Webpacker.config.source_entry_path
+        else
+          Webpacker::Configuration.source_path.join(Webpacker::Configuration.entry_path)
+        end
       end
     end
   end
