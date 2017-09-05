@@ -59,6 +59,14 @@ module WebpackerHelpers
     end
   end
 
+  def manifest_data
+    if Webpacker.respond_to?(:manifest)
+      Webpacker.manifest.refresh
+    else
+      Webpacker::Manifest.data
+    end
+  end
+
   # Start a webpack-dev-server
   # Call the block
   # Make sure to clean up the server
@@ -75,8 +83,7 @@ module WebpackerHelpers
       begin
         # Make sure that the manifest has been updated:
         manifest_lookup("./test/dummy/public/packs/manifest.json")
-        webpack_manifest = manifest.data
-        example_asset_path = webpack_manifest.values.first
+        example_asset_path = manifest_data.values.first
         if example_asset_path.nil?
           # Debug helper
           # puts "Manifest is blank, all manifests:"

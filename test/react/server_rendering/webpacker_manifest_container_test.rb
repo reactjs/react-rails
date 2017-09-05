@@ -9,7 +9,6 @@ WebpackerHelpers.when_webpacker_available do
     end
 
     def test_it_loads_JS_from_the_webpacker_container
-      binding.pry
       WebpackerHelpers.compile
       container = React::ServerRendering::WebpackerManifestContainer.new
       js_file = container.find_asset("application.js")
