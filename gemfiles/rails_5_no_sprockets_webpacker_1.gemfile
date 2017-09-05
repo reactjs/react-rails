@@ -2,7 +2,6 @@
 
 source "http://rubygems.org"
 
-gem "turbolinks"
 gem "rails", "~> 5.0.0"
 gem "webpacker", "~> 1.0"
 gem "therubyracer"

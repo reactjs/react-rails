@@ -1,9 +1,9 @@
 # Note: You must restart bin/webpack-dev-server for changes to take effect
 
-default: &default
-  source_path: app/javascript
-  source_entry_path: packs
-  public_output_path: packs
+default: &default                 # ~ = Rails.root
+  source_path: app/javascript     # ~/:source
+  source_entry_path: packs        # ~/:source/:entry
+  public_output_path: packs       # ~/public/:output
   cache_path: tmp/cache/webpacker
 
   # Additional paths webpack should lookup modules

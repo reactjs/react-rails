@@ -1,5 +1,6 @@
 require "test_helper"
 require "open-uri"
+require 'pry'
 
 WebpackerHelpers.when_webpacker_available do
   class WebpackerManifestContainerTest < ActiveSupport::TestCase
@@ -7,7 +8,8 @@ WebpackerHelpers.when_webpacker_available do
       WebpackerHelpers.clear_webpacker_packs
     end
 
-    test "it loads JS from the webpacker container" do
+    def test_it_loads_JS_from_the_webpacker_container
+      binding.pry
       WebpackerHelpers.compile
       container = React::ServerRendering::WebpackerManifestContainer.new
       js_file = container.find_asset("application.js")

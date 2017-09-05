@@ -43,7 +43,6 @@ appraise "rails-4.2-sprockets_4" do
   gem 'rails', '~> 4.2.1'
   gem "sprockets", "~> 4.0.x"
   gem "turbolinks", "~> 2.5.0"
-  gem "webpacker"
   # This ExecJS backend provides stateful context
   # which the default nodejs backend does not
   gem "mini_racer"

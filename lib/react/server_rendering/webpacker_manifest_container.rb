@@ -21,13 +21,21 @@ module React
           dev_server_asset
         else
           # Read the already-compiled pack:
-          full_path = manifest.lookup_path(logical_path).to_s
+          full_path = file_path(logical_path).to_s
           File.read(full_path)
         end
       end
 
       def manifest
         Webpacker.respond_to?(:manifest) ? Webpacker.manifest : Webpacker::Manifest
+      end
+
+      def file_path path
+        manifest.respond_to?(:lookup_path) ? manifest.lookup_path(path) : File.join(config.output_path, manifest.lookup(path).split('/')[2..-1])
+      end
+
+      def config
+        !!defined?(Webpacker::Configuration) ? Webpacker::Configuration : Webpacker.config
       end
 
       def self.compatible?
