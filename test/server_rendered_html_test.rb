@@ -61,15 +61,15 @@ SprocketsHelpers.when_available do
 
         if WebpackerHelpers.available?
           new_file_path = '../dummy/app/javascript/components/NewList.js'
-          new_file_contents = <<~HEREDOC
-          var React = require("react")
-          module.exports = function() { return <span>"New List"</span> }
-          HEREDOC
+          new_file_contents = <<-HEREDOC
+var React = require("react")
+module.exports = function() { return <span>"New List"</span> }
+HEREDOC
         else
           new_file_path = '../dummy/app/assets/javascripts/components/ZZ_NewComponent.js.jsx'
-          new_file_contents = <<~HEREDOC
-          var NewList = function() { return <span>"New List"</span> }
-          HEREDOC
+          new_file_contents = <<-HEREDOC
+var NewList = function() { return <span>"New List"</span> }
+HEREDOC
         end
 
         new_file_path = File.expand_path(new_file_path, __FILE__)
