@@ -114,9 +114,9 @@ JS
 
       def webpack_source_path
         if Webpacker.respond_to?(:config)
-          Webpacker.config.source_entry_path
+          Webpacker.config.source_entry_path # Webpacker >3
         else
-          Webpacker::Configuration.source_path.join(Webpacker::Configuration.entry_path)
+          Webpacker::Configuration.source_path.join(Webpacker::Configuration.entry_path) # Webpacker <3
         end
       end
     end

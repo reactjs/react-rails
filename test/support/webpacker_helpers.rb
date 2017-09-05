@@ -22,7 +22,7 @@ module WebpackerHelpers
       end
     end
     # Reload cached JSON manifest:
-    manifest.load
+    manifest_refresh
   end
 
   def compile_if_missing
@@ -35,8 +35,28 @@ module WebpackerHelpers
     FileUtils.rm_rf(PACKS_DIRECTORY)
   end
 
+  def manifest_refresh
+    if Webpacker.respond_to?(:manifest)
+      Webpacker.manifest.refresh
+    else
+      Webpacker::Manifest.load
+    end
+  end
+
+  def manifest_lookup name
+    if Webpacker.respond_to?(:manifest)
+      Webpacker.manifest.lookup(name)
+    else
+      Webpacker::Manifest.load(name)
+    end
+  end
+
   def manifest
-    Webpacker.respond_to?(:manifest) ? Webpacker.manifest : Webpacker::Manifest
+    if Webpacker.respond_to?(:manifest)
+      Webpacker.manifest
+    else
+      Webpacker::Manifest
+    end
   end
 
   # Start a webpack-dev-server
@@ -54,8 +74,8 @@ module WebpackerHelpers
     30.times do |i|
       begin
         # Make sure that the manifest has been updated:
-        manifest.load("./test/dummy/public/packs/manifest.json")
-        webpack_manifest = manifest.instance.data
+        manifest_lookup("./test/dummy/public/packs/manifest.json")
+        webpack_manifest = manifest.data
         example_asset_path = webpack_manifest.values.first
         if example_asset_path.nil?
           # Debug helper
