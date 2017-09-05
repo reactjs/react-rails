@@ -13,7 +13,7 @@ SprocketsHelpers.when_available do
       SprocketsHelpers.manually_expire_asset('JSXTransformer.js')
     end
 
-    test 'can use dropped-in version of JSX transformer' do
+    def test_can_use_dropped_in_version_of_JSX_transformer
       hidden_path =     Rails.root.join("vendor/assets/react/JSXTransformer__.js")
       replacing_path =  Rails.root.join("vendor/assets/react/JSXTransformer.js")
 
@@ -27,7 +27,7 @@ SprocketsHelpers.when_available do
       assert_equal 'test_confirmation_token_jsx_transformed;', @response.body.strip
     end
 
-    test 'accepts harmony: true option' do
+    def test_accepts_harmony_true_option
       React::JSX.transform_options = {harmony: true}
       get '/assets/harmony_example.js'
       assert_response :success
@@ -37,14 +37,14 @@ SprocketsHelpers.when_available do
       assert_match(/active=\$__0\.active/, @response.body, "destructuring assignment")
     end
 
-    test 'accepts strip_types: true option' do
+    def test_accepts_strip_types_true_option
       React::JSX.transform_options = {strip_types: true, harmony: true}
       get '/assets/flow_types_example.js'
       assert_response :success
       assert_match(/\(i\s*,\s*name\s*\)\s*\{/, @response.body, "type annotations are removed")
     end
 
-    test 'accepts asset_path: option' do
+    def test_accepts_asset_path_option
       hidden_path =     Rails.root.join("vendor/assets/react/JSXTransformer__.js")
       custom_path =     Rails.root.join("vendor/assets/react/custom")
       replacing_path =  custom_path.join("CustomTransformer.js")

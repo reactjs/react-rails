@@ -14,7 +14,7 @@ console.log.apply(console, ["Test Console Replay"]);
 </script>
     HTML
 
-    test "it clears the state between each request" do
+    def test_it_clears_the_state_between_each_request
       # Each request should only contain one log:
       get '/server/1'
       assert_includes(response.body, EXPECTED_REPLAY)

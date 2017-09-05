@@ -6,7 +6,7 @@ class PagesControllerTest < ActionController::TestCase
     WebpackerHelpers.compile_if_missing
   end
 
-  test 'renders successfully' do
+  def test_renders_successfully
     get :show, query_params(id: 1)
     assert_equal(200, response.status)
   end

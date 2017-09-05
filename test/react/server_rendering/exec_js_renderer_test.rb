@@ -21,19 +21,19 @@ class ExecJSRendererTest < ActiveSupport::TestCase
     @renderer = React::ServerRendering::ExecJSRenderer.new(code: code)
   end
 
-  test '#render returns HTML' do
+  def test_render_returns_HTML
     result = @renderer.render("Todo", {todo: "write tests"}.to_json, {})
     assert_match(/<li.*write tests<\/li>/, result)
     assert_match(/data-react-checksum/, result)
   end
 
-  test '#render accepts render_function:' do
+  def test_render_accepts_render_function
     result = @renderer.render("Todo", {todo: "write more tests"}.to_json, render_function: "renderToStaticMarkup")
     assert_match(/<li>write more tests<\/li>/, result)
     assert_no_match(/data-react-checksum/, result)
   end
 
-  test '#before_render is called before #after_render' do
+  def test_before_render_is_called_before_after_render
     def @renderer.before_render(name, props, opts)
       "throw 'before_render ' + afterRenderVar"
     end
@@ -50,7 +50,7 @@ class ExecJSRendererTest < ActiveSupport::TestCase
     assert_no_match(/assigned_after_render/, error.message)
   end
 
-  test '#after_render is called after #before_render' do
+  def test_after_render_is_called_after_before_render
     def @renderer.before_render(name, props, opts)
       "var beforeRenderVar = 'assigned_before_render'"
     end
@@ -67,7 +67,7 @@ class ExecJSRendererTest < ActiveSupport::TestCase
     assert_match(/assigned_before_render/, error.message)
   end
 
-  test '.new accepts code:' do
+  def test_new_accepts_code
     dummy_renderer = React::ServerRendering::ExecJSRenderer.new(code: DUMMY_IMPLEMENTATION)
     result = dummy_renderer.render("Todo", {todo: "get a real job"}.to_json, {})
     assert_equal("serverRender was called", result)

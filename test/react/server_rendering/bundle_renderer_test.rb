@@ -30,24 +30,24 @@ if SprocketsHelpers.available? || WebpackerHelpers.available?
       end
     end
 
-    test '#render returns HTML' do
+    def test_render_returns_HTML
       result = @renderer.render("Todo", {todo: "write tests"}, nil)
       assert_match(/<li.*write tests<\/li>/, result)
       assert_match(/data-react-checksum/, result)
     end
 
-    test '#render accepts strings' do
+    def test_render_accepts_strings
       result = @renderer.render("Todo", {todo: "write more tests"}.to_json, nil)
       assert_match(/<li.*write more tests<\/li>/, result)
     end
 
-    test '#render accepts :static pre-render option' do
+    def test_render_accepts_static_pre_render_option
       result = @renderer.render("Todo", {todo: "write more tests"}, :static)
       assert_match(/<li>write more tests<\/li>/, result)
       assert_no_match(/data-react-checksum/, result)
     end
 
-    test '#render replays console messages' do
+    def test_render_replays_console_messages
       result = @renderer.render("TodoListWithConsoleLog", {todos: ["log some messages"]}, nil)
       assert_match(/<script class="react-rails-console-replay">$/, result)
       assert_match(/console.log.apply\(console, \["got initial state"\]\);$/, result)
@@ -55,7 +55,7 @@ if SprocketsHelpers.available? || WebpackerHelpers.available?
       assert_match(/console.error.apply\(console, \["rendered!","foo"\]\);$/, result)
     end
 
-    test '#render console messages can be disabled' do
+    def test_render_console_messages_can_be_disabled
       no_log_renderer = React::ServerRendering::BundleRenderer.new({replay_console: false})
       result = no_log_renderer.render("TodoListWithConsoleLog", {todos: ["log some messages"]}, nil)
       assert_no_match(/console.log.apply\(console, \["got initial state"\]\)/, result)
@@ -63,7 +63,7 @@ if SprocketsHelpers.available? || WebpackerHelpers.available?
       assert_no_match(/console.error.apply\(console, \["rendered!","foo"\]\)/, result)
     end
 
-    test '#render errors include stack traces' do
+    def test_render_errors_include_stack_traces
       err = assert_raises React::ServerRendering::PrerenderError do
         @renderer.render("NonExistentComponent", {}, nil)
       end
@@ -80,7 +80,7 @@ if SprocketsHelpers.available? || WebpackerHelpers.available?
       assert_match(/\n/, err.to_s, "it includes the multi-line backtrace")
     end
 
-    test '#render polyfills setTimeout and clearTimeout and warn about it' do
+    def test_render_polyfills_setTimeout_and_clearTimeout_and_warn_about_it
       result = @renderer.render("WithSetTimeout", {}, nil)
 
       assert_match(/I am rendered!<\/span>/, result)

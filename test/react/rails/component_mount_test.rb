@@ -11,7 +11,7 @@ SprocketsHelpers.when_available do
       @helper = React::Rails::ComponentMount.new
     end
 
-    test '#react_component accepts React props' do
+    def test_react_component_accepts_React_props
       html = @helper.react_component('Foo', {bar: 'value'})
       expected_props = %w(data-react-class="Foo" data-react-props="{&quot;bar&quot;:&quot;value&quot;}")
       expected_props.each do |segment|
@@ -19,7 +19,7 @@ SprocketsHelpers.when_available do
       end
     end
 
-    test '#react_component accepts React props with camelize_props' do
+    def test_react_component_accepts_React_props_with_camelize_props
       React::Rails::ComponentMount.camelize_props_switch = true
       helper = React::Rails::ComponentMount.new
       html = helper.react_component('Foo', {foo_bar: 'value'})
@@ -29,7 +29,7 @@ SprocketsHelpers.when_available do
       end
     end
 
-    test '#react_component allows camelize_props to be passed in as an option' do
+    def test_react_component_allows_camelize_props_to_be_passed_in_as_an_option
       React::Rails::ComponentMount.camelize_props_switch = false
       helper = React::Rails::ComponentMount.new
       html = helper.react_component('Foo', {foo_bar: 'value'}, camelize_props: true)
@@ -47,7 +47,7 @@ SprocketsHelpers.when_available do
       end
     end
 
-    test '#react_component accepts React props with camelize_props containing nested arrays' do
+    def test_react_component_accepts_React_props_with_camelize_props_containing_nested_arrays
       React::Rails::ComponentMount.camelize_props_switch = true
       helper = React::Rails::ComponentMount.new
       html = helper.react_component('Foo', {foo_bar: [{user_name: 'Ryan'}, {user_name: 'Matt'}], bar_foo: 1})
@@ -57,7 +57,7 @@ SprocketsHelpers.when_available do
       end
     end
 
-    test '#react_component accepts jbuilder-based strings as properties' do
+    def test_react_component_accepts_jbuilder_based_strings_as_properties
       jbuilder_json = Jbuilder.new do |json|
         json.bar 'value'
       end.target!
@@ -69,25 +69,25 @@ SprocketsHelpers.when_available do
       end
     end
 
-    test '#react_component accepts string props with prerender: true' do
+    def test_react_component_accepts_string_props_with_prerender_true
       html = @helper.react_component('Todo', {todo: 'render on the server'}.to_json, prerender: true)
       assert(html.include?('data-react-class="Todo"'), "it includes attrs for UJS")
       assert(html.include?('>render on the server</li>'), "it includes rendered HTML")
       assert(html.include?('data-reactid'), "it includes React properties")
     end
 
-    test '#react_component passes :static to BundleRenderer' do
+    def test_react_component_passes_static_to_BundleRenderer
       html = @helper.react_component('Todo', {todo: 'render on the server'}.to_json, prerender: :static)
       assert(html.include?('>render on the server</li>'), "it includes rendered HTML")
       assert(!html.include?('data-reactid'), "it DOESNT INCLUDE React properties")
     end
 
-    test '#react_component does not include HTML properties with a static render' do
+    def test_react_component_does_not_include_HTML_properties_with_a_static_render
       html = @helper.react_component('Todo', {todo: 'render on the server'}.to_json, prerender: :static)
       assert_equal('<div><li>render on the server</li></div>', html)
     end
 
-    test '#react_component accepts HTML options and HTML tag' do
+    def test_react_component_accepts_HTML_options_and_HTML_tag
       assert @helper.react_component('Foo', {}, :span).match(/<span\s.*><\/span>/)
 
       html = @helper.react_component('Foo', {}, {class: 'test', tag: :span, data: {foo: 1}})
@@ -108,7 +108,7 @@ SprocketsHelpers.when_available do
       end
     end
 
-    test "it uses the controller's react_rails_prerenderer, if available" do
+    def test_it_uses_the_controllers_react_rails_prerenderer_if_available
       @helper.setup(DummyController)
       rendered_component = @helper.react_component('Foo', {"ok" => true}, prerender: :static)
       assert_equal %|<div>rendered Foo with {&quot;ok&quot;:true}</div>|, rendered_component

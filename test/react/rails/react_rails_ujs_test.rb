@@ -32,7 +32,7 @@ SprocketsHelpers.when_available do
       assert_greeting(page, greeting, refute: true)
     end
 
-    test 'ujs object present on the global React object and has our methods' do
+    def test_ujs_object_present_on_the_global_React_object_and_has_our_methods
       visit '/pages/1'
       assert_greeting(page, 'Hello Bob')
 
@@ -55,7 +55,7 @@ SprocketsHelpers.when_available do
       assert_equal(unmount_components_present, true)
     end
 
-    test 'react_ujs works with rendered HTML' do
+    def test_react_ujs_works_with_rendered_HTML
       visit '/pages/1'
       assert_greeting(page, 'Hello Bob')
 
@@ -64,7 +64,7 @@ SprocketsHelpers.when_available do
       assert_greeting(page, 'Goodbye Bob')
     end
 
-    test 'react_ujs works with Turbolinks' do
+    def test_react_ujs_works_with_Turbolinks
       visit '/pages/1'
       assert_greeting(page, 'Hello Bob')
       assert page.evaluate_script("Turbolinks.supported")
@@ -102,7 +102,7 @@ SprocketsHelpers.when_available do
       assert_greeting(page, 'Hello Bob')
     end
 
-    test 'react_ujs can unmount/mount using a selector reference for a component parent' do
+    def test_react_ujs_can_unmount_and_mount_using_a_selector_reference_for_a_component_parent
       visit '/pages/1'
       assert_greeting(page, 'Hello Bob')
 
@@ -113,7 +113,7 @@ SprocketsHelpers.when_available do
       assert_greeting(page, 'Hello Bob')
     end
 
-    test 'react_ujs can unmount/mount using a selector reference for the component' do
+    def test_react_ujs_can_unmount_and_mount_using_a_selector_reference_for_the_component
       visit '/pages/1'
       assert_greeting(page, 'Hello Bob')
 
@@ -124,7 +124,7 @@ SprocketsHelpers.when_available do
       assert_greeting(page, 'Hello Bob')
     end
 
-    test 'react_ujs does not unmount components that do not match a selector reference for the component' do
+    def test_react_ujs_does_not_unmount_components_that_do_not_match_a_selector_reference_for_the_component
       visit '/pages/1'
       assert_greeting page, 'Hello Bob'
       assert page.has_content?('Another Component'), page.body
@@ -139,7 +139,7 @@ SprocketsHelpers.when_available do
     end
 
 
-    test 'react_ujs can unmount/mount using a dom node context' do
+    def test_react_ujs_can_unmount_and_mount_using_a_dom_node_context
       visit '/pages/1'
       assert_greeting(page, 'Hello Bob')
 
@@ -150,13 +150,13 @@ SprocketsHelpers.when_available do
       assert_greeting(page, 'Hello Bob')
     end
 
-    test 'react server rendering also gets mounted on client' do
+    def test_react_server_rendering_also_gets_mounted_on_client
       visit '/server/1'
       assert_match(/data-react-class=\"TodoList\"/, page.html)
       assert_match(/yep/, page.find("#status").text)
     end
 
-    test 'react server rendering does not include internal properties' do
+    def test_react_server_rendering_does_not_include_internal_properties
       visit '/server/1'
       assert_no_match(/tag=/, page.html)
       assert_no_match(/prerender=/, page.html)

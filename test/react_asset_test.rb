@@ -10,7 +10,7 @@ SprocketsHelpers.when_available do
       SprocketsHelpers.clear_sprockets_cache
     end
 
-    test 'asset pipeline should deliver drop-in react file replacement' do
+    def test_asset_pipeline_should_deliver_drop_in_react_file_replacement
       app_react_file_path = File.expand_path("../dummy/vendor/assets/javascripts/react.js",  __FILE__)
       react_file_token = "'test_confirmation_token_react_content_non_production';\n"
       File.write(app_react_file_path, react_file_token)
@@ -26,7 +26,7 @@ SprocketsHelpers.when_available do
       assert_equal react_file_token.length, @response.body.length, "The asset route serves the drop-in file"
     end
 
-    test 'precompiling assets works' do
+    def test_precompiling_assets_works
       begin
         SprocketsHelpers.precompile_assets
       ensure
@@ -34,7 +34,7 @@ SprocketsHelpers.when_available do
       end
     end
 
-    test "the development version with addons is loaded" do
+    def test_the_development_version_with_addons_is_loaded
       asset = Rails.application.assets.find_asset('react')
       path =
         if asset.respond_to?(:pathname)
@@ -47,7 +47,7 @@ SprocketsHelpers.when_available do
       assert path.end_with?('development-with-addons/react.js')
     end
 
-    test "the production build is optimized for production" do
+    def test_the_production_build_is_optimized_for_production
       production_path = File.expand_path("../../lib/assets/react-source/production/react.js", __FILE__)
       production_js = File.read(production_path)
       env_checks = production_js.scan("NODE_ENV")
