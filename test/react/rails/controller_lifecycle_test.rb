@@ -37,20 +37,20 @@ class ControllerLifecycleTest < ActionDispatch::IntegrationTest
     React::Rails::ViewHelper.helper_implementation_class = @previous_helper_implementation
   end
 
-  test "it creates a helper object and puts it in the request env" do
+  def test_it_creates_a_helper_object_and_puts_it_in_the_request_env
     get '/pages/1'
     helper_obj = controller.__react_component_helper
     assert(helper_obj.is_a?(DummyHelperImplementation), "It uses the view helper implementation class")
   end
 
-  test "it calls setup and teardown methods" do
+  def test_it_calls_setup_and_teardown_methods
     get '/pages/1?param_test=123'
     helper_obj = controller.__react_component_helper
     lifecycle_steps = ["123", :react_component, :react_component, :teardown]
     assert_equal(lifecycle_steps, helper_obj.events)
   end
 
-  test "there's a new helper object for every request" do
+  def test_theres_a_new_helper_object_for_every_request
     get '/pages/1'
     first_helper = controller.__react_component_helper
     get '/pages/1'

@@ -16,7 +16,7 @@ SprocketsHelpers.when_available do
       end
     end
 
-    test 'react server rendering reloads jsx after changes to the jsx files' do
+    def test_react_server_rendering_reloads_jsx_after_changes_to_the_jsx_files
       if WebpackerHelpers.available?
         file_with_updates = File.expand_path('../helper_files/TodoListWithUpdates.js', __FILE__)
         file_without_updates = File.expand_path('../helper_files/TodoListWithoutUpdates.js', __FILE__)
@@ -53,7 +53,7 @@ SprocketsHelpers.when_available do
       end
     end
 
-    test 'it reloads when new jsx files are added to the asset pipeline' do
+    def test_it_reloads_when_new_jsx_files_are_added_to_the_asset_pipeline
       begin
         assert_raises(ActionView::Template::Error) {
           get '/server/1?component_name=NewList'
@@ -61,15 +61,15 @@ SprocketsHelpers.when_available do
 
         if WebpackerHelpers.available?
           new_file_path = '../dummy/app/javascript/components/NewList.js'
-          new_file_contents = <<-JS
+          new_file_contents = <<-JSDOC
           var React = require("react")
           module.exports = function() { return <span>"New List"</span> }
-          JS
+          JSDOC
         else
           new_file_path = '../dummy/app/assets/javascripts/components/ZZ_NewComponent.js.jsx'
-          new_file_contents = <<-JS
+          new_file_contents = <<-JSDOC
           var NewList = function() { return <span>"New List"</span> }
-          JS
+          JSDOC
         end
 
         new_file_path = File.expand_path(new_file_path, __FILE__)
@@ -89,7 +89,7 @@ SprocketsHelpers.when_available do
       end
     end
 
-    test 'react server rendering shows console output as html comment' do
+    def test_react_server_rendering_shows_console_output_as_html_comment
       # Make sure console messages are replayed when requested
       React::ServerRendering.renderer_options = {replay_console: true}
       React::ServerRendering.reset_pool
@@ -110,7 +110,7 @@ SprocketsHelpers.when_available do
       assert_no_match(/console.error/, response.body)
     end
 
-    test 'react inline component rendering (pre-rendered)' do
+    def test_react_inline_component_rendering_pre_rendered
       get '/server/inline_component_prerender_true'
       rendered_html = response.body
       assert_match(/<span.*data-react-class=\"TodoList\"/, rendered_html)
@@ -125,7 +125,7 @@ SprocketsHelpers.when_available do
       assert_match(/data-remote=\"true\"/, rendered_html)
     end
 
-    test 'react inline component rendering (not pre-rendered)' do
+    def test_react_inline_component_rendering_not_pre_rendered
       get '/server/inline_component_prerender_false'
       rendered_html = response.body
       # make sure the tag closes immediately:

@@ -36,21 +36,21 @@ SprocketsHelpers.when_available do
       reset_transformer
     end
 
-    test 'asset pipeline should transform JSX' do
+    def test_asset_pipeline_should_transform_JSX
       SprocketsHelpers.manually_expire_asset('example.js')
       get '/assets/example.js'
       assert_response :success
       assert_compiled_javascript_matches(EXPECTED_JS, @response.body)
     end
 
-    test 'asset pipeline should transform JSX + Coffeescript' do
+    def test_asset_pipeline_should_transform_JSX_and_Coffeescript
       SprocketsHelpers.manually_expire_asset('example2.js')
       get '/assets/example2.js'
       assert_response :success
       assert_compiled_javascript_matches(EXPECTED_JS_2, @response.body)
     end
 
-    test 'use a custom transformer' do
+    def test_use_a_custom_transformer
       React::JSX.transformer_class = NullTransformer
       SprocketsHelpers.manually_expire_asset('example2.js')
       get '/assets/example2.js'

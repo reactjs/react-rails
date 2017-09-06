@@ -16,18 +16,18 @@ if !WebpackerHelpers.available?
       FileUtils.cp_r source, dest
     end
 
-    test "adds requires to `application.js`" do
+    def test_adds_requires_to_application_js
       run_generator
       assert_application_file_created
     end
 
-    test "it modifes an existing 'application.js'" do
+    def test_it_modifes_an_existing_application_js
       copy_directory('app/assets/javascripts/application.js')
       run_generator
       assert_application_file_modified
     end
 
-    test "creates `application.js` if it doesn't exist" do
+    def test_creates_application_js_if_it_doesnt_exist
       copy_directory('app/assets/javascripts/application.js')
       File.delete destination_root + '/app/assets/javascripts/application.js'
 
@@ -35,14 +35,14 @@ if !WebpackerHelpers.available?
       assert_application_file_created
     end
 
-    test "modifies `application.js` if it's empty" do
+    def test_modifies_application_js_if_its_empty
       init_application_js ''
 
       run_generator
       assert_application_file_created
     end
 
-    test "updates `application.js` if require_tree is commented" do
+    def test_updates_application_js_if_require_tree_is_commented
       init_application_js <<-END
         //
         // require_tree .
@@ -53,7 +53,7 @@ if !WebpackerHelpers.available?
       assert_application_file_modified
     end
 
-    test "updates `application.js` if require turbolinks has extra spaces" do
+    def test_updates_application_js_if_require_turbolinks_has_extra_spaces
       init_application_js <<-END
         //
         //#{"=  require  turbolinks  "}
@@ -64,20 +64,20 @@ if !WebpackerHelpers.available?
       assert_application_file_modified
     end
 
-    test "creates server_rendering.js with default requires" do
+    def test_creates_server_rendering_js_with_default_requires
       run_generator
       server_rendering_file_path = "app/assets/javascripts/server_rendering.js"
       assert_file server_rendering_file_path, %r{//= require react-server\n}
       assert_file server_rendering_file_path, %r{//= require ./components\n}
     end
 
-    test "creates server rendering initializer" do
+    def test_creates_server_rendering_initializer
       run_generator
       initializer_path = "config/initializers/react_server_rendering.rb"
       assert_file(initializer_path, %r{Rails.application.config.assets.precompile \+= \["server_rendering.js"\]})
     end
 
-    test "skipping server rendering" do
+    def test_skipping_server_rendering
       run_generator %w(--skip-server-rendering)
       assert_no_file "config/initializers/react_server_rendering.rb"
       assert_no_file "app/assets/javascripts/server_rendering.js"

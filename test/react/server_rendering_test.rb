@@ -26,13 +26,13 @@ class ReactServerRenderingTest < ActiveSupport::TestCase
     React::ServerRendering.reset_pool
   end
 
-  test '.render returns a rendered string' do
+  def test_render_returns_a_rendered_string
     props = {"props" => true}
     result = React::ServerRendering.render("MyComponent", props, "prerender-opts")
     assert_equal("TEST rendered MyComponent with #{props} and prerender-opts", result)
   end
 
-  test '.reset_pool forgets old renderers' do
+  def test_reset_pool_forgets_old_renderers
     # At first, they use the first options:
     assert_match(/^TEST/, React::ServerRendering.render(nil, nil, nil))
     assert_match(/^TEST/, React::ServerRendering.render(nil, nil, nil))

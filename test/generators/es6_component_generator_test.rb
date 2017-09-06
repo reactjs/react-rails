@@ -20,19 +20,19 @@ class Es6ComponentGeneratorTest < Rails::Generators::TestCase
     'GeneratedComponent'
   end
 
-  test "uses es6 syntax" do
+  def test_uses_es6_syntax
     run_generator %w(GeneratedComponent name --es6)
 
     assert_file filename, /^class\s#{class_name}\sextends\sReact\.Component/
   end
 
-  test "assigns defaultProps after class definintion" do
+  def test_assigns_defaultProps_after_class_definintion
     run_generator %w(GeneratedComponent name --es6)
 
     assert_file filename, /\s^#{class_name}\.propTypes/
   end
 
-  test "generates working jsx" do
+  def test_generates_working_jsx
     expected_name_div = /React\.createElement\(\s*"div",\s*null,\s*\"Name:\s*\",\s*this\.props\.name\s*\)/x
     expected_shape_div = /React\.createElement\(\s*"div",\s*null,\s*\"Address:\s*\",\s*this\.props\.address\s*\)/x
 

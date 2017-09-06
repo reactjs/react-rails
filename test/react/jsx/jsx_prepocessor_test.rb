@@ -6,7 +6,7 @@ SprocketsHelpers.when_available do
     REQUIRED_COFFEESCRIPT =  "var requireCoffee; requireCoffee = true;"
     REQUIRED_JSX = "React.createElement(\"div\", { className: \"require-jsx\" });"
     OWN_JSX = "React.createElement(\"div\", { className: \"le-javascript\" });"
-    test 'executes //= require directives' do
+    def test_executes_require_directives
       require_parent = SprocketsHelpers.fetch_asset_body("require_test/jsx_preprocessor_test.js")
 
       assert_compiled_javascript_includes(require_parent, REQUIRED_JAVASCRIPT)

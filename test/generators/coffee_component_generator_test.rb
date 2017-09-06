@@ -19,20 +19,20 @@ class CoffeeComponentGeneratorTest < Rails::Generators::TestCase
     'GeneratedComponent'
   end
 
-  test 'that it the uses CoffeeScript syntax' do
+  def test_that_it_the_uses_CoffeeScript_syntax
     run_generator %w(GeneratedComponent name --coffee)
 
     assert_file filename, /^class @#{class_name}\sextends\sReact\.Component/
   end
 
-  test 'that propTypes get assigned' do
+  def test_that_propTypes_get_assigned
     run_generator %w(GeneratedComponent name --coffee)
 
     assert_file filename, /@propTypes\s=/
     assert_file filename, /React.PropTypes/
   end
 
-  test 'that it generates working jsx' do
+  def test_that_it_generates_working_jsx
     expected_name_div = /React\.createElement\(\s*"div",\s*null,\s*"Name:\s*",\s*this\.props\.name\s*\)/x
     expected_shape_div = /React\.createElement\(\s*"div",\s*null,\s*"Address:\s*",\s*this\.props\.address\s*\)/x
 
