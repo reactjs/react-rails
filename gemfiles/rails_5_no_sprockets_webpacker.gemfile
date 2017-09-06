@@ -3,7 +3,7 @@
 source "http://rubygems.org"
 
 gem "rails", "~> 5.0.0"
-gem "webpacker", :github => "rails/webpacker"
+gem "webpacker", "< 3.0"
 gem "therubyracer"
 
 gemspec :path => "../"
