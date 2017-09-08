@@ -1,0 +1,32 @@
+# Note: You must restart bin/webpack-dev-server for changes to take effect
+
+default: &default            # ~ = Rails.root
+  source: app/javascript     # ~/:source
+  entry: packs               # ~/:source/:entry
+  output: packs              # ~/public/:output
+  manifest: manifest.json    # ~/public/:output/:manifest
+  config: config/webpack     # ~/:config
+  node_modules: node_modules # ~/:node_modules
+  extensions:
+    - .coffee
+    - .js
+    - .jsx
+    - .ts
+    - .vue
+    - .sass
+    - .scss
+    - .css
+    - .png
+    - .svg
+    - .gif
+    - .jpeg
+    - .jpg
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+
+production:
+  <<: *default

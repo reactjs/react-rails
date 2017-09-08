@@ -3,7 +3,11 @@ if RUBY_PLATFORM != "java"
   SimpleCov.start
 end
 
-DUMMY_LOCATION = Bundler.locked_gems.specs.map(&:name).include?('webpacker') ? 'dummy_webpacker1' : 'dummy_sprockets'
+DUMMY_LOCATION = if Bundler.locked_gems.specs.map(&:name).include?('webpacker')
+  'dummy_webpacker1'
+else
+  'dummy_sprockets'
+end
 
 support_path = File.expand_path("../support/*.rb", __FILE__)
 Dir.glob(support_path).each do |f|
