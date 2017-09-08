@@ -1,6 +1,6 @@
 require 'pry'
 module WebpackerHelpers
-  PACKS_DIRECTORY =  File.expand_path("../../#{dummy_location}/public/packs", __FILE__)
+  PACKS_DIRECTORY =  File.expand_path("../../#{DUMMY_LOCATION}/public/packs", __FILE__)
 
   module_function
   def available?
@@ -16,11 +16,11 @@ module WebpackerHelpers
   def compile
     return if !available?
     clear_webpacker_packs
-    Dir.chdir("./test/#{dummy_location}") do
-      capture_io do
+    Dir.chdir("./test/#{DUMMY_LOCATION}") do
+      # capture_io do
         Rake::Task['webpacker:compile'].reenable
         Rake::Task['webpacker:compile'].invoke
-      end
+      # end
     end
     # Reload cached JSON manifest:
     manifest_refresh
@@ -73,7 +73,7 @@ module WebpackerHelpers
   # Make sure to clean up the server
   def with_dev_server
     # Start the server in a forked process:
-    webpack_dev_server = Dir.chdir("test/#{dummy_location}") do
+    webpack_dev_server = Dir.chdir("test/#{DUMMY_LOCATION}") do
       spawn "RAILS_ENV=development ./bin/webpack-dev-server "
     end
 
@@ -83,12 +83,12 @@ module WebpackerHelpers
     30.times do |i|
       begin
         # Make sure that the manifest has been updated:
-        manifest_lookup("./test/#{dummy_location}/public/packs/manifest.json")
+        manifest_lookup("./test/#{DUMMY_LOCATION}/public/packs/manifest.json")
         example_asset_path = manifest_data.values.first
         if example_asset_path.nil?
           # Debug helper
           # puts "Manifest is blank, all manifests:"
-          # Dir.glob("./test/#{dummy_location}/public/packs/*.json").each do |f|
+          # Dir.glob("./test/#{DUMMY_LOCATION}/public/packs/*.json").each do |f|
           #   puts f
           #   puts File.read(f)
           # end

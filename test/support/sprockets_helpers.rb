@@ -36,7 +36,7 @@ module SprocketsHelpers
       # Changing directories is required because:
       # - assets:precompile runs webpacker:compile when availabled
       # - webpacker:compile depends on `./bin/webpack`, so `.` must be the app root
-      Dir.chdir("./test/#{dummy_location}") do
+      Dir.chdir("./test/#{DUMMY_LOCATION}") do
 
         ENV['RAILS_GROUPS'] = 'assets' # required for Rails 3.2
         Rake::Task['assets:precompile'].reenable
@@ -59,12 +59,12 @@ module SprocketsHelpers
       Rails.application.assets_manifest = new_manifest
     end
 
-    assets_directory = File.expand_path("../../#{dummy_location}/public/assets", __FILE__)
+    assets_directory = File.expand_path("../../#{DUMMY_LOCATION}/public/assets", __FILE__)
     raise "Asset precompilation failed" unless Dir.exists?(assets_directory)
   end
 
   def clear_precompiled_assets
-    assets_directory = File.expand_path("../../#{dummy_location}/public/assets", __FILE__)
+    assets_directory = File.expand_path("../../#{DUMMY_LOCATION}/public/assets", __FILE__)
     FileUtils.rm_r(assets_directory)
     ENV.delete('RAILS_GROUPS')
   end

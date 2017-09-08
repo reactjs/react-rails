@@ -11,7 +11,7 @@ SprocketsHelpers.when_available do
     end
 
     test 'asset pipeline should deliver drop-in react file replacement' do
-      app_react_file_path = File.expand_path("../#{dummy_location}/vendor/assets/javascripts/react.js",  __FILE__)
+      app_react_file_path = File.expand_path("../#{DUMMY_LOCATION}/vendor/assets/javascripts/react.js",  __FILE__)
       react_file_token = "'test_confirmation_token_react_content_non_production';\n"
       File.write(app_react_file_path, react_file_token)
       SprocketsHelpers.manually_expire_asset("react.js")
