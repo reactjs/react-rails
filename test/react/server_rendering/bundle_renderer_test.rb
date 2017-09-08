@@ -70,7 +70,7 @@ if SprocketsHelpers.available? || WebpackerHelpers.available?
 
       if WebpackerHelpers.available?
         # require() failed:
-        assert_match(/Invariant Violation: Element type is invalid: expected a string/, err.to_s)
+        assert_match(/Invariant Violation:/, err.to_s)
       else
         # eval() failed:
         assert_match(/ReferenceError/, err.to_s)

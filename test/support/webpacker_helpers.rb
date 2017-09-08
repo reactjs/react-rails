@@ -1,3 +1,4 @@
+require 'pry'
 module WebpackerHelpers
   PACKS_DIRECTORY =  File.expand_path("../../dummy/public/packs", __FILE__)
 
@@ -63,7 +64,7 @@ module WebpackerHelpers
     if Webpacker.respond_to?(:manifest)
       Webpacker.manifest.refresh
     else
-      Webpacker::Manifest.data
+      Webpacker::Manifest.instance.data
     end
   end
 
@@ -94,7 +95,7 @@ module WebpackerHelpers
           next
         end
         # Make sure the dev server is up:
-        open("http://localhost:8080/application.js")
+        open("http://localhost:8080/packs/application.js")
         if !example_asset_path.start_with?("http://localhost:8080")
           raise "Manifest doesn't include absolute path to dev server"
         end

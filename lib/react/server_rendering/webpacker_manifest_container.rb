@@ -35,7 +35,7 @@ module React
       end
 
       def config
-        !!defined?(Webpacker::Configuration) ? Webpacker::Configuration : Webpacker.config
+        Webpacker.respond_to?(:config) ? Webpacker.config : Webpacker::Configuration
       end
 
       def self.compatible?
