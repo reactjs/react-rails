@@ -20,11 +20,11 @@ SprocketsHelpers.when_available do
       if WebpackerHelpers.available?
         file_with_updates = File.expand_path('../helper_files/TodoListWithUpdates.js', __FILE__)
         file_without_updates = File.expand_path('../helper_files/TodoListWithoutUpdates.js', __FILE__)
-        app_file = File.expand_path('../dummy/app/javascript/components/TodoList.js', __FILE__)
+        app_file = File.expand_path("../#{dummy_location}/app/javascript/components/TodoList.js", __FILE__)
       else
         file_with_updates = File.expand_path('../helper_files/TodoListWithUpdates.js.jsx', __FILE__)
         file_without_updates = File.expand_path('../helper_files/TodoListWithoutUpdates.js.jsx', __FILE__)
-        app_file = File.expand_path('../dummy/app/assets/javascripts/components/TodoList.js.jsx', __FILE__)
+        app_file = File.expand_path("../#{dummy_location}/app/assets/javascripts/components/TodoList.js.jsx", __FILE__)
       end
 
       FileUtils.cp app_file, file_without_updates
@@ -60,13 +60,13 @@ SprocketsHelpers.when_available do
         }
 
         if WebpackerHelpers.available?
-          new_file_path = '../dummy/app/javascript/components/NewList.js'
+          new_file_path = "../#{dummy_location}/app/javascript/components/NewList.js"
           new_file_contents = <<-HEREDOC
 var React = require("react")
 module.exports = function() { return <span>"New List"</span> }
 HEREDOC
         else
-          new_file_path = '../dummy/app/assets/javascripts/components/ZZ_NewComponent.js.jsx'
+          new_file_path = "../#{dummy_location}/app/assets/javascripts/components/ZZ_NewComponent.js.jsx"
           new_file_contents = <<-HEREDOC
 var NewList = function() { return <span>"New List"</span> }
 HEREDOC

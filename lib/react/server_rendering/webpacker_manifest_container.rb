@@ -31,11 +31,16 @@ module React
       end
 
       def file_path path
-        manifest.respond_to?(:lookup_path) ? manifest.lookup_path(path) : File.join(config.output_path, manifest.lookup(path).split('/')[2..-1])
+        manifest.respond_to?(:lookup_path) ? manifest.lookup_path(path) : File.join(output_path, manifest.lookup(path).split('/')[2..-1])
       end
 
       def config
         Webpacker.respond_to?(:config) ? Webpacker.config : Webpacker::Configuration
+      end
+
+      def output_path
+        # Webpack1 /:output/:entry, Webpack3 /public/:output
+        config.respond_to?(:output_path) ? config.output_path : 'public'
       end
 
       def self.compatible?

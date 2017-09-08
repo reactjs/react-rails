@@ -3,6 +3,11 @@ if RUBY_PLATFORM != "java"
   SimpleCov.start
 end
 
+def dummy_location
+  return 'dummy_webpacker1' if defined?(Webpacker)
+  'dummy_sprockets'
+end
+
 support_path = File.expand_path("../support/*.rb", __FILE__)
 Dir.glob(support_path).each do |f|
   require(f)
@@ -11,7 +16,7 @@ end
 # Configure Rails Environment
 ENV["RAILS_ENV"] = "test"
 
-require File.expand_path("../dummy/config/environment.rb", __FILE__)
+require File.expand_path("../#{dummy_location}/config/environment.rb", __FILE__)
 require "rails/test_help"
 require "rails/generators"
 require "pathname"
@@ -40,7 +45,7 @@ Capybara.javascript_driver = :poltergeist_debug
 Capybara.current_driver = Capybara.javascript_driver
 
 
-CACHE_PATH = Pathname.new File.expand_path("../dummy/tmp/cache", __FILE__)
+CACHE_PATH = Pathname.new File.expand_path("../#{dummy_location}/tmp/cache", __FILE__)
 
 Rails.backtrace_cleaner.remove_silencers!
 

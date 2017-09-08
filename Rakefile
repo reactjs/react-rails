@@ -92,7 +92,10 @@ end
 task default: :test
 
 task :test_setup do
-  Dir.chdir("./test/dummy") do
+  Dir.chdir("./test/dummy_sprockets") do
+    `yarn install`
+  end
+  Dir.chdir("./test/dummy_webpacker1") do
     `yarn install`
   end
 end
