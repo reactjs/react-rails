@@ -3,8 +3,12 @@ if RUBY_PLATFORM != "java"
   SimpleCov.start
 end
 
-DUMMY_LOCATION = if Bundler.locked_gems.specs.map(&:name).include?('webpacker')
-  'dummy_webpacker1'
+DUMMY_LOCATION = if (gem_webpack = Bundler.locked_gems.specs.find {|gem_spec| gem_spec.name == 'webpacker'})
+  if gem_webpack.version.segments.first == 1
+    'dummy_webpacker1'
+  else#if gem_webpack.version.segments.first == 3
+    'dummy_webpacker3'
+  end
 else
   'dummy_sprockets'
 end
@@ -26,8 +30,6 @@ require 'minitest/mock'
 require "capybara/rails"
 require "capybara/poltergeist"
 Dummy::Application.load_tasks
-
-
 
 WebpackerHelpers.clear_webpacker_packs
 
