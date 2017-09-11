@@ -12,7 +12,7 @@ module React
 
       def find_asset(logical_path)
         # raises if not found
-        asset_path = Webpacker::Manifest.lookup(logical_path).to_s
+        asset_path = Webpacker.manifest.lookup(logical_path).to_s
         if asset_path.start_with?("http")
           # Get a file from the webpack-dev-server
           dev_server_asset = open(asset_path).read
@@ -21,7 +21,7 @@ module React
           dev_server_asset
         else
           # Read the already-compiled pack:
-          full_path = Webpacker::Manifest.lookup_path(logical_path).to_s
+          full_path = ::Rails.root.join(File.join(Webpacker.config.public_path, Webpacker.manifest.lookup(logical_path))).to_s
           File.read(full_path)
         end
       end
