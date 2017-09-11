@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dummy</title>
+  <% if WebpackerHelpers.available? %>
+    <%= javascript_include_tag "turbolinks_only", "data-turbolinks-track" => true %>
+    <%= javascript_pack_tag "application" %>
+  <% elsif SprocketsHelpers.available? %>
+    <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+  <% end %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+
+<%= yield %>
+
+</body>
+</html>

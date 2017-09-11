@@ -4,8 +4,10 @@ if RUBY_PLATFORM != "java"
 end
 
 DUMMY_LOCATION = if (gem_webpack = Bundler.locked_gems.specs.find {|gem_spec| gem_spec.name == 'webpacker'})
-  if gem_webpack.version.segments.first == 1 || gem_webpack.version.segments.first == 2
+  if gem_webpack.version.segments.first == 1
     'dummy_webpacker1'
+  elsif gem_webpack.version.segments.first == 2
+    'dummy_webpacker2'
   else#if gem_webpack.version.segments.first == 3
     'dummy_webpacker3'
   end
