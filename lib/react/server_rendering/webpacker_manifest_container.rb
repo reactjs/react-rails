@@ -1,4 +1,5 @@
 require "open-uri"
+require 'pry'
 
 module React
   module ServerRendering
@@ -7,8 +8,15 @@ module React
     # - webpack-dev-server
     # - compiled pack
     class WebpackerManifestContainer
+
+      MAJOR, MINOR, PATCH, _ = Bundler.locked_gems.specs.find {|gem_spec| gem_spec.name == 'webpacker'}.version.segments
+
       # This pattern matches the code that initializes the dev-server client.
       CLIENT_REQUIRE = %r{__webpack_require__\(.*webpack-dev-server\/client\/index\.js.*\n}
+
+      def self.compatible?
+        !!defined?(Webpacker)
+      end
 
       def find_asset(logical_path)
         # raises if not found
@@ -26,25 +34,43 @@ module React
         end
       end
 
-      def manifest
-        Webpacker.respond_to?(:manifest) ? Webpacker.manifest : Webpacker::Manifest
+      if MAJOR < 3
+        def manifest
+          Webpacker::Manifest
+        end
+      else
+        def manifest
+          Webpacker.manifest
+        end
       end
 
-      def file_path path
-        manifest.respond_to?(:lookup_path) ? manifest.lookup_path(path) : File.join(output_path, manifest.lookup(path).split('/')[2..-1])
+      if MAJOR < 3
+        def config
+          Webpacker::Configuration
+        end
+      else
+        def config
+          Webpacker.config
+        end
       end
 
-      def config
-        Webpacker.respond_to?(:config) ? Webpacker.config : Webpacker::Configuration
+      if (MAJOR == 1 && MINOR >= 2) || MAJOR == 2
+        def file_path path
+          manifest.lookup_path(path)
+        end
+      elsif MAJOR == 3
+        def file_path path
+          File.join(Webpacker.config.public_output_path, path)
+        end
+      else # 1.0 and 1.1 support
+        def file_path path
+          File.join(output_path, manifest.lookup(path).split('/')[2..-1])
+        end
       end
 
       def output_path
         # Webpack1 /:output/:entry, Webpack3 /public/:output
         config.respond_to?(:output_path) ? config.output_path : 'public'
-      end
-
-      def self.compatible?
-        !!defined?(Webpacker)
       end
     end
   end

@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@rails/webpacker": "^3.0.1",
     "autoprefixer": "^7.1.1",
     "babel-core": "^6.24.1",
     "babel-loader": "7.x",
@@ -32,6 +33,6 @@
     "webpack-merge": "^4.1.0"
   },
   "devDependencies": {
-    "webpack-dev-server": "^2.4.5"
+    "webpack-dev-server": "^2.7.1"
   }
 }
