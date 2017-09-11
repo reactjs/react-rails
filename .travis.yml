@@ -50,6 +50,8 @@ matrix:
     - rvm: 2.1
       gemfile: gemfiles/rails_5_no_sprockets_webpacker_3.gemfile
     - rvm: 2.1
+      gemfile: gemfiles/rails_5_no_sprockets.gemfile
+    - rvm: 2.1
       gemfile: gemfiles/rails_5.1_sprockets_4.gemfile
     - rvm: jruby-9.0.1.0
       gemfile: gemfiles/rails_4.0.gemfile
