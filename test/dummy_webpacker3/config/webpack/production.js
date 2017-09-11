@@ -1,20 +1,35 @@
-try {
-  const environment = require('./environment')
+// Note: You must restart bin/webpack-dev-server for changes to take effect
 
-  module.exports = environment.toWebpackConfig()
-} catch (e) {
-  const merge = require('webpack-merge')
-  const sharedConfig = require('./shared.js')
+/* eslint global-require: 0 */
 
-  module.exports = merge(sharedConfig, {
-    devtool: 'sourcemap',
+const webpack = require('webpack')
+const merge = require('webpack-merge')
+const CompressionPlugin = require('compression-webpack-plugin')
+const sharedConfig = require('./shared.js')
 
-    stats: {
-      errorDetails: true
-    },
+module.exports = merge(sharedConfig, {
+  output: { filename: '[name]-[chunkhash].js' },
+  devtool: 'source-map',
+  stats: 'normal',
 
-    output: {
-      pathinfo: true
-    }
-  })
-}
+  plugins: [
+    new webpack.optimize.UglifyJsPlugin({
+      minimize: true,
+      sourceMap: true,
+
+      compress: {
+        warnings: false
+      },
+
+      output: {
+        comments: false
+      }
+    }),
+
+    new CompressionPlugin({
+      asset: '[path].gz[query]',
+      algorithm: 'gzip',
+      test: /\.(js|css|html|json|ico|svg|eot|otf|ttf)$/
+    })
+  ]
+})
