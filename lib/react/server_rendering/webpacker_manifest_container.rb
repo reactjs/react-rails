@@ -9,7 +9,11 @@ module React
     # - compiled pack
     class WebpackerManifestContainer
 
-      MAJOR, MINOR, PATCH, _ = Bundler.locked_gems.specs.find {|gem_spec| gem_spec.name == 'webpacker'}.version.segments if defined?(Webpacker)
+      begin
+        MAJOR, MINOR, PATCH, _ = Bundler.locked_gems.specs.find {|gem_spec| gem_spec.name == 'webpacker'}.version.segments
+      rescue
+        MAJOR, MINOR, PATCH, _ = [0,0,0]
+      end
 
       # This pattern matches the code that initializes the dev-server client.
       CLIENT_REQUIRE = %r{__webpack_require__\(.*webpack-dev-server\/client\/index\.js.*\n}

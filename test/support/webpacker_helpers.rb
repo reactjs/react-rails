@@ -1,6 +1,11 @@
 require 'pry'
 module WebpackerHelpers
   PACKS_DIRECTORY =  File.expand_path("../../#{DUMMY_LOCATION}/public/packs", __FILE__)
+  begin
+    MAJOR, MINOR, PATCH, _ = Bundler.locked_gems.specs.find {|gem_spec| gem_spec.name == 'webpacker'}.version.segments
+  rescue
+    MAJOR, MINOR, PATCH, _ = [0,0,0]
+  end
 
   module_function
   def available?
@@ -36,11 +41,13 @@ module WebpackerHelpers
     FileUtils.rm_rf(PACKS_DIRECTORY)
   end
 
-  def manifest_refresh
-    if Webpacker.respond_to?(:manifest)
-      Webpacker.manifest.refresh
-    else
+  if MAJOR < 3
+    def manifest_refresh
       Webpacker::Manifest.load
+    end
+  else
+    def manifest_refresh
+      Webpacker.manifest.refresh
     end
   end
 
@@ -52,18 +59,12 @@ module WebpackerHelpers
     end
   end
 
-  def manifest
-    if Webpacker.respond_to?(:manifest)
-      Webpacker.manifest
-    else
-      Webpacker::Manifest
-    end
-  end
-
-  def manifest_data
-    if Webpacker.respond_to?(:manifest)
+  if MAJOR < 3
+    def manifest_data
       Webpacker.manifest.refresh
-    else
+    end
+  else
+    def manifest_data
       Webpacker::Manifest.instance.data
     end
   end
