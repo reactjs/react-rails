@@ -64,7 +64,7 @@ module React
         end
       elsif MAJOR == 3
         def file_path path
-          File.join(Webpacker.config.public_output_path, path)
+          ::Rails.root.join('public', manifest.lookup(path)[1..-1])
         end
       else # 1.0 and 1.1 support
         def file_path path

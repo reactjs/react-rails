@@ -51,11 +51,13 @@ module WebpackerHelpers
     end
   end
 
-  def manifest_lookup name
-    if Webpacker.respond_to?(:manifest)
-      Webpacker.manifest.lookup(name)
-    else
+  if MAJOR < 3
+    def manifest_lookup name
       Webpacker::Manifest.load(name)
+    end
+  else
+    def manifest_lookup _
+      Webpacker.manifest
     end
   end
 
@@ -96,8 +98,8 @@ module WebpackerHelpers
           next
         end
         # Make sure the dev server is up:
-        open("http://localhost:8080/packs/application.js")
-        if !example_asset_path.start_with?("http://localhost:8080")
+        file = open("http://localhost:8080/packs/application.js")
+        if !example_asset_path.start_with?("http://localhost:8080") && ! file
           raise "Manifest doesn't include absolute path to dev server"
         end
 
