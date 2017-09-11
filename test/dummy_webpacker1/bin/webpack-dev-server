@@ -10,26 +10,24 @@ RAILS_ENV = ENV["RAILS_ENV"]
 ENV["NODE_ENV"] ||= RAILS_ENV
 NODE_ENV = ENV["NODE_ENV"]
 
-APP_PATH = File.expand_path("../", __dir__)
+APP_PATH    = File.expand_path("../", __dir__)
+CONFIG_PATH = File.join(APP_PATH, "config/webpack/paths.yml")
 
-def load_yaml_config(config_file)
-  YAML.load_file(File.join(APP_PATH, config_file))[NODE_ENV]
+begin
+  paths = YAML.load(File.read(CONFIG_PATH))
+
+  NODE_MODULES_PATH   = File.join(APP_PATH.shellescape, paths["node_modules"])
+  WEBPACK_CONFIG_PATH = File.join(APP_PATH.shellescape, paths["config"])
+
+  WEBPACK_BIN       = "#{NODE_MODULES_PATH}/.bin/webpack-dev-server"
+  DEV_SERVER_CONFIG = "#{WEBPACK_CONFIG_PATH}/development.server.js"
 rescue Errno::ENOENT, NoMethodError
-  puts "Configuration not found in #{config_file}."
+  puts "Configuration not found in config/webpacker/paths.yml."
   puts "Please run bundle exec rails webpacker:install to install webpacker"
   exit!
 end
 
-paths = load_yaml_config("config/webpack/paths.yml")
-NODE_MODULES_PATH = File.join(APP_PATH, paths["node_modules"])
-WEBPACK_CONFIG = File.join(APP_PATH, paths["config"], "development.server.js")
-
-dev_server = load_yaml_config("config/webpack/development.server.yml")
-DEV_SERVER_HOST = "http#{"s" if dev_server["https"]}://#{dev_server["host"]}:#{dev_server["port"]}"
-
-newenv = { "NODE_PATH" => NODE_MODULES_PATH.shellescape, "ASSET_HOST" => DEV_SERVER_HOST.shellescape }
-cmdline = ["yarn", "run", "webpack-dev-server", "--", "--progress", "--color", "--config", WEBPACK_CONFIG] + ARGV
-
 Dir.chdir(APP_PATH) do
-  exec newenv, *cmdline
+  exec "NODE_PATH=#{NODE_MODULES_PATH} #{WEBPACK_BIN} --progress --color " \
+    "--config #{DEV_SERVER_CONFIG}"
 end

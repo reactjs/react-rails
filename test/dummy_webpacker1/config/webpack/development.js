@@ -1,20 +1,16 @@
-try {
-  const environment = require('./environment')
+// Note: You must restart bin/webpack-watcher for changes to take effect
 
-  module.exports = environment.toWebpackConfig()
-} catch (e) {
-  const merge = require('webpack-merge')
-  const sharedConfig = require('./shared.js')
+const merge = require('webpack-merge')
+const sharedConfig = require('./shared.js')
 
-  module.exports = merge(sharedConfig, {
-    devtool: 'sourcemap',
+module.exports = merge(sharedConfig, {
+  devtool: 'sourcemap',
 
-    stats: {
-      errorDetails: true
-    },
+  stats: {
+    errorDetails: true
+  },
 
-    output: {
-      pathinfo: true
-    }
-  })
-}
+  output: {
+    pathinfo: true
+  }
+})

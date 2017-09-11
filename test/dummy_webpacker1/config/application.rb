@@ -5,11 +5,6 @@ require File.expand_path('../boot', __FILE__)
 require "action_controller/railtie"
 require "action_mailer/railtie"
 
-# Test no-sprockets environment by testing the gemfile name
-if SprocketsHelpers.available?
-  require "sprockets/railtie"
-end
-
 require "rails/test_unit/railtie"
 
 # Make sure gems in development group are required, for example, react-rails and turbolinks.
@@ -35,9 +30,5 @@ module Dummy
     config.react.server_renderer_options = {
       replay_console: true,
     }
-
-    if SprocketsHelpers.available?
-      config.assets.enabled = true
-    end
   end
 end

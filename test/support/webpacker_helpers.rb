@@ -61,11 +61,11 @@ module WebpackerHelpers
 
   if MAJOR < 3
     def manifest_data
-      Webpacker.manifest.refresh
+      Webpacker::Manifest.instance.data
     end
   else
     def manifest_data
-      Webpacker::Manifest.instance.data
+      Webpacker.manifest.refresh
     end
   end
 
