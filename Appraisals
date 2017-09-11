@@ -48,7 +48,9 @@ appraise "rails-4.2-sprockets_4" do
   gem "mini_racer"
 end
 
-appraise "rails-5_webpacker_1_1" do
+# no_sprockets is a magical name from sprockets_helper.rb in test to
+#   load in certain tests or not.
+appraise "rails-5_no_sprockets_webpacker_1_1" do
   gem 'rails', '~> 5.0.0'
   gem "webpacker", '~> 1.1.0'
   # This ExecJS backend provides stateful context
@@ -56,7 +58,7 @@ appraise "rails-5_webpacker_1_1" do
   gem "therubyracer"
 end
 
-appraise "rails-5_webpacker_1_x" do
+appraise "rails-5_no_sprockets_webpacker_1_x" do
   gem 'rails', '~> 5.0.0'
   gem "webpacker", '~> 1.2'
   # This ExecJS backend provides stateful context
@@ -64,7 +66,7 @@ appraise "rails-5_webpacker_1_x" do
   gem "therubyracer"
 end
 
-appraise "rails-5_webpacker_2" do
+appraise "rails-5_no_sprockets_webpacker_2" do
   gem 'rails', '~> 5.0.0'
   gem "webpacker", '~> 2.0'
   # This ExecJS backend provides stateful context
@@ -72,7 +74,7 @@ appraise "rails-5_webpacker_2" do
   gem "therubyracer"
 end
 
-appraise "rails-5_webpacker_3" do
+appraise "rails-5_no_sprockets_webpacker_3" do
   gem 'rails', '~> 5.0.0'
   gem 'webpacker', '>= 3.0'
   # This ExecJS backend provides stateful context

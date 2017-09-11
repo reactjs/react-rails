@@ -12,10 +12,10 @@ rvm:
 gemfile:
   # These have webpacker:
   - gemfiles/rails_4.2_sprockets_4.gemfile
-  - gemfiles/rails_5_webpacker_1_1.gemfile
-  - gemfiles/rails_5_webpacker_1_x.gemfile
-  - gemfiles/rails_5_webpacker_2.gemfile
-  - gemfiles/rails_5_webpacker_3.gemfile
+  - gemfiles/rails_5_no_sprockets_webpacker_1_1.gemfile
+  - gemfiles/rails_5_no_sprockets_webpacker_1_x.gemfile
+  - gemfiles/rails_5_no_sprockets_webpacker_2.gemfile
+  - gemfiles/rails_5_no_sprockets_webpacker_3.gemfile
   # These don't have webpacker:
   - gemfiles/rails_3.2.gemfile
   - gemfiles/rails_4.0.5.gemfile
@@ -42,13 +42,13 @@ matrix:
     - rvm: 2.1
       gemfile: gemfiles/rails_4.2_sprockets_4.gemfile
     - rvm: 2.1
-      gemfile: gemfiles/rails_5_webpacker_1_1.gemfile
+      gemfile: gemfiles/rails_5_no_sprockets_webpacker_1_1.gemfile
     - rvm: 2.1
-      gemfile: gemfiles/rails_5_webpacker_1_x.gemfile
+      gemfile: gemfiles/rails_5_no_sprockets_webpacker_1_x.gemfile
     - rvm: 2.1
-      gemfile: gemfiles/rails_5_webpacker_2.gemfile
+      gemfile: gemfiles/rails_5_no_sprockets_webpacker_2.gemfile
     - rvm: 2.1
-      gemfile: gemfiles/rails_5_webpacker_3.gemfile
+      gemfile: gemfiles/rails_5_no_sprockets_webpacker_3.gemfile
     - rvm: 2.1
       gemfile: gemfiles/rails_5.1_sprockets_4.gemfile
     - rvm: jruby-9.0.1.0
@@ -60,13 +60,13 @@ matrix:
     - rvm: jruby-9.0.1.0
       gemfile: gemfiles/rails_4.2_sprockets_2.gemfile
     - rvm: jruby-9.0.1.0
-      gemfile: gemfiles/rails_5_webpacker_1_1.gemfile
+      gemfile: gemfiles/rails_5_no_sprockets_webpacker_1_1.gemfile
     - rvm: jruby-9.0.1.0
-      gemfile: gemfiles/rails_5_webpacker_1_x.gemfile
+      gemfile: gemfiles/rails_5_no_sprockets_webpacker_1_x.gemfile
     - rvm: jruby-9.0.1.0
-      gemfile: gemfiles/rails_5_webpacker_2.gemfile
+      gemfile: gemfiles/rails_5_no_sprockets_webpacker_2.gemfile
     - rvm: jruby-9.0.1.0
-      gemfile: gemfiles/rails_5_webpacker_3.gemfile
+      gemfile: gemfiles/rails_5_no_sprockets_webpacker_3.gemfile
     - rvm: jruby-9.0.1.0
       gemfile: gemfiles/rails_5_no_sprockets.gemfile
 

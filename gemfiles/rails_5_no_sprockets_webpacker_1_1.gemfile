@@ -2,8 +2,8 @@
 
 source "http://rubygems.org"
 
-gem "rails", "~> 4.0.13"
-gem "therubyracer", "0.12.0", :platform => :mri
-gem "turbolinks"
+gem "rails", "~> 5.0.0"
+gem "webpacker", "~> 1.1.0"
+gem "therubyracer"
 
 gemspec :path => "../"
