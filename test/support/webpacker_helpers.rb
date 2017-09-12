@@ -1,4 +1,3 @@
-require 'pry'
 module WebpackerHelpers
   PACKS_DIRECTORY =  File.expand_path("../../#{DUMMY_LOCATION}/public/packs", __FILE__)
   begin

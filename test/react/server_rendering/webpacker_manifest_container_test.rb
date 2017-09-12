@@ -1,6 +1,5 @@
 require "test_helper"
 require "open-uri"
-require 'pry'
 
 WebpackerHelpers.when_webpacker_available do
   class WebpackerManifestContainerTest < ActiveSupport::TestCase

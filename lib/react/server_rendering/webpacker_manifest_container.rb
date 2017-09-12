@@ -1,5 +1,4 @@
 require "open-uri"
-# require 'pry'
 
 module React
   module ServerRendering
