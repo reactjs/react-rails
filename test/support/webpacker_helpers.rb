@@ -106,10 +106,13 @@ module WebpackerHelpers
         else
           # Webpacker proxies the dev server when Rails is running in Webpacker 3
           #  so the manifest doens't have absolute paths anymore..
-          file = open("http://localhost:8080#{example_asset_path}")
-          if ! file
-            raise "Webpack Dev Server hasn't started yet"
-          end
+          # Reload webpacker config.
+          old_env = ENV["NODE_ENV"]
+          ENV["NODE_ENV"] = 'development'
+          Webpacker.instance.instance_variable_set(:@config, nil)
+          Webpacker.config
+          ENV["NODE_ENV"] = old_env
+          raise "Webpack Dev Server hasn't started yet" unless Webpacker.dev_server.running?
         end
 
         detected_dev_server = true

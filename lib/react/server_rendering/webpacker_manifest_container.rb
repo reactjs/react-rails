@@ -22,19 +22,33 @@ module React
         !!defined?(Webpacker)
       end
 
-      def find_asset(logical_path)
-        # raises if not found
-        asset_path = manifest.lookup(logical_path).to_s
-        if asset_path.start_with?("http")
-          # Get a file from the webpack-dev-server
-          dev_server_asset = open(asset_path).read
-          # Remove `webpack-dev-server/client/index.js` code which causes ExecJS to 💥
-          dev_server_asset.sub!(CLIENT_REQUIRE, '//\0')
-          dev_server_asset
-        else
-          # Read the already-compiled pack:
-          full_path = file_path(logical_path).to_s
-          File.read(full_path)
+      if MAJOR < 3
+        def find_asset(logical_path)
+          # raises if not found
+          asset_path = manifest.lookup(logical_path).to_s
+          if asset_path.start_with?("http")
+            # Get a file from the webpack-dev-server
+            dev_server_asset = open(asset_path).read
+            # Remove `webpack-dev-server/client/index.js` code which causes ExecJS to 💥
+            dev_server_asset.sub!(CLIENT_REQUIRE, '//\0')
+            dev_server_asset
+          else
+            # Read the already-compiled pack:
+            full_path = file_path(logical_path).to_s
+            File.read(full_path)
+          end
+        end
+      else
+        def find_asset(logical_path)
+          asset_path = Webpacker.manifest.lookup(logical_path).to_s
+          if Webpacker.dev_server.running?
+            ds = Webpacker.dev_server
+            dev_server_asset = open("#{ds.protocol}://#{ds.host_with_port}#{asset_path}").read
+            dev_server_asset.sub!(CLIENT_REQUIRE, '//\0')
+            dev_server_asset
+          else
+            File.read(file_path(logical_path))
+          end
         end
       end
 
