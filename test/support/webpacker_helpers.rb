@@ -111,8 +111,9 @@ module WebpackerHelpers
           ENV["NODE_ENV"] = 'development'
           Webpacker.instance.instance_variable_set(:@config, nil)
           Webpacker.config
+          running = Webpacker.dev_server.running?
           ENV["NODE_ENV"] = old_env
-          raise "Webpack Dev Server hasn't started yet" unless Webpacker.dev_server.running?
+          raise "Webpack Dev Server hasn't started yet" unless running
         end
 
         detected_dev_server = true
