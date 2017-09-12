@@ -98,9 +98,18 @@ module WebpackerHelpers
           next
         end
         # Make sure the dev server is up:
-        file = open("http://localhost:8080/packs/application.js")
-        if !example_asset_path.start_with?("http://localhost:8080") && ! file
-          raise "Manifest doesn't include absolute path to dev server"
+        if MAJOR < 3
+          file = open("http://localhost:8080/packs/application.js")
+          if !example_asset_path.start_with?("http://localhost:8080") && ! file
+            raise "Manifest doesn't include absolute path to dev server"
+          end
+        else
+          # Webpacker proxies the dev server when Rails is running in Webpacker 3
+          #  so the manifest doens't have absolute paths anymore..
+          file = open("http://localhost:8080#{example_asset_path}")
+          if ! file
+            raise "Webpack Dev Server hasn't started yet"
+          end
         end
 
         detected_dev_server = true
