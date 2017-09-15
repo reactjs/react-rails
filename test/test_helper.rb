@@ -1,4 +1,4 @@
-if RUBY_PLATFORM != "java"
+if RUBY_PLATFORM != 'java'
   require 'simplecov'
   SimpleCov.start
 end
@@ -15,22 +15,22 @@ else
   'dummy_sprockets'
 end
 
-support_path = File.expand_path("../support/*.rb", __FILE__)
+support_path = File.expand_path('../support/*.rb', __FILE__)
 Dir.glob(support_path).each do |f|
   require(f)
 end
 
 # Configure Rails Environment
-ENV["RAILS_ENV"] = "test"
+ENV['RAILS_ENV'] = 'test'
 
 
 require File.expand_path("../#{DUMMY_LOCATION}/config/environment.rb", __FILE__)
-require "rails/test_help"
-require "rails/generators"
-require "pathname"
+require 'rails/test_help'
+require 'rails/generators'
+require 'pathname'
 require 'minitest/mock'
-require "capybara/rails"
-require "capybara/poltergeist"
+require 'capybara/rails'
+require 'capybara/poltergeist'
 Dummy::Application.load_tasks
 
 WebpackerHelpers.clear_webpacker_packs
@@ -85,7 +85,7 @@ Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
 
 # Load fixtures from the engine
 if ActiveSupport::TestCase.method_defined?(:fixture_path=)
-  ActiveSupport::TestCase.fixture_path = File.expand_path("../fixtures", __FILE__)
+  ActiveSupport::TestCase.fixture_path = File.expand_path('../fixtures', __FILE__)
 end
 
 if ActiveSupport::TestCase.respond_to?(:test_order=)

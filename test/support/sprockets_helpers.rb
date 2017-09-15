@@ -6,7 +6,7 @@ module SprocketsHelpers
     # We also can't scan for defined?(Sprockets) because this is used to
     #   require Sprockets in the config/application.rb
     # !!Bundler.locked_gems.specs.find {|gem_spec| gem_spec.name == 'sprockets'}
-    ENV["BUNDLE_GEMFILE"] !~ /no_sprockets/
+    ENV['BUNDLE_GEMFILE'] !~ /no_sprockets/
   end
 
   # The block depends on sprockets, don't run it if sprockets is missing
@@ -65,7 +65,7 @@ module SprocketsHelpers
     end
 
     assets_directory = File.expand_path("../../#{DUMMY_LOCATION}/public/assets", __FILE__)
-    raise "Asset precompilation failed" unless Dir.exists?(assets_directory)
+    raise 'Asset precompilation failed' unless Dir.exists?(assets_directory)
   end
 
   def clear_precompiled_assets

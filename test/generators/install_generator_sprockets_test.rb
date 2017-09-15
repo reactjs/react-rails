@@ -16,7 +16,7 @@ if !WebpackerHelpers.available?
       FileUtils.cp_r source, dest
     end
 
-    test "adds requires to `application.js`" do
+    test 'adds requires to `application.js`' do
       run_generator
       assert_application_file_created
     end
@@ -42,7 +42,7 @@ if !WebpackerHelpers.available?
       assert_application_file_created
     end
 
-    test "updates `application.js` if require_tree is commented" do
+    test 'updates `application.js` if require_tree is commented' do
       init_application_js <<-END
         //
         // require_tree .
@@ -53,7 +53,7 @@ if !WebpackerHelpers.available?
       assert_application_file_modified
     end
 
-    test "updates `application.js` if require turbolinks has extra spaces" do
+    test 'updates `application.js` if require turbolinks has extra spaces' do
       init_application_js <<-END
         //
         //#{"=  require  turbolinks  "}
@@ -64,23 +64,23 @@ if !WebpackerHelpers.available?
       assert_application_file_modified
     end
 
-    test "creates server_rendering.js with default requires" do
+    test 'creates server_rendering.js with default requires' do
       run_generator
-      server_rendering_file_path = "app/assets/javascripts/server_rendering.js"
+      server_rendering_file_path = 'app/assets/javascripts/server_rendering.js'
       assert_file server_rendering_file_path, %r{//= require react-server\n}
       assert_file server_rendering_file_path, %r{//= require ./components\n}
     end
 
-    test "creates server rendering initializer" do
+    test 'creates server rendering initializer' do
       run_generator
-      initializer_path = "config/initializers/react_server_rendering.rb"
+      initializer_path = 'config/initializers/react_server_rendering.rb'
       assert_file(initializer_path, %r{Rails.application.config.assets.precompile \+= \["server_rendering.js"\]})
     end
 
-    test "skipping server rendering" do
+    test 'skipping server rendering' do
       run_generator %w(--skip-server-rendering)
-      assert_no_file "config/initializers/react_server_rendering.rb"
-      assert_no_file "app/assets/javascripts/server_rendering.js"
+      assert_no_file 'config/initializers/react_server_rendering.rb'
+      assert_no_file 'app/assets/javascripts/server_rendering.js'
     end
 
     def init_application_js(content)

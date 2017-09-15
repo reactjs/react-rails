@@ -15,7 +15,7 @@ SprocketsHelpers.when_available do
     # Normalize for webpacker check:
     def assert_greeting(page, plain_greeting, refute: false)
       normalized_greeting = if WebpackerHelpers.available?
-        greeting, name = plain_greeting.split(" ")
+        greeting, name = plain_greeting.split(' ')
         "#{greeting} from Webpacker #{name}"
       else
         plain_greeting
@@ -67,7 +67,7 @@ SprocketsHelpers.when_available do
     test 'react_ujs works with Turbolinks' do
       visit '/pages/1'
       assert_greeting(page, 'Hello Bob')
-      assert page.evaluate_script("Turbolinks.supported")
+      assert page.evaluate_script('Turbolinks.supported')
 
       # Try clicking links.
       page.click_link('Alice')
@@ -106,10 +106,10 @@ SprocketsHelpers.when_available do
       visit '/pages/1'
       assert_greeting(page, 'Hello Bob')
 
-      page.click_button "Unmount by parent selector"
+      page.click_button 'Unmount by parent selector'
       refute_greeting(page, 'Hello Bob')
 
-      page.click_button "Mount by parent selector"
+      page.click_button 'Mount by parent selector'
       assert_greeting(page, 'Hello Bob')
     end
 
@@ -117,10 +117,10 @@ SprocketsHelpers.when_available do
       visit '/pages/1'
       assert_greeting(page, 'Hello Bob')
 
-      page.click_button "Unmount by own selector"
+      page.click_button 'Unmount by own selector'
       refute_greeting(page, 'Hello Bob')
 
-      page.click_button "Mount by own selector"
+      page.click_button 'Mount by own selector'
       assert_greeting(page, 'Hello Bob')
     end
 
@@ -129,11 +129,11 @@ SprocketsHelpers.when_available do
       assert_greeting page, 'Hello Bob'
       assert page.has_content?('Another Component'), page.body
 
-      page.click_button "Unmount by own selector"
+      page.click_button 'Unmount by own selector'
       refute_greeting(page, 'Hello Bob')
       assert page.has_content?('Another Component'), page.body
 
-      page.click_button "Mount by own selector"
+      page.click_button 'Mount by own selector'
       assert_greeting(page, 'Hello Bob')
       assert page.has_content?('Another Component'), page.body
     end
@@ -143,17 +143,17 @@ SprocketsHelpers.when_available do
       visit '/pages/1'
       assert_greeting(page, 'Hello Bob')
 
-      page.click_button "Unmount by parent node"
+      page.click_button 'Unmount by parent node'
       refute_greeting(page, 'Hello Bob')
 
-      page.click_button "Mount by parent node"
+      page.click_button 'Mount by parent node'
       assert_greeting(page, 'Hello Bob')
     end
 
     test 'react server rendering also gets mounted on client' do
       visit '/server/1'
       assert_match(/data-react-class=\"TodoList\"/, page.html)
-      assert_match(/yep/, page.find("#status").text)
+      assert_match(/yep/, page.find('#status').text)
     end
 
     test 'react server rendering does not include internal properties' do

@@ -21,7 +21,7 @@ module React
 
       def transform(code)
         result = @context.call('JSXTransformer.transform', code, @transform_options)
-        result["code"]
+        result['code']
       end
 
       # search for transformer file using sprockets - allows user to override

@@ -1,4 +1,4 @@
-require "open-uri"
+require 'open-uri'
 
 module React
   module ServerRendering
@@ -25,7 +25,7 @@ module React
         def find_asset(logical_path)
           # raises if not found
           asset_path = manifest.lookup(logical_path).to_s
-          if asset_path.start_with?("http")
+          if asset_path.start_with?('http')
             # Get a file from the webpack-dev-server
             dev_server_asset = open(asset_path).read
             # Remove `webpack-dev-server/client/index.js` code which causes ExecJS to 💥

@@ -76,7 +76,7 @@ module WebpackerHelpers
   def with_dev_server
     # Start the server in a forked process:
     webpack_dev_server = Dir.chdir("test/#{DUMMY_LOCATION}") do
-      spawn "RAILS_ENV=development ./bin/webpack-dev-server "
+      spawn 'RAILS_ENV=development ./bin/webpack-dev-server '
     end
 
     detected_dev_server = false
@@ -98,20 +98,20 @@ module WebpackerHelpers
         end
         # Make sure the dev server is up:
         if MAJOR < 3
-          file = open("http://localhost:8080/packs/application.js")
-          if !example_asset_path.start_with?("http://localhost:8080") && ! file
+          file = open('http://localhost:8080/packs/application.js')
+          if !example_asset_path.start_with?('http://localhost:8080') && ! file
             raise "Manifest doesn't include absolute path to dev server"
           end
         else
           # Webpacker proxies the dev server when Rails is running in Webpacker 3
           #  so the manifest doens't have absolute paths anymore..
           # Reload webpacker config.
-          old_env = ENV["NODE_ENV"]
-          ENV["NODE_ENV"] = 'development'
+          old_env = ENV['NODE_ENV']
+          ENV['NODE_ENV'] = 'development'
           Webpacker.instance.instance_variable_set(:@config, nil)
           Webpacker.config
           running = Webpacker.dev_server.running?
-          ENV["NODE_ENV"] = old_env
+          ENV['NODE_ENV'] = old_env
           raise "Webpack Dev Server hasn't started yet" unless running
         end
 
@@ -128,7 +128,7 @@ module WebpackerHelpers
 
     # If we didn't hook up with a dev server after waiting, fail loudly.
     if !detected_dev_server
-      raise "Failed to start dev server"
+      raise 'Failed to start dev server'
     end
 
     # Call the test block:
@@ -136,7 +136,7 @@ module WebpackerHelpers
   ensure
     # Kill the server process
     # puts "Killing webpack dev server"
-    check_cmd = "lsof -i :8080 -S"
+    check_cmd = 'lsof -i :8080 -S'
     10.times do
       # puts check_cmd
       status = `#{check_cmd}`

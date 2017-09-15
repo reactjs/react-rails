@@ -48,7 +48,7 @@ module React
       argument :attributes,
                :type => :array,
                :default => [],
-               :banner => "field[:type] field[:type] ..."
+               :banner => 'field[:type] field[:type] ...'
 
       class_option :es6,
                    type: :boolean,
@@ -61,29 +61,29 @@ module React
                    desc: 'Output coffeescript based component'
 
       REACT_PROP_TYPES = {
-        "node" =>        'React.PropTypes.node',
-        "bool" =>        'React.PropTypes.bool',
-        "boolean" =>     'React.PropTypes.bool',
-        "string" =>      'React.PropTypes.string',
-        "number" =>      'React.PropTypes.number',
-        "object" =>      'React.PropTypes.object',
-        "array" =>       'React.PropTypes.array',
-        "shape" =>       'React.PropTypes.shape({})',
-        "element" =>     'React.PropTypes.element',
-        "func" =>        'React.PropTypes.func',
-        "function" =>    'React.PropTypes.func',
-        "any" =>         'React.PropTypes.any',
+        'node' =>        'React.PropTypes.node',
+        'bool' =>        'React.PropTypes.bool',
+        'boolean' =>     'React.PropTypes.bool',
+        'string' =>      'React.PropTypes.string',
+        'number' =>      'React.PropTypes.number',
+        'object' =>      'React.PropTypes.object',
+        'array' =>       'React.PropTypes.array',
+        'shape' =>       'React.PropTypes.shape({})',
+        'element' =>     'React.PropTypes.element',
+        'func' =>        'React.PropTypes.func',
+        'function' =>    'React.PropTypes.func',
+        'any' =>         'React.PropTypes.any',
 
-        "instanceOf" => ->(type) {
+        'instanceOf' => ->(type) {
           'React.PropTypes.instanceOf(%s)' % type.to_s.camelize
         },
 
-        "oneOf" => ->(*options) {
+        'oneOf' => ->(*options) {
           enums = options.map{|k| "'#{k.to_s}'"}.join(',')
           'React.PropTypes.oneOf([%s])' % enums
         },
 
-        "oneOfType" => ->(*options) {
+        'oneOfType' => ->(*options) {
           types = options.map{|k| "#{lookup(k.to_s, k.to_s)}" }.join(',')
           'React.PropTypes.oneOfType([%s])' % types
         },
@@ -102,9 +102,9 @@ module React
         # Prefer webpacker to sprockets:
         if webpacker?
           new_file_name = file_name.camelize
-          extension = options[:coffee] ? "coffee" : "js"
+          extension = options[:coffee] ? 'coffee' : 'js'
           target_dir = webpack_configuration.source_path
-            .join("components")
+            .join('components')
             .relative_path_from(::Rails.root)
             .to_s
         else
@@ -131,7 +131,7 @@ module React
         if webpacker?
           %|var React = require("react")\n|
         else
-          ""
+          ''
         end
       end
 
@@ -139,7 +139,7 @@ module React
         if webpacker?
           %|module.exports = #{component_name}|
         else
-          ""
+          ''
         end
       end
 
@@ -149,7 +149,7 @@ module React
 
        def parse_attributes!
          self.attributes = (attributes || []).map do |attr|
-           name, type, options = "", "", ""
+           name, type, options = '', '', ''
            options_regex = /(?<options>{.*})/
 
            name, type = attr.split(':')
@@ -163,7 +163,7 @@ module React
          end
        end
 
-       def self.lookup(type = "node", options = "")
+       def self.lookup(type = 'node', options = '')
          react_prop_type = REACT_PROP_TYPES[type]
          if react_prop_type.blank?
            if type =~ /^[[:upper:]]/
@@ -179,7 +179,7 @@ module React
          react_prop_type
        end
 
-       def lookup(type = "node", options = "")
+       def lookup(type = 'node', options = '')
          self.class.lookup(type, options)
        end
     end

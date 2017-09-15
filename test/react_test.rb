@@ -1,4 +1,4 @@
-require "test_helper"
+require 'test_helper'
 
 class ReactTest < ActiveSupport::TestCase
   def test_it_camelizes_props
@@ -7,23 +7,23 @@ class ReactTest < ActiveSupport::TestCase
         nested_key: [
           { double_nested: true },
           1,
-          "string item",
+          'string item',
           [ { nested_array: {} }],
         ]
       },
-      "alreadyCamelized" => :ok,
+      'alreadyCamelized' => :ok,
     }
 
     expected_props = {
-      "multiWordSym" => {
-        "nestedKey" => [
-          { "doubleNested" => true },
+      'multiWordSym' => {
+        'nestedKey' => [
+          { 'doubleNested' => true },
           1,
-          "string item",
-          [ { "nestedArray" => {} }],
+          'string item',
+          [ { 'nestedArray' => {} }],
         ]
       },
-      "alreadyCamelized" => :ok
+      'alreadyCamelized' => :ok
     }
 
     assert_equal expected_props, React.camelize_props(raw_props)

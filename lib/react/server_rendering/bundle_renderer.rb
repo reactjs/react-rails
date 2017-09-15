@@ -1,7 +1,7 @@
-require "react/server_rendering/environment_container"
-require "react/server_rendering/manifest_container"
-require "react/server_rendering/webpacker_manifest_container"
-require "react/server_rendering/yaml_manifest_container"
+require 'react/server_rendering/environment_container'
+require 'react/server_rendering/manifest_container'
+require 'react/server_rendering/webpacker_manifest_container'
+require 'react/server_rendering/yaml_manifest_container'
 
 module React
   module ServerRendering
@@ -11,14 +11,14 @@ module React
     # - implements console replay
     class BundleRenderer < ExecJSRenderer
       # Reimplement console methods for replaying on the client
-      CONSOLE_POLYFILL = File.read(File.join(File.dirname(__FILE__), "bundle_renderer/console_polyfill.js"))
-      CONSOLE_REPLAY   = File.read(File.join(File.dirname(__FILE__), "bundle_renderer/console_replay.js"))
-      CONSOLE_RESET    = File.read(File.join(File.dirname(__FILE__), "bundle_renderer/console_reset.js"))
-      TIMEOUT_POLYFILL = File.read(File.join(File.dirname(__FILE__), "bundle_renderer/timeout_polyfill.js"))
+      CONSOLE_POLYFILL = File.read(File.join(File.dirname(__FILE__), 'bundle_renderer/console_polyfill.js'))
+      CONSOLE_REPLAY   = File.read(File.join(File.dirname(__FILE__), 'bundle_renderer/console_replay.js'))
+      CONSOLE_RESET    = File.read(File.join(File.dirname(__FILE__), 'bundle_renderer/console_reset.js'))
+      TIMEOUT_POLYFILL = File.read(File.join(File.dirname(__FILE__), 'bundle_renderer/timeout_polyfill.js'))
 
       def initialize(options={})
         @replay_console = options.fetch(:replay_console, true)
-        filenames = options.fetch(:files, ["server_rendering.js"])
+        filenames = options.fetch(:files, ['server_rendering.js'])
         js_code = CONSOLE_POLYFILL.dup
         js_code << TIMEOUT_POLYFILL.dup
         js_code << options.fetch(:code, '')
@@ -41,11 +41,11 @@ module React
       end
 
       def before_render(component_name, props, prerender_options)
-        @replay_console ? CONSOLE_RESET : ""
+        @replay_console ? CONSOLE_RESET : ''
       end
 
       def after_render(component_name, props, prerender_options)
-        @replay_console ? CONSOLE_REPLAY : ""
+        @replay_console ? CONSOLE_REPLAY : ''
       end
 
       class << self

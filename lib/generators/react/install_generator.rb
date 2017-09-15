@@ -42,13 +42,13 @@ module React
         if options[:skip_server_rendering]
           return
         elsif webpacker?
-          ssr_manifest_path = File.join(javascript_dir, "server_rendering.js")
-          template("server_rendering_pack.js", ssr_manifest_path)
+          ssr_manifest_path = File.join(javascript_dir, 'server_rendering.js')
+          template('server_rendering_pack.js', ssr_manifest_path)
         else
-          ssr_manifest_path = File.join(javascript_dir, "server_rendering.js")
-          template("server_rendering.js", ssr_manifest_path)
-          initializer_path = "config/initializers/react_server_rendering.rb"
-          template("react_server_rendering.rb", initializer_path)
+          ssr_manifest_path = File.join(javascript_dir, 'server_rendering.js')
+          template('server_rendering.js', ssr_manifest_path)
+          initializer_path = 'config/initializers/react_server_rendering.rb'
+          template('react_server_rendering.rb', initializer_path)
         end
       end
 
@@ -90,7 +90,7 @@ module React
         end
 
         components_js = "//= require_tree ./components\n"
-        components_file = File.join(javascript_dir, "components.js")
+        components_file = File.join(javascript_dir, 'components.js')
         create_file components_file, components_js
       end
 

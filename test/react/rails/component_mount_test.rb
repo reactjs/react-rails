@@ -71,15 +71,15 @@ SprocketsHelpers.when_available do
 
     test '#react_component accepts string props with prerender: true' do
       html = @helper.react_component('Todo', { todo: 'render on the server' }.to_json, prerender: true)
-      assert(html.include?('data-react-class="Todo"'), "it includes attrs for UJS")
-      assert(html.include?('>render on the server</li>'), "it includes rendered HTML")
-      assert(html.include?('data-reactid'), "it includes React properties")
+      assert(html.include?('data-react-class="Todo"'), 'it includes attrs for UJS')
+      assert(html.include?('>render on the server</li>'), 'it includes rendered HTML')
+      assert(html.include?('data-reactid'), 'it includes React properties')
     end
 
     test '#react_component passes :static to BundleRenderer' do
       html = @helper.react_component('Todo', { todo: 'render on the server' }.to_json, prerender: :static)
-      assert(html.include?('>render on the server</li>'), "it includes rendered HTML")
-      assert(!html.include?('data-reactid'), "it DOESNT INCLUDE React properties")
+      assert(html.include?('>render on the server</li>'), 'it includes rendered HTML')
+      assert(!html.include?('data-reactid'), 'it DOESNT INCLUDE React properties')
     end
 
     test '#react_component does not include HTML properties with a static render' do
@@ -110,7 +110,7 @@ SprocketsHelpers.when_available do
 
     test "it uses the controller's react_rails_prerenderer, if available" do
       @helper.setup(DummyController)
-      rendered_component = @helper.react_component('Foo', { "ok" => true }, prerender: :static)
+      rendered_component = @helper.react_component('Foo', { 'ok' => true }, prerender: :static)
       assert_equal %|<div>rendered Foo with {&quot;ok&quot;:true}</div>|, rendered_component
     end
   end
