@@ -91,7 +91,7 @@ HEREDOC
 
     test 'react server rendering shows console output as html comment' do
       # Make sure console messages are replayed when requested
-      React::ServerRendering.renderer_options = {replay_console: true}
+      React::ServerRendering.renderer_options = { replay_console: true }
       React::ServerRendering.reset_pool
       get '/server/console_example'
       assert_match(/Console Logged/, response.body)
@@ -100,7 +100,7 @@ HEREDOC
       assert_match(/console.error.apply\(console, \["rendered!","foo"\]\)/, response.body)
 
       # Make sure they're not when we don't ask for them
-      React::ServerRendering.renderer_options = {replay_console: false}
+      React::ServerRendering.renderer_options = { replay_console: false }
       React::ServerRendering.reset_pool
 
       get '/server/console_example'

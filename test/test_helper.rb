@@ -118,7 +118,7 @@ module ParamsHelper
   # Normalize params for Rails 5.1+
   def query_params(params)
     if Rails::VERSION::MAJOR > 4
-      {params: params}
+      { params: params }
     else
       params
     end

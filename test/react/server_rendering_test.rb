@@ -27,7 +27,7 @@ class ReactServerRenderingTest < ActiveSupport::TestCase
   end
 
   test '.render returns a rendered string' do
-    props = {"props" => true}
+    props = { "props" => true }
     result = React::ServerRendering.render("MyComponent", props, "prerender-opts")
     assert_equal("TEST rendered MyComponent with #{props} and prerender-opts", result)
   end

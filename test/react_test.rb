@@ -5,7 +5,7 @@ class ReactTest < ActiveSupport::TestCase
     raw_props = {
       multi_word_sym: {
         nested_key: [
-          {double_nested: true},
+          { double_nested: true },
           1,
           "string item",
           [ { nested_array: {} }],

@@ -11,13 +11,13 @@ end
 class ViewHelperTest < ActionView::TestCase
   test "view helper can be called directly" do
     expected_html = %{<div data-react-class="Component" data-react-props="{&quot;a&quot;:&quot;b&quot;}"></div>}
-    rendered_html = ViewHelperHelper.react_component("Component", {a: "b"})
+    rendered_html = ViewHelperHelper.react_component("Component", { a: "b" })
     assert_equal(expected_html, rendered_html)
   end
 
   test 'view helper accepts block usage' do
     expected_html = %{<div data-react-class="Component" data-react-props="{&quot;a&quot;:&quot;b&quot;}">content</div>}
-    rendered_html = ViewHelperHelper.react_component("Component", {a: "b"}) do
+    rendered_html = ViewHelperHelper.react_component("Component", { a: "b" }) do
       "content"
     end
     assert_equal(expected_html, rendered_html)

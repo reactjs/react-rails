@@ -4,7 +4,7 @@ if WebpackerHelpers.available? || SprocketsHelpers.available?
   class ConsoleReplayTest < ActionDispatch::IntegrationTest
     setup do
       WebpackerHelpers.compile
-      React::ServerRendering.renderer_options = {replay_console: true}
+      React::ServerRendering.renderer_options = { replay_console: true }
       React::ServerRendering.reset_pool
     end
 
