@@ -103,7 +103,7 @@ module React
         if webpacker?
           new_file_name = file_name.camelize
           extension = options[:coffee] ? "coffee" : "js"
-          target_dir = Webpacker::Configuration.source_path
+          target_dir = Webpacker.config.source_path
             .join("components")
             .relative_path_from(::Rails.root)
             .to_s
