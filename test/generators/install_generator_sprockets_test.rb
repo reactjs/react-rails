@@ -74,7 +74,7 @@ if !WebpackerHelpers.available?
     test 'creates server rendering initializer' do
       run_generator
       initializer_path = 'config/initializers/react_server_rendering.rb'
-      assert_file(initializer_path, %r{Rails.application.config.assets.precompile \+= \["server_rendering.js"\]})
+      assert_file(initializer_path, %r{Rails.application.config.assets.precompile \+= \['server_rendering.js'\]})
     end
 
     test 'skipping server rendering' do
