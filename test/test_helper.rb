@@ -23,7 +23,6 @@ end
 # Configure Rails Environment
 ENV['RAILS_ENV'] = 'test'
 
-
 require File.expand_path("../#{DUMMY_LOCATION}/config/environment.rb", __FILE__)
 require 'rails/test_help'
 require 'rails/generators'
@@ -49,7 +48,6 @@ Capybara.register_driver :poltergeist_debug do |app|
 end
 Capybara.javascript_driver = :poltergeist_debug
 Capybara.current_driver = Capybara.javascript_driver
-
 
 CACHE_PATH = Pathname.new File.expand_path("../#{DUMMY_LOCATION}/tmp/cache", __FILE__)
 

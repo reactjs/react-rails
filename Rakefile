@@ -57,7 +57,6 @@ namespace :ujs do
     yarn_run_in('react_ujs', 'upgrade')
   end
 
-
   desc 'Build the JS bundles with Webpack'
   task :build do
     yarn_run_in('react_ujs', 'build')

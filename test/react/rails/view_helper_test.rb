@@ -39,7 +39,6 @@ HTML
     assert_equal expected_html.strip, rendered_html
   end
 
-
   test 'view helper uses the implementation class set in the initializer' do
     assert_equal(
       React::Rails::ViewHelper.helper_implementation_class.to_s,

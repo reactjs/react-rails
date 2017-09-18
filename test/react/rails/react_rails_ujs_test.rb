@@ -88,7 +88,6 @@ SprocketsHelpers.when_available do
       wait_for_turbolinks_to_be_available
       assert_greeting(page, 'Hello Alice')
 
-
       page.execute_script('Turbolinks.visit("/pages/1");')
       wait_for_turbolinks_to_be_available
       assert_greeting(page, 'Hello Bob')
@@ -137,7 +136,6 @@ SprocketsHelpers.when_available do
       assert_greeting(page, 'Hello Bob')
       assert page.has_content?('Another Component'), page.body
     end
-
 
     test 'react_ujs can unmount/mount using a dom node context' do
       visit '/pages/1'

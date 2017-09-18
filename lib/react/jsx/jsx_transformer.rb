@@ -18,7 +18,6 @@ module React
         @context = ExecJS.compile(js_code)
       end
 
-
       def transform(code)
         result = @context.call('JSXTransformer.transform', code, @transform_options)
         result['code']
