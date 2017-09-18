@@ -8,7 +8,7 @@ DUMMY_LOCATION = if (gem_webpack = Bundler.locked_gems.specs.find { |gem_spec| g
     'dummy_webpacker1'
   elsif gem_webpack.version.segments.first == 2
     'dummy_webpacker2'
-  else#if gem_webpack.version.segments.first == 3
+  else #if gem_webpack.version.segments.first == 3
     'dummy_webpacker3'
   end
 else
