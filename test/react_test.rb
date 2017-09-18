@@ -8,7 +8,7 @@ class ReactTest < ActiveSupport::TestCase
           { double_nested: true },
           1,
           'string item',
-          [ { nested_array: {} }]
+          [{ nested_array: {} }]
         ]
       },
       'alreadyCamelized' => :ok
@@ -20,7 +20,7 @@ class ReactTest < ActiveSupport::TestCase
           { 'doubleNested' => true },
           1,
           'string item',
-          [ { 'nestedArray' => {} }]
+          [{ 'nestedArray' => {} }]
         ]
       },
       'alreadyCamelized' => :ok
