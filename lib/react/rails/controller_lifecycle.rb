@@ -44,7 +44,6 @@ module React
         end
       end
 
-
       # An instance of a server renderer, for use during this request
       def react_rails_prerenderer
         @__react_rails_prerenderer

@@ -1,7 +1,12 @@
 module SprocketsHelpers
   module_function
   def available?
-    ENV["BUNDLE_GEMFILE"] !~ /no_sprockets/
+    # We can't scan for sprockets in gemfile_lock because it's
+    #   a dependency of Rails even if not required.
+    # We also can't scan for defined?(Sprockets) because this is used to
+    #   require Sprockets in the config/application.rb
+    # !!Bundler.locked_gems.specs.find {|gem_spec| gem_spec.name == 'sprockets'}
+    ENV['BUNDLE_GEMFILE'] !~ /no_sprockets/
   end
 
   # The block depends on sprockets, don't run it if sprockets is missing
@@ -36,7 +41,7 @@ module SprocketsHelpers
       # Changing directories is required because:
       # - assets:precompile runs webpacker:compile when availabled
       # - webpacker:compile depends on `./bin/webpack`, so `.` must be the app root
-      Dir.chdir("./test/dummy") do
+      Dir.chdir("./test/#{DUMMY_LOCATION}") do
 
         ENV['RAILS_GROUPS'] = 'assets' # required for Rails 3.2
         Rake::Task['assets:precompile'].reenable
@@ -59,12 +64,12 @@ module SprocketsHelpers
       Rails.application.assets_manifest = new_manifest
     end
 
-    assets_directory = File.expand_path("../../dummy/public/assets", __FILE__)
-    raise "Asset precompilation failed" unless Dir.exists?(assets_directory)
+    assets_directory = File.expand_path("../../#{DUMMY_LOCATION}/public/assets", __FILE__)
+    raise 'Asset precompilation failed' unless Dir.exists?(assets_directory)
   end
 
   def clear_precompiled_assets
-    assets_directory = File.expand_path("../../dummy/public/assets", __FILE__)
+    assets_directory = File.expand_path("../../#{DUMMY_LOCATION}/public/assets", __FILE__)
     FileUtils.rm_r(assets_directory)
     ENV.delete('RAILS_GROUPS')
   end

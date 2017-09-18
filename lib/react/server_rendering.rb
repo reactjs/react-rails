@@ -13,7 +13,7 @@ module React
     # This will clear all state such as loaded code, JS VM state, or options.
     # @return [void]
     def self.reset_pool
-      options = {size: pool_size, timeout: pool_timeout}
+      options = { size: pool_size, timeout: pool_timeout }
       @@pool = ConnectionPool.new(options) { self.renderer.new(self.renderer_options) }
     end
 

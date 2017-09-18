@@ -14,21 +14,21 @@ this.ReactRailsUJS = {
 
 class ExecJSRendererTest < ActiveSupport::TestCase
   setup do
-    react_server_source = File.read(File.expand_path("../../../../lib/assets/react-source/production/react-server.js", __FILE__))
-    react_ujs_source = File.read(File.expand_path("../../../../lib/assets/javascripts/react_ujs.js", __FILE__))
-    todo_component_source = File.read(File.expand_path("../../../dummy/app/assets/javascripts/components/PlainJSTodo.js", __FILE__))
+    react_server_source = File.read(File.expand_path('../../../../lib/assets/react-source/production/react-server.js', __FILE__))
+    react_ujs_source = File.read(File.expand_path('../../../../lib/assets/javascripts/react_ujs.js', __FILE__))
+    todo_component_source = File.read(File.expand_path("../../../#{DUMMY_LOCATION}/app/assets/javascripts/components/PlainJSTodo.js", __FILE__))
     code = react_server_source + react_ujs_source + todo_component_source
     @renderer = React::ServerRendering::ExecJSRenderer.new(code: code)
   end
 
   test '#render returns HTML' do
-    result = @renderer.render("Todo", {todo: "write tests"}.to_json, {})
+    result = @renderer.render('Todo', { todo: 'write tests' }.to_json, {})
     assert_match(/<li.*write tests<\/li>/, result)
     assert_match(/data-react-checksum/, result)
   end
 
   test '#render accepts render_function:' do
-    result = @renderer.render("Todo", {todo: "write more tests"}.to_json, render_function: "renderToStaticMarkup")
+    result = @renderer.render('Todo', { todo: 'write more tests' }.to_json, render_function: 'renderToStaticMarkup')
     assert_match(/<li>write more tests<\/li>/, result)
     assert_no_match(/data-react-checksum/, result)
   end
@@ -43,7 +43,7 @@ class ExecJSRendererTest < ActiveSupport::TestCase
     end
 
     error = assert_raises(React::ServerRendering::PrerenderError) do
-      @renderer.render("Todo", {todo: "write tests"}.to_json, {})
+      @renderer.render('Todo', { todo: 'write tests' }.to_json, {})
     end
 
     assert_match(/before_render/, error.message)
@@ -60,7 +60,7 @@ class ExecJSRendererTest < ActiveSupport::TestCase
     end
 
     error = assert_raises(React::ServerRendering::PrerenderError) do
-      @renderer.render("Todo", {todo: "write tests"}.to_json, {})
+      @renderer.render('Todo', { todo: 'write tests' }.to_json, {})
     end
 
     assert_match(/after_render/, error.message)
@@ -69,7 +69,7 @@ class ExecJSRendererTest < ActiveSupport::TestCase
 
   test '.new accepts code:' do
     dummy_renderer = React::ServerRendering::ExecJSRenderer.new(code: DUMMY_IMPLEMENTATION)
-    result = dummy_renderer.render("Todo", {todo: "get a real job"}.to_json, {})
-    assert_equal("serverRender was called", result)
+    result = dummy_renderer.render('Todo', { todo: 'get a real job' }.to_json, {})
+    assert_equal('serverRender was called', result)
   end
 end

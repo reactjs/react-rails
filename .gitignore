@@ -1,8 +1,8 @@
 *.gem
 Gemfile.lock
 *.log
-test/dummy/tmp
-test/dummy/public/packs
+test/*/tmp
+test/*/public/packs
 gemfiles/*.lock
 *.swp
 /vendor/react

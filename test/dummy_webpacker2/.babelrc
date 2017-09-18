@@ -1,0 +1,18 @@
+{
+  "presets": [
+    ["env", {
+      "modules": false,
+      "targets": {
+        "browsers": "> 1%",
+        "uglify": true
+      },
+      "useBuiltIns": true
+    }],
+    "react"
+  ],
+
+  "plugins": [
+    "syntax-dynamic-import",
+    ["transform-class-properties", { "spec": true }]
+  ]
+}

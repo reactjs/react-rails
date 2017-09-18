@@ -24,7 +24,7 @@ module React
           javascript_dir
         end
         empty_directory File.join(components_dir, 'components')
-        if !options[:skip_git]
+        unless options[:skip_git]
           create_file File.join(components_dir, 'components/.gitkeep')
         end
       end
@@ -42,13 +42,13 @@ module React
         if options[:skip_server_rendering]
           return
         elsif webpacker?
-          ssr_manifest_path = File.join(javascript_dir, "server_rendering.js")
-          template("server_rendering_pack.js", ssr_manifest_path)
+          ssr_manifest_path = File.join(javascript_dir, 'server_rendering.js')
+          template('server_rendering_pack.js', ssr_manifest_path)
         else
-          ssr_manifest_path = File.join(javascript_dir, "server_rendering.js")
-          template("server_rendering.js", ssr_manifest_path)
-          initializer_path = "config/initializers/react_server_rendering.rb"
-          template("react_server_rendering.rb", initializer_path)
+          ssr_manifest_path = File.join(javascript_dir, 'server_rendering.js')
+          template('server_rendering.js', ssr_manifest_path)
+          initializer_path = 'config/initializers/react_server_rendering.rb'
+          template('react_server_rendering.rb', initializer_path)
         end
       end
 
@@ -60,8 +60,7 @@ module React
 
       def javascript_dir
         if webpacker?
-          Webpacker::Configuration.source_path
-            .join(Webpacker::Configuration.entry_path)
+          webpack_source_path
             .relative_path_from(::Rails.root)
             .to_s
         else
@@ -91,7 +90,7 @@ module React
         end
 
         components_js = "//= require_tree ./components\n"
-        components_file = File.join(javascript_dir, "components.js")
+        components_file = File.join(javascript_dir, 'components.js')
         create_file components_file, components_js
       end
 
@@ -108,6 +107,16 @@ JS
           append_file(manifest, WEBPACKER_SETUP_UJS)
         else
           create_file(manifest, WEBPACKER_SETUP_UJS)
+        end
+      end
+
+      private
+
+      def webpack_source_path
+        if Webpacker.respond_to?(:config)
+          Webpacker.config.source_entry_path # Webpacker >3
+        else
+          Webpacker::Configuration.source_path.join(Webpacker::Configuration.entry_path) # Webpacker <3
         end
       end
     end

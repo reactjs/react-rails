@@ -1,5 +1,10 @@
 module WebpackerHelpers
-  PACKS_DIRECTORY =  File.expand_path("../../dummy/public/packs", __FILE__)
+  PACKS_DIRECTORY =  File.expand_path("../../#{DUMMY_LOCATION}/public/packs", __FILE__)
+  begin
+    MAJOR, MINOR, PATCH, _ = Bundler.locked_gems.specs.find { |gem_spec| gem_spec.name == 'webpacker' }.version.segments
+  rescue
+    MAJOR, MINOR, PATCH, _ = [0,0,0]
+  end
 
   module_function
   def available?
@@ -13,20 +18,20 @@ module WebpackerHelpers
   end
 
   def compile
-    return if !available?
+    return unless available?
     clear_webpacker_packs
-    Dir.chdir("./test/dummy") do
-      capture_io do
+    Dir.chdir("./test/#{DUMMY_LOCATION}") do
+      # capture_io do
         Rake::Task['webpacker:compile'].reenable
         Rake::Task['webpacker:compile'].invoke
-      end
+      # end
     end
     # Reload cached JSON manifest:
-    Webpacker::Manifest.load
+    manifest_refresh
   end
 
   def compile_if_missing
-    if !File.exist?(PACKS_DIRECTORY)
+    unless File.exist?(PACKS_DIRECTORY)
       compile
     end
   end
@@ -35,13 +40,43 @@ module WebpackerHelpers
     FileUtils.rm_rf(PACKS_DIRECTORY)
   end
 
+  if MAJOR < 3
+    def manifest_refresh
+      Webpacker::Manifest.load
+    end
+  else
+    def manifest_refresh
+      Webpacker.manifest.refresh
+    end
+  end
+
+  if MAJOR < 3
+    def manifest_lookup name
+      Webpacker::Manifest.load(name)
+    end
+  else
+    def manifest_lookup _
+      Webpacker.manifest
+    end
+  end
+
+  if MAJOR < 3
+    def manifest_data
+      Webpacker::Manifest.instance.data
+    end
+  else
+    def manifest_data
+      Webpacker.manifest.refresh
+    end
+  end
+
   # Start a webpack-dev-server
   # Call the block
   # Make sure to clean up the server
   def with_dev_server
     # Start the server in a forked process:
-    webpack_dev_server = Dir.chdir("test/dummy") do
-      spawn "RAILS_ENV=development ./bin/webpack-dev-server "
+    webpack_dev_server = Dir.chdir("test/#{DUMMY_LOCATION}") do
+      spawn 'RAILS_ENV=development ./bin/webpack-dev-server '
     end
 
     detected_dev_server = false
@@ -50,22 +85,34 @@ module WebpackerHelpers
     30.times do |i|
       begin
         # Make sure that the manifest has been updated:
-        Webpacker::Manifest.load("./test/dummy/public/packs/manifest.json")
-        webpack_manifest = Webpacker::Manifest.instance.data
-        example_asset_path = webpack_manifest.values.first
+        manifest_lookup("./test/#{DUMMY_LOCATION}/public/packs/manifest.json")
+        example_asset_path = manifest_data.values.first
         if example_asset_path.nil?
           # Debug helper
           # puts "Manifest is blank, all manifests:"
-          # Dir.glob("./test/dummy/public/packs/*.json").each do |f|
+          # Dir.glob("./test/#{DUMMY_LOCATION}/public/packs/*.json").each do |f|
           #   puts f
           #   puts File.read(f)
           # end
           next
         end
         # Make sure the dev server is up:
-        open("http://localhost:8080/application.js")
-        if !example_asset_path.start_with?("http://localhost:8080")
-          raise "Manifest doesn't include absolute path to dev server"
+        if MAJOR < 3
+          file = open('http://localhost:8080/packs/application.js')
+          if !example_asset_path.start_with?('http://localhost:8080') && ! file
+            raise "Manifest doesn't include absolute path to dev server"
+          end
+        else
+          # Webpacker proxies the dev server when Rails is running in Webpacker 3
+          #  so the manifest doens't have absolute paths anymore..
+          # Reload webpacker config.
+          old_env = ENV['NODE_ENV']
+          ENV['NODE_ENV'] = 'development'
+          Webpacker.instance.instance_variable_set(:@config, nil)
+          Webpacker.config
+          running = Webpacker.dev_server.running?
+          ENV['NODE_ENV'] = old_env
+          raise "Webpack Dev Server hasn't started yet" unless running
         end
 
         detected_dev_server = true
@@ -80,8 +127,8 @@ module WebpackerHelpers
     end
 
     # If we didn't hook up with a dev server after waiting, fail loudly.
-    if !detected_dev_server
-      raise "Failed to start dev server"
+    unless detected_dev_server
+      raise 'Failed to start dev server'
     end
 
     # Call the test block:
@@ -89,7 +136,7 @@ module WebpackerHelpers
   ensure
     # Kill the server process
     # puts "Killing webpack dev server"
-    check_cmd = "lsof -i :8080 -S"
+    check_cmd = 'lsof -i :8080 -S'
     10.times do
       # puts check_cmd
       status = `#{check_cmd}`

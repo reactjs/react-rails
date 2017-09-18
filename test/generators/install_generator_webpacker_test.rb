@@ -13,7 +13,7 @@ var ReactRailsUJS = require("react_ujs")
 ReactRailsUJS.useContext(componentRequireContext)
 |
 
-    DEFAULT_SERVER_RENDERING_PACK_PATH = "app/javascript/packs/server_rendering.js"
+    DEFAULT_SERVER_RENDERING_PACK_PATH = 'app/javascript/packs/server_rendering.js'
 
     def copy_directory(dir)
       source = Rails.root.join(dir)
@@ -23,13 +23,13 @@ ReactRailsUJS.useContext(componentRequireContext)
       FileUtils.cp_r source, dest
     end
 
-    test "adds requires to `application.js`" do
+    test 'adds requires to `application.js`' do
       run_generator
-      assert_file "app/javascript/packs/application.js", EXPECTED_SETUP
-      assert_file "app/javascript/components"
+      assert_file 'app/javascript/packs/application.js', EXPECTED_SETUP
+      assert_file 'app/javascript/components'
     end
 
-    test "creates server_rendering.js with default requires" do
+    test 'creates server_rendering.js with default requires' do
       run_generator
       assert_file DEFAULT_SERVER_RENDERING_PACK_PATH do |contents|
         assert_includes contents, "var componentRequireContext = require.context(\"components\", true)\n"
@@ -38,7 +38,7 @@ ReactRailsUJS.useContext(componentRequireContext)
       end
     end
 
-    test "skipping server rendering" do
+    test 'skipping server rendering' do
       run_generator %w(--skip-server-rendering)
       assert_no_file DEFAULT_SERVER_RENDERING_PACK_PATH
     end

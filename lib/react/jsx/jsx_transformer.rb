@@ -7,7 +7,7 @@ module React
       def initialize(options)
         @transform_options = {
           stripTypes: options.fetch(:strip_types, false),
-          harmony:    options.fetch(:harmony, false),
+          harmony:    options.fetch(:harmony, false)
         }
 
         @asset_path = options.fetch(:asset_path, DEFAULT_ASSET_PATH)
@@ -18,10 +18,9 @@ module React
         @context = ExecJS.compile(js_code)
       end
 
-
       def transform(code)
         result = @context.call('JSXTransformer.transform', code, @transform_options)
-        result["code"]
+        result['code']
       end
 
       # search for transformer file using sprockets - allows user to override
