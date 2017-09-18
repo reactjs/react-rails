@@ -149,7 +149,9 @@ module React
 
        def parse_attributes!
          self.attributes = (attributes || []).map do |attr|
-           name, type, options = '', '', ''
+           name = ''
+           type = ''
+           options = ''
            options_regex = /(?<options>{.*})/
 
            name, type = attr.split(':')

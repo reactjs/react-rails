@@ -68,9 +68,12 @@ end
 def capture_io
   require 'stringio'
 
-  orig_stdout, orig_stderr         = $stdout, $stderr
-  captured_stdout, captured_stderr = StringIO.new, StringIO.new
-  $stdout, $stderr                 = captured_stdout, captured_stderr
+  orig_stdout = $stdout
+  orig_stderr = $stderr
+  captured_stdout = StringIO.new
+  captured_stderr = StringIO.new
+  $stdout = captured_stdout
+  $stderr = captured_stderr
 
   yield
 
