@@ -86,7 +86,7 @@ module React
         'oneOfType' => ->(*options) {
           types = options.map{ |k| "#{lookup(k.to_s, k.to_s)}" }.join(',')
           'React.PropTypes.oneOfType([%s])' % types
-        },
+        }
       }
 
       def create_component_file

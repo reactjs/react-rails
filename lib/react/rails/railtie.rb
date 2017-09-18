@@ -74,12 +74,12 @@ module React
       initializer 'react_rails.bust_cache', after: :load_config_initializers, group: :all do |app|
         asset_variant = React::Rails::AssetVariant.new({
           variant: app.config.react.variant,
-          addons: app.config.react.addons,
+          addons: app.config.react.addons
         })
 
         sprockets_env = app.assets || app.config.try(:assets) # sprockets-rails 3.x attaches this at a different config
         unless sprockets_env.nil?
-          sprockets_env.version = [sprockets_env.version, "react-#{asset_variant.react_build}",].compact.join('-')
+          sprockets_env.version = [sprockets_env.version, "react-#{asset_variant.react_build}"].compact.join('-')
         end
 
       end
@@ -87,7 +87,7 @@ module React
       initializer 'react_rails.set_variant', after: :engines_blank_point, group: :all do |app|
         asset_variant = React::Rails::AssetVariant.new({
           variant: app.config.react.variant,
-          addons: app.config.react.addons,
+          addons: app.config.react.addons
         })
 
         if app.config.respond_to?(:assets)

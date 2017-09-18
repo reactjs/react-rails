@@ -43,7 +43,7 @@ Capybara.register_driver :poltergeist_debug do |app|
     inspector: true,
     # hide warnings from React.js whitespace changes:
     # and from React.createClass deprecation
-    js_errors: false,
+    js_errors: false
   }
   Capybara::Poltergeist::Driver.new(app, poltergeist_options)
 end

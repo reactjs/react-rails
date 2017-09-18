@@ -7,7 +7,7 @@ module React
       def initialize(options)
         @transform_options = {
           stripTypes: options.fetch(:strip_types, false),
-          harmony:    options.fetch(:harmony, false),
+          harmony:    options.fetch(:harmony, false)
         }
 
         @asset_path = options.fetch(:asset_path, DEFAULT_ASSET_PATH)
