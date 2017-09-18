@@ -79,12 +79,12 @@ module React
         },
 
         'oneOf' => ->(*options) {
-          enums = options.map{|k| "'#{k.to_s}'"}.join(',')
+          enums = options.map{ |k| "'#{k.to_s}'" }.join(',')
           'React.PropTypes.oneOf([%s])' % enums
         },
 
         'oneOfType' => ->(*options) {
-          types = options.map{|k| "#{lookup(k.to_s, k.to_s)}" }.join(',')
+          types = options.map{ |k| "#{lookup(k.to_s, k.to_s)}" }.join(',')
           'React.PropTypes.oneOfType([%s])' % types
         },
       }

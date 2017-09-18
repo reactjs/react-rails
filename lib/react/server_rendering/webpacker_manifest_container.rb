@@ -9,7 +9,7 @@ module React
     class WebpackerManifestContainer
 
       begin
-        MAJOR, MINOR, PATCH, _ = Bundler.locked_gems.specs.find {|gem_spec| gem_spec.name == 'webpacker'}.version.segments
+        MAJOR, MINOR, PATCH, _ = Bundler.locked_gems.specs.find { |gem_spec| gem_spec.name == 'webpacker' }.version.segments
       rescue
         MAJOR, MINOR, PATCH, _ = [0,0,0]
       end
