@@ -25,7 +25,7 @@ end
 class ControllerLifecycleTest < ActionDispatch::IntegrationTest
   compiled = false
   setup do
-    if !compiled
+    unless compiled
       compile = true
       WebpackerHelpers.compile
     end

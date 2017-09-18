@@ -2,7 +2,7 @@ require 'test_helper'
 require 'generators/react/install_generator'
 
 # If webpacker is available, its setup is preferred
-if !WebpackerHelpers.available?
+unless WebpackerHelpers.available?
   class InstallGeneratorSprocketsTest < Rails::Generators::TestCase
     destination File.join(Rails.root, 'tmp', 'generator_test_output')
     tests React::Generators::InstallGenerator

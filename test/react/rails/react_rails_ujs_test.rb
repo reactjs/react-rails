@@ -6,7 +6,7 @@ SprocketsHelpers.when_available do
 
     compiled = false
     setup do
-      if !compiled
+      unless compiled
         React::ServerRendering.reset_pool
         WebpackerHelpers.compile
       end

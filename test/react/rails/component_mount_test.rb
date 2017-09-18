@@ -4,7 +4,7 @@ SprocketsHelpers.when_available do
   class ComponentMountTest < ActionDispatch::IntegrationTest
     compiled_once = false
     setup do
-      if !compiled_once
+      unless compiled_once
         WebpackerHelpers.clear_webpacker_packs
         WebpackerHelpers.compile
       end

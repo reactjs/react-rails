@@ -90,7 +90,7 @@ if SprocketsHelpers.available? || WebpackerHelpers.available?
       assert_match(/console.error.apply\(console, \["setTimeout #{message}"\]\);$/, result)
     end
 
-    if !WebpackerHelpers.available?
+    unless WebpackerHelpers.available?
       # This doesn't work with webpacker since finding components is based on filename
       test '.new accepts additional code to add to the JS context' do
         additional_code = File.read(File.expand_path('../../../helper_files/WithoutSprockets.js', __FILE__))

@@ -78,7 +78,7 @@ module React
         })
 
         sprockets_env = app.assets || app.config.try(:assets) # sprockets-rails 3.x attaches this at a different config
-        if !sprockets_env.nil?
+        unless sprockets_env.nil?
           sprockets_env.version = [sprockets_env.version, "react-#{asset_variant.react_build}",].compact.join('-')
         end
 

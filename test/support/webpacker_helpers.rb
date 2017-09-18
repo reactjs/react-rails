@@ -18,7 +18,7 @@ module WebpackerHelpers
   end
 
   def compile
-    return if !available?
+    return unless available?
     clear_webpacker_packs
     Dir.chdir("./test/#{DUMMY_LOCATION}") do
       # capture_io do
@@ -31,7 +31,7 @@ module WebpackerHelpers
   end
 
   def compile_if_missing
-    if !File.exist?(PACKS_DIRECTORY)
+    unless File.exist?(PACKS_DIRECTORY)
       compile
     end
   end
@@ -127,7 +127,7 @@ module WebpackerHelpers
     end
 
     # If we didn't hook up with a dev server after waiting, fail loudly.
-    if !detected_dev_server
+    unless detected_dev_server
       raise 'Failed to start dev server'
     end
 
