@@ -49,7 +49,7 @@ module WebpackerHelpers
     ENV['NODE_ENV'] = 'development'
 
     # Start the server in a forked process:
-    webpack_dev_server = Dir.chdir("test/#{DUMMY_LOCATION}") do
+    Dir.chdir("test/#{DUMMY_LOCATION}") do
       spawn 'RAILS_ENV=development ./bin/webpack-dev-server '
     end
 
@@ -69,12 +69,24 @@ module WebpackerHelpers
     yield
 
   ensure
-    # Kill the server process
-    puts "Killing webpack dev server"
-    kill_cmd = "kill -9 #{webpack_dev_server}"
+    check_cmd = 'lsof -i :8080 -S'
+    10.times do
+      # puts check_cmd
+      status = `#{check_cmd}`
+      # puts status
+      remaining_pid_match = status.match(/\n[a-z]+\s+(\d+)/)
+      if remaining_pid_match
+        remaining_pid = remaining_pid_match[1]
+        # puts "Remaining #{remaining_pid}"
+        kill_cmd = "kill -9 #{remaining_pid}"
+        # puts kill_cmd
+        `#{kill_cmd}`
+        sleep 0.5
+      else
+        break
+      end
+    end
 
-    puts kill_cmd
-    `#{kill_cmd}`
     # Remove the dev-server packs:
     WebpackerHelpers.clear_webpacker_packs
     ENV['NODE_ENV'] = old_env
@@ -86,12 +98,14 @@ module WebpackerHelpers
     def dev_server_running?
       manifest_refresh
       example_asset_path = manifest_data.values.first
+      return false unless example_asset_path
+      return false unless example_asset_path.start_with?('http://localhost:8080')
       begin
         file = open('http://localhost:8080/packs/application.js')
       rescue StandardError => e
         file = nil
       end
-      if !example_asset_path.start_with?('http://localhost:8080') && ! file
+      unless file
         puts "Manifest doesn't include absolute path to dev server"
         return false
       end
@@ -118,6 +132,7 @@ module WebpackerHelpers
 
       ds = Webpacker.dev_server
       example_asset_path = manifest_data.values.first
+      return false unless example_asset_path
       begin
         file = open("#{ds.protocol}://#{ds.host}:#{ds.port}#{example_asset_path}")
       rescue StandardError => e
