@@ -5,4 +5,4 @@ source "http://rubygems.org"
 gem "rails", "~> 4.1.10"
 gem "turbolinks", "~> 2.3.0"
 
-gemspec :path => "../"
+gemspec path: "../"

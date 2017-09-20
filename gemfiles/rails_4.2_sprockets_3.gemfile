@@ -6,4 +6,4 @@ gem "rails", "~> 4.2.1"
 gem "sprockets", "~> 3.5"
 gem "turbolinks", "~> 2.5.0"
 
-gemspec :path => "../"
+gemspec path: "../"
