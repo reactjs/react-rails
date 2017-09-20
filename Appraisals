@@ -17,7 +17,7 @@ end
 
 appraise 'rails-4.0-with-therubyracer' do
   gem 'rails', '~> 4.0.13'
-  gem 'therubyracer', '0.12.0', :platform => :mri
+  gem 'therubyracer', '0.12.0', :platforms => :mri
   gem 'turbolinks'
 end
 
@@ -45,7 +45,8 @@ appraise 'rails-4.2-sprockets_4' do
   gem 'turbolinks', '~> 2.5.0'
   # This ExecJS backend provides stateful context
   # which the default nodejs backend does not
-  gem 'mini_racer'
+  gem 'mini_racer', :platforms => :mri
+  gem 'therubyrhino', :platforms => :jruby
 end
 
 # no_sprockets is a magical name from sprockets_helper.rb in test to
@@ -55,7 +56,8 @@ appraise 'rails-5_no_sprockets_webpacker_1_1' do
   gem 'webpacker', '~> 1.1.0'
   # This ExecJS backend provides stateful context
   # which the default nodejs backend does not
-  gem 'therubyracer'
+  gem 'therubyracer', :platforms => :mri
+  gem 'therubyrhino', :platforms => :jruby
 end
 
 appraise 'rails-5_no_sprockets_webpacker_1_x' do
@@ -63,7 +65,8 @@ appraise 'rails-5_no_sprockets_webpacker_1_x' do
   gem 'webpacker', '~> 1.2'
   # This ExecJS backend provides stateful context
   # which the default nodejs backend does not
-  gem 'therubyracer'
+  gem 'therubyracer', :platforms => :mri
+  gem 'therubyrhino', :platforms => :jruby
 end
 
 appraise 'rails-5_no_sprockets_webpacker_2' do
@@ -71,7 +74,8 @@ appraise 'rails-5_no_sprockets_webpacker_2' do
   gem 'webpacker', '~> 2.0'
   # This ExecJS backend provides stateful context
   # which the default nodejs backend does not
-  gem 'therubyracer'
+  gem 'therubyracer', :platforms => :mri
+  gem 'therubyrhino', :platforms => :jruby
 end
 
 appraise 'rails-5_no_sprockets_webpacker_3' do
@@ -79,7 +83,8 @@ appraise 'rails-5_no_sprockets_webpacker_3' do
   gem 'webpacker', '>= 3.0'
   # This ExecJS backend provides stateful context
   # which the default nodejs backend does not
-  gem 'therubyracer'
+  gem 'therubyracer', :platforms => :mri
+  gem 'therubyrhino', :platforms => :jruby
 end
 
 appraise 'rails-5-no_sprockets' do
