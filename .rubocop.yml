@@ -3,7 +3,6 @@ AllCops:
   DisplayCopNames: true
   Exclude:
     - test/dummy_sprockets/**/*
-    - test/dummy_webpacker1/**/*
     - test/dummy_webpacker2/**/*
     - test/dummy_webpacker3/**/*
     - node_modules/**/*
