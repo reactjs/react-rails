@@ -7,7 +7,7 @@ cache:
 rvm:
   - 2.3.0
   - 2.1
-  - jruby-9.0.1.0
+  - jruby-9.1.9.0
 
 gemfile:
   # These have webpacker:
@@ -53,27 +53,27 @@ matrix:
       gemfile: gemfiles/rails_5_no_sprockets.gemfile
     - rvm: 2.1
       gemfile: gemfiles/rails_5.1_sprockets_4.gemfile
-    - rvm: jruby-9.0.1.0
+    - rvm: jruby-9.1.9.0
       gemfile: gemfiles/rails_4.0.gemfile
-    - rvm: jruby-9.0.1.0
+    - rvm: jruby-9.1.9.0
       gemfile: rails_4.0_with_therubyracer.gemfile
-    - rvm: jruby-9.0.1.0
+    - rvm: jruby-9.1.9.0
       gemfile: gemfiles/rails_4.1.gemfile
-    - rvm: jruby-9.0.1.0
+    - rvm: jruby-9.1.9.0
       gemfile: gemfiles/rails_4.2_sprockets_2.gemfile
-    - rvm: jruby-9.0.1.0
+    - rvm: jruby-9.1.9.0
       gemfile: gemfiles/rails_5_no_sprockets_webpacker_1_1.gemfile
-    - rvm: jruby-9.0.1.0
+    - rvm: jruby-9.1.9.0
       gemfile: gemfiles/rails_5_no_sprockets_webpacker_1_x.gemfile
-    - rvm: jruby-9.0.1.0
+    - rvm: jruby-9.1.9.0
       gemfile: gemfiles/rails_5_no_sprockets_webpacker_2.gemfile
-    - rvm: jruby-9.0.1.0
+    - rvm: jruby-9.1.9.0
       gemfile: gemfiles/rails_5_no_sprockets_webpacker_3.gemfile
-    - rvm: jruby-9.0.1.0
+    - rvm: jruby-9.1.9.0
       gemfile: gemfiles/rails_5_no_sprockets.gemfile
 
   allow_failures:
-    - rvm: jruby-9.0.1.0
+    - rvm: jruby-9.1.9.0
 
 before_install:
   - nvm install 7.8.0 && nvm use 7.8.0

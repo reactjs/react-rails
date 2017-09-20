@@ -5,6 +5,6 @@ source "http://rubygems.org"
 gem "rails", "~> 4.2.1"
 gem "sprockets", "~> 4.0.x"
 gem "turbolinks", "~> 2.5.0"
-gem "mini_racer"
+gem "mini_racer", platforms: :mri
 
-gemspec :path => "../"
+gemspec path: "../"
