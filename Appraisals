@@ -46,7 +46,6 @@ appraise 'rails-4.2-sprockets_4' do
   # This ExecJS backend provides stateful context
   # which the default nodejs backend does not
   gem 'mini_racer', :platforms => :mri
-  gem 'therubyrhino', :platforms => :jruby
 end
 
 # no_sprockets is a magical name from sprockets_helper.rb in test to
