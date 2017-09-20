@@ -12,8 +12,6 @@ rvm:
 gemfile:
   # These have webpacker:
   - gemfiles/rails_4.2_sprockets_4.gemfile
-  - gemfiles/rails_5_no_sprockets_webpacker_1_1.gemfile
-  - gemfiles/rails_5_no_sprockets_webpacker_1_x.gemfile
   - gemfiles/rails_5_no_sprockets_webpacker_2.gemfile
   - gemfiles/rails_5_no_sprockets_webpacker_3.gemfile
   # These don't have webpacker:
@@ -42,10 +40,6 @@ matrix:
     - rvm: 2.1
       gemfile: gemfiles/rails_4.2_sprockets_4.gemfile
     - rvm: 2.1
-      gemfile: gemfiles/rails_5_no_sprockets_webpacker_1_1.gemfile
-    - rvm: 2.1
-      gemfile: gemfiles/rails_5_no_sprockets_webpacker_1_x.gemfile
-    - rvm: 2.1
       gemfile: gemfiles/rails_5_no_sprockets_webpacker_2.gemfile
     - rvm: 2.1
       gemfile: gemfiles/rails_5_no_sprockets_webpacker_3.gemfile
@@ -61,10 +55,6 @@ matrix:
       gemfile: gemfiles/rails_4.1.gemfile
     - rvm: jruby-9.1.9.0
       gemfile: gemfiles/rails_4.2_sprockets_2.gemfile
-    - rvm: jruby-9.1.9.0
-      gemfile: gemfiles/rails_5_no_sprockets_webpacker_1_1.gemfile
-    - rvm: jruby-9.1.9.0
-      gemfile: gemfiles/rails_5_no_sprockets_webpacker_1_x.gemfile
     - rvm: jruby-9.1.9.0
       gemfile: gemfiles/rails_5_no_sprockets_webpacker_2.gemfile
     - rvm: jruby-9.1.9.0
