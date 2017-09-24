@@ -10,7 +10,12 @@ module.exports = function(reqctx) {
     var filename = parts.shift()
     var keys = parts
     // Load the module:
-    var component = reqctx("./" + filename)
+    var component;
+    try {
+      component = reqctx("./" + filename)
+    } catch(err) {
+      component = reqctx("./" + filename + ".jsx")
+    }
     // Then access each key:
     keys.forEach(function(k) {
       component = component[k]
