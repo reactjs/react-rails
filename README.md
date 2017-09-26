@@ -485,3 +485,14 @@ You can also specify this option in `react_component`:
 - Run tests with `rake test` or `appraisal rake test`
 - Update React assets with `rake react:update`
 - Update the UJS with `rake ujs:update`
+- Releases:
+  - To release a new RubyGems version:
+    - Increment the version in `lib/react/rails/version.rb`
+    - Add an entry to `VERSIONS.md`
+    - Update the changelog (find recent changes on GitHub by listing commits or showing closed PRs)
+    - Commit changes & push to master
+    - `bundle exec rake release`: pushes a tag to GitHub, builds a `.gem`, and pushes to RubyGems
+  - To release a new NPM version:
+    - Update the version in `react_ujs/package.json`
+    - Commit & push to master
+    - `bundle exec rake ujs:publish` (runs `npm publish`)
