@@ -4,16 +4,10 @@
   "description": "Prepares react-rails asset files",
   "main": "react.js",
   "dependencies": {
+    "immutability-helper": "^2.4.0",
     "react": "^15.3.0",
-    "react-addons-create-fragment": "^15.3.0",
-    "react-addons-css-transition-group": "^15.3.0",
-    "react-addons-linked-state-mixin": "^15.3.0",
-    "react-addons-perf": "^15.3.0",
-    "react-addons-pure-render-mixin": "^15.3.0",
-    "react-addons-test-utils": "^15.3.0",
-    "react-addons-transition-group": "^15.3.0",
-    "react-addons-update": "^15.3.0",
     "react-dom": "^15.3.0",
+    "react-transition-group": "1.1.1",
     "webpack": "^1.12.2"
   },
   "scripts": {
