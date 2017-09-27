@@ -1,5 +1,15 @@
 # react-rails
 
+#### Breaking Changes
+
+#### New Features
+
+#### Deprecation
+
+#### Bug Fixes
+
+## 2.3.0
+
 #### New Features
 
 - Webpacker and Webpack 3 support #777
