@@ -29,24 +29,29 @@ require 'rails/generators'
 require 'pathname'
 require 'minitest/mock'
 require 'capybara/rails'
-require 'capybara/poltergeist'
+require 'selenium/webdriver'
 Dummy::Application.load_tasks
 
 WebpackerHelpers.clear_webpacker_packs
 
 Capybara.app = Rails.application
 
-Capybara.register_driver :poltergeist_debug do |app|
-  poltergeist_options = {
-    # `page.driver.debug` will cause Poltergeist to open a browser window
-    inspector: true,
-    # hide warnings from React.js whitespace changes:
-    # and from React.createClass deprecation
-    js_errors: false
-  }
-  Capybara::Poltergeist::Driver.new(app, poltergeist_options)
+Capybara.register_driver :chrome do |app|
+  Capybara::Selenium::Driver.new(app, browser: :chrome)
 end
-Capybara.javascript_driver = :poltergeist_debug
+
+Capybara.register_driver :headless_chrome do |app|
+  capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(
+    chromeOptions: { args: %w(headless disable-gpu) }
+  )
+
+  Capybara::Selenium::Driver.new(app,
+    browser: :chrome,
+    desired_capabilities: capabilities
+  )
+end
+
+Capybara.javascript_driver = :headless_chrome
 Capybara.current_driver = Capybara.javascript_driver
 
 CACHE_PATH = Pathname.new File.expand_path("../#{DUMMY_LOCATION}/tmp/cache", __FILE__)

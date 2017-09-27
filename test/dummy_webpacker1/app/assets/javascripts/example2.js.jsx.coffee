@@ -1,4 +1,4 @@
-Component = React.createClass
+Component = createReactClass
   render: ->
     `<ExampleComponent videos={this.props.videos} />`
 

@@ -61,31 +61,31 @@ module React
                    desc: 'Output coffeescript based component'
 
       REACT_PROP_TYPES = {
-        'node' =>        'React.PropTypes.node',
-        'bool' =>        'React.PropTypes.bool',
-        'boolean' =>     'React.PropTypes.bool',
-        'string' =>      'React.PropTypes.string',
-        'number' =>      'React.PropTypes.number',
-        'object' =>      'React.PropTypes.object',
-        'array' =>       'React.PropTypes.array',
-        'shape' =>       'React.PropTypes.shape({})',
-        'element' =>     'React.PropTypes.element',
-        'func' =>        'React.PropTypes.func',
-        'function' =>    'React.PropTypes.func',
-        'any' =>         'React.PropTypes.any',
+        'node' =>        'PropTypes.node',
+        'bool' =>        'PropTypes.bool',
+        'boolean' =>     'PropTypes.bool',
+        'string' =>      'PropTypes.string',
+        'number' =>      'PropTypes.number',
+        'object' =>      'PropTypes.object',
+        'array' =>       'PropTypes.array',
+        'shape' =>       'PropTypes.shape({})',
+        'element' =>     'PropTypes.element',
+        'func' =>        'PropTypes.func',
+        'function' =>    'PropTypes.func',
+        'any' =>         'PropTypes.any',
 
         'instanceOf' => ->(type) {
-          'React.PropTypes.instanceOf(%s)' % type.to_s.camelize
+          'PropTypes.instanceOf(%s)' % type.to_s.camelize
         },
 
         'oneOf' => ->(*options) {
           enums = options.map{ |k| "'#{k.to_s}'" }.join(',')
-          'React.PropTypes.oneOf([%s])' % enums
+          'PropTypes.oneOf([%s])' % enums
         },
 
         'oneOfType' => ->(*options) {
           types = options.map{ |k| "#{lookup(k.to_s, k.to_s)}" }.join(',')
-          'React.PropTypes.oneOfType([%s])' % types
+          'PropTypes.oneOfType([%s])' % types
         }
       }
 
@@ -129,7 +129,7 @@ module React
 
       def file_header
         if webpacker?
-          %|var React = require("react")\n|
+          %|import React from "react"\nimport PropTypes from "prop-types"\n|
         else
           ''
         end
@@ -137,7 +137,11 @@ module React
 
       def file_footer
         if webpacker?
-          %|module.exports = #{component_name}|
+          if options[:es6]
+            %|export default #{component_name}|
+          else
+            %|module.exports = #{component_name}|
+          end
         else
           ''
         end

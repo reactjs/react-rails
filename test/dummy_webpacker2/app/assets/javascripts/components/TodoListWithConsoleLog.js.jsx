@@ -1,4 +1,4 @@
-TodoListWithConsoleLog = React.createClass({
+TodoListWithConsoleLog = createReactClass({
   getInitialState: function() {
     console.log('got initial state');
     return({mounted: "nope"});

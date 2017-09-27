@@ -1,4 +1,4 @@
-WithSetTimeout = React.createClass({
+WithSetTimeout = createReactClass({
   componentWillMount: function () {
     setTimeout(function () {}, 1000)
     clearTimeout(0)

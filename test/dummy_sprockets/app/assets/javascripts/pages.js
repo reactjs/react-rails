@@ -1,4 +1,4 @@
-var GreetingMessage = React.createClass({
+var GreetingMessage = createReactClass({
   getInitialState: function() {
     var initialGreeting = 'Hello';
     if (typeof global !== "undefined" && global.ctx && global.ctx.greeting) {
@@ -13,9 +13,9 @@ var GreetingMessage = React.createClass({
     this.setState({greeting: 'Goodbye'});
   },
   render: function() {
-    return React.DOM.div({},
-      React.DOM.div({}, this.state.greeting, ' ', this.props.name),
-      React.DOM.button({onClick: this.goodbye}, 'Goodbye')
+    return React.createElement('div', {},
+      React.createElement('div', {}, this.state.greeting, ' ', this.props.name ),
+      React.createElement('button', {onClick: this.goodbye}, 'Goodbye')
     );
   }
 });
