@@ -21,6 +21,11 @@ module React
         !!defined?(Webpacker)
       end
 
+      def output_path
+        # Webpack1 /:output/:entry, Webpack3 /public/:output
+        config.respond_to?(:output_path) ? config.output_path : 'public'
+      end
+
       if MAJOR < 3
         def find_asset(logical_path)
           # raises if not found
@@ -37,7 +42,19 @@ module React
             File.read(full_path)
           end
         end
-      else
+
+        def config
+          Webpacker::Configuration
+        end
+
+        def file_path path
+          manifest.lookup_path(path)
+        end
+
+        def manifest
+          Webpacker::Manifest
+        end
+      else # if MAJOR == 3
         def find_asset(logical_path)
           asset_path = Webpacker.manifest.lookup(logical_path).to_s
           if Webpacker.dev_server.running?
@@ -49,45 +66,18 @@ module React
             File.read(file_path(logical_path))
           end
         end
-      end
 
-      if MAJOR < 3
-        def manifest
-          Webpacker::Manifest
-        end
-      else
-        def manifest
-          Webpacker.manifest
-        end
-      end
-
-      if MAJOR < 3
-        def config
-          Webpacker::Configuration
-        end
-      else
         def config
           Webpacker.config
         end
-      end
 
-      if (MAJOR == 1 && MINOR >= 2) || MAJOR == 2
-        def file_path path
-          manifest.lookup_path(path)
+        def manifest
+          Webpacker.manifest
         end
-      elsif MAJOR == 3
+
         def file_path path
           ::Rails.root.join('public', manifest.lookup(path)[1..-1])
         end
-      else # 1.0 and 1.1 support
-        def file_path path
-          File.join(output_path, manifest.lookup(path).split('/')[2..-1])
-        end
-      end
-
-      def output_path
-        # Webpack1 /:output/:entry, Webpack3 /public/:output
-        config.respond_to?(:output_path) ? config.output_path : 'public'
       end
     end
   end

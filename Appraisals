@@ -48,33 +48,13 @@ appraise 'rails-4.2-sprockets_4' do
   gem 'mini_racer', :platforms => :mri
 end
 
-# no_sprockets is a magical name from sprockets_helper.rb in test to
-#   load in certain tests or not.
-appraise 'rails-5_no_sprockets_webpacker_1_1' do
-  gem 'rails', '~> 5.0.0'
-  gem 'webpacker', '~> 1.1.0'
-  # This ExecJS backend provides stateful context
-  # which the default nodejs backend does not
-  gem 'therubyracer', :platforms => :mri
-  gem 'therubyrhino', :platforms => :jruby
-end
-
-appraise 'rails-5_no_sprockets_webpacker_1_x' do
-  gem 'rails', '~> 5.0.0'
-  gem 'webpacker', '~> 1.2'
-  # This ExecJS backend provides stateful context
-  # which the default nodejs backend does not
-  gem 'therubyracer', :platforms => :mri
-  gem 'therubyrhino', :platforms => :jruby
-end
-
 appraise 'rails-5_no_sprockets_webpacker_2' do
   gem 'rails', '~> 5.0.0'
   gem 'webpacker', '~> 2.0'
   # This ExecJS backend provides stateful context
   # which the default nodejs backend does not
   gem 'therubyracer', :platforms => :mri
-  gem 'therubyrhino', :platforms => :jruby
+  gem 'therubyrhino', :platforms => :jruby # Doesnt seem to run, excluded from Travis
 end
 
 appraise 'rails-5_no_sprockets_webpacker_3' do
@@ -83,7 +63,7 @@ appraise 'rails-5_no_sprockets_webpacker_3' do
   # This ExecJS backend provides stateful context
   # which the default nodejs backend does not
   gem 'therubyracer', :platforms => :mri
-  gem 'therubyrhino', :platforms => :jruby
+  gem 'therubyrhino', :platforms => :jruby # Doesnt seem to run, excluded from Travis
 end
 
 appraise 'rails-5-no_sprockets' do
