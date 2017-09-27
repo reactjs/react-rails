@@ -1,8 +1,9 @@
 # react-rails
 
-#### Breaking Changes
-
 #### New Features
+
+- Webpacker and Webpack 3 support #777
+- Update to React 15.6.2 #789
 
 #### Deprecation
 
