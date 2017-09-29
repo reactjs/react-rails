@@ -1,4 +1,4 @@
-<%= file_header %>var <%= component_name %> = React.createClass({
+<%= file_header %>var <%= component_name %> = createReactClass({
 <% if attributes.size > 0 -%>
   propTypes: {
 <% attributes.each_with_index do |attribute, idx| -%>

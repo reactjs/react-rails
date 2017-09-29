@@ -132,7 +132,7 @@ module React
           if options[:es6]
             %|import React from "react"\nimport PropTypes from "prop-types"\n|
           else
-            %|var React = require("react")\nvar PropTypes = require("prop-types")\n|
+            %|var React = require("react")\nvar PropTypes = require("prop-types")\nvar createReactClass = require('create-react-class');|
           end
         else
           ''
