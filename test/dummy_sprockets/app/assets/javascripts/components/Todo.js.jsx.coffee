@@ -1,4 +1,4 @@
-Todo = React.createClass
+Todo = createReactClass
   render: ->
     `<li>{this.props.todo}</li>`
 

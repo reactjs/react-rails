@@ -1,6 +1,7 @@
 var React = require("react")
+var createReactClass = require("create-react-class")
 
-module.exports = React.createClass({
+module.exports = createReactClass({
   getInitialState: function() {
     console.log('got initial state');
     return({mounted: "nope"});

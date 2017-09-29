@@ -1,4 +1,4 @@
-TodoList = React.createClass({
+TodoList = createReactClass({
   getInitialState: function() {
     return({mounted: "nope"});
   },
