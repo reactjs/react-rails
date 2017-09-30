@@ -475,7 +475,7 @@ You can also specify this option in `react_component`:
 ## Related Projects
 
 - [react\_on\_rails Gem](https://github.com/shakacode/react_on_rails): Integration of React with Rails utilizing Webpack, Babel, React, Redux, React-Router.
-- [Ruby Hyperloop](http://ruby-hyperloop.io/): Use Ruby to build reactive user interfaces with React.
+- [Ruby Hyperloop](http://ruby-hyperloop.org/): Use Ruby to build reactive user interfaces with React.
 - [react-rails-hot-loader](https://github.com/rmosolgo/react-rails-hot-loader) is a simple live-reloader for `react-rails`.
 - [react-rails-benchmark_renderer](https://github.com/pboling/react-rails-benchmark_renderer) adds performance instrumentation to server rendering.
 - [The Free React on Rails Course](https://learnetto.com/users/hrishio/courses/the-free-react-on-rails-5-course) A free video course which teaches the basics of React and how to get started using it in Rails with `react-rails`.
