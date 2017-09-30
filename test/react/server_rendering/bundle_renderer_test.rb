@@ -33,7 +33,7 @@ if SprocketsHelpers.available? || WebpackerHelpers.available?
     test '#render returns HTML' do
       result = @renderer.render('Todo', { todo: 'write tests' }, nil)
       assert_match(/<li.*write tests<\/li>/, result)
-      assert_match(/data-react-checksum/, result)
+      assert_match(/data-reactroot/, result)
     end
 
     test '#render accepts strings' do
@@ -70,7 +70,7 @@ if SprocketsHelpers.available? || WebpackerHelpers.available?
 
       if WebpackerHelpers.available?
         # require() failed:
-        assert_match(/Invariant Violation:/, err.to_s)
+        assert_match(/TypeError: Cannot read property 'toLowerCase' of undefined/, err.to_s)
       else
         # eval() failed:
         assert_match(/ReferenceError/, err.to_s)
