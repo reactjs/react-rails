@@ -1,3 +1,4 @@
+
 require 'test_helper'
 require 'generators/react/component_generator'
 
@@ -33,8 +34,8 @@ class Es6ComponentGeneratorTest < Rails::Generators::TestCase
   end
 
   test 'generates working jsx' do
-    expected_name_div = /React\.createElement\(\s*"div",\s*null,\s*\"Name:\s*\",\s*this\.props\.name\s*\)/x
-    expected_shape_div = /React\.createElement\(\s*"div",\s*null,\s*\"Address:\s*\",\s*this\.props\.address\s*\)/x
+    expected_name_div = /\.createElement\(\s*"div",\s*null,\s*\"Name:\s*\",\s*this\.props\.name\s*\)/x
+    expected_shape_div = /\.createElement\(\s*"div",\s*null,\s*\"Address:\s*\",\s*this\.props\.address\s*\)/x
 
     run_generator %w(GeneratedComponent name:string address:shape --es6)
     jsx = React::JSX.transform(File.read(File.join(destination_root, filename)))
