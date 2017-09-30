@@ -29,7 +29,7 @@ class CoffeeComponentGeneratorTest < Rails::Generators::TestCase
     run_generator %w(GeneratedComponent name --coffee)
 
     assert_file filename, /@propTypes\s=/
-    assert_file filename, /React.PropTypes/
+    assert_file filename, /PropTypes/
   end
 
   test 'that it generates working jsx' do

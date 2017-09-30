@@ -14,7 +14,7 @@ this.ReactRailsUJS = {
 
 class ExecJSRendererTest < ActiveSupport::TestCase
   setup do
-    react_server_source = File.read(File.expand_path('../../../../lib/assets/react-source/production/react-server.js', __FILE__))
+    react_server_source = File.read(File.expand_path('../../../../lib/assets/react-source/production-with-addons/react-server.js', __FILE__))
     react_ujs_source = File.read(File.expand_path('../../../../lib/assets/javascripts/react_ujs.js', __FILE__))
     todo_component_source = File.read(File.expand_path("../../../#{DUMMY_LOCATION}/app/assets/javascripts/components/PlainJSTodo.js", __FILE__))
     code = react_server_source + react_ujs_source + todo_component_source
