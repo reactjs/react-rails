@@ -99,7 +99,7 @@ Now, you can create React components in `.jsx` files:
 ```js
 // app/assets/javascripts/components/post.jsx
 
-window.Post = React.createClass({
+window.Post = createReactClass({
   render: function() {
     return <h1>{this.props.title}</h1>
   }
