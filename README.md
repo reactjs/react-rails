@@ -90,7 +90,7 @@ Then restart your development server.
 
 This will:
 
-- add some `//= require`s to `application.js`  
+- add some `//= require`s to `application.js`
 - add a `components/` directory for React components
 - add `server_rendering.js` for [server-side rendering](#server-side-rendering)
 
@@ -108,7 +108,7 @@ window.Post = React.createClass({
 // or, equivalent:
 class Post extends React.Component {
   render() {
-    return <h1>{this.props.title}</h1>    
+    return <h1>{this.props.title}</h1>
   }
 }
 ```
@@ -483,6 +483,8 @@ You can also specify this option in `react_component`:
 ## Development
 
 - Run tests with `rake test` or `appraisal rake test`
+  - Integration tests run in Headless Chrome which is included in Chrome (59+ linux,OSX | 60+ Windows)
+  - ChromeDriver is included with `chromedriver-helper` gem so no need to manually install that 👍
 - Update React assets with `rake react:update`
 - Update the UJS with `rake ujs:update`
 - Releases:
