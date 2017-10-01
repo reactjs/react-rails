@@ -129,14 +129,18 @@ module React
 
       def file_header
         if webpacker?
-          %|var React = require("react")\n|
+          if options[:coffee]
+            %|import React from 'react'\nimport PropTypes from 'prop-types'\n|
+          else
+            %|var React = require("react")\n|
+          end
         else
           ''
         end
       end
 
       def file_footer
-        if webpacker?
+        if webpacker? && !options[:coffee]
           %|module.exports = #{component_name}|
         else
           ''
