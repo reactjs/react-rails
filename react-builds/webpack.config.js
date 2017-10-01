@@ -21,9 +21,7 @@ module.exports = {
   context: __dirname,
   entry: {
     "react-browser": "./react-browser.js",
-    "react-browser-with-addons": "./react-browser-with-addons.js",
     "react-server": "./react-server.js",
-    "react-server-with-addons": "./react-server-with-addons.js",
   },
   output: {
       path: __dirname + "/build/" + reactRailsEnv,

@@ -1,4 +1,3 @@
-require 'pry'
 module React
   module ServerRendering
     # A bare-bones renderer for React.js + Exec.js
@@ -10,7 +9,6 @@ module React
       attr_reader :context
 
       def initialize(options={})
-        binding.pry
         js_code = options[:code] || raise('Pass `code:` option to instantiate a JS context!')
         @context = ExecJS.compile(GLOBAL_WRAPPER + js_code)
       end

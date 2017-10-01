@@ -1,7 +1,7 @@
 var React = require("react");
 var ReactDOMServer = require("react-dom/server");
-var PropTypes = require("prop-types");
+var createReactClass = require("create-react-class");
 
 global.React = React;
 global.ReactDOMServer = ReactDOMServer;
-global.PropTypes = PropTypes;
+global.createReactClass = createReactClass;

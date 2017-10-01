@@ -139,15 +139,6 @@ Components must be accessible from the top level, but they may be namespaced, fo
 
 `//= require react` brings `React` into your project.
 
-To include `React.addons`, add this config:
-
-```ruby
-# config/application.rb
-MyApp::Application.configure do
-  config.react.addons = true # defaults to false
-end
-```
-
 By default, React's [development version] is provided to `Rails.env.development`. You can override the React build with a config:
 
 ```ruby

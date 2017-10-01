@@ -26,7 +26,6 @@ module Dummy
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
     config.react.variant = :production
-    config.react.addons = false
     config.react.server_renderer_options = {
       replay_console: true,
     }
