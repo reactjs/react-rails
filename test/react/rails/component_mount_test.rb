@@ -73,13 +73,11 @@ SprocketsHelpers.when_available do
       html = @helper.react_component('Todo', { todo: 'render on the server' }.to_json, prerender: true)
       assert(html.include?('data-react-class="Todo"'), 'it includes attrs for UJS')
       assert(html.include?('>render on the server</li>'), 'it includes rendered HTML')
-      assert(html.include?('data-reactid'), 'it includes React properties')
     end
 
     test '#react_component passes :static to BundleRenderer' do
       html = @helper.react_component('Todo', { todo: 'render on the server' }.to_json, prerender: :static)
       assert(html.include?('>render on the server</li>'), 'it includes rendered HTML')
-      assert(!html.include?('data-reactid'), 'it DOESNT INCLUDE React properties')
     end
 
     test '#react_component does not include HTML properties with a static render' do
