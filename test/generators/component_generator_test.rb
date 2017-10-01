@@ -21,7 +21,7 @@ class ComponentGeneratorTest < Rails::Generators::TestCase
 
     assert_file filename do |contents|
       if WebpackerHelpers.available?
-        assert_match /^var React = require\("react"\)/, contents
+        assert_match /^import React from "react"/, contents
         assert_match /module\.exports = GeneratedComponent\n$/m, contents
       end
     end
@@ -58,8 +58,8 @@ class ComponentGeneratorTest < Rails::Generators::TestCase
   end
 
   test 'generates working jsx' do
-    expected_name_div = /React\.createElement\(\s*"div",\s*null,\s*\"Name:\s*\",\s*this\.props\.name\s*\)/x
-    expected_shape_div = /React\.createElement\(\s*"div",\s*null,\s*\"Address:\s*\",\s*this\.props\.address\s*\)/x
+    expected_name_div = /\.createElement\(\s*"div",\s*null,\s*\"Name:\s*\",\s*this\.props\.name\s*\)/x
+    expected_shape_div = /\.createElement\(\s*"div",\s*null,\s*\"Address:\s*\",\s*this\.props\.address\s*\)/x
 
     run_generator %w(GeneratedComponent name:string address:shape)
     jsx = React::JSX.transform(File.read(File.join(destination_root, filename)))
