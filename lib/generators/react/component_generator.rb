@@ -129,11 +129,7 @@ module React
 
       def file_header
         if webpacker?
-          if options[:es6]
-            %|import React from "react"\nimport PropTypes from "prop-types"\n|
-          else
-            %|var React = require("react")\nvar PropTypes = require("prop-types")\nvar createReactClass = require('create-react-class');|
-          end
+          %|import React from "react"\nimport PropTypes from "prop-types"\n|
         else
           ''
         end
