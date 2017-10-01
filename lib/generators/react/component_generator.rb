@@ -130,9 +130,7 @@ module React
       def file_header
         if webpacker?
           if options[:coffee]
-            %|import React from 'react'\n|
-            %|import PropTypes from 'prop-types'\n|
-            %|export default |
+            %|import React from 'react'\nimport PropTypes from 'prop-types'\n|
           else
             %|var React = require("react")\n|
           end
