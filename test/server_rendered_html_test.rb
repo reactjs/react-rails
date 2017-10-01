@@ -79,6 +79,7 @@ HEREDOC
           WebpackerHelpers.compile
         else
           wait_to_ensure_asset_pipeline_detects_changes
+          FileUtils.touch new_file_path
         end
 
         get '/server/1?component_name=NewList'
