@@ -20,6 +20,6 @@ class AssetVariantTest < ActiveSupport::TestCase
 
   test 'it includes addons if requested' do
     asset_variant = build_variant(addons: true)
-    assert_equal "development-with-addons", asset_variant.react_build
+    assert_equal 'development-with-addons', asset_variant.react_build
   end
 end

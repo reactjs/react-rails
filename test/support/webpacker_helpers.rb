@@ -1,5 +1,10 @@
 module WebpackerHelpers
-  PACKS_DIRECTORY =  File.expand_path("../../dummy/public/packs", __FILE__)
+  PACKS_DIRECTORY =  File.expand_path("../../#{DUMMY_LOCATION}/public/packs", __FILE__)
+  begin
+    MAJOR, MINOR, PATCH, _ = Bundler.locked_gems.specs.find { |gem_spec| gem_spec.name == 'webpacker' }.version.segments
+  rescue
+    MAJOR, MINOR, PATCH, _ = [0,0,0]
+  end
 
   module_function
   def available?
@@ -13,20 +18,20 @@ module WebpackerHelpers
   end
 
   def compile
-    return if !available?
+    return unless available?
     clear_webpacker_packs
-    Dir.chdir("./test/dummy") do
+    Dir.chdir("./test/#{DUMMY_LOCATION}") do
       capture_io do
         Rake::Task['webpacker:compile'].reenable
         Rake::Task['webpacker:compile'].invoke
       end
     end
     # Reload cached JSON manifest:
-    Webpacker::Manifest.load
+    manifest_refresh
   end
 
   def compile_if_missing
-    if !File.exist?(PACKS_DIRECTORY)
+    unless File.exist?(PACKS_DIRECTORY)
       compile
     end
   end
@@ -39,57 +44,32 @@ module WebpackerHelpers
   # Call the block
   # Make sure to clean up the server
   def with_dev_server
+
+    old_env = ENV['NODE_ENV']
+    ENV['NODE_ENV'] = 'development'
+
     # Start the server in a forked process:
-    webpack_dev_server = Dir.chdir("test/dummy") do
-      spawn "RAILS_ENV=development ./bin/webpack-dev-server "
+    Dir.chdir("test/#{DUMMY_LOCATION}") do
+      spawn 'RAILS_ENV=development ./bin/webpack-dev-server '
     end
 
+    stop_time = Time.now + 30.seconds
     detected_dev_server = false
-
-    # Wait for it to start up, make sure it's there by connecting to it:
-    30.times do |i|
-      begin
-        # Make sure that the manifest has been updated:
-        Webpacker::Manifest.load("./test/dummy/public/packs/manifest.json")
-        webpack_manifest = Webpacker::Manifest.instance.data
-        example_asset_path = webpack_manifest.values.first
-        if example_asset_path.nil?
-          # Debug helper
-          # puts "Manifest is blank, all manifests:"
-          # Dir.glob("./test/dummy/public/packs/*.json").each do |f|
-          #   puts f
-          #   puts File.read(f)
-          # end
-          next
-        end
-        # Make sure the dev server is up:
-        open("http://localhost:8080/application.js")
-        if !example_asset_path.start_with?("http://localhost:8080")
-          raise "Manifest doesn't include absolute path to dev server"
-        end
-
-        detected_dev_server = true
-        break
-      rescue StandardError => err
-        puts err.message
-      ensure
-        sleep 0.5
-        # debug counter
-        # puts i
-      end
+    loop do
+      detected_dev_server = dev_server_running?
+      break if detected_dev_server || Time.now > stop_time
+      sleep 0.5
     end
 
     # If we didn't hook up with a dev server after waiting, fail loudly.
-    if !detected_dev_server
-      raise "Failed to start dev server"
-    end
+    raise 'Failed to start dev server' unless detected_dev_server
+    puts 'Detected dev server - Continuing'
 
     # Call the test block:
     yield
+
   ensure
-    # Kill the server process
-    # puts "Killing webpack dev server"
-    check_cmd = "lsof -i :8080 -S"
+    check_cmd = 'lsof -i :8080 -S'
     10.times do
       # puts check_cmd
       status = `#{check_cmd}`
@@ -109,6 +89,73 @@ module WebpackerHelpers
 
     # Remove the dev-server packs:
     WebpackerHelpers.clear_webpacker_packs
-    # puts "Killed."
+    ENV['NODE_ENV'] = old_env
+    puts "Killed."
+  end
+
+  if MAJOR < 3 # Old webpackers
+
+    def dev_server_running?
+      manifest_refresh
+      example_asset_path = manifest_data.values.first
+      return false unless example_asset_path
+      return false unless example_asset_path.start_with?('http://localhost:8080')
+      begin
+        file = open('http://localhost:8080/packs/application.js')
+      rescue StandardError => e
+        file = nil
+      end
+      unless file
+        puts "Manifest doesn't include absolute path to dev server"
+        return false
+      end
+      true
+    end
+
+    def manifest_refresh
+      Webpacker::Manifest.load
+    end
+
+    def manifest_lookup name
+      Webpacker::Manifest.load(name)
+    end
+
+    def manifest_data
+      Webpacker::Manifest.instance.data
+    end
+
+  else # New webpackers
+
+    def dev_server_running?
+      Webpacker.instance.instance_variable_set(:@config, nil)
+      return false unless Webpacker.dev_server.running?
+
+      ds = Webpacker.dev_server
+      example_asset_path = manifest_data.values.first
+      return false unless example_asset_path
+      begin
+        file = open("#{ds.protocol}://#{ds.host}:#{ds.port}#{example_asset_path}")
+      rescue StandardError => e
+        file = nil
+      end
+      if ! file
+        puts "Dev server is not serving assets yet"
+        return false
+      end
+      true
+    end
+
+    def manifest_refresh
+      Webpacker.manifest.refresh
+    end
+
+    def manifest_lookup _
+      Webpacker.manifest
+    end
+
+    def manifest_data
+      Webpacker.manifest.refresh
+    end
+
   end
 end

@@ -1,4 +1,4 @@
-require "test_helper"
+require 'test_helper'
 
 # sprockets-rails < 2.2.2 does not support
 # `application.assets_manifest`. Since sprockets-rails < 2.1.2 does
@@ -19,7 +19,7 @@ if defined?(Sprockets::Rails::VERSION) &&
     end
 
     def test_find_asset_gets_asset_contents
-      application_js_content = @manifest_container.find_asset("application.js")
+      application_js_content = @manifest_container.find_asset('application.js')
       assert(application_js_content.length > 50000, "It's the compiled file")
     end
   end

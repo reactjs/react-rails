@@ -8,6 +8,17 @@
 
 #### Bug Fixes
 
+## 2.3.0
+
+#### New Features
+
+- Webpacker and Webpack 3 support #777
+- Update to React 15.6.2 #789
+
+#### Deprecation
+
+#### Bug Fixes
+
 ## 2.2.1
 
 #### New Features

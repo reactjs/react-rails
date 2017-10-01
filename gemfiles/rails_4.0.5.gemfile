@@ -2,7 +2,7 @@
 
 source "http://rubygems.org"
 
-gem "turbolinks"
 gem "rails", "4.0.5"
+gem "turbolinks"
 
-gemspec :path => "../"
+gemspec path: "../"

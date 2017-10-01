@@ -90,7 +90,7 @@ Then restart your development server.
 
 This will:
 
-- add some `//= require`s to `application.js`  
+- add some `//= require`s to `application.js`
 - add a `components/` directory for React components
 - add `server_rendering.js` for [server-side rendering](#server-side-rendering)
 
@@ -108,7 +108,7 @@ window.Post = React.createClass({
 // or, equivalent:
 class Post extends React.Component {
   render() {
-    return <h1>{this.props.title}</h1>    
+    return <h1>{this.props.title}</h1>
   }
 }
 ```
@@ -194,7 +194,7 @@ react_component(component_class_name, props={}, html_options={})
 - `html_options` may include:
   - `tag:` to use an element other than a `div` to embed `data-react-class` and `data-react-props`.
   - `prerender: true` to render the component on the server.
-  - `camelize_props` to [transform a props hash](#camelize_props)
+  - `camelize_props` to [transform a props hash](#camelize-props)
   - `**other` Any other arguments (eg `class:`, `id:`) are passed through to [`content_tag`](http://api.rubyonrails.org/classes/ActionView/Helpers/TagHelper.html#method-i-content_tag).
 
 
@@ -475,7 +475,7 @@ You can also specify this option in `react_component`:
 ## Related Projects
 
 - [react\_on\_rails Gem](https://github.com/shakacode/react_on_rails): Integration of React with Rails utilizing Webpack, Babel, React, Redux, React-Router.
-- [Ruby Hyperloop](http://ruby-hyperloop.io/): Use Ruby to build reactive user interfaces with React.
+- [Ruby Hyperloop](http://ruby-hyperloop.org/): Use Ruby to build reactive user interfaces with React.
 - [react-rails-hot-loader](https://github.com/rmosolgo/react-rails-hot-loader) is a simple live-reloader for `react-rails`.
 - [react-rails-benchmark_renderer](https://github.com/pboling/react-rails-benchmark_renderer) adds performance instrumentation to server rendering.
 - [The Free React on Rails Course](https://learnetto.com/users/hrishio/courses/the-free-react-on-rails-5-course) A free video course which teaches the basics of React and how to get started using it in Rails with `react-rails`.
@@ -483,5 +483,18 @@ You can also specify this option in `react_component`:
 ## Development
 
 - Run tests with `rake test` or `appraisal rake test`
+  - Integration tests run in Headless Chrome which is included in Chrome (59+ linux,OSX | 60+ Windows)
+  - ChromeDriver is included with `chromedriver-helper` gem so no need to manually install that 👍
 - Update React assets with `rake react:update`
 - Update the UJS with `rake ujs:update`
+- Releases:
+  - To release a new RubyGems version:
+    - Increment the version in `lib/react/rails/version.rb`
+    - Add an entry to `VERSIONS.md`
+    - Update the changelog (find recent changes on GitHub by listing commits or showing closed PRs)
+    - Commit changes & push to master
+    - `bundle exec rake release`: pushes a tag to GitHub, builds a `.gem`, and pushes to RubyGems
+  - To release a new NPM version:
+    - Update the version in `react_ujs/package.json`
+    - Commit & push to master
+    - `bundle exec rake ujs:publish` (runs `npm publish`)

@@ -1,4 +1,4 @@
-require "test_helper"
+require 'test_helper'
 
 if Rails::VERSION::MAJOR == 3
   class YamlManifestContainerTest < ActiveSupport::TestCase
@@ -13,7 +13,7 @@ if Rails::VERSION::MAJOR == 3
     end
 
     def test_find_asset_gets_asset_contents
-      application_js_content = @manifest_container.find_asset("application.js")
+      application_js_content = @manifest_container.find_asset('application.js')
       assert(application_js_content.length > 50000, "It's the compiled file")
     end
   end

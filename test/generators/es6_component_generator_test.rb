@@ -8,7 +8,7 @@ class Es6ComponentGeneratorTest < Rails::Generators::TestCase
 
   if WebpackerHelpers.available?
     def filename
-      "app/javascript/components/GeneratedComponent.js"
+      'app/javascript/components/GeneratedComponent.js'
     end
   else
     def filename
@@ -20,19 +20,19 @@ class Es6ComponentGeneratorTest < Rails::Generators::TestCase
     'GeneratedComponent'
   end
 
-  test "uses es6 syntax" do
+  test 'uses es6 syntax' do
     run_generator %w(GeneratedComponent name --es6)
 
     assert_file filename, /^class\s#{class_name}\sextends\sReact\.Component/
   end
 
-  test "assigns defaultProps after class definintion" do
+  test 'assigns defaultProps after class definintion' do
     run_generator %w(GeneratedComponent name --es6)
 
     assert_file filename, /\s^#{class_name}\.propTypes/
   end
 
-  test "generates working jsx" do
+  test 'generates working jsx' do
     expected_name_div = /React\.createElement\(\s*"div",\s*null,\s*\"Name:\s*\",\s*this\.props\.name\s*\)/x
     expected_shape_div = /React\.createElement\(\s*"div",\s*null,\s*\"Address:\s*\",\s*this\.props\.address\s*\)/x
 

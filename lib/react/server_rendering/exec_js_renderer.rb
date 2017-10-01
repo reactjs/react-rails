@@ -9,7 +9,7 @@ module React
       attr_reader :context
 
       def initialize(options={})
-        js_code = options[:code] || raise("Pass `code:` option to instantiate a JS context!")
+        js_code = options[:code] || raise('Pass `code:` option to instantiate a JS context!')
         @context = ExecJS.compile(GLOBAL_WRAPPER + js_code)
       end
 
@@ -23,8 +23,8 @@ module React
       end
 
       # Hooks for inserting JS before/after rendering
-      def before_render(component_name, props, prerender_options); ""; end
-      def after_render(component_name, props, prerender_options); ""; end
+      def before_render(component_name, props, prerender_options); ''; end
+      def after_render(component_name, props, prerender_options); ''; end
 
       # Handle Node.js & other ExecJS contexts
       GLOBAL_WRAPPER = <<-JS
@@ -40,7 +40,7 @@ module React
       end
 
       def main_render(component_name, props, prerender_options)
-        render_function = prerender_options.fetch(:render_function, "renderToString")
+        render_function = prerender_options.fetch(:render_function, 'renderToString')
         "this.ReactRailsUJS.serverRender('#{render_function}', '#{component_name}', #{props})"
       end
 
