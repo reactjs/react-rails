@@ -1,5 +1,7 @@
 var React = require("react")
-module.exports = React.createClass({
+var createReactClass = require("create-react-class")
+
+module.exports = createReactClass({
   componentWillMount: function () {
     setTimeout(function () {}, 1000)
     clearTimeout(0)

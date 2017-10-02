@@ -33,7 +33,7 @@ if SprocketsHelpers.available? || WebpackerHelpers.available?
     test '#render returns HTML' do
       result = @renderer.render('Todo', { todo: 'write tests' }, nil)
       assert_match(/<li.*write tests<\/li>/, result)
-      assert_match(/data-react-checksum/, result)
+      assert_match(/data-reactroot/, result)
     end
 
     test '#render accepts strings' do
@@ -44,7 +44,7 @@ if SprocketsHelpers.available? || WebpackerHelpers.available?
     test '#render accepts :static pre-render option' do
       result = @renderer.render('Todo', { todo: 'write more tests' }, :static)
       assert_match(/<li>write more tests<\/li>/, result)
-      assert_no_match(/data-react-checksum/, result)
+      assert_no_match(/data-reactroot/, result)
     end
 
     test '#render replays console messages' do
@@ -123,7 +123,7 @@ if SprocketsHelpers.available? || WebpackerHelpers.available?
 
           result = @renderer.render('Todo', { todo: 'write tests' }, nil)
           assert_match(/<li.*write tests<\/li>/, result)
-          assert_match(/data-react-checksum/, result)
+          assert_match(/data-reactroot/, result)
         ensure
           Rails.application.config.assets.compile = true
 

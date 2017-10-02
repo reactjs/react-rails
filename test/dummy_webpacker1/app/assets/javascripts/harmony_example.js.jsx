@@ -1,4 +1,4 @@
-var HarmonyComponent = React.createClass({
+var HarmonyComponent = createReactClass({
   statics: {
     generateGreeting() {
       return "Hello Harmony!"

@@ -2,9 +2,16 @@
 
 #### Breaking Changes
 
+- React Deprecations for 15.4, 15.5, 15.6 in preparation for 16 handled in prebundled version
+
 #### New Features
 
+- Generator now makes modern style `createReactClass`(JS) or `extends React.Component`(ES6, CoffeeScript) code
+
 #### Deprecation
+
+- Next version will drop the addons option as they are not supported with React 16
+- TheRubyRacer's newest version (0.12.3 at time of writing) only supports libV8 (3.16.14.15) which is too old for some new JS features, future versions of this gem will need more modern ExecJS runtimes such as mini_racer (currently on libV8 5.9.x)
 
 #### Bug Fixes
 

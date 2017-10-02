@@ -2,9 +2,9 @@
 
 source "http://rubygems.org"
 
-gem "rails", "~> 5.0.0"
-gem "webpacker", ">= 3.0"
+gem "rails", "~> 4.0.13"
 gem "mini_racer", platforms: :mri
 gem "therubyrhino", platforms: :jruby
+gem "turbolinks"
 
 gemspec path: "../"

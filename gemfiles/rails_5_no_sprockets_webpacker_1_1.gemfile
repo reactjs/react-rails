@@ -4,7 +4,7 @@ source "http://rubygems.org"
 
 gem "rails", "~> 5.0.0"
 gem "webpacker", "~> 1.1.0"
-gem "therubyracer", platforms: :mri
+gem "mini_racer", platforms: :mri
 gem "therubyrhino", platforms: :jruby
 
 gemspec path: "../"

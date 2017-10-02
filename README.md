@@ -99,7 +99,7 @@ Now, you can create React components in `.jsx` files:
 ```js
 // app/assets/javascripts/components/post.jsx
 
-window.Post = React.createClass({
+window.Post = createReactClass({
   render: function() {
     return <h1>{this.props.title}</h1>
   }
@@ -138,15 +138,6 @@ Components must be accessible from the top level, but they may be namespaced, fo
 ### React.js versions
 
 `//= require react` brings `React` into your project.
-
-To include `React.addons`, add this config:
-
-```ruby
-# config/application.rb
-MyApp::Application.configure do
-  config.react.addons = true # defaults to false
-end
-```
 
 By default, React's [development version] is provided to `Rails.env.development`. You can override the React build with a config:
 
@@ -395,11 +386,11 @@ rails g react:component Post title:string published:bool published_by:instanceOf
 would generate:
 
 ```js
-var Post = React.createClass({
+var Post = createReactClass({
   propTypes: {
-    title: React.PropTypes.string,
-    published: React.PropTypes.bool,
-    publishedBy: React.PropTypes.instanceOf(Person)
+    title: PropTypes.string,
+    published: PropTypes.bool,
+    publishedBy: PropTypes.instanceOf(Person)
   },
 
   render: function() {
@@ -411,7 +402,7 @@ var Post = React.createClass({
       </div>
     );
   }
-});
+};
 ```
 
 The generator also accepts options:
