@@ -137,11 +137,7 @@ module React
 
       def file_footer
         if webpacker?
-          if options[:es6]
-            %|export default #{component_name}|
-          else
-            %|module.exports = #{component_name}|
-          end
+          %|export default #{component_name}|
         else
           ''
         end

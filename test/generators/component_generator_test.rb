@@ -22,7 +22,7 @@ class ComponentGeneratorTest < Rails::Generators::TestCase
     assert_file filename do |contents|
       if WebpackerHelpers.available?
         assert_match /^import React from "react"/, contents
-        assert_match /module\.exports = GeneratedComponent\n$/m, contents
+        assert_match /export default GeneratedComponent\n$/m, contents
       end
     end
   end
