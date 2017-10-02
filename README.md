@@ -474,6 +474,8 @@ You can also specify this option in `react_component`:
 ## Development
 
 - Run tests with `rake test` or `appraisal rake test`
+  - Integration tests run in Headless Chrome which is included in Chrome (59+ linux,OSX | 60+ Windows)
+  - ChromeDriver is included with `chromedriver-helper` gem so no need to manually install that 👍
 - Update React assets with `rake react:update`
 - Update the UJS with `rake ujs:update`
 - Releases:
