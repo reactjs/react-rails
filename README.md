@@ -402,7 +402,7 @@ var Post = createReactClass({
       </div>
     );
   }
-});
+};
 ```
 
 The generator also accepts options:
