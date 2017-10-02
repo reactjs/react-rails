@@ -1,4 +1,4 @@
-class @<%= component_name %> extends React.Component
+<%= file_header %>class @<%= component_name %> extends React.Component
 <% if attributes.size > 0 -%>
   @propTypes =
 <% attributes.each do |attribute| -%>
@@ -16,3 +16,4 @@ class @<%= component_name %> extends React.Component
 <% else -%>
     `<div />`
 <% end -%>
+<%= file_footer %>
