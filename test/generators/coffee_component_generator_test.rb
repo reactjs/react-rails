@@ -22,7 +22,7 @@ class CoffeeComponentGeneratorTest < Rails::Generators::TestCase
   test 'that it the uses CoffeeScript syntax' do
     run_generator %w(GeneratedComponent name --coffee)
 
-    assert_file filename, /^class @#{class_name}\sextends\sReact\.Component/
+    assert_file filename, /^class #{class_name}\sextends\sReact\.Component/
   end
 
   test 'that propTypes get assigned' do
