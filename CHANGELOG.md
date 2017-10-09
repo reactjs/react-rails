@@ -2,6 +2,16 @@
 
 #### Breaking Changes
 
+#### New Features
+
+#### Deprecation
+
+#### Bug Fixes
+
+## 2.3.1
+
+#### Breaking Changes
+
 - React Deprecations for 15.4, 15.5, 15.6 in preparation for 16 handled in prebundled version
 
 #### New Features
