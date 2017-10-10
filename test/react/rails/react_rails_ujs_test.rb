@@ -103,7 +103,7 @@ SprocketsHelpers.when_available do
 
     test 'react_ujs works without Turbolinks' do # Fixes #743
       visit '/no-turbolinks'
-      assert page.execute_script('ReactRailsUJS.detectEvents()')
+      assert_nil page.execute_script('ReactRailsUJS.detectEvents()')
     end
 
     test 'react_ujs can unmount/mount using a selector reference for a component parent' do
