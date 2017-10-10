@@ -18,4 +18,9 @@ class PagesController < ApplicationController
       js_context.exec("global.ctx = undefined;")
     end
   end
+
+  def no_turbolinks
+    @prerender = false
+    render :show, layout: 'app_no_turbolinks'
+  end
 end
