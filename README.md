@@ -9,7 +9,7 @@
 `react-rails` makes it easy to use [React](http://facebook.github.io/react/) and [JSX](http://facebook.github.io/react/docs/jsx-in-depth.html) in your Ruby on Rails (3.2+) application. Learn more:
 
 - React's [Getting Started guide](https://facebook.github.io/react/docs/getting-started.html)
-- Use React & JSX [with webpacker](#use-with-webpacker) or [with the asset pipeline](#use-with-asset-pipeline)
+- Use React & JSX [with Webpacker](#use-with-webpacker) or [with the asset pipeline](#use-with-asset-pipeline)
 - Rendering [components in views](#view-helper) or [in controller actions](#controller-actions)
 - [Server-side rendering](#server-side-rendering)
 - [Generating components](#component-generator) in various formats
@@ -34,7 +34,7 @@ $ rails g react:install
 
 ## Use with Webpacker
 
-[webpacker](https://github.com/rails/webpacker) integrates modern JS tooling with Rails. `ReactRailsUJS` allows you to gradually migrate to webpacker.
+[Webpacker](https://github.com/rails/webpacker) integrates modern JS tooling with Rails. `ReactRailsUJS` allows you to gradually migrate to Webpacker.
 
 Get started by adding `webpacker` to your gemfile and installing `webpacker` and `react-rails`:
 
@@ -250,7 +250,7 @@ For example, if `Turbolinks` is loaded _after_ `ReactRailsUJS`, you'll need to c
 Components are loaded with `ReactRailsUJS.getConstructor(className)`. This function has two built-in implementations:
 
 - On the asset pipeline, it looks up `className` in the global namespace.
-- On webpacker, it `require`s files and accesses named exports, as described in [Use with Webpacker](#use-with-webpacker).
+- On Webpacker, it `require`s files and accesses named exports, as described in [Use with Webpacker](#use-with-webpacker).
 
 You can override this function to customize the mapping of name-to-constructor. [Server-side rendering](#server-side-rendering) also uses this function.
 
