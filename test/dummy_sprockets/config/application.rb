@@ -37,6 +37,7 @@ module Dummy
     }
 
     if SprocketsHelpers.available?
+      config.assets.precompile += %w( app_no_turbolinks.js )
       config.assets.enabled = true
     end
   end
