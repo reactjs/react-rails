@@ -12,13 +12,6 @@ def copy_react_asset(webpack_file, destination_file)
   FileUtils.cp(full_webpack_path, full_destination_path)
 end
 
-# Move to `dirname` and execute `yarn {cmd}`
-def yarn_run_in(dirname, cmd)
-  Dir.chdir(dirname) do
-    `yarn #{cmd}`
-  end
-end
-
 namespace :react do
   desc 'Run the JS build process to put files in the gem source'
   task update: [:install, :build, :copy]
@@ -49,12 +42,12 @@ namespace :ujs do
 
   desc 'Install the JavaScript dependencies'
   task :install do
-    yarn_run_in('react_ujs', 'upgrade')
+    `yarn upgrade`
   end
 
   desc 'Build the JS bundles with Webpack'
   task :build do
-    yarn_run_in('react_ujs', 'build')
+    `yarn build`
   end
 
   desc "Copy browser-ready JS files to the gem's asset paths"
@@ -66,9 +59,7 @@ namespace :ujs do
 
   desc 'Publish the package in ./react_ujs/ to npm as `react_ujs`'
   task publish: :update do
-    Dir.chdir('react_ujs') do
-      `npm publish`
-    end
+    `npm publish`
   end
 end
 
