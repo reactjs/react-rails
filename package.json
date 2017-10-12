@@ -2,10 +2,13 @@
   "name": "react_ujs",
   "version": "2.3.1",
   "description": "Rails UJS for the react-rails gem",
-  "main": "index.js",
+  "main": "react_ujs/index.js",
+  "files": [
+    "react_ujs"
+  ],
   "repository": "reactjs/react-rails",
   "scripts": {
-    "build": "webpack"
+    "build": "cd react_ujs && webpack"
   },
   "devDependencies": {
     "webpack": "^2.3.3"
