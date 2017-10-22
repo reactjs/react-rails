@@ -69,10 +69,11 @@ This way, you can access top-level, default, or named exports.
 
 If `require` fails, `react-rails` falls back to the global namespace approach described in [Use with Asset Pipeline](#use-with-asset-pipeline).
 
-The `require.context` inserted into `packs/application.js` is used to load components. If you want to load components from a different directory, override it by calling `ReactRailsUJS.useContext`:
+The `require.context` ([docs](https://webpack.js.org/guides/dependency-management/#require-context)) inserted into `packs/application.js` is used to load components. If you want to load components from a different directory, override it by calling `ReactRailsUJS.useContext`:
 
 ```js
-var myCustomContext = require.context("custom_components", true)
+// Search the custom_components directory, its subdirectories (true) and match .js or .jsx files
+var myCustomContext = require.context("custom_components", true, /\.jsx?$/)
 var ReactRailsUJS = require("react_ujs")
 // use `custom_components/` for <%= react_component(...) %> calls
 ReactRailsUJS.useContext(myCustomContext)
