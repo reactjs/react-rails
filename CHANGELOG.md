@@ -2,7 +2,33 @@
 
 #### Breaking Changes
 
-- React Deprecations for 15.4, 15.5, 15.6 in preparation for 16 handled in prebundled version
+#### New Features
+
+#### Deprecation
+
+#### Bug Fixes
+
+## 2.4.0
+
+#### Breaking Changes
+
+- (Sprockets) Prebundled React upgraded to 16 #792
+- (Sprockets) Addons removed # 792
+
+#### New Features
+
+#### Deprecation
+
+#### Bug Fixes
+
+- Coffeescript generator exports correctly #799, #800
+- Running detector manually no longer breaks if Turbolinks is not preset #802
+
+## 2.3.1
+
+#### Breaking Changes
+
+- React Deprecations for 15.4, 15.5, 15.6 in preparation for 16 handled in prebundled version #789, #798
 
 #### New Features
 

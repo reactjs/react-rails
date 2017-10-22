@@ -6,6 +6,13 @@
 [![Code Climate](https://img.shields.io/codeclimate/github/reactjs/react-rails.svg?style=flat-square)](https://codeclimate.com/github/reactjs/react-rails)
 [![Test Coverage](https://img.shields.io/codeclimate/coverage/github/reactjs/react-rails.svg?style=flat-square)](https://codeclimate.com/github/reactjs/react-rails/coverage)
 
+Gem version 2.4.x onwards and master will no longer have React Addons.
+
+If you need to make changes for the prebundled react, see the migration docs here:
+https://reactjs.org/blog/2016/11/16/react-v15.4.0.html
+https://reactjs.org/blog/2017/04/07/react-v15.5.0.html
+https://reactjs.org/blog/2017/06/13/react-v15.6.0.html
+
 `react-rails` makes it easy to use [React](http://facebook.github.io/react/) and [JSX](http://facebook.github.io/react/docs/jsx-in-depth.html) in your Ruby on Rails (3.2+) application. Learn more:
 
 - React's [Getting Started guide](https://facebook.github.io/react/docs/getting-started.html)
