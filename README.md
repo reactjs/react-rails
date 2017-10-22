@@ -6,7 +6,7 @@
 [![Code Climate](https://img.shields.io/codeclimate/github/reactjs/react-rails.svg?style=flat-square)](https://codeclimate.com/github/reactjs/react-rails)
 [![Test Coverage](https://img.shields.io/codeclimate/coverage/github/reactjs/react-rails.svg?style=flat-square)](https://codeclimate.com/github/reactjs/react-rails/coverage)
 
-You are looking at the 2.3 stable branch. This branch is for maintaining the prebundled 15.6 ReactJS with Addons. Gem version 2.4.x onwards and master will no longer have React Addons.
+Gem version 2.4.x onwards and master will no longer have React Addons.
 
 If you need to make changes for the prebundled react, see the migration docs here:
 https://reactjs.org/blog/2016/11/16/react-v15.4.0.html
