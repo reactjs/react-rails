@@ -30,7 +30,7 @@ https://reactjs.org/blog/2017/06/13/react-v15.6.0.html
 Install from Rubygems as `react-rails`.
 
 ```ruby
-gem "react-rails"
+gem install react-rails
 ```
 
 Get started with `rails g react:install`:
