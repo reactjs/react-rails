@@ -6,7 +6,6 @@ module React
       config.react = ActiveSupport::OrderedOptions.new
       # Sensible defaults. Can be overridden in application.rb
       config.react.variant = (::Rails.env.production? ? :production : :development)
-      config.react.addons = false
       config.react.jsx_transform_options = {}
       config.react.jsx_transformer_class = nil # defaults to BabelTransformer
       config.react.camelize_props = false # pass in an underscored hash but get a camelized hash
@@ -74,7 +73,6 @@ module React
       initializer 'react_rails.bust_cache', after: :load_config_initializers, group: :all do |app|
         asset_variant = React::Rails::AssetVariant.new({
           variant: app.config.react.variant,
-          addons: app.config.react.addons
         })
 
         sprockets_env = app.assets || app.config.try(:assets) # sprockets-rails 3.x attaches this at a different config
@@ -87,7 +85,6 @@ module React
       initializer 'react_rails.set_variant', after: :engines_blank_point, group: :all do |app|
         asset_variant = React::Rails::AssetVariant.new({
           variant: app.config.react.variant,
-          addons: app.config.react.addons
         })
 
         if app.config.respond_to?(:assets)

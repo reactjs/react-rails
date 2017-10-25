@@ -6,7 +6,7 @@
 [![Code Climate](https://img.shields.io/codeclimate/github/reactjs/react-rails.svg?style=flat-square)](https://codeclimate.com/github/reactjs/react-rails)
 [![Test Coverage](https://img.shields.io/codeclimate/coverage/github/reactjs/react-rails.svg?style=flat-square)](https://codeclimate.com/github/reactjs/react-rails/coverage)
 
-You are looking at the 2.3 stable branch. This branch is for maintaining the prebundled 15.6 ReactJS with Addons. Gem version 2.4.x onwards and master will no longer have React Addons.
+Gem version 2.4.x onwards and master will no longer have React Addons.
 
 If you need to make changes for the prebundled react, see the migration docs here:
 https://reactjs.org/blog/2016/11/16/react-v15.4.0.html
@@ -16,7 +16,7 @@ https://reactjs.org/blog/2017/06/13/react-v15.6.0.html
 `react-rails` makes it easy to use [React](http://facebook.github.io/react/) and [JSX](http://facebook.github.io/react/docs/jsx-in-depth.html) in your Ruby on Rails (3.2+) application. Learn more:
 
 - React's [Getting Started guide](https://facebook.github.io/react/docs/getting-started.html)
-- Use React & JSX [with webpacker](#use-with-webpacker) or [with the asset pipeline](#use-with-asset-pipeline)
+- Use React & JSX [with Webpacker](#use-with-webpacker) or [with the asset pipeline](#use-with-asset-pipeline)
 - Rendering [components in views](#view-helper) or [in controller actions](#controller-actions)
 - [Server-side rendering](#server-side-rendering)
 - [Generating components](#component-generator) in various formats
@@ -41,7 +41,7 @@ $ rails g react:install
 
 ## Use with Webpacker
 
-[webpacker](https://github.com/rails/webpacker) integrates modern JS tooling with Rails. `ReactRailsUJS` allows you to gradually migrate to webpacker.
+[Webpacker](https://github.com/rails/webpacker) integrates modern JS tooling with Rails. `ReactRailsUJS` allows you to gradually migrate to Webpacker.
 
 Get started by adding `webpacker` to your gemfile and installing `webpacker` and `react-rails`:
 
@@ -53,11 +53,11 @@ $ rails generate react:install
 
 This gives you:
 
-- `components/` directory for your React components
-- [`ReactRailsUJS`](#ujs) setup in `packs/application.js`
-- `packs/server_rendering.js` for [server-side rendering](#server-side-rendering)
+- `app/javascript/components/` directory for your React components
+- [`ReactRailsUJS`](#ujs) setup in `app/javascript/packs/application.js`
+- `app/javascript/packs/server_rendering.js` for [server-side rendering](#server-side-rendering)
 
-When you add a component to `components/`, you can [render it in a Rails view](#view-helper):
+When you add a component to `app/javascript/components/`, you can [render it in a Rails view](#view-helper):
 
 ```erb
 <%= react_component("HelloWorld", { greeting: "Hello" }) %>
@@ -84,6 +84,16 @@ var ReactRailsUJS = require("react_ujs")
 // use `custom_components/` for <%= react_component(...) %> calls
 ReactRailsUJS.useContext(myCustomContext)
 ```
+
+### Gotcha: Capitalization
+
+Component File Name | `react_component` call
+-----|-----
+`app/javascript/components/samplecomponent.js` | `react_component("samplecomponent")`
+`app/javascript/components/sample_component.js` | `react_component("sample_component")`
+`app/javascript/components/SampleComponent.js` | `react_component("SampleComponent")`
+`app/javascript/components/SampleComponent.js.jsx` | Has to be renamed to SampleComponent.jsx, then use `react_component("SampleComponent")`
+
 
 ## Use with Asset Pipeline
 
@@ -257,7 +267,7 @@ For example, if `Turbolinks` is loaded _after_ `ReactRailsUJS`, you'll need to c
 Components are loaded with `ReactRailsUJS.getConstructor(className)`. This function has two built-in implementations:
 
 - On the asset pipeline, it looks up `className` in the global namespace.
-- On webpacker, it `require`s files and accesses named exports, as described in [Use with Webpacker](#use-with-webpacker).
+- On Webpacker, it `require`s files and accesses named exports, as described in [Use with Webpacker](#use-with-webpacker).
 
 You can override this function to customize the mapping of name-to-constructor. [Server-side rendering](#server-side-rendering) also uses this function.
 

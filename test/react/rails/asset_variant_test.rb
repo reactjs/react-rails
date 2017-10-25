@@ -17,9 +17,4 @@ class AssetVariantTest < ActiveSupport::TestCase
     variant = build_variant({})
     assert_match(%r{/lib/assets/javascripts/}, variant.jsx_directory)
   end
-
-  test 'it includes addons if requested' do
-    asset_variant = build_variant(addons: true)
-    assert_equal 'development-with-addons', asset_variant.react_build
-  end
 end

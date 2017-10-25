@@ -15,11 +15,9 @@ module React
 
       # @param [Hash] Options for the asset variant
       # @option variant [Symbol] if `:production`, use the minified React.js build
-      # @option addons [Boolean] if true, use a React.js build with all addons
       def initialize(options={})
 
         @react_build = options[:variant] == :production ? 'production' : 'development'
-        options[:addons] && @react_build += '-with-addons'
 
         @react_directory = GEM_ROOT.join('lib/assets/react-source/').join(@react_build).to_s
         @jsx_directory =   GEM_ROOT.join('lib/assets/javascripts/').to_s
