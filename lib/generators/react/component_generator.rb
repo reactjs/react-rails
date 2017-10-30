@@ -90,11 +90,10 @@ module React
       }
 
       def create_component_file
-        template_extension = case
-        when options[:es6]
-          'es6.jsx'
-        when options[:coffee]
+        template_extension = if options[:coffee]
           'js.jsx.coffee'
+        elsif options[:es6] || webpacker?
+          'es6.jsx'
         else
           'js.jsx'
         end

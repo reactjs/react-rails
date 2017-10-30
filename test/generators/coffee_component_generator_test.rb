@@ -10,6 +10,13 @@ class CoffeeComponentGeneratorTest < Rails::Generators::TestCase
     def filename
       'app/javascript/components/GeneratedComponent.coffee'
     end
+
+    test 'that Webpacker defaults to ES6' do
+      run_generator  %w(GeneratedComponent name)
+
+      es6 = File.read(File.join(destination_root, 'app/javascript/components/GeneratedComponent.js'))
+      assert_match(%r{extends React.Component}, es6)
+    end
   else
     def filename
       'app/assets/javascripts/components/generated_component.js.jsx.coffee'
