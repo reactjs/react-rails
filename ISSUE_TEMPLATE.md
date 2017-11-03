@@ -1,4 +1,4 @@
-Help us help you! Please choose one:
+Help us help you! Have you looked for similar issues? Do you have reproduction steps? [Contributing Guide](CONTRIBUTING.md#reporting-bugs)
 
 - [ ] My app crashes with `react-rails`, so I've included the stack trace and the exact steps which make it crash.
 - [ ] My app doesn't crash, but I'm getting unexpected behavior. So, I've described the unexpected behavior and suggested a new behavior.

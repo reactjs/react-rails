@@ -8,7 +8,40 @@
 
 React-Rails makes it easy to use [React](http://facebook.github.io/react/) and [JSX](http://facebook.github.io/react/docs/jsx-in-depth.html) in your Ruby on Rails (3.2 to 5+) application.
 
-Automatic Server-side Rendering (SSR) with **Webpacker** 3+ down to 1.1 support!
+Automatic Server-side Rendering (SSR) for SEO benefits with **Webpacker** 1.1 to 3+ and Sprockets 2 to 4 support!
+
+Example app code available here: https://github.com/BookOfGreg/react-rails-example-app
+
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+
+- [Learn more](#learn-more)
+- [Get started with Webpacker](#get-started-with-webpacker)
+  - [File naming](#file-naming)
+- [Use with Asset Pipeline](#use-with-asset-pipeline)
+  - [Custom JSX Transformer](#custom-jsx-transformer)
+  - [React.js versions](#reactjs-versions)
+- [View Helper](#view-helper)
+    - [Custom View Helper](#custom-view-helper)
+- [UJS](#ujs)
+  - [Mounting & Unmounting](#mounting--unmounting)
+  - [Event Handling](#event-handling)
+  - [`getConstructor`](#getconstructor)
+- [Server-Side Rendering](#server-side-rendering)
+    - [Configuration](#configuration)
+    - [JavaScript State](#javascript-state)
+    - [Custom Server Renderer](#custom-server-renderer)
+- [Controller Actions](#controller-actions)
+- [Component Generator](#component-generator)
+    - [Use with JBuilder](#use-with-jbuilder)
+  - [Camelize Props](#camelize-props)
+- [Upgrading](#upgrading)
+  - [2.3 to 2.4](#23-to-24)
+- [Related Projects](#related-projects)
+- [Contributing](#contributing)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## Learn more
 - React's [Getting Started guide](https://facebook.github.io/react/docs/getting-started.html)
@@ -483,46 +516,38 @@ You can also specify this option in `react_component`:
 
 ### 2.3 to 2.4
 
+Keep your `react_ujs` up to date, `yarn upgrade`
+
 React-Rails 2.4.x uses React 16+ which no longer has React Addons. Therefore the pre-bundled version of react no longer has an addons version, if you need addons still, there is the 2.3.1+ version of the gem that still has addons.
 
-If you need to make changes for the prebundled react, see the migration docs here:
+If you need to make changes in your components for the prebundled react, see the migration docs here:
 
 - https://reactjs.org/blog/2016/11/16/react-v15.4.0.html
 - https://reactjs.org/blog/2017/04/07/react-v15.5.0.html
 - https://reactjs.org/blog/2017/06/13/react-v15.6.0.html
 
 
-For the vast majority this will get you most of the migration:
+For the vast majority of cases this will get you most of the migration:
 - global find+replace `React.Prop` -> `Prop`
 - add `import PropTypes from 'prop-types'` (Webpacker only)
 - re-run `bundle exec rails webpacker:install:react` to update npm packages (Webpacker only)
 
+## Related Projects
+
+- [webpacker-react](https://github.com/renchap/webpacker-react): Integration of React with Rails utilizing Webpack with Hot Module Replacement (HMR).
+- [react\_on\_rails](https://github.com/shakacode/react_on_rails): Integration of React with Rails utilizing Webpack, Redux, React-Router.
+- [react-rails-hot-loader](https://github.com/rmosolgo/react-rails-hot-loader) Simple live-reloader for `react-rails`.
+- [react-rails-benchmark_renderer](https://github.com/pboling/react-rails-benchmark_renderer) adds performance instrumentation to server rendering.
+- [Ruby Hyperloop](http://ruby-hyperloop.org/): Use Ruby to build reactive user interfaces with React.
+
 ## Contributing
 
-We have a [Code of Conduct]() that you need to follow.
+🎉 Thanks for taking the time to contribute! 🎉
+
+With 2 Million+ downloads of the react-rails Gem and another 100k+ downloads of react_ujs on NPM, you're helping the biggest React + Rails community!
+
+By contributing to React-Rails, you agree to abide by the [code of conduct](https://github.com/reactjs/react-rails/blob/master/CODE_OF_CONDUCT.md).
+
 You can always help by submitting patches or triaging issues, even offering reproduction steps to issues is incredibly helpful!
 
-### Running tests
-`rake test` or `bundle exec appraisal rake test` runs everything.
-or run a specific suite using `bundle exec appraisal <appraisal name> rake test`
-  - Integration tests run in Headless Chrome which is included in Chrome (59+ linux,OSX | 60+ Windows)
-  - ChromeDriver is included with `chromedriver-helper` gem so no need to manually install that 👍
-
-### Updating the pre-bundled react
-- Update React with `rake react:update`
-It outputs an ironically webpacked couple of files into `lib/assets/react-source/<environment>/react(-server).js` where it will be picked up by `sprockets` in `lib/react/rails/asset_variant.rb`
-
-### Updating ReactRailsUJS
-- Update the UJS with `rake ujs:update`
-- To release a new NPM version:
-  - Update the version in `react_ujs/package.json`
-  - Commit & push to master
-  - `bundle exec rake ujs:publish` (runs `npm publish`)
-
-### Releasing the Gem
-- To release a new RubyGems version:
-  - Increment the version in `lib/react/rails/version.rb`
-  - Add an entry to `VERSIONS.md`
-  - Update the changelog (find recent changes on GitHub by listing commits or showing closed PRs)
-  - Commit changes & push to master
-  - `bundle exec rake release`: pushes a tag to GitHub, builds a `.gem`, and pushes to RubyGems
+Please see our [Contribution guide](https://github.com/reactjs/react-rails/blob/master/CONTRIBUTING.md) for more info.
