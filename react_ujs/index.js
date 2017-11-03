@@ -90,7 +90,7 @@ var ReactRailsUJS = {
         }
         throw new Error(message + ". Make sure your component is available to render.")
       } else {
-        ReactDOM.render(React.createElement(constructor, props), node);
+        ReactDOM.hydrate(React.createElement(constructor, props), node);
       }
     }
   },
