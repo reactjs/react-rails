@@ -21,7 +21,7 @@ Example app code available here: https://github.com/BookOfGreg/react-rails-examp
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-
+## Contents
 
 - [Get started with Webpacker](#get-started-with-webpacker)
   - [File naming](#file-naming)
