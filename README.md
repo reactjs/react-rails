@@ -11,11 +11,7 @@ React-Rails is a flexible tool to use [React](http://facebook.github.io/react/) 
 * Automatically renders React server-side and client-side
 * Supports Webpacker 3.x, 2.x, 1.1+
 * Supports Sprockets 4.x, 3.x, 2.x
-* Lets you use [JSX](http://facebook.github.io/react/docs/jsx-in-depth.html), [ES6](), [Coffeescript]()
-
-React-Rails makes it easy to use [React](http://facebook.github.io/react/) and [JSX](http://facebook.github.io/react/docs/jsx-in-depth.html) in your Ruby on Rails (3.2 to 5+) application.
-
-Automatic Server-side Rendering (SSR) for SEO benefits with **Webpacker** 1.1 to 3+ and Sprockets 2 to 4 support!
+* Lets you use [JSX](http://facebook.github.io/react/docs/jsx-in-depth.html), [ES6](http://es6-features.org/), [Coffeescript](http://coffeescript.org/)
 
 Example app code available here: https://github.com/BookOfGreg/react-rails-example-app
 
