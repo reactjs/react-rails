@@ -1,10 +1,17 @@
-# react-rails
+# React-Rails
 
 [![Gem](https://img.shields.io/gem/v/react-rails.svg?style=flat-square)](http://rubygems.org/gems/react-rails)
-[![npm](https://img.shields.io/npm/v/react_ujs.svg)](https://www.npmjs.com/package/react_ujs)
+[![npm](https://img.shields.io/npm/v/react_ujs.svg?style=flat-square)](https://www.npmjs.com/package/react_ujs)
 [![Build Status](https://img.shields.io/travis/reactjs/react-rails/master.svg?style=flat-square)](https://travis-ci.org/reactjs/react-rails)
 [![Gemnasium](https://img.shields.io/gemnasium/reactjs/react-rails.svg?style=flat-square)](https://gemnasium.com/reactjs/react-rails)
 [![Code Climate](https://img.shields.io/codeclimate/github/reactjs/react-rails.svg?style=flat-square)](https://codeclimate.com/github/reactjs/react-rails)
+
+
+React-Rails is a flexible tool to use [React](http://facebook.github.io/react/) with Rails. It:
+* Automatically renders React server-side and client-side
+* Supports Webpacker 3.x, 2.x, 1.1+
+* Supports Sprockets 4.x, 3.x, 2.x
+* Lets you use [JSX](http://facebook.github.io/react/docs/jsx-in-depth.html), [ES6](), [Coffeescript]()
 
 React-Rails makes it easy to use [React](http://facebook.github.io/react/) and [JSX](http://facebook.github.io/react/docs/jsx-in-depth.html) in your Ruby on Rails (3.2 to 5+) application.
 
@@ -16,7 +23,6 @@ Example app code available here: https://github.com/BookOfGreg/react-rails-examp
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 
-- [Learn more](#learn-more)
 - [Get started with Webpacker](#get-started-with-webpacker)
   - [File naming](#file-naming)
 - [Use with Asset Pipeline](#use-with-asset-pipeline)
@@ -43,19 +49,11 @@ Example app code available here: https://github.com/BookOfGreg/react-rails-examp
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-## Learn more
-- React's [Getting Started guide](https://facebook.github.io/react/docs/getting-started.html)
-- Use React & JSX [with Webpacker](#get-started-with-webpacker)
-  - or [with the asset pipeline](#use-with-asset-pipeline)
-- [Rendering components in views](#view-helper)
-  - or [Render directly in controller actions](#controller-actions)
-- [Generating components](#component-generator) in various formats
-- Automatically [camelizing props](#camelize-props)
-- [Server-side rendering](#server-side-rendering)
-- [`ReactRailsUJS`](#ujs) for mounting and unmounting components
-- [Upgrading](#upgrading) 2.3 to 2.4
-- [Related Projects](#related-projects)
-- [Contribute to](#contributing) the gem
+
+The React-Rails Wiki has lots of additional information about React-Rails including many "how-to" articles and answers to the most frequently asked questions. Please browse the Wiki after finishing this README:
+
+https://github.com/reactjs/React-Rails/wiki
+
 
 ## Get started with Webpacker
 
