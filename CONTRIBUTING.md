@@ -42,7 +42,7 @@ By contributing to React-Rails, you agree to abide by the [code of conduct](http
 
 #### How Do I Submit A (Good) Bug Report?
 Bugs are tracked as [GitHub issues](https://guides.github.com/features/issues/).
-Create an issue and provide the following information by filling in [the template](ISSUE_TEMPLATE.md).
+Create an issue and provide the following information by filling in [the template](.github/ISSUE_TEMPLATE.md).
 
 Explain the problem and include additional details to help maintainers reproduce the problem:
 
@@ -72,7 +72,7 @@ This issue list is sorted by total number of comments. While not perfect, number
 
 See [git commit message style](#git-commit-messages)
 
-* Fill in [the required template](PULL_REQUEST_TEMPLATE.md)
+* Fill in [the required template](.github/PULL_REQUEST_TEMPLATE.md)
 * Do not include issue numbers in the PR title
 * Include screenshots and animated GIFs in your pull request whenever possible.
 * Follow the [styleguides](#styleguides) where possible but readability is the most important!
