@@ -64,7 +64,7 @@ Include details about your configuration and environment, React-Rails integrates
 
 Unsure where to begin contributing to React-Rails? You can start by looking through these `help-wanted` issues:
 
-* [Help wanted issues][help-wanted]
+* [Help wanted issues](https://github.com/reactjs/react-rails/issues?q=is%3Aopen+is%3Aissue+label%3A%22help+wanted%22)
 
 This issue list is sorted by total number of comments. While not perfect, number of comments is a reasonable proxy for impact a given change will have.
 
