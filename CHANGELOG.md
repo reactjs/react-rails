@@ -8,12 +8,26 @@
 
 #### Bug Fixes
 
+## 2.4.1
+
+#### Breaking Changes
+
+#### New Features
+- Webpacker gets ES6 components by default #822
+- ReactDOM.hydrate() #828
+- Documentation updates #830
+
+#### Deprecation
+
+#### Bug Fixes
+- Webpacker local manifest sometimes had double asset_hosts if the dev server was running #834 thanks @joeyparis
+
 ## 2.4.0
 
 #### Breaking Changes
 
 - (Sprockets) Prebundled React upgraded to 16 #792
-- (Sprockets) Addons removed # 792
+- (Sprockets) Addons removed #792
 
 #### New Features
 
