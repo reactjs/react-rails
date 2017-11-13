@@ -108,7 +108,7 @@ It outputs an ironically webpacked couple of files into `lib/assets/react-source
 ##### Updating ReactRailsUJS
 - Update the UJS with `rake ujs:update`
 - (For Maintainers) To release a new NPM version:
-  - Update the version in `react_ujs/package.json`
+  - Update the version in `package.json`
   - Commit & push to master
   - `bundle exec rake ujs:publish` (runs `npm publish`)
 
