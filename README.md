@@ -340,7 +340,7 @@ MyApp::Application.configure do
   }
   # Changing files matching these dirs/exts will cause the server renderer to reload:
   config.react.server_renderer_extensions = ["jsx", "js"]
-  config.react.server_renderer_directories = ["/app/assets/javascripts", "/app/javascripts/"]
+  config.react.server_renderer_directories = ["/app/assets/javascripts", "/app/javascript/"]
 end
 ```
 
