@@ -1,12 +1,8 @@
 # react-rails
 
-#### Breaking Changes
-
-#### New Features
-
-#### Deprecation
-
+## 2.4.2
 #### Bug Fixes
+- ReactDOM.hydrate() may not be defined for everyone, it will now use hydrate if it is defined or fallback to render #832
 
 ## 2.4.1
 
