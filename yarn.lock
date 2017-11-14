@@ -1310,9 +1310,11 @@ rc@^1.1.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
-react_ujs@^2.4.1:
-  version "2.4.1"
-  resolved "https://registry.yarnpkg.com/react_ujs/-/react_ujs-2.4.1.tgz#a0a9c83c258fe945a797b716e07a8f091d194e51"
+react_ujs@^2.4.1, react_ujs@^2.4.2:
+  version "2.4.2"
+  resolved "https://registry.yarnpkg.com/react_ujs/-/react_ujs-2.4.2.tgz#c09365579b1c7b2191eab5a57f007609fd1852ba"
+  dependencies:
+    react_ujs "^2.4.1"
 
 read-pkg-up@^1.0.1:
   version "1.0.1"
