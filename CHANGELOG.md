@@ -7,6 +7,9 @@
 #### Deprecation
 
 #### Bug Fixes
+
+## 2.4.3
+#### Bug Fixes
 - Call ReactDOM.render() when react_component :prerender option is falsy, instead of ReactDOM.hydrate() #844, #842
 
 ## 2.4.2
