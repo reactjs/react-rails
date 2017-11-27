@@ -118,6 +118,8 @@ HEREDOC
       # make sure that the items are prerendered
       assert_match(/Render this inline/, rendered_html)
       assert_match(/<\/ul><\/span>/, rendered_html, 'it accepts a tag override')
+      # make sure that prerendered items are marked
+      assert_match(/data-hydrate=\"t\"/, rendered_html)
       # make sure that the layout is rendered with the component
       assert_match(/<title>Dummy<\/title>/, rendered_html)
       # make sure that custom html attributes are rendered
