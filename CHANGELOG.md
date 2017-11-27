@@ -3,6 +3,7 @@
 ## 2.4.2
 #### Bug Fixes
 - ReactDOM.hydrate() may not be defined for everyone, it will now use hydrate if it is defined or fallback to render #832
+- Call ReactDOM.render() when react_component :prerender option is falsy ( instead of ReactDOM.hydrate() ).
 
 ## 2.4.1
 

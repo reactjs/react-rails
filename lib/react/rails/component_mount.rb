@@ -39,6 +39,7 @@ module React
           html_options[:data].tap do |data|
             data[:react_class] = name
             data[:react_props] = (props.is_a?(String) ? props : props.to_json)
+            data[:hydrate] = 't' if prerender_options
           end
         end
         html_tag = html_options[:tag] || :div
