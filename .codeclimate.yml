@@ -1,3 +1,6 @@
-exclude_paths:
-- lib/assets/javascripts/JSXTransformer.js
-- lib/assets/react-source/
+version: '2'
+exclude_patterns:
+- lib/assets/
+- react-builds/
+- react_ujs/dist/
+- test/
