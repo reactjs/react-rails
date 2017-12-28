@@ -72,6 +72,13 @@ This gives you:
 - [`ReactRailsUJS`](#ujs) setup in `app/javascript/packs/application.js`
 - `app/javascript/packs/server_rendering.js` for [server-side rendering](#server-side-rendering)
 
+Link the JavaScript pack in Rails view using `javascript_pack_tag` [helper](https://github.com/rails/webpacker#usage), for example:
+
+```
+<!-- application.html.erb -->
+<%= javascript_pack_tag 'application' %>
+```
+
 Generate your first component:
 
 ```
