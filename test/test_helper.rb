@@ -120,6 +120,10 @@ def when_stateful_js_context_available
   end
 end
 
+def expected_working_jsx
+  /\.createElement\(\s*\S*\.Fragment,\s*null,\s*\"Name:\s*\",\s*this\.props\.name,\s*\"Address:\s*\",\s*this\.props\.address\s*\)/x
+end
+
 module ParamsHelper
   # Normalize params for Rails 5.1+
   def query_params(params)
