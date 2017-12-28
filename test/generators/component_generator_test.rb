@@ -58,13 +58,9 @@ class ComponentGeneratorTest < Rails::Generators::TestCase
   end
 
   test 'generates working jsx' do
-    expected_name_div = /\.createElement\(\s*"div",\s*null,\s*\"Name:\s*\",\s*this\.props\.name\s*\)/x
-    expected_shape_div = /\.createElement\(\s*"div",\s*null,\s*\"Address:\s*\",\s*this\.props\.address\s*\)/x
-
     run_generator %w(GeneratedComponent name:string address:shape)
     jsx = React::JSX.transform(File.read(File.join(destination_root, filename)))
 
-    assert_match(Regexp.new(expected_name_div), jsx)
-    assert_match(Regexp.new(expected_shape_div), jsx)
+    assert_match(Regexp.new(expected_working_jsx), jsx)
   end
 end
