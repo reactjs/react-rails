@@ -32,6 +32,14 @@ gemfile:
 matrix:
   fast_finish: true
   exclude:
+    - rvm: 2.5.0
+      gemfile: gemfiles/rails_3.2.gemfile
+    - rvm: 2.5.0
+      gemfile: gemfiles/rails_4.0_with_mini_racer.gemfile
+    - rvm: 2.5.0
+      gemfile: gemfiles/rails_4.0.5.gemfile
+    - rvm: 2.5.0
+      gemfile: gemfiles/rails_4.1.gemfile
     # all except rails_4.1 skipped on 2.1
     - rvm: 2.1
       gemfile: gemfiles/rails_3.2.gemfile
