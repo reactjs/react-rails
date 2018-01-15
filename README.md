@@ -216,7 +216,7 @@ The view helper (`react_component`) puts a `div` on the page with the requested 
 ```erb
 <%= react_component('HelloMessage', name: 'John') %>
 <!-- becomes: -->
-<div data-react-class="HelloMessage" data-react-props="{&quot;name&quot;:&quot;John&quot;}"></div>
+<div data-react-class="HelloMessage" data-react-props="{'name':'John'}"></div>
 ```
 
 On page load, the [`react_ujs` driver](#ujs) will scan the page and mount components using `data-react-class`
@@ -311,7 +311,7 @@ You can render React components inside your Rails server with `prerender: true`:
 ```erb
 <%= react_component('HelloMessage', {name: 'John'}, {prerender: true}) %>
 <!-- becomes: -->
-<div data-react-class="HelloMessage" data-react-props="{&quot;name&quot;:&quot;John&quot;}">
+<div data-react-class="HelloMessage" data-react-props="{'name': 'John'}">
   <h1>Hello, John!</h1>
 </div>
 ```
