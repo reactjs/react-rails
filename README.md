@@ -61,8 +61,8 @@ Add `webpacker` and `react-rails` to your gemfile and run the installers:
 
 ```
 $ bundle install
-$ rails webpacker:install
-$ rails webpacker:install:react
+$ rails webpacker:install       # OR (on rails version < 5.0) rake webpacker:install
+$ rails webpacker:install:react # OR (on rails version < 5.0) rake webpacker:install:react
 $ rails generate react:install
 ```
 
