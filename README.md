@@ -61,8 +61,8 @@ Add `webpacker` and `react-rails` to your gemfile and run the installers:
 
 ```
 $ bundle install
-$ rails webpacker:install
-$ rails webpacker:install:react
+$ rails webpacker:install       # OR (on rails version < 5.0) rake webpacker:install
+$ rails webpacker:install:react # OR (on rails version < 5.0) rake webpacker:install:react
 $ rails generate react:install
 ```
 
@@ -71,6 +71,13 @@ This gives you:
 - `app/javascript/components/` directory for your React components
 - [`ReactRailsUJS`](#ujs) setup in `app/javascript/packs/application.js`
 - `app/javascript/packs/server_rendering.js` for [server-side rendering](#server-side-rendering)
+
+Link the JavaScript pack in Rails view using `javascript_pack_tag` [helper](https://github.com/rails/webpacker#usage), for example:
+
+```
+<!-- application.html.erb -->
+<%= javascript_pack_tag 'application' %>
+```
 
 Generate your first component:
 
@@ -327,20 +334,22 @@ Server renderers are stored in a pool and reused between requests. Threaded Rubi
 These are the default configurations:
 
 ```ruby
-# config/environments/application.rb
+# config/application.rb
 # These are the defaults if you don't specify any yourself
-MyApp::Application.configure do
-  # Settings for the pool of renderers:
-  config.react.server_renderer_pool_size  ||= 1  # ExecJS doesn't allow more than one on MRI
-  config.react.server_renderer_timeout    ||= 20 # seconds
-  config.react.server_renderer = React::ServerRendering::BundleRenderer
-  config.react.server_renderer_options = {
-    files: ["server_rendering.js"],       # files to load for prerendering
-    replay_console: true,                 # if true, console.* will be replayed client-side
-  }
-  # Changing files matching these dirs/exts will cause the server renderer to reload:
-  config.react.server_renderer_extensions = ["jsx", "js"]
-  config.react.server_renderer_directories = ["/app/assets/javascripts", "/app/javascript/"]
+module MyApp
+  class Application < Rails::Application
+    # Settings for the pool of renderers:
+    config.react.server_renderer_pool_size  ||= 1  # ExecJS doesn't allow more than one on MRI
+    config.react.server_renderer_timeout    ||= 20 # seconds
+    config.react.server_renderer = React::ServerRendering::BundleRenderer
+    config.react.server_renderer_options = {
+      files: ["server_rendering.js"],       # files to load for prerendering
+      replay_console: true,                 # if true, console.* will be replayed client-side
+    }
+    # Changing files matching these dirs/exts will cause the server renderer to reload:
+    config.react.server_renderer_extensions = ["jsx", "js"]
+    config.react.server_renderer_directories = ["/app/assets/javascripts", "/app/javascript/"]
+  end
 end
 ```
 

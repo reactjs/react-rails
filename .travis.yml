@@ -27,6 +27,7 @@ gemfile:
 matrix:
   fast_finish: true
   exclude:
+
     # all except 5.1_sprockets_4, 5.1_webpacker_3, 4.2_sprockets_3
     - rvm: jruby-9.1.9.0
       gemfile: gemfiles/rails_4.2_sprockets_4.gemfile

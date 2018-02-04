@@ -7,13 +7,9 @@
 
 <% end -%>
   render: ->
-<% if attributes.size > 0 -%>
-    `<div>
+    `<React.Fragment>
 <% attributes.each do |attribute| -%>
-      <div><%= attribute[:name].titleize %>: {this.props.<%= attribute[:name].camelize(:lower) %>}</div>
+      <%= attribute[:name].titleize %>: {this.props.<%= attribute[:name].camelize(:lower) %>}
 <% end -%>
-    </div>`
-<% else -%>
-    `<div />`
-<% end -%>
+    </React.Fragment>`
 <%= file_footer %>

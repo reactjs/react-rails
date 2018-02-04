@@ -1,7 +1,7 @@
 module React
   module ServerRendering
     # A bare-bones renderer for React.js + Exec.js
-    # - Depends on global ReactDOMServer in the ExecJS context
+    # - Depends on global ReactRailsUJS in the ExecJS context
     # - No Rails dependency
     # - No browser concerns
     class ExecJSRenderer

@@ -1,16 +1,12 @@
 <%= file_header %>class <%= component_name %> extends React.Component {
   render () {
-<% if attributes.size > 0 -%>
     return (
-      <div>
+      <React.Fragment>
 <% attributes.each do |attribute| -%>
-        <div><%= attribute[:name].titleize %>: {this.props.<%= attribute[:name].camelize(:lower) %>}</div>
+        <%= attribute[:name].titleize %>: {this.props.<%= attribute[:name].camelize(:lower) %>}
 <% end -%>
-      </div>
+      </React.Fragment>
     );
-<% else -%>
-    return <div />;
-<% end -%>
   }
 }
 
