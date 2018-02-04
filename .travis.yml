@@ -7,8 +7,8 @@ cache:
   bundler: true
   yarn: true
 rvm:
+  - 2.5.0
   - 2.3.0
-  - 2.1
   - jruby-9.1.9.0
 
 gemfile:
@@ -19,10 +19,6 @@ gemfile:
   - gemfiles/rails_5_no_sprockets_webpacker_2.gemfile
   - gemfiles/rails_5_no_sprockets_webpacker_3.gemfile
   # These don't have webpacker:
-  - gemfiles/rails_3.2.gemfile
-  - gemfiles/rails_4.0.5.gemfile
-  - gemfiles/rails_4.0_with_mini_racer.gemfile
-  - gemfiles/rails_4.1.gemfile
   - gemfiles/rails_4.2_sprockets_2.gemfile
   - gemfiles/rails_4.2_sprockets_3.gemfile
   - gemfiles/rails_5_no_sprockets.gemfile
@@ -31,32 +27,7 @@ gemfile:
 matrix:
   fast_finish: true
   exclude:
-    # all except rails_4.1 skipped on 2.1
-    - rvm: 2.1
-      gemfile: gemfiles/rails_3.2.gemfile
-    - rvm: 2.1
-      gemfile: gemfiles/rails_4.0.5.gemfile
-    - rvm: 2.1
-      gemfile: gemfiles/rails_4.0_with_mini_racer.gemfile
-    - rvm: 2.1
-      gemfile: gemfiles/rails_4.2_sprockets_2.gemfile
-    - rvm: 2.1
-      gemfile: gemfiles/rails_4.2_sprockets_3.gemfile
-    - rvm: 2.1
-      gemfile: gemfiles/rails_4.2_sprockets_4.gemfile
-    - rvm: 2.1
-      gemfile: gemfiles/rails_5_no_sprockets_webpacker_1_1.gemfile
-    - rvm: 2.1
-      gemfile: gemfiles/rails_5_no_sprockets_webpacker_1_x.gemfile
-    - rvm: 2.1
-      gemfile: gemfiles/rails_5_no_sprockets_webpacker_2.gemfile
-    - rvm: 2.1
-      gemfile: gemfiles/rails_5_no_sprockets_webpacker_3.gemfile
-    - rvm: 2.1
-      gemfile: gemfiles/rails_5_no_sprockets.gemfile
-    - rvm: 2.1
-      gemfile: gemfiles/rails_5.1_sprockets_4.gemfile
-    # all except 5.1_sprockets_4, 5.1_webpacker_3, 4.2_sprockets_3, and 3.2 skipped on jruby
+    # all except 5.1_sprockets_4, 5.1_webpacker_3, 4.2_sprockets_3
     - rvm: jruby-9.1.9.0
       gemfile: gemfiles/rails_4.2_sprockets_4.gemfile
     - rvm: jruby-9.1.9.0
@@ -65,12 +36,6 @@ matrix:
       gemfile: gemfiles/rails_5_no_sprockets_webpacker_1_x.gemfile
     - rvm: jruby-9.1.9.0
       gemfile: gemfiles/rails_5_no_sprockets_webpacker_2.gemfile
-    - rvm: jruby-9.1.9.0
-      gemfile: gemfiles/rails_4.0.5.gemfile
-    - rvm: jruby-9.1.9.0
-      gemfile: gemfiles/rails_4.0_with_mini_racer.gemfile
-    - rvm: jruby-9.1.9.0
-      gemfile: gemfiles/rails_4.1.gemfile
     - rvm: jruby-9.1.9.0
       gemfile: gemfiles/rails_4.2_sprockets_2.gemfile
     - rvm: jruby-9.1.9.0
@@ -85,3 +50,4 @@ before_install:
   - echo "deb http://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
   - sudo apt-get update -qq
   - sudo apt-get install -y -qq yarn
+  - gem update --system
