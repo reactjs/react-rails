@@ -134,5 +134,17 @@ HEREDOC
       # make sure the tag closes immediately:
       assert_match(/<span.*data-react-class=\"TodoList\"[^<]*><\/span>/, rendered_html)
     end
+
+    test 'react inline component rendering with camelize_props (pre-rendered)' do
+      get '/server/inline_component_with_camelize_props_prerender_true'
+      rendered_html = response.body
+      assert_match(/data-react-props.*testCamelizeProps.*true/, rendered_html)
+    end
+
+    test 'react inline component rendering with camelize_props (not pre-rendered)' do
+      get '/server/inline_component_with_camelize_props_prerender_false'
+      rendered_html = response.body
+      assert_match(/data-react-props.*testCamelizeProps.*true/, rendered_html)
+    end
   end
 end

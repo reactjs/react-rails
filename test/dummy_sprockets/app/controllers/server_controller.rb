@@ -16,6 +16,14 @@ class ServerController < ApplicationController
     render(component_options.merge(prerender: false))
   end
 
+  def inline_component_with_camelize_props_prerender_true
+    render component: 'TodoList', props: { test_camelize_props: true, todos: ['dummy'] }, camelize_props: true
+  end
+
+  def inline_component_with_camelize_props_prerender_false
+    render component: 'TodoList', props: { test_camelize_props: true, todos: ['dummy'] }, camelize_props: true, prerender: false
+  end
+
   private
 
   def component_options
