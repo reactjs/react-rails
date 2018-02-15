@@ -127,6 +127,15 @@ Component File Name | `react_component` call
 `app/javascript/components/SampleComponent.js` | `react_component("SampleComponent")`
 `app/javascript/components/SampleComponent.js.jsx` | Has to be renamed to SampleComponent.jsx, then use `react_component("SampleComponent")`
 
+### Typescript support
+
+If you want to use React-Rails with Typescript, simply run the installer and add @types:
+```
+$ bundle exec rails webpacker:install:typescript
+$ yarn add @types/react @types/react-dom
+```
+
+Doing this will allow React-Rails to support the .tsx extension. 
 
 ## Use with Asset Pipeline
 
