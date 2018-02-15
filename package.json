@@ -1,6 +1,6 @@
 {
   "name": "react_ujs",
-  "version": "2.4.4-PRE",
+  "version": "2.4.4",
   "description": "Rails UJS for the react-rails gem",
   "main": "react_ujs/index.js",
   "files": [
