@@ -5,6 +5,8 @@ Dummy::Application.routes.draw do
       get :console_example
       get :inline_component_prerender_true
       get :inline_component_prerender_false
+      get :inline_component_with_camelize_props_prerender_true
+      get :inline_component_with_camelize_props_prerender_false
     end
   end
 

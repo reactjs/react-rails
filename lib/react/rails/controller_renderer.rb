@@ -28,7 +28,7 @@ module React
       # @return [String] HTML for `component_name` with `options[:props]`
       def call(component_name, options, &block)
         props = options.fetch(:props, {})
-        options = default_options.merge(options.slice(:data, :aria, :tag, :class, :id, :prerender))
+        options = default_options.merge(options.slice(:data, :aria, :tag, :class, :id, :prerender, :camelize_props))
         react_component(component_name, props, options, &block)
       end
 
