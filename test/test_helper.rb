@@ -35,6 +35,7 @@ Dummy::Application.load_tasks
 WebpackerHelpers.clear_webpacker_packs
 
 Capybara.app = Rails.application
+Capybara.server = :webrick
 
 Capybara.register_driver :chrome do |app|
   Capybara::Selenium::Driver.new(app, browser: :chrome)
