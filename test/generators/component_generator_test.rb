@@ -10,9 +10,15 @@ class ComponentGeneratorTest < Rails::Generators::TestCase
     def filename
       'app/javascript/components/GeneratedComponent.js'
     end
+    def filename_with_subfolder
+      'app/javascript/components/generated_folder/GeneratedComponent.js'
+    end
   else
     def filename
       'app/assets/javascripts/components/generated_component.js.jsx'
+    end
+    def filename_with_subfolder
+      'app/assets/javascripts/components/generated_folder/generated_component.js.jsx'
     end
   end
 
@@ -20,6 +26,17 @@ class ComponentGeneratorTest < Rails::Generators::TestCase
     run_generator %w(GeneratedComponent)
 
     assert_file filename do |contents|
+      if WebpackerHelpers.available?
+        assert_match /^import React from "react"/, contents
+        assert_match /export default GeneratedComponent\n$/m, contents
+      end
+    end
+  end
+
+  test 'creates the component file in a subdirectory' do
+    puts WebpackerHelpers.available?
+    run_generator %w(generated_folder/GeneratedComponent)
+    assert_file filename_with_subfolder do |contents|
       if WebpackerHelpers.available?
         assert_match /^import React from "react"/, contents
         assert_match /export default GeneratedComponent\n$/m, contents

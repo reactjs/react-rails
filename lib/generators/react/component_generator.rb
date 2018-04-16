@@ -112,7 +112,7 @@ module React
           target_dir = 'app/assets/javascripts/components'
         end
 
-        file_path = File.join(target_dir, "#{new_file_name}.#{extension}")
+        file_path = File.join(target_dir, class_path, "#{new_file_name}.#{extension}")
         template("component.#{template_extension}", file_path)
       end
 
