@@ -87,6 +87,12 @@ $ rails g react:component HelloWorld greeting:string
 
 Your component is added to `app/javascript/components/` by default.
 
+You can also generate your component in a subdirectory:
+
+```
+$ rails g react:component my_subdirectory/HelloWorld greeting:string
+```
+
 [Render it in a Rails view](#view-helper):
 
 ```erb
@@ -135,7 +141,7 @@ $ bundle exec rails webpacker:install:typescript
 $ yarn add @types/react @types/react-dom
 ```
 
-Doing this will allow React-Rails to support the .tsx extension. 
+Doing this will allow React-Rails to support the .tsx extension.
 
 ## Use with Asset Pipeline
 
