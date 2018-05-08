@@ -1,5 +1,11 @@
+appraise 'rails-5.2-sprockets_4' do
+  gem 'rails', '~> 5.2.0'
+  gem 'sprockets', '~> 4.0.x'
+  gem 'turbolinks', '~> 5'
+end
+
 appraise 'rails-5.1-sprockets_4' do
-  gem 'rails', '~> 5.1'
+  gem 'rails', '~> 5.1.0'
   gem 'sprockets', '~> 4.0.x'
   gem 'turbolinks', '~> 5.0.0'
 end
