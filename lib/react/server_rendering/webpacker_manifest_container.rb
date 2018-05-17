@@ -77,7 +77,7 @@ module React
         def file_path path
           manifest.lookup_path(path)
         end
-      elsif MAJOR == 3
+      elsif MAJOR >= 3
         def file_path path
           ::Rails.root.join('public', manifest.lookup(path)[1..-1])
         end
