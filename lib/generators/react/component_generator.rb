@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module React
   module Generators
     class ComponentGenerator < ::Rails::Generators::NamedBase

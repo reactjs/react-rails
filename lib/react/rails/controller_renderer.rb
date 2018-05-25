@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module React
   module Rails
     # A renderer class suitable for `ActionController::Renderers`.

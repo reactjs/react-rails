@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Dummy::Application.routes.draw do
   resources :pages, only: [:show]
   resources :server, only: [:show] do

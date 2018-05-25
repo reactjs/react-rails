@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Override setting set in application.rb
 class CustomComponentMount < React::Rails::ComponentMount
 end

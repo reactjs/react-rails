@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module React
   module Rails
     # This module is included into ActionController so that

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'connection_pool'
 require 'react/server_rendering/exec_js_renderer'
 require 'react/server_rendering/bundle_renderer'

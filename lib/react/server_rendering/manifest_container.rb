@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module React
   module ServerRendering
     # Get asset content by reading the compiled file from disk using a Sprockets::Manifest.

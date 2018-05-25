@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module React
   # Recursively camelize `props`, returning a new Hash
   # @param props [Object] If it's a Hash or Array, it will be recursed. Otherwise it will be returned.

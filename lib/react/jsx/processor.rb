@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module React
   module JSX
     # A Sprockets 3+-compliant processor

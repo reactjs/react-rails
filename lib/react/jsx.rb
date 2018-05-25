@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'execjs'
 require 'react/jsx/processor'
 require 'react/jsx/template'

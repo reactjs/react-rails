@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ServerController < ApplicationController
   def show
     @component_name = params[:component_name] || "TodoList"
