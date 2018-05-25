@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module React
   module Rails
     # This is the default view helper implementation.

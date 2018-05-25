@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'react/rails/asset_variant'
 require 'react/rails/railtie'
 require 'react/rails/controller_lifecycle'

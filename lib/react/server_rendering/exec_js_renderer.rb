@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module React
   module ServerRendering
     # A bare-bones renderer for React.js + Exec.js

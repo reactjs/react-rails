@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Dummy::Application.routes.draw do
   get 'no-turbolinks', to: 'pages#no_turbolinks'
   resources :pages, only: [:show]

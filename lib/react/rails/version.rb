@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module React
   module Rails
     # If you change this, make sure to update VERSIONS.md

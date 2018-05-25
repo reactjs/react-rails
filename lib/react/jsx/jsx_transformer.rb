@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module React
   module JSX
     # A {React::JSX}-compliant transformer which uses the deprecated `JSXTransformer.js` to transform JSX.

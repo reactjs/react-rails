@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'babel/transpiler'
 module React
   module JSX

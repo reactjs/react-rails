@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'react/server_rendering/environment_container'
 require 'react/server_rendering/manifest_container'
 require 'react/server_rendering/webpacker_manifest_container'

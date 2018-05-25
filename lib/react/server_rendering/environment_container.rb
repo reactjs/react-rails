@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module React
   module ServerRendering
     # Return asset contents by getting them from a Sprockets::Environment instance.

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module React
   module Rails
     # This class accepts some options for which build you want, then exposes where you can find

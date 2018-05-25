@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PagesController < ApplicationController
   if WebpackerHelpers.available? || SprocketsHelpers.available?
     per_request_react_rails_prerenderer

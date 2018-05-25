@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'test_helper'
 
 # Sprockets is inserting a newline after the docblock for some reason...
