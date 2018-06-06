@@ -310,6 +310,19 @@ ReactRailsUJS.detectEvents()
 
 For example, if `Turbolinks` is loaded _after_ `ReactRailsUJS`, you'll need to call this again. This function removes previous handlers before adding new ones, so it's safe to call as often as needed.
 
+If `Turbolinks` is `import`ed via Webpacker (and thus not available globally), `ReactRailsUJS` will be unable to locate it. To fix this, you can temporarily add it to the global namespace:
+
+```js
+// Order is particular. First start Turbolinks:
+Turbolinks.start();
+// Add Turbolinks to the global namespace:
+window.Turbolinks = Turbolinks;
+// Remove previous event handlers and add new ones:
+ReactRailsUJS.detectEvents();
+// (Optional) Clean up global namespace:
+delete window.Turbolinks;
+```
+
 ### `getConstructor`
 
 Components are loaded with `ReactRailsUJS.getConstructor(className)`. This function has two built-in implementations:
