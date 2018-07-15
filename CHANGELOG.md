@@ -12,6 +12,16 @@
 
 #### New Features
 
+- React 16.3.2 prebundled #908
+- Supports Webpacker 4.x #895
+- Enhanced generator to create components in subdirectories #890
+- Explicitly support Rails 5.2 #893
+- Enhanced documentation for Turbolinks usage #900
+
+## 2.4.4
+
+#### New Features
+
 - React 16.2 prebundled #856, #874
 - Use Fragments instead of Divs by default #856
 - Explicitly support Ruby 2.5 #857
