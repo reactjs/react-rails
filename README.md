@@ -11,7 +11,7 @@ React-Rails is a flexible tool to use [React](http://facebook.github.io/react/) 
 * Automatically renders React server-side and client-side
 * Supports Webpacker 3.x, 2.x, 1.1+
 * Supports Sprockets 4.x, 3.x, 2.x
-* Lets you use [JSX](http://facebook.github.io/react/docs/jsx-in-depth.html), [ES6](http://es6-features.org/), [Coffeescript](http://coffeescript.org/)
+* Lets you use [JSX](http://facebook.github.io/react/docs/jsx-in-depth.html), [ES6](http://es6-features.org/), [TypeScript](https://www.typescriptlang.org/), [CoffeeScript](http://coffeescript.org/)
 
 Example app code available here: https://github.com/BookOfGreg/react-rails-example-app
 
@@ -475,14 +475,14 @@ var Post = createReactClass({
 
   render: function() {
     return (
-      <div>
-        <div>Title: {this.props.title}</div>
-        <div>Published: {this.props.published}</div>
-        <div>Published By: {this.props.publishedBy}</div>
-      </div>
+      <React.Fragment>
+        Title: {this.props.title}
+        Published: {this.props.published}
+        Published By: {this.props.publishedBy}
+      </React.Fragment>
     );
   }
-};
+});
 ```
 
 The generator also accepts options:
