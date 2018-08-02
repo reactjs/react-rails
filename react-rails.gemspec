@@ -11,8 +11,8 @@ Gem::Specification.new do |s|
   s.homepage = 'https://github.com/reactjs/react-rails'
   s.license = 'Apache-2.0'
 
-  s.author = ['Paul O’Shannessy', 'Robert Mosolgo', 'Gregory Myers']
-  s.email = ['paul@oshannessy.com', 'rmosolgo@gmail.com', 'neonmd@hotmail.co.uk']
+  s.author = ['Paul O’Shannessy', 'Robert Mosolgo', 'Gregory Myers', 'Tsukuru Tanimichi']
+  s.email = ['paul@oshannessy.com', 'rmosolgo@gmail.com', 'neonmd@hotmail.co.uk', 'info@ttanimichi.com']
 
   s.add_development_dependency 'appraisal'
   s.add_development_dependency 'bundler', '>= 1.2.2'
