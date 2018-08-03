@@ -8,6 +8,12 @@
 
 #### Bug Fixes
 
+## 2.4.7
+
+#### New Features
+
+- React 16.4.2 prebundled #914
+
 ## 2.4.6
 
 #### New Features
