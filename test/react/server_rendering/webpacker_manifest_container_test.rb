@@ -10,21 +10,13 @@ WebpackerHelpers.when_webpacker_available do
     def test_it_loads_JS_from_the_webpacker_container
       WebpackerHelpers.compile
       container = React::ServerRendering::WebpackerManifestContainer.new
-      js_file = container.find_asset('application.js')
-      # Main file:
-      assert_includes js_file, 'ReactRailsUJS'
-      # Bundled dependencies:
-      assert_includes js_file, 'ExportDefaultComponent'
+      assert_not_empty container.find_asset('application.js')
     end
 
     def test_it_loads_from_webpack_dev_server
       WebpackerHelpers.with_dev_server do
         container = React::ServerRendering::WebpackerManifestContainer.new
-        js_file = container.find_asset('application.js')
-        # Main file:
-        assert_includes js_file, 'ReactRailsUJS'
-        # Bundled dependencies:
-        assert_includes js_file, 'ExportDefaultComponent'
+        assert_not_empty container.find_asset('application.js')
       end
     end
   end

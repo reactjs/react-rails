@@ -43,6 +43,12 @@ test:
   <<: *default
   compile: true
 
+  dev_server:
+    host: localhost
+    port: 8080
+    hmr: false
+    https: false
+
 production:
   <<: *default
 
