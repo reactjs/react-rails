@@ -8,8 +8,7 @@ cache:
   yarn: true
 rvm:
   - 2.5.1
-  - 2.3
-  - ruby-head
+  - 2.3.7
   - jruby-9.1.9.0
 
 gemfile:
@@ -45,7 +44,6 @@ matrix:
       gemfile: gemfiles/rails_5_no_sprockets.gemfile
 
   allow_failures:
-    - rvm: ruby-head
     - rvm: jruby-9.1.9.0
 
 before_install:
