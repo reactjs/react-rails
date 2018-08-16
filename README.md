@@ -327,7 +327,7 @@ delete window.Turbolinks;
 Components are loaded with `ReactRailsUJS.getConstructor(className)`. This function has two built-in implementations:
 
 - On the asset pipeline, it looks up `className` in the global namespace.
-- On Webpacker, it `require`s files and accesses named exports, as described in [Use with Webpacker](#use-with-webpacker).
+- On Webpacker, it `require`s files and accesses named exports, as described in [Get started with Webpacker](#get-started-with-webpacker).
 
 You can override this function to customize the mapping of name-to-constructor. [Server-side rendering](#server-side-rendering) also uses this function.
 
