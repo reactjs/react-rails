@@ -199,6 +199,18 @@ Components must be accessible from the top level, but they may be namespaced, fo
 
 `react-rails` provides two transformers, `React::JSX::BabelTransformer` (which uses [ruby-babel-transpiler](https://github.com/babel/ruby-babel-transpiler)) and `React::JSX::JSXTransformer` (which uses the deprecated `JSXTransformer.js`).
 
+#### Transform Plugin Options
+
+To supply additional transform plugins to your JSX Transformer, assign them to `config.react.jsx_transform_options`
+
+`react-rails` uses the Babel version of the `babel-source` gem.
+
+For example, to use `babel-plugin-transform-class-properties` :
+
+    config.react.jsx_transform_options = {
+      optional: ['es7.classProperties']
+    }
+
 ### React.js versions
 
 `//= require react` brings `React` into your project.
