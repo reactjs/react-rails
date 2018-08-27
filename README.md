@@ -39,6 +39,7 @@ Example app code available here: https://github.com/BookOfGreg/react-rails-examp
   - [Camelize Props](#camelize-props)
 - [Upgrading](#upgrading)
   - [2.3 to 2.4](#23-to-24)
+- [Common Errors](#common-errors)
 - [Related Projects](#related-projects)
 - [Contributing](#contributing)
 
@@ -83,7 +84,7 @@ This gives you:
 
 4) Link the JavaScript pack in Rails view using `javascript_pack_tag` [helper](https://github.com/rails/webpacker#usage), for example:
 ```
-<!-- application.html.erb in Head tag below turbolinks-->
+<!-- application.html.erb in Head tag below turbolinks -->
 <%= javascript_pack_tag 'application' %>
 ```
 
@@ -101,7 +102,8 @@ Note: Your component is added to `app/javascript/components/` by default.
 
 7) [Render it in a Rails view](#view-helper):
 
-```erb: paste this in view 
+```
+<!-- erb: paste this in view -->
 <%= react_component("HelloWorld", { greeting: "Hello from react-rails." }) %>
 ```
 
@@ -586,6 +588,31 @@ For the vast majority of cases this will get you most of the migration:
 - global find+replace `React.Prop` -> `Prop`
 - add `import PropTypes from 'prop-types'` (Webpacker only)
 - re-run `bundle exec rails webpacker:install:react` to update npm packages (Webpacker only)
+
+## Common Errors
+1) While using installers.(rails webpacker:install:react && rails webpacker:install)
+Error:
+```
+public/packs/manifest.json. Possible causes:
+1. You want to set webpacker.yml value of compile to true for your environment
+   unless you are using the `webpack -w` or the webpack-dev-server.
+2. webpack has not yet re-run to reflect updates.
+3. You have misconfigured Webpacker's config/webpacker.yml file.
+4. Your webpack configuration is not creating a manifest.
+or
+yarn: error: no such option: --dev
+ERROR: [Errno 2] No such file or directory: 'add'
+```
+Fix: Try updating yarn package.
+```
+sudo apt remove cmdtest
+sudo apt remove yarn
+curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+sudo apt-get update && sudo apt-get install yarn
+
+yarn install
+```
 
 ## Related Projects
 
