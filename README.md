@@ -56,63 +56,60 @@ https://github.com/reactjs/React-Rails/wiki
 
 [Webpacker](https://github.com/rails/webpacker) integrates modern JS tooling with Rails.
 
-Create a new Rails app:
+1) Create a new Rails app:
 ```
-$ rails new my-app --webpack=react
+$ rails new my-app
 $ cd my-app
 ```
 
-Add `webpacker` and `react-rails` to your gemfile 
+2) Add `webpacker` and `react-rails` to your gemfile 
 ```
 gem 'webpacker'
 gem 'react-rails'
 ```
 
-Now run the installers:
+3) Now run the installers:
 ```
 $ bundle install
 $ rails webpacker:install       # OR (on rails version < 5.0) rake webpacker:install
-$ rails generate react:install
 $ rails webpacker:install:react # OR (on rails version < 5.0) rake webpacker:install:react
+$ rails generate react:install
 ```
-
 This gives you:
 
 - `app/javascript/components/` directory for your React components
 - [`ReactRailsUJS`](#ujs) setup in `app/javascript/packs/application.js`
 - `app/javascript/packs/server_rendering.js` for [server-side rendering](#server-side-rendering)
 
-Link the JavaScript pack in Rails view using `javascript_pack_tag` [helper](https://github.com/rails/webpacker#usage), for example:
-
+4) Link the JavaScript pack in Rails view using `javascript_pack_tag` [helper](https://github.com/rails/webpacker#usage), for example:
 ```
 <!-- application.html.erb in Head tag below turbolinks-->
 <%= javascript_pack_tag 'application' %>
 ```
 
-Generate your first component:
-
+5) Generate your first component:
 ```
 $ rails g react:component HelloWorld greeting:string
 ```
 
-Your component is added to `app/javascript/components/` by default.
-
-You can also generate your component in a subdirectory:
-
+6) You can also generate your component in a subdirectory:
 ```
 $ rails g react:component my_subdirectory/HelloWorld greeting:string
 ```
+Note: Your component is added to `app/javascript/components/` by default.
 
-[Render it in a Rails view](#view-helper):
+
+7) [Render it in a Rails view](#view-helper):
 
 ```erb: paste this in view 
-<%= react_component("HelloWorld", { greeting: "Hello" }) %>
+<%= react_component("HelloWorld", { greeting: "Hello from react-rails." }) %>
 ```
 
-Lets Start the app:
+8) Lets Start the app:
 ```
 $ rails s
 ```
+output: greeting: Hello from react-rails", inspect webpage in your browser too see change in tag props.
 
 The component name tells `react-rails` where to load the component. For example:
 
