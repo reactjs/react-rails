@@ -56,13 +56,24 @@ https://github.com/reactjs/React-Rails/wiki
 
 [Webpacker](https://github.com/rails/webpacker) integrates modern JS tooling with Rails.
 
-Add `webpacker` and `react-rails` to your gemfile and run the installers:
+Create a new Rails app:
+```
+$ rails new my-app --webpack=react
+$ cd my-app
+```
 
+Add `webpacker` and `react-rails` to your gemfile 
+```
+gem 'webpacker'
+gem 'react-rails'
+```
+
+Now run the installers:
 ```
 $ bundle install
 $ rails webpacker:install       # OR (on rails version < 5.0) rake webpacker:install
-$ rails webpacker:install:react # OR (on rails version < 5.0) rake webpacker:install:react
 $ rails generate react:install
+$ rails webpacker:install:react # OR (on rails version < 5.0) rake webpacker:install:react
 ```
 
 This gives you:
@@ -74,7 +85,7 @@ This gives you:
 Link the JavaScript pack in Rails view using `javascript_pack_tag` [helper](https://github.com/rails/webpacker#usage), for example:
 
 ```
-<!-- application.html.erb -->
+<!-- application.html.erb in Head tag below turbolinks-->
 <%= javascript_pack_tag 'application' %>
 ```
 
@@ -94,8 +105,13 @@ $ rails g react:component my_subdirectory/HelloWorld greeting:string
 
 [Render it in a Rails view](#view-helper):
 
-```erb
+```erb: paste this in view 
 <%= react_component("HelloWorld", { greeting: "Hello" }) %>
+```
+
+Lets Start the app:
+```
+$ rails s
 ```
 
 The component name tells `react-rails` where to load the component. For example:
