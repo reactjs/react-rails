@@ -28,4 +28,23 @@ class ReactTest < ActiveSupport::TestCase
 
     assert_equal expected_props, React.camelize_props(raw_props)
   end
+
+  def test_it_camelizes_params
+    raw_params = ActionController::Parameters.new({
+      foo_bar_baz: 'foo bar baz',
+      nested_keys: {
+        qux_etc: 'bish bash bosh'
+      }
+    })
+    permitted_params = raw_params.permit(:foo_bar_baz, nested_keys: :qux_etc)
+
+    expected_params = {
+      'fooBarBaz' => 'foo bar baz',
+      'nestedKeys' => {
+        'quxEtc' => 'bish bash bosh'
+      }
+    }
+
+    assert_equal expected_params, React.camelize_props(permitted_params)
+  end
 end
