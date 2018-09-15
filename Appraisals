@@ -6,14 +6,16 @@ end
 
 appraise 'rails-5.2_no_sprockets_webpacker_3' do
   gem 'rails', '~> 5.2.0'
-  gem 'webpacker', '4.0.0.pre.pre.2'
+  gem 'webpacker', '~> 3.0'
   gem 'mini_racer', :platforms => :mri
+  gem 'therubyrhino', :platforms => :jruby
 end
 
 appraise 'rails-5.2_no_sprockets_webpacker_4' do
   gem 'rails', '~> 5.2.0'
   gem 'webpacker', '4.0.0.pre.pre.2'
   gem 'mini_racer', :platforms => :mri
+  gem 'therubyrhino', :platforms => :jruby
 end
 
 appraise 'rails-5.1-sprockets_4' do

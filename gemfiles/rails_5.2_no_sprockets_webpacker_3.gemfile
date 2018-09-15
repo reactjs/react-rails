@@ -3,7 +3,8 @@
 source "http://rubygems.org"
 
 gem "rails", "~> 5.2.0"
-gem "webpacker", "4.0.0.pre.pre.2"
+gem "webpacker", "~> 3.0"
 gem "mini_racer", platforms: :mri
+gem "therubyrhino", platforms: :jruby
 
 gemspec path: "../"
