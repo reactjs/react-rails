@@ -18,6 +18,8 @@ gemfile:
   - gemfiles/rails_5_no_sprockets_webpacker_1_x.gemfile
   - gemfiles/rails_5_no_sprockets_webpacker_2.gemfile
   - gemfiles/rails_5_no_sprockets_webpacker_3.gemfile
+  - gemfiles/rails_5.2_no_sprockets_webpacker_3.gemfile
+  - gemfiles/rails_5.2_no_sprockets_webpacker_4.gemfile
   # These don't have webpacker:
   - gemfiles/rails_4.2_sprockets_2.gemfile
   - gemfiles/rails_4.2_sprockets_3.gemfile
@@ -45,6 +47,7 @@ matrix:
 
   allow_failures:
     - rvm: jruby-9.1.9.0
+    - gemfile: gemfiles/rails_5.2_no_sprockets_webpacker_4.gemfile
 
 before_install:
   # Repo for Yarn
