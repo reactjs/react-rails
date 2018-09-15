@@ -13,7 +13,11 @@ module React
     when Array
       props.map { |item| camelize_props(item) }
     else
-      props
+      if defined?(ActionController::Parameters) && props.is_a?(ActionController::Parameters)
+        camelize_props(props.to_h)
+      else
+        props
+      end
     end
   end
 end
