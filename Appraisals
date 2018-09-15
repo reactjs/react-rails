@@ -4,6 +4,12 @@ appraise 'rails-5.2-sprockets_4' do
   gem 'turbolinks', '~> 5'
 end
 
+appraise 'rails-5.2_no_sprockets_webpacker_4' do
+  gem 'rails', '~> 5.2.0'
+  gem 'webpacker', '4.0.0.pre.pre.2'
+  gem 'mini_racer', :platforms => :mri
+end
+
 appraise 'rails-5.1-sprockets_4' do
   gem 'rails', '~> 5.1.0'
   gem 'sprockets', '~> 4.0.x'
