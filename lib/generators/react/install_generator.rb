@@ -25,7 +25,7 @@ module React
         end
         empty_directory File.join(components_dir, 'components')
         unless options[:skip_git]
-          create_file File.join(components_dir, 'components/.gitkeep')
+          create_file File.join(components_dir, 'components/.keep')
         end
       end
 
