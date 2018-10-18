@@ -23,7 +23,7 @@ class ReactTest < ActiveSupport::TestCase
           [{ 'nestedArray' => {} }]
         ]
       },
-      'alreadyCamelized' => :ok
+      'alreadyCamelized' => 'ok'
     }
 
     assert_equal expected_props, React.camelize_props(raw_props)
@@ -46,5 +46,35 @@ class ReactTest < ActiveSupport::TestCase
     }
 
     assert_equal expected_params, React.camelize_props(permitted_params)
+  end
+
+  def test_it_camelizes_json_serializable_objects
+    my_json_serializer = Class.new do
+      def initialize(data)
+        @data = data
+      end
+
+      def as_json
+        @data
+      end
+    end
+
+    raw_props = {
+      key_one: 'value1',
+      key_two: my_json_serializer.new(
+        nested_key_one: 'nested_value1',
+        nested_key_two: ['nested', 'value', 'two']
+      )
+    }
+
+    expected_params = {
+      'keyOne' => 'value1',
+      'keyTwo' => {
+        'nestedKeyOne' => 'nested_value1',
+        'nestedKeyTwo' => ['nested', 'value', 'two']
+      }
+    }
+
+    assert_equal expected_params, React.camelize_props(raw_props)
   end
 end
