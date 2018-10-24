@@ -98,6 +98,20 @@ module React
         # The class isn't accessible in the configure block, so assign it here if it wasn't overridden:
         app.config.react.server_renderer ||= React::ServerRendering::BundleRenderer
 
+        def yellow(message)
+           "\e[33m#{message}\e[0m"
+        end
+
+        node_version = `echo $(node -v | cut -c 2-)`.strip
+        node_major_version = node_version.sub(/\..*/, '').to_i
+
+        if node_major_version < 6
+          puts yellow("Warning: You are using node #{node_version}.")
+          puts yellow("This an unsupported JavaScript runtime.")
+          puts yellow("Please upgrade your node version to one >=6.")
+          puts yellow("For more information see this issue https://git.io/fxXgI")
+        end
+
         React::ServerRendering.pool_size        = app.config.react.server_renderer_pool_size
         React::ServerRendering.pool_timeout     = app.config.react.server_renderer_timeout
         React::ServerRendering.renderer_options = app.config.react.server_renderer_options
