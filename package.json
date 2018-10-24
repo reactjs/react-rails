@@ -15,5 +15,9 @@
   },
   "dependencies": {
     "react_ujs": "^2.6.0"
+  },
+  "engines": {
+    "node": ">=6.0.0",
+    "yarn": ">=1.0.0"
   }
 }
