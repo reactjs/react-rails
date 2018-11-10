@@ -6,13 +6,13 @@
 [![Code Climate](https://img.shields.io/codeclimate/github/reactjs/react-rails.svg?style=flat-square)](https://codeclimate.com/github/reactjs/react-rails)
 
 
-React-Rails is a flexible tool to use [React](http://facebook.github.io/react/) with Rails. It:
+React-Rails is a flexible tool to use [React](http://facebook.github.io/react/) with Rails. The benefits:
 * Automatically renders React server-side and client-side
 * Supports Webpacker 3.x, 2.x, 1.1+
 * Supports Sprockets 4.x, 3.x, 2.x
 * Lets you use [JSX](http://facebook.github.io/react/docs/jsx-in-depth.html), [ES6](http://es6-features.org/), [TypeScript](https://www.typescriptlang.org/), [CoffeeScript](http://coffeescript.org/)
 
-Example app code available here: https://github.com/BookOfGreg/react-rails-example-app
+A source code example utilizing React-Rails: https://github.com/BookOfGreg/react-rails-example-app
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -46,30 +46,30 @@ Example app code available here: https://github.com/BookOfGreg/react-rails-examp
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 
-The React-Rails Wiki has lots of additional information about React-Rails including many "how-to" articles and answers to the most frequently asked questions. Please browse the Wiki after finishing this README:
-
+After reading this README file, additional information about React-Rails can be found in the Wiki page:
 https://github.com/reactjs/React-Rails/wiki
+The Wiki page features a significant amount of additional information about React-Rails which includes instructional articles and answers to the most frequently asked questions.
 
 
 ## Get started with Webpacker
 
-[or Get started with Sprockets](#use-with-asset-pipeline)
+[Alternatively, get started with Sprockets](#use-with-asset-pipeline)
 
-[Webpacker](https://github.com/rails/webpacker) integrates modern JS tooling with Rails.
+[Webpacker](https://github.com/rails/webpacker) provides modern JS tooling for Rails. Here are the listed steps for integrating Webpacker and Rails-React with Rails:
 
-1) Create a new Rails app:
+##### 1) Create a new Rails app:
 ```
 $ rails new my-app
 $ cd my-app
 ```
 
-2) Add `webpacker` and `react-rails` to your gemfile 
+##### 2) Add `webpacker` and `react-rails` to your gemfile:
 ```
 gem 'webpacker'
 gem 'react-rails'
 ```
 
-3) Now run the installers:
+##### 3) Now run the installers:
 ```
 $ bundle install
 $ rails webpacker:install       # OR (on rails version < 5.0) rake webpacker:install
@@ -82,36 +82,38 @@ This gives you:
 - [`ReactRailsUJS`](#ujs) setup in `app/javascript/packs/application.js`
 - `app/javascript/packs/server_rendering.js` for [server-side rendering](#server-side-rendering)
 
-4) Link the JavaScript pack in Rails view using `javascript_pack_tag` [helper](https://github.com/rails/webpacker#usage), for example:
+##### 4) Link the JavaScript pack in Rails view using `javascript_pack_tag` [helper](https://github.com/rails/webpacker#usage):
 ```
 <!-- application.html.erb in Head tag below turbolinks -->
 <%= javascript_pack_tag 'application' %>
 ```
 
-5) Generate your first component:
+##### 5) Generate your first component:
 ```
 $ rails g react:component HelloWorld greeting:string
 ```
 
-6) You can also generate your component in a subdirectory:
+##### 6) You can also generate your component in a subdirectory:
 ```
 $ rails g react:component my_subdirectory/HelloWorld greeting:string
 ```
 Note: Your component is added to `app/javascript/components/` by default.
 
 
-7) [Render it in a Rails view](#view-helper):
+##### 7) [Render it in a Rails view](#view-helper):
 
 ```
 <!-- erb: paste this in view -->
 <%= react_component("HelloWorld", { greeting: "Hello from react-rails." }) %>
 ```
 
-8) Lets Start the app:
+##### 8) Lets Start the app:
 ```
 $ rails s
 ```
 output: greeting: Hello from react-rails", inspect webpage in your browser too see change in tag props.
+
+### Component name
 
 The component name tells `react-rails` where to load the component. For example:
 
