@@ -161,7 +161,13 @@ Doing this will allow React-Rails to support the .tsx extension.
 
 ## Use with Asset Pipeline
 
-`react-rails` provides a pre-bundled React.js & a UJS driver to the Rails asset pipeline. Get started by installing:
+`react-rails` provides a pre-bundled React.js & a UJS driver to the Rails asset pipeline. Get started by adding the `react-rails` gem:
+
+```
+gem 'react-rails'
+```
+
+And then install the react generator:
 
 ```
 $ rails g react:install
