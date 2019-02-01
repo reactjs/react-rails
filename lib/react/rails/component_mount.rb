@@ -15,6 +15,7 @@ module React
       # You can use them in custom helper implementations
       def setup(controller)
         @controller = controller
+        @cache_ids = []
       end
 
       def teardown(controller)
@@ -40,6 +41,9 @@ module React
             data[:react_class] = name
             data[:react_props] = (props.is_a?(String) ? props : props.to_json)
             data[:hydrate] = 't' if prerender_options
+
+            num_components = @cache_ids.count { |c| c.start_with? name }
+            data[:react_cache_id] = "#{name}-#{num_components}"
           end
         end
         html_tag = html_options[:tag] || :div
