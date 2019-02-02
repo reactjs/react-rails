@@ -21,6 +21,8 @@ var ReactRailsUJS = {
   // A unique identifier to identify a node
   CACHE_ID_ATTR: "data-react-cache-id",
 
+  TURBOLINKS_PERMANENT_ATTR: "data-turbolinks-permanent",
+
   // If jQuery is detected, save a reference to it for event handlers
   jQuery: (typeof window !== 'undefined') && (typeof window.jQuery !== 'undefined') && window.jQuery,
 
@@ -92,6 +94,7 @@ var ReactRailsUJS = {
       var props = propsJson && JSON.parse(propsJson);
       var hydrate = node.getAttribute(ReactRailsUJS.RENDER_ATTR);
       var cacheId = node.getAttribute(ujs.CACHE_ID_ATTR);
+      var turbolinksPermanent = node.hasAttribute(ujs.TURBOLINKS_PERMANENT_ATTR);
 
       if (!constructor) {
         var message = "Cannot find component: '" + className + "'"
@@ -103,7 +106,9 @@ var ReactRailsUJS = {
         let component = this.components[cacheId];
         if(component === undefined) {
           component = React.createElement(constructor, props);
-          this.components[cacheId] = component;
+          if(turbolinksPermanent) {
+            this.components[cacheId] = component;
+          }
         }
 
         if (hydrate && typeof ReactDOM.hydrate === "function") {
