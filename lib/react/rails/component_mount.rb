@@ -11,11 +11,14 @@ module React
       attr_accessor :output_buffer
       mattr_accessor :camelize_props_switch
 
+      def initialize
+        @cache_ids = []
+      end
+
       # {ControllerLifecycle} calls these hooks
       # You can use them in custom helper implementations
       def setup(controller)
         @controller = controller
-        @cache_ids = []
       end
 
       def teardown(controller)
