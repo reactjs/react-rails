@@ -32,7 +32,7 @@ class ViewHelperTest < ActionView::TestCase
   test 'view helper can accept block and render inner content only once' do
     rendered_html = render partial: 'pages/component_with_inner_html'
     expected_html = <<HTML
-<div data-react-class=\"GreetingMessage\" data-react-props=\"{&quot;name&quot;:&quot;Name&quot;}\" id=\"component\" data-react-cache-id=\"GreetingMessage-0\">
+<div data-react-class=\"GreetingMessage\" data-react-props=\"{&quot;name&quot;:&quot;Name&quot;}\" data-react-cache-id=\"GreetingMessage-0\" id=\"component\">
   <div id=\"unique-nested-id\">NestedContent</div>
 </div>
 HTML
