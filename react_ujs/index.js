@@ -92,7 +92,7 @@ var ReactRailsUJS = {
       var constructor = ujs.getConstructor(className);
       var propsJson = node.getAttribute(ujs.PROPS_ATTR);
       var props = propsJson && JSON.parse(propsJson);
-      var hydrate = node.getAttribute(ReactRailsUJS.RENDER_ATTR);
+      var hydrate = node.getAttribute(ujs.RENDER_ATTR);
       var cacheId = node.getAttribute(ujs.CACHE_ID_ATTR);
       var turbolinksPermanent = node.hasAttribute(ujs.TURBOLINKS_PERMANENT_ATTR);
 
