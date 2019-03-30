@@ -25,7 +25,7 @@ module React
         end
         empty_directory File.join(components_dir, 'components')
         unless options[:skip_git]
-          create_file File.join(components_dir, 'components/.gitkeep')
+          create_file File.join(components_dir, 'components/.keep')
         end
       end
 
@@ -96,9 +96,9 @@ module React
 
       WEBPACKER_SETUP_UJS = <<-JS
 // Support component names relative to this directory:
-var componentRequireContext = require.context("components", true)
-var ReactRailsUJS = require("react_ujs")
-ReactRailsUJS.useContext(componentRequireContext)
+var componentRequireContext = require.context("components", true);
+var ReactRailsUJS = require("react_ujs");
+ReactRailsUJS.useContext(componentRequireContext);
 JS
 
       def setup_react_webpacker
