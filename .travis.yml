@@ -59,6 +59,10 @@ matrix:
       gemfile: gemfiles/rails_5.2_no_sprockets_webpacker_4.gemfile
     - rvm: 2.3.8
       gemfile: gemfiles/rails_5.2_sprockets_4.gemfile
+    - rvm: jruby-9.1.9.0
+      gemfile: gemfiles/rails_5.2_no_sprockets_webpacker_4.gemfile
+    - rvm: jruby-9.1.9.0
+      gemfile: gemfiles/rails_5.2_sprockets_4.gemfile
 
   allow_failures:
     - rvm: jruby-9.1.9.0
