@@ -4,7 +4,7 @@
 </ul>
 
 <div id='component-parent'>
-  <%= react_component 'GreetingMessage', { name: @name }, { id: 'component', prerender: @prerender } %>
+  <%= react_component 'GreetingMessage', { name: @name, last_name: "Last #{@name}", info: { name: @name } }, { id: 'component', class: "greeting-message", prerender: @prerender } %>
   <ul>
     <%= react_component 'Todo', { todo: 'Another Component' }, { id: 'todo', prerender: @prerender } %>
   </ul>

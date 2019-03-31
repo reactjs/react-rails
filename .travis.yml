@@ -7,8 +7,9 @@ cache:
   bundler: true
   yarn: true
 rvm:
-  - 2.5.1
-  - 2.3.7
+  - 2.6.2
+  - 2.5.3
+  - 2.3.8
   - jruby-9.1.9.0
 
 gemfile:
@@ -18,6 +19,8 @@ gemfile:
   - gemfiles/rails_5_no_sprockets_webpacker_1_x.gemfile
   - gemfiles/rails_5_no_sprockets_webpacker_2.gemfile
   - gemfiles/rails_5_no_sprockets_webpacker_3.gemfile
+  - gemfiles/rails_5.2_no_sprockets_webpacker_3.gemfile
+  - gemfiles/rails_5.2_no_sprockets_webpacker_4.gemfile
   # These don't have webpacker:
   - gemfiles/rails_4.2_sprockets_2.gemfile
   - gemfiles/rails_4.2_sprockets_3.gemfile
@@ -28,23 +31,44 @@ gemfile:
 matrix:
   fast_finish: true
   exclude:
-
-    # all except 5.1_sprockets_4, 5.1_webpacker_3, 4.2_sprockets_3
-    - rvm: jruby-9.1.9.0
+    # Oldest rails does not run on ruby 2.6
+    - rvm: 2.6.2
       gemfile: gemfiles/rails_4.2_sprockets_4.gemfile
-    - rvm: jruby-9.1.9.0
-      gemfile: gemfiles/rails_5_no_sprockets_webpacker_1_1.gemfile
-    - rvm: jruby-9.1.9.0
-      gemfile: gemfiles/rails_5_no_sprockets_webpacker_1_x.gemfile
-    - rvm: jruby-9.1.9.0
-      gemfile: gemfiles/rails_5_no_sprockets_webpacker_2.gemfile
-    - rvm: jruby-9.1.9.0
+    - rvm: 2.6.2
+      gemfile: gemfiles/rails_4.2_sprockets_3.gemfile
+    - rvm: 2.6.2
       gemfile: gemfiles/rails_4.2_sprockets_2.gemfile
+    - rvm: 2.5.3
+    - rvm: 2.3.8
     - rvm: jruby-9.1.9.0
-      gemfile: gemfiles/rails_5_no_sprockets.gemfile
+
+  include:
+    # Oldest rails does not run on ruby 2.6
+    - rvm: 2.5.3
+      gemfile: gemfiles/rails_4.2_sprockets_4.gemfile
+    - rvm: 2.5.3
+      gemfile: gemfiles/rails_4.2_sprockets_3.gemfile
+    - rvm: 2.5.3
+      gemfile: gemfiles/rails_4.2_sprockets_2.gemfile
+    # Newest gemfiles for universal testing
+    - rvm: 2.5.3
+      gemfile: gemfiles/rails_5.2_no_sprockets_webpacker_4.gemfile
+    - rvm: 2.5.3
+      gemfile: gemfiles/rails_5.2_sprockets_4.gemfile
+    - rvm: 2.3.8
+      gemfile: gemfiles/rails_5.2_no_sprockets_webpacker_4.gemfile
+    - rvm: 2.3.8
+      gemfile: gemfiles/rails_5.2_sprockets_4.gemfile
+    - rvm: jruby-9.1.9.0
+      gemfile: gemfiles/rails_5.2_no_sprockets_webpacker_4.gemfile
+    - rvm: jruby-9.1.9.0
+      gemfile: gemfiles/rails_5.2_sprockets_4.gemfile
 
   allow_failures:
     - rvm: jruby-9.1.9.0
+      gemfile: gemfiles/rails_5.2_no_sprockets_webpacker_4.gemfile
+    - rvm: jruby-9.1.9.0
+      gemfile: gemfiles/rails_5.2_sprockets_4.gemfile
 
 before_install:
   # Repo for Yarn

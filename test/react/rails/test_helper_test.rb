@@ -1,6 +1,10 @@
 require 'test_helper'
 
 class TestHelperTest < ActionDispatch::IntegrationTest
+  setup do
+    WebpackerHelpers.compile_if_missing
+  end
+
   test 'assert_react_component' do
     get "/pages/1"
     assert_equal 200, response.status
@@ -12,6 +16,9 @@ class TestHelperTest < ActionDispatch::IntegrationTest
 
       assert_select "[id=?]", "component"
       assert_select "[class=?]", "greeting-message"
+    end
+    assert_react_component "Todo" do |props|
+      assert_equal "Another Component", props[:todo]
     end
   end
 end
