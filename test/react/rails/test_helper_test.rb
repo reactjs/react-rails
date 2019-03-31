@@ -13,5 +13,8 @@ class TestHelperTest < ActionDispatch::IntegrationTest
       assert_select "[id=?]", "component"
       assert_select "[class=?]", "greeting-message"
     end
+    assert_react_component "Todo" do |props|
+      assert_equal "Another Component", props[:todo]
+    end
   end
 end
