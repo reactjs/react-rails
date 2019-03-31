@@ -14,7 +14,7 @@
 
 #### New Features
 
-- React 16.4.2 prebundled #977
+- React 16.8.6 prebundled #977
 - Added `assert_react_component` test helper #957
 - Supports Webpacker 4, Ruby 2.6 #934
 - Supports camelize on ActionController::Parameters #932
