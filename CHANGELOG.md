@@ -8,6 +8,24 @@
 
 #### Bug Fixes
 
+## 2.5.0
+
+#### Breaking Changes
+
+#### New Features
+
+- React 16.4.2 prebundled #977
+- Added `assert_react_component` test helper #957
+- Supports Webpacker 4, Ruby 2.6 #934
+- Supports camelize on ActionController::Parameters #932
+
+#### Deprecation
+
+#### Bug Fixes
+
+- Linting fix to generated JS #941
+- (Meta) Tests for react-rails updated #892 #894 #916
+
 ## 2.4.7
 
 #### New Features
