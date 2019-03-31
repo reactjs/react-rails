@@ -9,9 +9,7 @@ module React
       #   assert_equal "Hello world", props[:message]
       # end
       def assert_react_component(name)
-        assert_select "div[data-react-class]" do |dom|
-          assert_select "[data-react-class=?]", name
-
+        assert_select "div[data-react-class=?]", name do |dom|
           if block_given?
             props = JSON.parse(dom.attr("data-react-props"))
             props.deep_transform_keys! { |key| key.to_s.underscore }
