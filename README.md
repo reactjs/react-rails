@@ -64,7 +64,7 @@ $ cd my-app
 ```
 
 ##### 2) Add `webpacker` and `react-rails` to your gemfile:
-```
+```ruby
 gem 'webpacker'
 gem 'react-rails'
 ```
@@ -83,7 +83,7 @@ This gives you:
 - `app/javascript/packs/server_rendering.js` for [server-side rendering](#server-side-rendering)
 
 ##### 4) Link the JavaScript pack in Rails view using `javascript_pack_tag` [helper](https://github.com/rails/webpacker#usage):
-```
+```erb
 <!-- application.html.erb in Head tag below turbolinks -->
 <%= javascript_pack_tag 'application' %>
 ```
@@ -102,7 +102,7 @@ Note: Your component is added to `app/javascript/components/` by default.
 
 ##### 7) [Render it in a Rails view](#view-helper):
 
-```
+```erb
 <!-- erb: paste this in view -->
 <%= react_component("HelloWorld", { greeting: "Hello from react-rails." }) %>
 ```
@@ -192,7 +192,7 @@ end
 
 `react-rails` provides a pre-bundled React.js & a UJS driver to the Rails asset pipeline. Get started by adding the `react-rails` gem:
 
-```
+```ruby
 gem 'react-rails'
 ```
 
