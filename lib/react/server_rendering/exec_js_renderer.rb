@@ -10,7 +10,7 @@ module React
 
       def initialize(options={})
         js_code = options[:code] || raise('Pass `code:` option to instantiate a JS context!')
-        @context = ExecJS.compile(GLOBAL_WRAPPER + js_code)
+        @context = ExecJS.compile(global_wrapper + js_code)
       end
 
       def render(component_name, props, prerender_options)
@@ -27,10 +27,18 @@ module React
       def after_render(component_name, props, prerender_options); ''; end
 
       # Handle Node.js & other ExecJS contexts
-      GLOBAL_WRAPPER = <<-JS
-        var global = global || this;
-        var self = self || this;
-      JS
+      def global_wrapper
+        @_global_wrapper ||= begin
+          # Add loadable_stats.json
+          stats = File.read('public/packs/loadable-stats.json')
+
+          <<-JS
+            var global = global || this;
+            var self = self || this;
+            const loadableStats = #{stats};
+          JS
+        end
+      end
 
       private
 
