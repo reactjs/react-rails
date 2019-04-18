@@ -30,12 +30,12 @@ module React
       def global_wrapper
         @_global_wrapper ||= begin
           # Add loadable_stats.json
-          stats = File.read('public/packs/loadable-stats.json')
+          manifest = File.read('public/packs/manifest.json')
 
           <<-JS
             var global = global || this;
             var self = self || this;
-            const loadableStats = #{stats};
+            var PACKS_MANIFEST = #{manifest};
           JS
         end
       end
