@@ -12,7 +12,6 @@ module React
         assert_select "div[data-react-class=?]", name do |dom|
           if block_given?
             props = JSON.parse(dom.attr("data-react-props"))
-            props.deep_transform_keys! { |key| key.to_s.underscore }
             props.deep_symbolize_keys!
 
             yield(props)
