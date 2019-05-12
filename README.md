@@ -671,7 +671,8 @@ LibV8 itself is already [beyond version 7](https://github.com/cowboyd/libv8/rele
 
 ### HMR
 HRM is possible with this gem as it does just pass through to Webpacker. Please open an issue to let us know tips and tricks for it to add to the wiki.
-https://stackoverflow.com/a/54846330/193785
+
+One example: [Stack Overflow answer with Babel and Webpacker config](https://stackoverflow.com/a/54846330/193785)
 
 ## Related Projects
 
