@@ -40,6 +40,10 @@ A source code example utilizing React-Rails: https://github.com/BookOfGreg/react
 - [Upgrading](#upgrading)
   - [2.3 to 2.4](#23-to-24)
 - [Common Errors](#common-errors)
+  - [During installation](#during-installation)
+  - [Undefined Set](#undefined-set)
+  - [Using TheRubyRacer](#using-therubyracer)
+  - [HMR](#hmr)
 - [Related Projects](#related-projects)
 - [Contributing](#contributing)
 
@@ -627,6 +631,7 @@ For the vast majority of cases this will get you most of the migration:
 - re-run `bundle exec rails webpacker:install:react` to update npm packages (Webpacker only)
 
 ## Common Errors
+### During installation
 1) While using installers.(rails webpacker:install:react && rails webpacker:install)
 Error:
 ```
@@ -650,6 +655,24 @@ sudo apt-get update && sudo apt-get install yarn
 
 yarn install
 ```
+### Undefined Set
+```
+ExecJS::ProgramError (identifier 'Set' undefined):
+  
+(execjs):1
+```
+If you see any variation of this issue, see [Using TheRubyRacer](#using-therubyracer)
+
+
+### Using TheRubyRacer
+TheRubyRacer [hasn't updated LibV8](https://github.com/cowboyd/therubyracer/blob/master/therubyracer.gemspec#L20) (The library that powers Node.js) from v3 in 2 years, any new features are unlikely to work.
+
+LibV8 itself is already [beyond version 7](https://github.com/cowboyd/libv8/releases/tag/v7.3.492.27.1) therefore many serverside issues are caused by old JS engines and fixed by using an up to date one such as [MiniRacer](https://github.com/discourse/mini_racer) or [TheRubyRhino](https://github.com/cowboyd/therubyrhino) on JRuby.
+
+### HMR
+HRM is possible with this gem as it does just pass through to Webpacker. Please open an issue to let us know tips and tricks for it to add to the wiki.
+
+One example: [Stack Overflow answer with Babel and Webpacker config](https://stackoverflow.com/a/54846330/193785)
 
 ## Related Projects
 
@@ -664,7 +687,7 @@ yarn install
 
 🎉 Thanks for taking the time to contribute! 🎉
 
-With 2 Million+ downloads of the react-rails Gem and another 100k+ downloads of react_ujs on NPM, you're helping the biggest React + Rails community!
+With 5 Million+ downloads of the react-rails Gem and another 2 Million+ downloads of react_ujs on NPM, you're helping the biggest React + Rails community!
 
 By contributing to React-Rails, you agree to abide by the [code of conduct](https://github.com/reactjs/react-rails/blob/master/CODE_OF_CONDUCT.md).
 
