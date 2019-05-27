@@ -94,6 +94,33 @@ module React
         }
       }
 
+      TYPESCRIPT_TYPES = {
+        'node' =>        'React.ReactNode',
+        'bool' =>        'boolean',
+        'boolean' =>     'boolean',
+        'string' =>      'string',
+        'number' =>      'number',
+        'object' =>      'object',
+        'array' =>       'Array<any>',
+        'shape' =>       'object',
+        'element' =>     'object',
+        'func' =>        'object',
+        'function' =>    'object',
+        'any' =>         'any',
+
+        'instanceOf' => ->(type) {
+          type.to_s.camelize
+        },
+
+        'oneOf' => ->(*opts) {
+          opts.map{ |k| "'#{k.to_s}'" }.join(" | ")
+        },
+
+        'oneOfType' => ->(*opts) {
+          opts.map{ |k| "#{ts_lookup(k.to_s, k.to_s)}" }.join(" | ")
+        }
+      }
+
       def create_component_file
         template_extension = if options[:coffee]
           'js.jsx.coffee'
@@ -114,6 +141,7 @@ module React
             'tsx'
           else
             'js'
+          end
           target_dir = webpack_configuration.source_path
             .join('components')
             .relative_path_from(::Rails.root)
@@ -140,9 +168,8 @@ module React
 
       def file_header
         if webpacker?
+          return %|import * as React from "react"\n| if options[:ts]
           %|import React from "react"\nimport PropTypes from "prop-types"\n|
-        elsif options[:ts]
-          %|import * as React from "react"\n|
         else
           ''
         end
@@ -160,23 +187,58 @@ module React
         defined?(Webpacker)
       end
 
-       def parse_attributes!
-         self.attributes = (attributes || []).map do |attr|
-           name = ''
-           type = ''
-           options = ''
-           options_regex = /(?<options>{.*})/
+      def parse_attributes!
+        self.attributes = (attributes || []).map do |attr|
+          name = ''
+          type = ''
+          args = ''
+          args_regex = /(?<args>{.*})/
 
-           name, type = attr.split(':')
+          name, type = attr.split(':')
 
-           if matchdata = options_regex.match(type)
-             options = matchdata[:options]
-             type = type.gsub(options_regex, '')
-           end
+          if matchdata = args_regex.match(type)
+            args = matchdata[:args]
+            type = type.gsub(args_regex, '')
+          end
 
-           { :name => name, :type => lookup(type, options) }
-         end
-       end
+          if options[:ts]
+            { :name => name, :type => ts_lookup(name, type, args), :union => union?(args) }
+          else
+            { :name => name, :type => lookup(type, args) }
+          end
+        end
+      end
+
+      def union?(args = '')
+        return args.to_s.gsub(/[{}]/, '').split(',').count > 1
+      end
+
+      def self.ts_lookup(name, type = 'node', args = '')
+        ts_type = TYPESCRIPT_TYPES[type]
+        if ts_type.blank?
+          if type =~ /^[[:upper:]]/
+            ts_type = TYPESCRIPT_TYPES['instanceOf']
+          else
+            ts_type = TYPESCRIPT_TYPES['node']
+          end
+        end
+
+        args = args.to_s.gsub(/[{}]/, '').split(',')
+
+        if ts_type.respond_to? :call
+          if args.blank?
+            return ts_type.call(type)
+          end
+
+          ts_type = ts_type.call(*args)
+        end
+
+        ts_type
+      end
+
+      def ts_lookup(name, type = 'node', args = '')
+        self.class.ts_lookup(name, type, args)
+      end
 
        def self.lookup(type = 'node', options = '')
          react_prop_type = REACT_PROP_TYPES[type]
