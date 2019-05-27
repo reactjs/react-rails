@@ -55,6 +55,11 @@ module React
                    default: false,
                    desc: 'Output es6 class based component'
 
+      class_option :ts,
+                   type: :boolean,
+                   default: false,
+                   desc: 'Output tsx class based component'
+
       class_option :coffee,
                    type: :boolean,
                    default: false,
@@ -92,6 +97,8 @@ module React
       def create_component_file
         template_extension = if options[:coffee]
           'js.jsx.coffee'
+        elsif options[:ts]
+          'js.jsx.tsx'
         elsif options[:es6] || webpacker?
           'es6.jsx'
         else
@@ -101,7 +108,12 @@ module React
         # Prefer webpacker to sprockets:
         if webpacker?
           new_file_name = file_name.camelize
-          extension = options[:coffee] ? 'coffee' : 'js'
+          extension = if options[:coffee]
+            'coffee'
+          elsif options[:ts]
+            'tsx'
+          else
+            'js'
           target_dir = webpack_configuration.source_path
             .join('components')
             .relative_path_from(::Rails.root)
@@ -129,6 +141,8 @@ module React
       def file_header
         if webpacker?
           %|import React from "react"\nimport PropTypes from "prop-types"\n|
+        elsif options[:ts]
+          %|import * as React from "react"\n|
         else
           ''
         end
