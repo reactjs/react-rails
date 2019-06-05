@@ -31,11 +31,13 @@ module React
         @_global_wrapper ||= begin
           # Add loadable_stats.json
           manifest = File.read('public/packs/manifest.json')
+          loadable_stats = File.file?('public/packs/loadable-stats.json') ? File.read('public/packs/loadable-stats.json') : {}
 
           <<-JS
             var global = global || this;
             var self = self || this;
             var PACKS_MANIFEST = #{manifest};
+            var LOADABLE_STATS = #{loadable_stats};
           JS
         end
       end
