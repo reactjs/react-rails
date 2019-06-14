@@ -56,4 +56,4 @@ You can control what version of React.js (and JSXTransformer) is used by `react-
 
 ## Drop-in Version
 
-You can also provide your own copies of React.js and JSXTransformer. Just add `react.js` or `JSXTransformer.js` (case-sensitive) files to the asset pipeline (eg,  `app/assets/vendor/`).
+You can also provide your own copies of React.js and JSXTransformer. Just add a different version of `react.js` and `react-server.js` from this project or `JSXTransformer.js` (case-sensitive) files to the asset pipeline (eg,  `app/assets/vendor/`).
