@@ -77,5 +77,4 @@ before_install:
   - sudo apt-get update -qq
   - sudo apt-get install -y -qq yarn
   - gem update --system
-  - gem install chromedriver-helper
-  - chromedriver-update
+  - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
