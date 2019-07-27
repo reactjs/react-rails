@@ -28,6 +28,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'selenium-webdriver'
   s.add_development_dependency 'test-unit', '~> 2.5'
   s.add_development_dependency 'rails', '>= 3.2'
+  s.add_development_dependency 'pry-byebug'
 
   s.add_dependency 'connection_pool'
   s.add_dependency 'execjs'
