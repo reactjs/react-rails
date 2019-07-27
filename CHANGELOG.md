@@ -8,6 +8,21 @@
 
 #### Bug Fixes
 
+## 2.6.0
+
+#### Breaking Changes
+
+#### New Features
+
+- Typescript component generator #990
+
+#### Deprecation
+
+#### Bug Fixes
+
+- assert_react_component will not pass tests where the case was different #979
+- action_controller/test_case was accidentally `required` in dev #996
+
 ## 2.5.0
 
 #### Breaking Changes
