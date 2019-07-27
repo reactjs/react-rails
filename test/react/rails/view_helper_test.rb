@@ -10,13 +10,13 @@ end
 
 class ViewHelperTest < ActionView::TestCase
   test 'view helper can be called directly' do
-    expected_html = %{<div data-react-class="Component" data-react-props="{&quot;a&quot;:&quot;b&quot;}"></div>}
+    expected_html = %{<div data-react-class="Component" data-react-props="{&quot;a&quot;:&quot;b&quot;}" data-react-cache-id="Component-0"></div>}
     rendered_html = ViewHelperHelper.react_component('Component', { a: 'b' })
     assert_equal(expected_html, rendered_html)
   end
 
   test 'view helper accepts block usage' do
-    expected_html = %{<div data-react-class="Component" data-react-props="{&quot;a&quot;:&quot;b&quot;}">content</div>}
+    expected_html = %{<div data-react-class="Component" data-react-props="{&quot;a&quot;:&quot;b&quot;}" data-react-cache-id="Component-0">content</div>}
     rendered_html = ViewHelperHelper.react_component('Component', { a: 'b' }) do
       'content'
     end
@@ -32,7 +32,7 @@ class ViewHelperTest < ActionView::TestCase
   test 'view helper can accept block and render inner content only once' do
     rendered_html = render partial: 'pages/component_with_inner_html'
     expected_html = <<HTML
-<div data-react-class=\"GreetingMessage\" data-react-props=\"{&quot;name&quot;:&quot;Name&quot;}\" id=\"component\">
+<div data-react-class=\"GreetingMessage\" data-react-props=\"{&quot;name&quot;:&quot;Name&quot;}\" data-react-cache-id=\"GreetingMessage-0\" id=\"component\">
   <div id=\"unique-nested-id\">NestedContent</div>
 </div>
 HTML

@@ -84,6 +84,7 @@ end
 task default: :test
 
 task :test_setup do
+  load 'webdrivers/Rakefile'
   Dir.chdir('./test/dummy_sprockets') do
     `yarn install`
   end
