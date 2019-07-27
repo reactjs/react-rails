@@ -58,7 +58,7 @@ module React
 
         ActiveSupport.on_load(:action_view) do
           include ::React::Rails::ViewHelper
-          ActionDispatch::IntegrationTest.send(:include, React::Rails::TestHelper)
+          ActionDispatch::IntegrationTest.send(:include, React::Rails::TestHelper) if ::Rails.env.test?
         end
       end
 
