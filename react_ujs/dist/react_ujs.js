@@ -236,8 +236,15 @@ var ReactRailsUJS = {
   // This attribute holds which method to use between: ReactDOM.hydrate, ReactDOM.render
   RENDER_ATTR: 'data-hydrate',
 
+  // A unique identifier to identify a node
+  CACHE_ID_ATTR: "data-react-cache-id",
+
+  TURBOLINKS_PERMANENT_ATTR: "data-turbolinks-permanent",
+
   // If jQuery is detected, save a reference to it for event handlers
   jQuery: (typeof window !== 'undefined') && (typeof window.jQuery !== 'undefined') && window.jQuery,
+
+  components: {},
 
   // helper method for the mount and unmount methods to find the
   // `data-react-class` DOM elements
@@ -304,6 +311,8 @@ var ReactRailsUJS = {
       var propsJson = node.getAttribute(ujs.PROPS_ATTR);
       var props = propsJson && JSON.parse(propsJson);
       var hydrate = node.getAttribute(ujs.RENDER_ATTR);
+      var cacheId = node.getAttribute(ujs.CACHE_ID_ATTR);
+      var turbolinksPermanent = node.hasAttribute(ujs.TURBOLINKS_PERMANENT_ATTR);
 
       if (!constructor) {
         var message = "Cannot find component: '" + className + "'"
@@ -312,13 +321,21 @@ var ReactRailsUJS = {
         }
         throw new Error(message + ". Make sure your component is available to render.")
       } else {
+        let component = this.components[cacheId];
+        if(component === undefined) {
+          component = React.createElement(constructor, props);
+          if(turbolinksPermanent) {
+            this.components[cacheId] = component;
+          }
+        }
+
         if (hydrate && typeof ReactDOM.hydrate === "function") {
-          ReactDOM.hydrate(React.createElement(constructor, props), node);
+          component = ReactDOM.hydrate(component, node);
         } else {
-          ReactDOM.render(React.createElement(constructor, props), node);
+          component = ReactDOM.render(component, node);
         }
       }
-    }
+    } 
   },
 
   // Within `searchSelector`, find nodes which have React components
@@ -422,13 +439,13 @@ module.exports = {
 module.exports = {
   // Turbolinks 5+ got rid of named events (?!)
   setup: function(ujs) {
-    ujs.handleEvent('turbolinks:load', ujs.handleMount)
-    ujs.handleEvent('turbolinks:before-render', ujs.handleUnmount)
+  	ujs.handleEvent('turbolinks:load', ujs.handleMount);
+    ujs.handleEvent('turbolinks:before-render', ujs.handleMount);
   },
 
   teardown: function(ujs) {
-    ujs.removeEvent('turbolinks:load', ujs.handleMount)
-    ujs.removeEvent('turbolinks:before-render', ujs.handleUnmount)
+  	ujs.removeEvent('turbolinks:load', ujs.handleMount);
+    ujs.removeEvent('turbolinks:before-render', ujs.handleMount);
   },
 }
 
