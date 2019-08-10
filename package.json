@@ -1,6 +1,6 @@
 {
   "name": "react_ujs",
-  "version": "2.5.0",
+  "version": "2.6.0",
   "description": "Rails UJS for the react-rails gem",
   "main": "react_ujs/index.js",
   "files": [
@@ -14,6 +14,6 @@
     "webpack": "^2.3.3"
   },
   "dependencies": {
-    "react_ujs": "^2.5.0"
+    "react_ujs": "^2.6.0"
   }
 }

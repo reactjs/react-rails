@@ -15,6 +15,7 @@
 #### New Features
 
 - Typescript component generator #990
+- Enhanced Turbolinks Support #978 #962
 
 #### Deprecation
 
