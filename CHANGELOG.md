@@ -8,6 +8,19 @@
 
 #### Bug Fixes
 
+## 2.6.1
+
+#### Breaking Changes
+
+#### New Features
+
+- React 16.9.0
+- Sprockets users get React_UJS 2.6.0
+
+#### Deprecation
+
+#### Bug Fixes
+
 ## 2.6.0
 
 #### Breaking Changes
