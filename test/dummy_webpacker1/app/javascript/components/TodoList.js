@@ -5,7 +5,7 @@ module.exports = createReactClass({
   getInitialState: function() {
     return({mounted: "nope"});
   },
-  componentWillMount: function() {
+  componentDidMount: function() {
     this.setState({mounted: 'yep'});
   },
   render: function() {

@@ -1,5 +1,5 @@
 WithSetTimeout = createReactClass({
-  componentWillMount: function () {
+  componentDidMount: function () {
     setTimeout(function () {}, 1000)
     clearTimeout(0)
   },
