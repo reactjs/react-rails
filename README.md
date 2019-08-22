@@ -81,6 +81,7 @@ $ bundle install
 $ rails webpacker:install:react
 $ rails generate react:install
 ```
+Note: For Rails 6, You don't need to add `javascript_pack_tag` as in Step 4. Since its already added by default.
 
 ###### Rails 5.x:
 ```
