@@ -2,7 +2,7 @@
 
 🎉 Thanks for taking the time to contribute! 🎉
 
-With 2 Million+ downloads of the react-rails Gem and another 100k+ downloads of react_ujs on NPM, you're helping the biggest React + Rails community!
+With 5 Million+ downloads of the react-rails Gem and another 2 Million+ downloads of react_ujs on NPM, you're helping the biggest React + Rails community!
 
 What follows is a set of guidelines for contributing to React-Rails, inside the [react-js Organization](https://github.com/reactjs), part of the wider [React Community](https://reactcommunity.org/)
 

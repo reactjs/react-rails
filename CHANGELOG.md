@@ -15,11 +15,13 @@
 #### New Features
 
 - React 16.9.0
-- Sprockets users get React_UJS 2.6.0
+- Sprockets users get React_UJS 2.6.1
 
 #### Deprecation
 
 #### Bug Fixes
+
+- React_UJS 2.6.1 still complies with ES5 #1027 #1026 #1016
 
 ## 2.6.0
 
