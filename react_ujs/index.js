@@ -103,7 +103,7 @@ var ReactRailsUJS = {
         }
         throw new Error(message + ". Make sure your component is available to render.")
       } else {
-        let component = this.components[cacheId];
+        var component = this.components[cacheId];
         if(component === undefined) {
           component = React.createElement(constructor, props);
           if(turbolinksPermanent) {
