@@ -6,10 +6,9 @@
     "prop-types": "^15.6.0",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
-    "react_ujs": "^2.2.1",
-    "webpack-cli": "^3.3.9"
+    "react_ujs": "^2.2.1"
   },
   "devDependencies": {
-    "webpack-dev-server": "^3.1.11"
+    "webpack-dev-server": "^2.7.1"
   }
 }
