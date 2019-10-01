@@ -1,0 +1,27 @@
+React-Rails Demo Application
+This repo is an example of a simple working Rails 5, Webpack(er)3, React-Rails 2.3+ application.
+
+Where generators are used, the git commit will be the command ran to get to the current application state so it will hopefully be easy to follow along at home.
+
+How to test the Demo Application
+1) Install the JS packages:
+$ yarn # or npm install
+2) In one terminal run the rails server:
+$ rails s
+3) In another terminal run the webpack server:
+$ ./bin/webpack-dev-server
+4) Visit the welcome page
+http://localhost:3000/welcome/index
+Branches
+This repo contains two trees, one Webpacker and one Sprockets.
+
+Each branch illustrates a react-rails ability.
+
+master -> Webpacker 3
+sprockets -> Sprockets 3
+rails-production-version -> Sprockets 3 + serving production prebundled react
+rails-assets-sprockets -> Sprockets 3 + using Rails-Assets.org (failed)
+generate-new-component -> Webpacker 3 + new style component
+without-ujs -> Sprockets 3 + removing UJS and making component globally accessible
+jsx-file-example -> Webpacker 3 + file named .JSX
+coffeescript-example -> Webpacker 3 + Coffeescript WITH JSX
