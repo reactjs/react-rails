@@ -74,6 +74,16 @@ gem 'react-rails'
 ```
 
 ##### 3) Now run the installers:
+
+###### Rails 6.x:
+```
+$ bundle install
+$ rails webpacker:install:react
+$ rails generate react:install
+```
+Note: For Rails 6, You don't need to add `javascript_pack_tag` as in Step 4. Since its already added by default.
+
+###### Rails 5.x:
 ```
 $ bundle install
 $ rails webpacker:install       # OR (on rails version < 5.0) rake webpacker:install
@@ -658,7 +668,7 @@ yarn install
 ### Undefined Set
 ```
 ExecJS::ProgramError (identifier 'Set' undefined):
-  
+
 (execjs):1
 ```
 If you see any variation of this issue, see [Using TheRubyRacer](#using-therubyracer)
