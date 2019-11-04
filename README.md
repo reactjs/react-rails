@@ -78,6 +78,7 @@ gem 'react-rails'
 ###### Rails 6.x:
 ```
 $ bundle install
+$ rails webpacker:install
 $ rails webpacker:install:react
 $ rails generate react:install
 ```
