@@ -23,7 +23,7 @@ module React
       # @return [Symbol] based on the environment, return a method name to call with the sprockets environment
       def detect_strategy
         sprockets_version = Gem::Version.new(Sprockets::VERSION)
-        if sprockets_version >= Gem::Version.new('4.x')
+        if sprockets_version >= Gem::Version.new('4.a')
           :register_processors
         elsif sprockets_version >= Gem::Version.new('3.0.0')
           :register_engine_with_mime_type
