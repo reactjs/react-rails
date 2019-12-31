@@ -22,6 +22,7 @@
 #### Bug Fixes
 
 - React_UJS 2.6.1 still complies with ES5 #1027 #1026 #1016
+- Support RubyGems pattern for Alpha releases when detecting sprockets version #1047
 
 ## 2.6.0
 
