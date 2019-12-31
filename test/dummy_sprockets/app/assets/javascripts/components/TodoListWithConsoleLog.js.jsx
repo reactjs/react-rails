@@ -3,7 +3,7 @@ TodoListWithConsoleLog = createReactClass({
     console.log('got initial state');
     return({mounted: "nope"});
   },
-  componentDidMount: function() {
+  componentWillMount: function() {
     console.warn('mounted component');
     this.setState({mounted: 'yep'});
   },
