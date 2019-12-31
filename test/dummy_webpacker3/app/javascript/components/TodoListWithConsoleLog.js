@@ -6,7 +6,9 @@ module.exports = createReactClass({
     console.log('got initial state');
     return({mounted: "nope"});
   },
-  componentDidMount: function() {
+  componentWillMount: function() {
+    // This will need to be replaced
+    // https://reactjs.org/blog/2018/03/27/update-on-async-rendering.html
     console.warn('mounted component');
     this.setState({mounted: 'yep'});
   },
