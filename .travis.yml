@@ -7,25 +7,18 @@ cache:
   bundler: true
   yarn: true
 rvm:
-  - 2.6.2
-  - 2.5.3
-  - 2.3.8
+  - 2.7.0
+  - 2.6.4
+  - 2.5.7
   - jruby-9.1.9.0
 
 gemfile:
   # These have webpacker:
-  - gemfiles/rails_4.2_sprockets_4.gemfile
-  - gemfiles/rails_5_no_sprockets_webpacker_1_1.gemfile
-  - gemfiles/rails_5_no_sprockets_webpacker_1_x.gemfile
-  - gemfiles/rails_5_no_sprockets_webpacker_2.gemfile
-  - gemfiles/rails_5_no_sprockets_webpacker_3.gemfile
+  - gemfiles/rails_5.2_no_sprockets.gemfile
   - gemfiles/rails_5.2_no_sprockets_webpacker_3.gemfile
   - gemfiles/rails_5.2_no_sprockets_webpacker_4.gemfile
   # These don't have webpacker:
-  - gemfiles/rails_4.2_sprockets_2.gemfile
-  - gemfiles/rails_4.2_sprockets_3.gemfile
-  - gemfiles/rails_5_no_sprockets.gemfile
-  - gemfiles/rails_5.1_sprockets_4.gemfile
+  - gemfiles/rails_5.2_sprockets_3.gemfile
   - gemfiles/rails_5.2_sprockets_4.gemfile
 
 matrix:
