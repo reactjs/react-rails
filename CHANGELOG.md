@@ -8,6 +8,26 @@
 
 #### Bug Fixes
 
+## 2.6.1
+
+#### Breaking Changes
+
+#### New Features
+
+- React 16.9.0
+- Sprockets users get React_UJS 2.6.1
+
+#### Deprecation
+
+- Removed tests for Rails 3, 4, 5.0
+- Removed tests for Sprockets 2
+- Removed tests for Webpacker 1.1, 2
+
+#### Bug Fixes
+
+- React_UJS 2.6.1 still complies with ES5 #1027 #1026 #1016
+- Support RubyGems pattern for Alpha releases when detecting sprockets version #1047
+
 ## 2.6.0
 
 #### Breaking Changes

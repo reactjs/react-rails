@@ -2,7 +2,7 @@
 
 source "http://rubygems.org"
 
-gem "rails", "~> 5.2.0"
+gem "rails", "~> 5.2.x"
 gem "webpacker", "~> 4.0"
 gem "mini_racer", platforms: :mri
 gem "therubyrhino", platforms: :jruby

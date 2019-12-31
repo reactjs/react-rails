@@ -1,9 +1,7 @@
 *.gem
-Gemfile.lock
 *.log
 test/*/tmp
 test/*/public/packs
-gemfiles/*.lock
 *.swp
 /vendor/react
 **/node_modules
