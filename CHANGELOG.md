@@ -19,6 +19,10 @@
 
 #### Deprecation
 
+- Removed tests for Rails 3, 4, 5.0
+- Removed tests for Sprockets 2
+- Removed tests for Webpacker 1.1, 2
+
 #### Bug Fixes
 
 - React_UJS 2.6.1 still complies with ES5 #1027 #1026 #1016
