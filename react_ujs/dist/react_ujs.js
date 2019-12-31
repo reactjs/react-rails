@@ -321,7 +321,7 @@ var ReactRailsUJS = {
         }
         throw new Error(message + ". Make sure your component is available to render.")
       } else {
-        let component = this.components[cacheId];
+        var component = this.components[cacheId];
         if(component === undefined) {
           component = React.createElement(constructor, props);
           if(turbolinksPermanent) {
@@ -440,12 +440,12 @@ module.exports = {
   // Turbolinks 5+ got rid of named events (?!)
   setup: function(ujs) {
   	ujs.handleEvent('turbolinks:load', ujs.handleMount);
-    ujs.handleEvent('turbolinks:before-render', ujs.handleMount);
+    ujs.handleEvent('turbolinks:before-render', ujs.handleUnmount);
   },
 
   teardown: function(ujs) {
   	ujs.removeEvent('turbolinks:load', ujs.handleMount);
-    ujs.removeEvent('turbolinks:before-render', ujs.handleMount);
+    ujs.removeEvent('turbolinks:before-render', ujs.handleUnmount);
   },
 }
 
