@@ -74,6 +74,17 @@ gem 'react-rails'
 ```
 
 ##### 3) Now run the installers:
+
+###### Rails 6.x:
+```
+$ bundle install
+$ rails webpacker:install
+$ rails webpacker:install:react
+$ rails generate react:install
+```
+Note: For Rails 6, You don't need to add `javascript_pack_tag` as in Step 4. Since its already added by default.
+
+###### Rails 5.x:
 ```
 $ bundle install
 $ rails webpacker:install       # OR (on rails version < 5.0) rake webpacker:install
@@ -658,7 +669,7 @@ yarn install
 ### Undefined Set
 ```
 ExecJS::ProgramError (identifier 'Set' undefined):
-  
+
 (execjs):1
 ```
 If you see any variation of this issue, see [Using TheRubyRacer](#using-therubyracer)
@@ -670,9 +681,11 @@ TheRubyRacer [hasn't updated LibV8](https://github.com/cowboyd/therubyracer/blob
 LibV8 itself is already [beyond version 7](https://github.com/cowboyd/libv8/releases/tag/v7.3.492.27.1) therefore many serverside issues are caused by old JS engines and fixed by using an up to date one such as [MiniRacer](https://github.com/discourse/mini_racer) or [TheRubyRhino](https://github.com/cowboyd/therubyrhino) on JRuby.
 
 ### HMR
-HMR is possible with this gem as it does just pass through to Webpacker. Please open an issue to let us know tips and tricks for it to add to the wiki.
+Hot Module Replacement is [possible with this gem](https://stackoverflow.com/a/54846330/193785) as it does just pass through to Webpacker. Please open an issue to let us know tips and tricks for it to add to the wiki.
 
-One example: [Stack Overflow answer with Babel and Webpacker config](https://stackoverflow.com/a/54846330/193785)
+Sample repo that shows HMR working with `react-rails`: [https://github.com/edelgado/react-rails-hmr](https://github.com/edelgado/react-rails-hmr)
+
+One caveat is that currently you [cannot Server-Side Render along with HMR](https://github.com/reactjs/react-rails/issues/925#issuecomment-415469572). 
 
 ## Related Projects
 
