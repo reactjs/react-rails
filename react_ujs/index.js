@@ -4,6 +4,7 @@ var ReactDOMServer = require("react-dom/server")
 
 var detectEvents = require("./src/events/detect")
 var constructorFromGlobal = require("./src/getConstructor/fromGlobal")
+var constructorFromRequireContext = require("./src/getConstructor/fromRequireContext")
 var constructorFromRequireContextWithGlobalFallback = require("./src/getConstructor/fromRequireContextWithGlobalFallback")
 const { supportsHydration, reactHydrate, createReactRootLike } = require("./src/renderHelpers")
 
@@ -65,6 +66,11 @@ var ReactRailsUJS = {
   // Override this function to lookup classes in a custom way,
   // the default is ReactRailsUJS.ComponentGlobal
   getConstructor: constructorFromGlobal,
+
+  // Available for customizing `getConstructor`
+  constructorFromGlobal: constructorFromGlobal,
+  constructorFromRequireContext: constructorFromRequireContext,
+  constructorFromRequireContextWithGlobalFallback: constructorFromRequireContextWithGlobalFallback,
 
   // Given a Webpack `require.context`,
   // try finding components with `require`,
@@ -140,6 +146,7 @@ var ReactRailsUJS = {
   detectEvents: function() {
     detectEvents(this)
   },
+
 }
 
 // These stable references are so that handlers can be added and removed:

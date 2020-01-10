@@ -4,6 +4,8 @@
 
 #### New Features
 
+- Expose alternative implementations for `ReactUJS.getConstructor` #1050
+
 #### Deprecation
 
 #### Bug Fixes
