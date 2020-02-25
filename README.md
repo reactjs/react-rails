@@ -172,7 +172,10 @@ $ bundle exec rails webpacker:install:typescript
 $ yarn add @types/react @types/react-dom
 ```
 
-Doing this will allow React-Rails to support the .tsx extension.
+Doing this will allow React-Rails to support the .tsx extension. Additionally, it is recommended to add `ts` and `tsx` to the `server_renderer_extensions` in your application configuration:
+```
+config.react.server_renderer_extensions = ["jsx", "js", "tsx", "ts"]
+```
 
 ### Test component
 
