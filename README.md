@@ -94,7 +94,7 @@ $ rails generate react:install
 This gives you:
 
 - `app/assets/javascript/components/` directory for your React components
-- [`ReactRailsUJS`](#ujs) setup in `app/javascript/packs/application.js`
+- [`ReactRailsUJS`](#ujs) setup in `app/assets/javascript/packs/application.js`
 - `app/assets/javascript/packs/server_rendering.js` for [server-side rendering](#server-side-rendering)
 
 ##### 4) Link the JavaScript pack in Rails view using `javascript_pack_tag` [helper](https://github.com/rails/webpacker#usage):
@@ -112,7 +112,7 @@ $ rails g react:component HelloWorld greeting:string
 ```
 $ rails g react:component my_subdirectory/HelloWorld greeting:string
 ```
-Note: Your component is added to `app/javascript/components/` by default.
+Note: Your component is added to `app/assets/javascript/components/` by default.
 
 
 ##### 7) [Render it in a Rails view](#view-helper):
@@ -159,10 +159,10 @@ Sometimes this will cause a stumble when searching for filenames.
 
 Component File Name | `react_component` call
 -----|-----
-`app/javascript/components/samplecomponent.js` | `react_component("samplecomponent")`
-`app/javascript/components/sample_component.js` | `react_component("sample_component")`
-`app/javascript/components/SampleComponent.js` | `react_component("SampleComponent")`
-`app/javascript/components/SampleComponent.js.jsx` | Has to be renamed to SampleComponent.jsx, then use `react_component("SampleComponent")`
+`app/assets/javascript/components/samplecomponent.js` | `react_component("samplecomponent")`
+`app/assets/javascript/components/sample_component.js` | `react_component("sample_component")`
+`app/assets/javascript/components/SampleComponent.js` | `react_component("SampleComponent")`
+`app/assets/javascript/components/SampleComponent.js.jsx` | Has to be renamed to SampleComponent.jsx, then use `react_component("SampleComponent")`
 
 ### Typescript support
 
@@ -454,7 +454,7 @@ module MyApp
     }
     # Changing files matching these dirs/exts will cause the server renderer to reload:
     config.react.server_renderer_extensions = ["jsx", "js"]
-    config.react.server_renderer_directories = ["/app/assets/javascripts", "/app/javascript/"]
+    config.react.server_renderer_directories = ["/app/assets/javascripts", "/app/assets/javascript/"]
   end
 end
 ```
