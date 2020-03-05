@@ -93,9 +93,9 @@ $ rails generate react:install
 ```
 This gives you:
 
-- `app/javascript/components/` directory for your React components
+- `app/assets/javascript/components/` directory for your React components
 - [`ReactRailsUJS`](#ujs) setup in `app/javascript/packs/application.js`
-- `app/javascript/packs/server_rendering.js` for [server-side rendering](#server-side-rendering)
+- `app/assets/javascript/packs/server_rendering.js` for [server-side rendering](#server-side-rendering)
 
 ##### 4) Link the JavaScript pack in Rails view using `javascript_pack_tag` [helper](https://github.com/rails/webpacker#usage):
 ```erb
