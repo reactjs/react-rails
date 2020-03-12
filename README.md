@@ -694,7 +694,7 @@ One caveat is that currently you [cannot Server-Side Render along with HMR](http
 - [react\_on\_rails](https://github.com/shakacode/react_on_rails): Integration of React with Rails utilizing Webpack, Redux, React-Router.
 - [react-rails-hot-loader](https://github.com/rmosolgo/react-rails-hot-loader) Simple live-reloader for `react-rails`.
 - [react-rails-benchmark_renderer](https://github.com/pboling/react-rails-benchmark_renderer) adds performance instrumentation to server rendering.
-- [Ruby Hyperloop](http://ruby-hyperloop.org/): Use Ruby to build reactive user interfaces with React.
+- [Ruby Hyperstack](https://hyperstack.org/): Use Ruby to build reactive user interfaces with React.
 
 ## Contributing
 
