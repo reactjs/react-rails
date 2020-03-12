@@ -690,7 +690,7 @@ One caveat is that currently you [cannot Server-Side Render along with HMR](http
 ## Related Projects
 
 - [webpacker-react](https://github.com/renchap/webpacker-react): Integration of React with Rails utilizing Webpack with Hot Module Replacement (HMR).
-- [The Free React on Rails Course](https://learnetto.com/users/hrishio/courses/the-free-react-on-rails-5-course) A free video course which teaches the basics of React and how to get started using it in Rails with `react-rails`.
+- [The React on Rails Course](https://learnetto.com/users/hrishio/courses/the-free-react-on-rails-5-course) A video course which teaches the basics of React and how to get started using it in Rails with `react-rails`.
 - [react\_on\_rails](https://github.com/shakacode/react_on_rails): Integration of React with Rails utilizing Webpack, Redux, React-Router.
 - [react-rails-hot-loader](https://github.com/rmosolgo/react-rails-hot-loader) Simple live-reloader for `react-rails`.
 - [react-rails-benchmark_renderer](https://github.com/pboling/react-rails-benchmark_renderer) adds performance instrumentation to server rendering.
