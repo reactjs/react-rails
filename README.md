@@ -114,7 +114,7 @@ $ rails g react:component my_subdirectory/HelloWorld greeting:string
 ```
 Note: Your component is added to `app/javascript/components/` by default.
 
-Note: If you generated into a subdirectory you will append the directory path to your erb component call.
+Note: If your component is in a subdirectory you will append the directory path to your erb component call.
 
 Example: 
 ```
