@@ -80,7 +80,12 @@ var ReactRailsUJS = {
     return ReactDOMServer[renderFunction](element)
   },
 
-  renderComponent: function(renderFunction, component, node, props) {
+  // Render `component` using the specified `renderFunction` from `react-dom`.
+  // Override this function to render components in a custom way,
+  // the default is ReactRailsUJS.renderWithReactDOM
+  renderComponent: this.renderWithReactDOM,
+
+  renderWithReactDOM: function(renderFunction, component, node, props) {
     ReactDOM[renderFunction](component, node);
   },
 
