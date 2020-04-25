@@ -85,6 +85,7 @@ var ReactRailsUJS = {
 
   // Render `component` using the specified `renderFunction` from `react-dom`.
   // Override this function to render components in a custom way.
+  // function signature: ("hydrate" | "render", component, node, props)
   renderComponent: renderWithReactDOM,
 
   // Enables hot reload for component rendering.
