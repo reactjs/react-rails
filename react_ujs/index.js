@@ -80,6 +80,10 @@ var ReactRailsUJS = {
     return ReactDOMServer[renderFunction](element)
   },
 
+  renderComponent: function(renderFunction, component, node, props) {
+    ReactDOM[renderFunction](component, node);
+  },
+
   // Within `searchSelector`, find nodes which should have React components
   // inside them, and mount them with their props.
   mountComponents: function(searchSelector) {
@@ -112,9 +116,9 @@ var ReactRailsUJS = {
         }
 
         if (hydrate && typeof ReactDOM.hydrate === "function") {
-          component = ReactDOM.hydrate(component, node);
+          renderComponent("hydrate", component, node, props);
         } else {
-          component = ReactDOM.render(component, node);
+          renderComponent("render", component, node, props);
         }
       }
     } 
