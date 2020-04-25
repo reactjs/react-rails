@@ -7,6 +7,7 @@ var constructorFromGlobal = require("./src/getConstructor/fromGlobal")
 var constructorFromRequireContextWithGlobalFallback = require("./src/getConstructor/fromRequireContextWithGlobalFallback")
 
 var renderWithReactDOM = require("./src/renderComponent/withReactDOM")
+var renderWithHotReload = require("./src/renderComponent/withHotReload")
 
 var ReactRailsUJS = {
   // This attribute holds the name of component which should be mounted
@@ -84,8 +85,32 @@ var ReactRailsUJS = {
 
   // Render `component` using the specified `renderFunction` from `react-dom`.
   // Override this function to render components in a custom way.
-  // function signature: ("hydrate" | "render", component, node, props)
   renderComponent: renderWithReactDOM,
+
+  // Enables hot reload for component rendering.
+  //
+  // Ensure
+  // 1. [react-hot-loader](https://github.com/gaearon/react-hot-loader) and [@hot-loader/react-dom](https://github.com/hot-loader/react-dom) are installed;
+  // 2. your webpack config has the following in dev:
+  // {
+  //   module: {
+  //     rules: [
+  //       {
+  //         test: /\.(jsx|tsx)?$/,
+  //         use: ["react-hot-loader/webpack"],
+  //       },
+  //     ],
+  //   },
+  //   resolve: {
+  //     alias: {
+  //       "react-dom": "@hot-loader/react-dom",
+  //     },
+  //   },
+  // }
+  //
+  useHotReload: function(requireContext) {
+    this.renderComponent = renderWithHotReload(requireContext)
+  },
 
   // Within `searchSelector`, find nodes which should have React components
   // inside them, and mount them with their props.
