@@ -90,25 +90,7 @@ var ReactRailsUJS = {
 
   // Enables hot reload for component rendering.
   //
-  // Ensure
-  // 1. [react-hot-loader](https://github.com/gaearon/react-hot-loader) and [@hot-loader/react-dom](https://github.com/hot-loader/react-dom) are installed;
-  // 2. your webpack config has the following in dev:
-  // {
-  //   module: {
-  //     rules: [
-  //       {
-  //         test: /\.(jsx|tsx)?$/,
-  //         use: ["react-hot-loader/webpack"],
-  //       },
-  //     ],
-  //   },
-  //   resolve: {
-  //     alias: {
-  //       "react-dom": "@hot-loader/react-dom",
-  //     },
-  //   },
-  // }
-  //
+  // See the HMR section in README to ensure required steps are completed.
   useHotReload: function(requireContext) {
     this.renderComponent = renderWithHotReload(requireContext)
   },
