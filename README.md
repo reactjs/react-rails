@@ -684,16 +684,8 @@ LibV8 itself is already [beyond version 7](https://github.com/cowboyd/libv8/rele
 Hot Module Replacement is [possible with this gem](https://stackoverflow.com/a/54846330/193785) as it does just pass through to Webpacker. Please open an issue to let us know tips and tricks for it to add to the wiki.
 
 Similar to `useContext`, you can pass the webpack context into `useHotReload` to enable hot reload:
-```js
-var myCustomContext = require.context("custom_components", true)
-var ReactRailsUJS = require("react_ujs")
-// use `custom_components/` for <%= react_component(...) %> calls
-ReactRailsUJS.useHotReload(myCustomContext)
-```
-
-You must ensure
-1. [react-hot-loader](https://github.com/gaearon/react-hot-loader) and [@hot-loader/react-dom](https://github.com/hot-loader/react-dom) are installed;
-2. your webpack config has the following in dev:
+1. install [react-hot-loader](https://github.com/gaearon/react-hot-loader) and [@hot-loader/react-dom](https://github.com/hot-loader/react-dom)
+1. add the following to your webpack config in dev:
 ```js
 {
   module: {
@@ -710,6 +702,12 @@ You must ensure
     },
   },
 }
+```
+1. in your entry file, usually where you call `ReactRailsUJS.useContext` already, call `useHotReload`:
+```js
+var ReactRailsUJS = require("react_ujs")
+var myCustomContext = require.context("custom_components", true)
+ReactRailsUJS.useHotReload(myCustomContext)
 ```
 
 One caveat is that currently you [cannot Server-Side Render along with HMR](https://github.com/reactjs/react-rails/issues/925#issuecomment-415469572). 
