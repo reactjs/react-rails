@@ -685,7 +685,7 @@ Hot Module Replacement is [possible with this gem](https://stackoverflow.com/a/5
 
 Similar to `useContext`, you can pass the webpack context into `useHotReload` to enable hot reload:
 1. install [react-hot-loader](https://github.com/gaearon/react-hot-loader) and [@hot-loader/react-dom](https://github.com/hot-loader/react-dom)
-1. add the following to your webpack config in dev:
+2. add the following to your webpack config in dev:
 ```js
 {
   module: {
@@ -703,7 +703,7 @@ Similar to `useContext`, you can pass the webpack context into `useHotReload` to
   },
 }
 ```
-1. in your entry file, usually where you call `ReactRailsUJS.useContext` already, call `useHotReload`:
+3. in your entry file, usually where you call `ReactRailsUJS.useContext` already, call `useHotReload`:
 ```js
 var ReactRailsUJS = require("react_ujs")
 var myCustomContext = require.context("custom_components", true)
