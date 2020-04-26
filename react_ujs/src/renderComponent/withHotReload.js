@@ -5,11 +5,11 @@ var AppContainer = reactHotLoader.AppContainer;
 // Render React component with hot reload.
 //
 // See the HMR section in README to ensure required steps are completed.
-module.exports = function(reqctx) {
+module.exports = function(webpackRequireContext) {
   return function(renderFunctionName, component, node, props) {
     var className = node.getAttribute(ReactRailsUJS.CLASS_NAME_ATTR);
     var filename = getFileNameFromClassName(className);
-    var path = reqctx.resolve("./" + filename);
+    var path = webpackRequireContext.resolve("./" + filename);
     var cache = require.cache;
     var module = cache[path];
     var moduleParent = module && cache[module.parents[0]];
