@@ -21,7 +21,11 @@ module.exports = function(webpackRequireContext) {
       var FreshConstructor = ReactRailsUJS.getConstructor(className);
       var FreshComponent = React.createElement(FreshConstructor, props);
 
-      ReactDOM[renderFunctionName](React.createElement(AppContainer, null, FreshComponent), node);
+      var nodes = findAllReactNodes(className);
+      for (var i = 0; i < nodes.length; ++i) {
+        var reactNode = nodes[i];
+        ReactDOM[renderFunctionName](React.createElement(AppContainer, null, FreshComponent), reactNode);
+      }
     });
 
     ReactDOM[renderFunctionName](React.createElement(AppContainer, null, component), node);
@@ -33,4 +37,13 @@ function getFileNameFromClassName(className) {
   var filename = parts.shift();
 
   return filename;
+}
+
+function findAllReactNodes(className) {
+  var selector = '[' + ReactRailsUJS.CLASS_NAME_ATTR + '="' + className + '"]';
+  if (ReactRailsUJS.jQuery) {
+    return ReactRailsUJS.jQuery(selector, document);
+  } else {
+    return parent.querySelectorAll(selector);
+  }
 }
