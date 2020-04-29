@@ -17,18 +17,7 @@ module.exports = function(webpackRequireContext) {
       console.warn(`Cannot hot reload for ${path}. Ensure webpack-dev-server is started with --hot and WEBPACKER_DEV_SERVER_HMR=true`);
       return;
     }
-    moduleParent.hot.accept(path, () => {
-      var FreshConstructor = ReactRailsUJS.getConstructor(className);
-
-      var nodes = findAllReactNodes(className);
-      for (var i = 0; i < nodes.length; ++i) {
-        var reactNode = nodes[i];
-        var propsJson = reactNode.getAttribute(ujs.PROPS_ATTR);
-        var props = propsJson && JSON.parse(propsJson);
-        var FreshComponent = React.createElement(FreshConstructor, props);
-        ReactDOM[renderFunctionName](React.createElement(AppContainer, null, FreshComponent), reactNode);
-      }
-    });
+    moduleParent.hot.accept(path, () => reRenderAllNodes(className, renderFunctionName));
 
     ReactDOM[renderFunctionName](React.createElement(AppContainer, null, component), node);
   };
@@ -39,6 +28,17 @@ function getFileNameFromClassName(className) {
   var filename = parts.shift();
 
   return filename;
+}
+
+function reRenderAllNodes(className, renderFunctionName) {
+  var nodes = findAllReactNodes(className);
+  for (var i = 0; i < nodes.length; ++i) {
+    var node = nodes[i];
+    var propsJson = node.getAttribute(ujs.PROPS_ATTR);
+    var props = propsJson && JSON.parse(propsJson);
+    var FreshComponent = React.createElement(FreshConstructor, props);
+    ReactDOM[renderFunctionName](React.createElement(AppContainer, null, FreshComponent), node);
+  }
 }
 
 function findAllReactNodes(className) {
