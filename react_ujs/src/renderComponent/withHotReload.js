@@ -2,10 +2,16 @@ var ReactDOM = require("react-dom")
 var reactHotLoader = require("react-hot-loader")
 var AppContainer = reactHotLoader.AppContainer;
 
+var IS_MOUNTED_ATTR = "data-react-is-mounted";
+
 // Render React component with hot reload.
 //
 // See the HMR section in README to ensure required steps are completed.
 module.exports = function(webpackRequireContext) {
+  ReactRailsUJS.onComponentUnmountAtNode = function(node) {
+    node.setAttribute(IS_MOUNTED_ATTR, "false");
+  }
+  
   return function(renderFunctionName, component, node, props) {
     var className = node.getAttribute(ReactRailsUJS.CLASS_NAME_ATTR);
     var filename = getFileNameFromClassName(className);
@@ -20,6 +26,7 @@ module.exports = function(webpackRequireContext) {
     moduleParent.hot.accept(path, () => reRenderAllNodes(className, renderFunctionName));
 
     ReactDOM[renderFunctionName](React.createElement(AppContainer, null, component), node);
+    node.setAttribute(IS_MOUNTED_ATTR, "true");
   };
 }
 
@@ -53,5 +60,5 @@ function findAllReactNodes(className) {
 }
 
 function isReactMountedAtNode(node) {
-  return node.hasChildNodes();
+  return node.matches('[' + IS_MOUNTED_ATTR + '="true"]');
 }
