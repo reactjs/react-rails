@@ -34,6 +34,8 @@ function reRenderAllNodes(className, renderFunctionName) {
   var nodes = findAllReactNodes(className);
   for (var i = 0; i < nodes.length; ++i) {
     var node = nodes[i];
+    if (!isReactMountedAtNode(node)) continue;
+    
     var propsJson = node.getAttribute(ujs.PROPS_ATTR);
     var props = propsJson && JSON.parse(propsJson);
     var FreshComponent = React.createElement(FreshConstructor, props);
@@ -48,4 +50,8 @@ function findAllReactNodes(className) {
   } else {
     return parent.querySelectorAll(selector);
   }
+}
+
+function isReactMountedAtNode(node) {
+  return node.hasChildNodes();
 }
