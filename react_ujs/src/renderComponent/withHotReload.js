@@ -19,11 +19,13 @@ module.exports = function(webpackRequireContext) {
     }
     moduleParent.hot.accept(path, () => {
       var FreshConstructor = ReactRailsUJS.getConstructor(className);
-      var FreshComponent = React.createElement(FreshConstructor, props);
 
       var nodes = findAllReactNodes(className);
       for (var i = 0; i < nodes.length; ++i) {
         var reactNode = nodes[i];
+        var propsJson = reactNode.getAttribute(ujs.PROPS_ATTR);
+        var props = propsJson && JSON.parse(propsJson);
+        var FreshComponent = React.createElement(FreshConstructor, props);
         ReactDOM[renderFunctionName](React.createElement(AppContainer, null, FreshComponent), reactNode);
       }
     });
