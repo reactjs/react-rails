@@ -73,6 +73,11 @@ var ReactRailsUJS = {
   useContext: function(requireContext) {
     this.getConstructor = constructorFromRequireContextWithGlobalFallback(requireContext)
   },
+  
+  // Called after React unmounts component at `node`
+  // Override this function to perform any cleanup
+  // the default function does nothing
+  onComponentUnmountAtNode: function (node) {},
 
   // Render `componentName` with `props` to a string,
   // using the specified `renderFunction` from `react-dom/server`.
@@ -135,6 +140,7 @@ var ReactRailsUJS = {
     for (var i = 0; i < nodes.length; ++i) {
       var node = nodes[i];
       ReactDOM.unmountComponentAtNode(node);
+      ReactRailsUJS.onComponentUnmountAtNode(node);
     }
   },
 
