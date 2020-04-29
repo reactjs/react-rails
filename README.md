@@ -709,6 +709,12 @@ var ReactRailsUJS = require("react_ujs")
 var myCustomContext = require.context("custom_components", true)
 ReactRailsUJS.useHotReload(myCustomContext)
 ```
+4. optionally, for CSS to hot reload, update the following for dev in `webpacker.yml`:
+```yml
+development:
+  <<: *default
+  extract_css: false
+```
 
 One caveat is that currently you [cannot Server-Side Render along with HMR](https://github.com/reactjs/react-rails/issues/925#issuecomment-415469572). 
 
