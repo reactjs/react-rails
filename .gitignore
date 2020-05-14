@@ -7,3 +7,4 @@ test/*/public/packs
 **/node_modules
 react-builds/build
 coverage/
+.idea/
