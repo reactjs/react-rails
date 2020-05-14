@@ -16,8 +16,10 @@ module React
 
           ActiveSupport::Deprecation.warn(warning)
         end
-      end
 
+      rescue => e
+        ActiveSupport::Deprecation.warn("Error checking JavaScript runtime: #{e.message}")
+      end
     end
   end
 end
