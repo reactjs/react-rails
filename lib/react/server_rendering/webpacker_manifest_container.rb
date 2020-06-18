@@ -44,7 +44,7 @@ module React
             ds = Webpacker.dev_server
             # Remove the protocol and host from the asset path. Sometimes webpacker includes this, sometimes it does not
             asset_path.slice!("#{ds.protocol}://#{ds.host_with_port}")
-            dev_server_asset = open("#{ds.protocol}://#{ds.host_with_port}#{asset_path}").read
+            dev_server_asset = open("#{ds.protocol}://#{ds.host_with_port}#{asset_path}", ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE).read
             dev_server_asset.sub!(CLIENT_REQUIRE, '//\0')
             dev_server_asset
           else
