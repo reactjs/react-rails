@@ -82,7 +82,6 @@ $ rails webpacker:install
 $ rails webpacker:install:react
 $ rails generate react:install
 ```
-Note: For Rails 6, You don't need to add `javascript_pack_tag` as in Step 4. Since its already added by default.
 
 ###### Rails 5.x:
 ```
@@ -97,42 +96,40 @@ This gives you:
 - [`ReactRailsUJS`](#ujs) setup in `app/javascript/packs/application.js`
 - `app/javascript/packs/server_rendering.js` for [server-side rendering](#server-side-rendering)
 
-##### 4) Link the JavaScript pack in Rails view using `javascript_pack_tag` [helper](https://github.com/rails/webpacker#usage):
+##### 4) Add a link to the JavaScript pack in your Rails `application.html.erb` view by using the `javascript_pack_tag` [helper](https://github.com/rails/webpacker#usage):
 ```erb
 <!-- application.html.erb in Head tag below turbolinks -->
 <%= javascript_pack_tag 'application' %>
 ```
+Note: If you are using Rails 6, you may not need to add the helper tag as shown in this step. However, Rails 6 does not always load the JS pack automatically so please use caution and, if you have problems, add the helper manually.
 
 ##### 5) Generate your first component:
 ```
 $ rails g react:component HelloWorld greeting:string
 ```
 
-##### 6) You can also generate your component in a subdirectory:
+Your component is added to `app/javascript/components/` by default, but you can also generate your component in a subdirectory like this:
 ```
 $ rails g react:component my_subdirectory/HelloWorld greeting:string
 ```
-Note: Your component is added to `app/javascript/components/` by default.
 
-Note: If your component is in a subdirectory you will append the directory path to your erb component call.
-
-Example: 
+If you create a component in a subdirectory, you will append the directory path to your erb component call. For example:
 ```
 <%= react_component("my_subdirectory/HelloWorld", { greeting: "Hello from react-rails." }) %>
 ```
 
-##### 7) [Render it in a Rails view](#view-helper):
+##### 6) [Load your component in a Rails view](#view-helper):
 
 ```erb
 <!-- erb: paste this in view -->
 <%= react_component("HelloWorld", { greeting: "Hello from react-rails." }) %>
 ```
 
-##### 8) Lets Start the app:
+##### 7) Start the app:
 ```
 $ rails s
 ```
-output: greeting: Hello from react-rails", inspect webpage in your browser too see change in tag props.
+You should see the output: "greeting: Hello from react-rails". If you use your browser's developer tools to inspect the webpage's source, you should be able to see this change reflected in the tag props in the Inspector. (This may require the use of the [React Developer Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi) extension for Chrome.)
 
 ### Component name
 
@@ -145,9 +142,9 @@ The component name tells `react-rails` where to load the component. For example:
 `react_component("items.Index")` | `require("items").Index`
 `react_component("items.Index.Header")` | `require("items").Index.Header`
 
-This way, you can access top-level, default, or named exports.
+This allows you to load top-level, default, or named exports, depending how the component has been written.
 
-The `require.context` inserted into `packs/application.js` is used to load components. If you want to load components from a different directory, override it by calling `ReactRailsUJS.useContext`:
+If you add `require.context` into your `packs/application.js` file, you can load components from webpacker. If you want to load components from a different directory, you should override the default location by calling `ReactRailsUJS.useContext`:
 
 ```js
 var myCustomContext = require.context("custom_components", true)
@@ -161,7 +158,7 @@ If `require` fails to find your component, [`ReactRailsUJS`](#ujs) falls back to
 ### File naming
 
 React-Rails supports plenty of file extensions such as: .js, .jsx.js, .js.jsx, .es6.js, .coffee, etcetera!
-Sometimes this will cause a stumble when searching for filenames.
+Sometimes this will cause a stumble when searching for filenames so take care.
 
 Component File Name | `react_component` call
 -----|-----
@@ -172,20 +169,20 @@ Component File Name | `react_component` call
 
 ### Typescript support
 
-If you want to use React-Rails with Typescript, simply run the installer and add @types:
+If you want to use React-Rails with Typescript, you should add @types when you run the installer:
 ```
 $ bundle exec rails webpacker:install:typescript
 $ yarn add @types/react @types/react-dom
 ```
 
-Doing this will allow React-Rails to support the .tsx extension. Additionally, it is recommended to add `ts` and `tsx` to the `server_renderer_extensions` in your application configuration:
+Doing this will allow React-Rails to support the .tsx file-name extension. We also recommend adding `ts` and `tsx` to the `server_renderer_extensions` in your application configuration:
 ```
 config.react.server_renderer_extensions = ["jsx", "js", "tsx", "ts"]
 ```
 
-### Test component
+### Testing your components
 
-You can use `assert_react_component` to test component render:
+You can use `assert_react_component` in your tests to confirm that components are being rendered:
 
 app/views/welcome/index.html.erb
 
