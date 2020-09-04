@@ -14,7 +14,7 @@
     "file-loader": "^0.11.1",
     "glob": "^7.1.2",
     "js-yaml": "^3.8.4",
-    "node-sass": "^4.5.3",
+    "node-sass": "^4.13.1",
     "path-complete-extname": "^0.1.0",
     "postcss-loader": "^2.0.5",
     "postcss-smart-import": "^0.7.0",
