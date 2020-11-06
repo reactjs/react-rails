@@ -116,7 +116,7 @@ Note: Your component is added to `app/javascript/components/` by default.
 
 Note: If your component is in a subdirectory you will append the directory path to your erb component call.
 
-Example: 
+Example:
 ```
 <%= react_component("my_subdirectory/HelloWorld", { greeting: "Hello from react-rails." }) %>
 ```
@@ -630,6 +630,12 @@ You can also specify this option in `react_component`:
 <%= react_component('HelloMessage', {name: 'John'}, {camelize_props: true}) %>
 ```
 
+### Changing Component Templates
+
+To make simple changes to Component templates, copy the respective template file to your Rails project at `lib/templates/react/component/template_filename`.
+
+For example, to change the [ES6 Component template](https://github.com/reactjs/react-rails/blob/master/lib/generators/templates/component.es6.jsx), copy it to `lib/templates/react/component/component.es6.jsx` and modify it.
+
 ## Upgrading
 
 ### 2.3 to 2.4
@@ -694,7 +700,7 @@ Hot Module Replacement is [possible with this gem](https://stackoverflow.com/a/5
 
 Sample repo that shows HMR working with `react-rails`: [https://github.com/edelgado/react-rails-hmr](https://github.com/edelgado/react-rails-hmr)
 
-One caveat is that currently you [cannot Server-Side Render along with HMR](https://github.com/reactjs/react-rails/issues/925#issuecomment-415469572). 
+One caveat is that currently you [cannot Server-Side Render along with HMR](https://github.com/reactjs/react-rails/issues/925#issuecomment-415469572).
 
 ## Related Projects
 
