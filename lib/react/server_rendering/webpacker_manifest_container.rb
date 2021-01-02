@@ -27,7 +27,7 @@ module React
           asset_path = manifest.lookup(logical_path).to_s
           if asset_path.start_with?('http')
             # Get a file from the webpack-dev-server
-            dev_server_asset = open(asset_path).read
+            dev_server_asset = URI.open(asset_path).read
             # Remove `webpack-dev-server/client/index.js` code which causes ExecJS to 💥
             dev_server_asset.sub!(CLIENT_REQUIRE, '//\0')
             dev_server_asset
@@ -44,7 +44,7 @@ module React
             ds = Webpacker.dev_server
             # Remove the protocol and host from the asset path. Sometimes webpacker includes this, sometimes it does not
             asset_path.slice!("#{ds.protocol}://#{ds.host_with_port}")
-            dev_server_asset = open("#{ds.protocol}://#{ds.host_with_port}#{asset_path}").read
+            dev_server_asset = URI.open("#{ds.protocol}://#{ds.host_with_port}#{asset_path}").read
             dev_server_asset.sub!(CLIENT_REQUIRE, '//\0')
             dev_server_asset
           else
