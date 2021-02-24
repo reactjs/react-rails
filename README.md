@@ -72,6 +72,9 @@ $ cd my-app
 gem 'webpacker'
 gem 'react-rails'
 ```
+Note: For Rails 6, You don't need to add `gem 'webpacker'` to your gemfile in step 2 above.
+Webpacker is the default javascript compiler for Rails 6, and is already added to your gemfile
+when you create a new app.
 
 ##### 3) Now run the installers:
 
