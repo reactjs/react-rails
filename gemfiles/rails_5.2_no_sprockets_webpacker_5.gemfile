@@ -3,8 +3,7 @@
 source "http://rubygems.org"
 
 gem "rails", "~> 5.2.x"
-gem "sprockets", "~> 4.0"
-gem "turbolinks", "~> 5"
+gem "webpacker", "~> 5.0"
 gem "mini_racer", platforms: :mri
 gem "therubyrhino", platforms: :jruby
 

@@ -1,6 +1,10 @@
+# Notes;
+# 1) 'no_sprockets' in an appraisal name affects the setup for the tests.
+#    See SprocketsHelpers.available? in test/support/sprockets_helpers.rb
+
 appraise 'rails-5.2-sprockets_4' do
   gem 'rails', '~> 5.2.x'
-  gem 'sprockets', '~> 4.0.x'
+  gem 'sprockets', '~> 4.0'
   gem 'turbolinks', '~> 5'
   gem 'mini_racer', :platforms => :mri
   gem 'therubyrhino', :platforms => :jruby
@@ -24,6 +28,13 @@ end
 appraise 'rails-5.2_no_sprockets_webpacker_4' do
   gem 'rails', '~> 5.2.x'
   gem 'webpacker', '~> 4.0'
+  gem 'mini_racer', :platforms => :mri
+  gem 'therubyrhino', :platforms => :jruby
+end
+
+appraise 'rails-5.2_no_sprockets_webpacker_5' do
+  gem 'rails', '~> 5.2.x'
+  gem 'webpacker', '~> 5.0'
   gem 'mini_racer', :platforms => :mri
   gem 'therubyrhino', :platforms => :jruby
 end
