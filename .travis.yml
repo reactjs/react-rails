@@ -7,7 +7,8 @@ cache:
   bundler: true
   yarn: true
 rvm:
-  - 3.0
+  # TODO: Ruby 3.0 requires the rexml gem adding to the Gemfile
+  # - 3.0
   - 2.7
   - 2.6
   - 2.5
