@@ -716,3 +716,4 @@ By contributing to React-Rails, you agree to abide by the [code of conduct](http
 You can always help by submitting patches or triaging issues, even offering reproduction steps to issues is incredibly helpful!
 
 Please see our [Contribution guide](https://github.com/reactjs/react-rails/blob/master/CONTRIBUTING.md) for more info.
+
