@@ -101,7 +101,7 @@ module WebpackerHelpers
       return false unless example_asset_path
       return false unless example_asset_path.start_with?('http://localhost:8080')
       begin
-        file = open('http://localhost:8080/packs/application.js')
+        file = URI.open('http://localhost:8080/packs/application.js')
       rescue StandardError => e
         file = nil
       end
@@ -134,7 +134,7 @@ module WebpackerHelpers
       example_asset_path = manifest_data.values.first
       return false unless example_asset_path
       begin
-        file = open("#{ds.protocol}://#{ds.host}:#{ds.port}#{example_asset_path}")
+        file = URI.open("#{ds.protocol}://#{ds.host}:#{ds.port}#{example_asset_path}")
       rescue StandardError => e
         file = nil
       end
