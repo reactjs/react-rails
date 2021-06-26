@@ -78,8 +78,8 @@ Note: On rails versions < 6.0, You need to add `gem 'webpacker'` to your Gemfile
 ###### Rails 6.x and 5.x:
 ```
 $ bundle install
-$ rails webpacker:install        # OR (on rails version < 5.0) rake webpacker:install
-$ rails webpacker:install:react  # OR (on rails version < 5.0) rake webpacker:install:react
+$ rails webpacker:install         # OR (on rails version < 5.0) rake webpacker:install
+$ rails webpacker:install:react   # OR (on rails version < 5.0) rake webpacker:install:react
 $ rails generate react:install
 ```
 
