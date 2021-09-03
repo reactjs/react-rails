@@ -79,6 +79,13 @@ var ReactRailsUJS = {
     this.getConstructor = constructorFromRequireContextWithGlobalFallback(requireContext)
   },
 
+  // Given an array of Webpack `require.context`,
+  // try finding components with `require`,
+  // then falling back to global lookup.
+  useContexts: function(requireContexts) {
+    this.getConstructor = constructorFromRequireContextsWithGlobalFallback(requireContexts)
+  },
+
   // Render `componentName` with `props` to a string,
   // using the specified `renderFunction` from `react-dom/server`.
   serverRender: function(renderFunction, componentName, props) {
