@@ -172,6 +172,8 @@ ReactRailsUJS.useContext(myCustomContext)
 
 If `require` fails to find your component, [`ReactRailsUJS`](#ujs) falls back to the global namespace, described in [Use with Asset Pipeline](#use-with-asset-pipeline).
 
+In some cases, having multiple `require.context` may be desired. If so, an array of `require.context` can be passed to `ReactRailsUJS.useContexts`. With an array of contexts, an attempt will be made to `require` the component from each context before falling back to the global namespace as described above.
+
 ### File naming
 
 React-Rails supports plenty of file extensions such as: .js, .jsx.js, .js.jsx, .es6.js, .coffee, etcetera!
