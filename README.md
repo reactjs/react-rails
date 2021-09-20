@@ -67,51 +67,40 @@ $ rails new my-app
 $ cd my-app
 ```
 
-##### 2) Add `webpacker` and `react-rails` to your gemfile:
+##### 2) Add `react-rails` to your Gemfile:
 ```ruby
-gem 'webpacker'
 gem 'react-rails'
 ```
-Note: For Rails 6, You don't need to add `gem 'webpacker'` to your gemfile in step 2 above.
-Webpacker is the default javascript compiler for Rails 6, and is already added to your gemfile
-when you create a new app.
+Note: On rails versions < 6.0, You need to add `gem 'webpacker'` to your Gemfile in step 2 above.
 
 ##### 3) Now run the installers:
 
-###### Rails 6.x:
+###### Rails 6.x and 5.x:
 ```
 $ bundle install
-$ rails webpacker:install
-$ rails webpacker:install:react
+$ rails webpacker:install         # OR (on rails version < 5.0) rake webpacker:install
+$ rails webpacker:install:react   # OR (on rails version < 5.0) rake webpacker:install:react
 $ rails generate react:install
 ```
-Note: For Rails 6, You don't need to add `javascript_pack_tag` as in Step 4. Since it's already added by default.
 
-###### Rails 5.x:
-```
-$ bundle install
-$ rails webpacker:install       # OR (on rails version < 5.0) rake webpacker:install
-$ rails webpacker:install:react # OR (on rails version < 5.0) rake webpacker:install:react
-$ rails generate react:install
-```
 This gives you:
 
 - `app/javascript/components/` directory for your React components
 - [`ReactRailsUJS`](#ujs) setup in `app/javascript/packs/application.js`
 - `app/javascript/packs/server_rendering.js` for [server-side rendering](#server-side-rendering)
 
-##### 4) Link the JavaScript pack in Rails view using `javascript_pack_tag` [helper](https://github.com/rails/webpacker#usage):
+Note: On rails versions < 6.0, link the JavaScript pack in Rails view using `javascript_pack_tag` [helper](https://github.com/rails/webpacker#usage):
 ```erb
 <!-- application.html.erb in Head tag below turbolinks -->
 <%= javascript_pack_tag 'application' %>
 ```
 
-##### 5) Generate your first component:
+##### 4) Generate your first component:
 ```
 $ rails g react:component HelloWorld greeting:string
 ```
 
-##### 6) You can also generate your component in a subdirectory:
+##### 5) You can also generate your component in a subdirectory:
 ```
 $ rails g react:component my_subdirectory/HelloWorld greeting:string
 ```
@@ -124,14 +113,14 @@ Example:
 <%= react_component("my_subdirectory/HelloWorld", { greeting: "Hello from react-rails." }) %>
 ```
 
-##### 7) [Render it in a Rails view](#view-helper):
+##### 6) [Render it in a Rails view](#view-helper):
 
 ```erb
 <!-- erb: paste this in view -->
 <%= react_component("HelloWorld", { greeting: "Hello from react-rails." }) %>
 ```
 
-##### 8) Lets Start the app:
+##### 7) Lets Start the app:
 ```
 $ rails s
 ```
