@@ -9,6 +9,6 @@
     "react_ujs": "^2.2.1"
   },
   "devDependencies": {
-    "webpack-dev-server": "^3.1.11"
+    "webpack-dev-server": "^2.11.5"
   }
 }
