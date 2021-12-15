@@ -5,6 +5,7 @@ var ReactDOMServer = require("react-dom/server")
 var detectEvents = require("./src/events/detect")
 var constructorFromGlobal = require("./src/getConstructor/fromGlobal")
 var constructorFromRequireContextWithGlobalFallback = require("./src/getConstructor/fromRequireContextWithGlobalFallback")
+const { supportsHydration, reactHydrate, createReactRootLike } = require("./src/renderHelpers")
 
 var ReactRailsUJS = {
   // This attribute holds the name of component which should be mounted
@@ -111,10 +112,10 @@ var ReactRailsUJS = {
           }
         }
 
-        if (hydrate && typeof ReactDOM.hydrateRoot === "function") {
-          component = ReactDOM.hydrateRoot(component, node);
+        if (hydrate && supportsHydration()) {
+          component = reactHydrate(node, component);
         } else {
-          const root = ReactDOM.createRoot(node)
+          const root = createReactRootLike(node)
           component = root.render(component);
         }
       }
