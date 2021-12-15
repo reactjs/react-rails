@@ -111,13 +111,14 @@ var ReactRailsUJS = {
           }
         }
 
-        if (hydrate && typeof ReactDOM.hydrate === "function") {
-          component = ReactDOM.hydrate(component, node);
+        if (hydrate && typeof ReactDOM.hydrateRoot === "function") {
+          component = ReactDOM.hydrateRoot(component, node);
         } else {
-          component = ReactDOM.render(component, node);
+          const root = ReactDOM.createRoot(node)
+          component = root.render(component);
         }
       }
-    } 
+    }
   },
 
   // Within `searchSelector`, find nodes which have React components
