@@ -13,6 +13,13 @@
 #### New Features
 
 - React 16.14
+- Support for ShakaPacker
+- Preparation for React 18 #1151
+
+#### Bug Fixes
+
+- URI.open instead of open #1099
+- No longer unmount components on Turbolinks navigation #1135
 
 ## 2.6.1
 
