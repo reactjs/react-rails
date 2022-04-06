@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    react-rails (2.6.1)
+    react-rails (2.6.2)
       babel-transpiler (>= 0.7.0)
       connection_pool
       execjs
@@ -98,7 +98,7 @@ GEM
       execjs
     coffee-script-source (1.12.2)
     concurrent-ruby (1.1.5)
-    connection_pool (2.2.2)
+    connection_pool (2.2.5)
     crass (1.0.5)
     docile (1.1.5)
     erubi (1.9.0)
@@ -252,4 +252,4 @@ DEPENDENCIES
   webdrivers
 
 BUNDLED WITH
-   2.1.2
+   2.1.4
