@@ -5,11 +5,11 @@
   "main": "react.js",
   "dependencies": {
     "create-react-class": "^15.6.2",
-    "immutability-helper": "^2.4.0",
+    "immutability-helper": "^3.1.1",
     "prop-types": "^15.6.0",
-    "react": "^16.4.1",
-    "react-dom": "^16.4.1",
-    "react-transition-group": "1.1.1",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "react-transition-group": "4.4.2",
     "webpack": "^1.12.2"
   },
   "scripts": {
