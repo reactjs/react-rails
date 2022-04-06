@@ -8,6 +8,12 @@
 
 #### Bug Fixes
 
+## 2.6.2
+
+#### New Features
+
+- React 16.14
+
 ## 2.6.1
 
 #### Breaking Changes
@@ -112,6 +118,7 @@
 - Call ReactDOM.render() when react_component :prerender option is falsy, instead of ReactDOM.hydrate() #844, #842
 
 ## 2.4.2
+
 #### Bug Fixes
 
 - ReactDOM.hydrate() may not be defined for everyone, it will now use hydrate if it is defined or fallback to render #832
@@ -223,7 +230,6 @@
   // = require react-server
   // = require components
   ```
-
 
 #### New Features
 
@@ -471,14 +477,14 @@
 
 - Changed server rendering configuration names #253
 
-  |  Old | New  |
-  | ---- | ---- |
-  | `config.react.timeout` | `config.react.server_renderer_timeout` |
-  | `config.react.max_renderers` | `config.react.server_renderer_pool_size` |
-  | `config.react.react_js` | `config.react.server_renderer_options[:files]` |
-  | `config.react.component_filenames` | `config.react.server_renderer_options[:files]` |
-  | `config.react.replay_console` | `config.react.server_renderer_options[:replay_console]` |
-  | (none) | `config.react.server_renderer` |
+  | Old                                | New                                                     |
+  | ---------------------------------- | ------------------------------------------------------- |
+  | `config.react.timeout`             | `config.react.server_renderer_timeout`                  |
+  | `config.react.max_renderers`       | `config.react.server_renderer_pool_size`                |
+  | `config.react.react_js`            | `config.react.server_renderer_options[:files]`          |
+  | `config.react.component_filenames` | `config.react.server_renderer_options[:files]`          |
+  | `config.react.replay_console`      | `config.react.server_renderer_options[:replay_console]` |
+  | (none)                             | `config.react.server_renderer`                          |
 
 - JSX is transformed by Babel, not JSTransform #295
 
@@ -503,7 +509,6 @@
 - Camelize attribute names in the component generator #262
 - Add `tilt` dependency #248
 - Default prerender pool size to 1 #302
-
 
 ## 1.0.0 (April 7, 2015)
 
