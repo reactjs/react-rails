@@ -1,25 +1,25 @@
-const ReactDOM = require("react-dom")
+const ReactDOMClient = require("react-dom/client")
 
 export function supportsHydration() {
-  return typeof ReactDOM.hydrate === "function" || typeof ReactDOM.hydrateRoot === "function"
+  return typeof ReactDOMClient.hydrate === "function" || typeof ReactDOMClient.hydrateRoot === "function"
 }
 
 export function reactHydrate(node, component) {
-  if (typeof ReactDOM.hydrateRoot === "function") {
-    return ReactDOM.hydrateRoot(node, component)
+  if (typeof ReactDOMClient.hydrateRoot === "function") {
+    return ReactDOMClient.hydrateRoot(node, component)
   } else {
-    return ReactDOM.hydrate(component, node)
+    return ReactDOMClient.hydrate(component, node)
   }
 }
 
 export function createReactRootLike(node) {
-  return ReactDOM.createRoot ? ReactDOM.createRoot(node) : legacyReactRootLike(node)
+  return ReactDOMClient.createRoot ? ReactDOMClient.createRoot(node) : legacyReactRootLike(node)
 }
 
 function legacyReactRootLike(node) {
   const root = {
     render(component) {
-      return ReactDOM.render(component, node)
+      return ReactDOMClient.render(component, node)
     }
   }
   return root
