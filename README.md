@@ -124,7 +124,7 @@ Example:
 ```
 $ rails s
 ```
-output: greeting: Hello from react-rails", inspect webpage in your browser too see change in tag props.
+Output: greeting: Hello from react-rails", inspect webpage in your browser to see the change in tag props.
 
 ### Component name
 
