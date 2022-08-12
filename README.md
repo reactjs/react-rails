@@ -8,11 +8,13 @@
 
 React-Rails is a flexible tool to use [React](http://facebook.github.io/react/) with Rails. The benefits:
 * Automatically renders React server-side and client-side
-* Supports Webpacker 4.x, 3.x, 2.x, 1.1+
+* Supports Webpacker 4.x, 3.x, 2.x, 1.1+ or Shakapacker v6+
 * Supports Sprockets 4.x, 3.x, 2.x
 * Lets you use [JSX](http://facebook.github.io/react/docs/jsx-in-depth.html), [ES6](http://es6-features.org/), [TypeScript](https://www.typescriptlang.org/), [CoffeeScript](http://coffeescript.org/)
 
-A source code example utilizing React-Rails: https://github.com/BookOfGreg/react-rails-example-app
+## Resouces
+* [Click to join **React + Rails Slack**](https://reactrails.slack.com/join/shared_invite/enQtNjY3NTczMjczNzYxLTlmYjdiZmY3MTVlMzU2YWE0OWM0MzNiZDI0MzdkZGFiZTFkYTFkOGVjODBmOWEyYWQ3MzA2NGE1YWJjNmVlMGE). Then join the channel `#react-rails`.
+* Source code example utilizing React-Rails: https://github.com/BookOfGreg/react-rails-example-app
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
