@@ -12,8 +12,5 @@
   },
   "devDependencies": {
     "webpack": "^2.3.3"
-  },
-  "dependencies": {
-    "react_ujs": "^2.6.1"
   }
 }
