@@ -8,6 +8,12 @@
 
 #### Bug Fixes
 
+## 2.6.3
+
+#### Bug Fixes
+
+- Support React 18 createRoot API #1194
+
 ## 2.6.2
 
 #### New Features
