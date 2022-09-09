@@ -14,6 +14,7 @@ React-Rails is a flexible tool to use [React](http://facebook.github.io/react/) 
 
 ## Resouces
 * [Click to join **React + Rails Slack**](https://reactrails.slack.com/join/shared_invite/enQtNjY3NTczMjczNzYxLTlmYjdiZmY3MTVlMzU2YWE0OWM0MzNiZDI0MzdkZGFiZTFkYTFkOGVjODBmOWEyYWQ3MzA2NGE1YWJjNmVlMGE). Then join the channel `#react-rails`.
+* If you need help upgrading `react-rails`, `webpacker`, or JS packages, contact [justin@shakacode.com](mailto:justin@shakacode.com). The [ShakaCode.com](https://www.shakacode.com) team is helping to maintain this Ruby gem. Check out [this discussion](https://github.com/reactjs/react-rails/discussions/1200).
 * Source code example utilizing React-Rails: https://github.com/BookOfGreg/react-rails-example-app
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
