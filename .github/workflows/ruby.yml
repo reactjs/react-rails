@@ -26,8 +26,12 @@ jobs:
           - rails_5.2_sprockets_3
           - rails_5.2_sprockets_4
     runs-on: ubuntu-latest
-    env: # $BUNDLE_GEMFILE must be set at the job level, so it is set for all steps
+    env:
+      # $BUNDLE_GEMFILE must be set at the job level, so it is set for all steps
       BUNDLE_GEMFILE: ${{ github.workspace }}/gemfiles/${{ matrix.gemfile }}.gemfile
+      # Workaround b/c upgrading Minitest broke some mocking expectations
+      # having to do with automatic kwarg splatting
+      MT_KWARGS_HACK: 1
     steps:
     - uses: actions/checkout@v3
     - uses: actions/setup-node@v3
