@@ -15,7 +15,6 @@ jobs:
         ruby:
           - 2.7.0
           - 2.6.5
-          - 2.5.7
           - jruby-9.1.17.0
         gemfile:
           # These have webpacker:
