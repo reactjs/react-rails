@@ -15,7 +15,8 @@ jobs:
         ruby:
           - 2.7.0
           - 2.6.5
-          - jruby-9.3.7.0
+          # TODO restore testing against JRuby w/ therubyrhino
+          # - jruby-9.3.7.0
         gemfile:
           # These have webpacker:
           - rails_5.2_no_sprockets
