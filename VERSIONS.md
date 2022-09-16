@@ -7,7 +7,7 @@ You can control what version of React.js (and JSXTransformer) is used by `react-
 
 ## Bundled Versions
 
-| Gem      | React.js |
+| Gem      | React.js |                |
 | -------- | -------- | -------------- |
 | master   | 16.14.0  |
 | 2.6.2    | 16.14.0  |
