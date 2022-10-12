@@ -3,6 +3,7 @@
 #### Breaking Changes
 
 #### New Features
+- Camelizes keys with primitive values, in addition to hashes #946
 
 #### Deprecation
 
