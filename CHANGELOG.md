@@ -1,4 +1,10 @@
-# react-rails
+# CHANGELOG for react-rails
+
+If you need help upgrading `react-rails`, `webpacker` to `shakapacker`, or JS packages, contact justin@shakacode.com. The ShakaCode.com team is helping to maintain this Ruby gem. You also might want to consider the [react_on_rails](https://github.com/shakacode/react_on_rails) gem. If you have feedback on what's needed for the next version of react-rails, please [comment on #1209](https://github.com/reactjs/react-rails/issues/1209).
+
+
+## Unreleased
+
 
 #### Breaking Changes
 
