@@ -5,6 +5,8 @@
 #### New Features
 - Camelizes keys with primitive values, in addition to hashes #946
 
+- Expose alternative implementations for `ReactUJS.getConstructor` #1050
+
 #### Deprecation
 
 #### Bug Fixes

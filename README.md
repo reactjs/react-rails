@@ -406,12 +406,26 @@ delete window.Turbolinks;
 
 ### `getConstructor`
 
-Components are loaded with `ReactRailsUJS.getConstructor(className)`. This function has two built-in implementations:
+Components are loaded with `ReactRailsUJS.getConstructor(className)`. This function has two default implementations, depending on if you're using the asset pipeline or Webpacker:
 
-- On the asset pipeline, it looks up `className` in the global namespace.
-- On Webpacker, it `require`s files and accesses named exports, as described in [Get started with Webpacker](#get-started-with-webpacker).
+- On the asset pipeline, it looks up `className` in the global namespace (`ReactUJS.constructorFromGlobal`).
+- On Webpacker, it `require`s files and accesses named exports, as described in [Get started with Webpacker](#get-started-with-webpacker), falling back to the global namespace (`ReactUJS.constructorFromRequireContextWithGlobalFallback`).
 
 You can override this function to customize the mapping of name-to-constructor. [Server-side rendering](#server-side-rendering) also uses this function.
+
+For example, the fallback behavior of
+`ReactUJS.constructorFromRequireContextWithGlobalFallback` can sometimes make
+server-side rendering errors hard to debug as it will swallow the original error
+(more info
+[here](https://github.com/reactjs/react-rails/issues/264#issuecomment-552326663)).
+`ReactUJS.constructorFromRequireContext` is provided for this reason. You can
+use it like so:
+
+```js
+// Replaces calls to `ReactUJS.useContext`
+ReactUJS.getConstructor = ReactUJS.constructorFromRequireContext(require.context('components', true));
+```
+
 
 ## Server-Side Rendering
 
