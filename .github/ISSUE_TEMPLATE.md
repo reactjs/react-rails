@@ -12,11 +12,11 @@ Tell us what should happen
 Tell us what happens instead
 
 ### System configuration
-**Sprockets or Webpacker version**:
-**React-Rails version**:
-**Rect_UJS version**:
-**Rails version**:
-**Ruby version**:
+- **Shakapacker or Sprockets version**:
+- **React-Rails version**:
+- **Rect_UJS version**:
+- **Rails version**:
+- **Ruby version**:
 
 
 -------

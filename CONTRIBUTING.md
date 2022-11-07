@@ -57,7 +57,7 @@ Include details about your configuration and environment, React-Rails integrates
 
 * **Which version of React-Rails are you using?**
 * **Which version of React_UJS are you using?**
-* **Which version of Webpacker/Sprockets are you using?**
+* **Which version of Shakapacker/Sprockets are you using?**
 * **Which version of Rails are you using?**
 
 ### Your First Code Contribution
