@@ -4,8 +4,18 @@
 
 #### New Features
 - Camelizes keys with primitive values, in addition to hashes #946
-
 - Expose alternative implementations for `ReactUJS.getConstructor` #1050
+- Update dependencies
+  - webpack-dev-server to 2.11.5 #1150
+  - Node-sass to 7.0.0 #1158
+  - url-parse to 1.5.10 #1167
+  - minimist to 1.2.6 #1169
+  - async to 2.6.4 #1178
+  - rack to 2.2.3.1 #1182
+  - eventsource to 1.1.1 #1183
+  - rails-html-sanitizer to 1.4.3 #1188
+  - tzinfo to 1.2.10 #1190
+- Include turbolinks in dev and update webdrivers #1174
 
 #### Deprecation
 
