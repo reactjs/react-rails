@@ -18,8 +18,8 @@ module React
 
       # For Shakapacker below version 7, we need to set relative path for source_entry_path
       def modify_webpacker_yml
-        if webpacker?
-          webpacker_yml_path = 'config/webpacker.yml'
+        webpacker_yml_path = 'config/webpacker.yml'
+        if webpacker? && Pathname.new(webpacker_yml_path).exist?
           gsub_file(
             webpacker_yml_path,
             "source_entry_path: /\n",
