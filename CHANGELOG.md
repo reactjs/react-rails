@@ -10,6 +10,7 @@
 #### Deprecation
 
 #### Bug Fixes
+- Fix installation crash caused by absolute path for `source_entry_path` in default `config/webpacker.yml` coming from `shakapacker` version 6.x - #1216
 
 ## 2.6.2
 
