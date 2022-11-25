@@ -76,8 +76,6 @@ $ bundle add shakapacker --strict
 $ rails webpacker:install
 ```
 
-Update `config/webpacker.yml` and set the `source_entry_path` to `packs`.
-
 #### 3) Install `react` and some other required npm packages:
 ```bash
 $ yarn add react react-dom @babel/preset-react prop-types \
