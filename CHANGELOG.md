@@ -6,6 +6,8 @@
 - Camelizes keys with primitive values, in addition to hashes #946
 - Expose alternative implementations for `ReactUJS.getConstructor` #1050
 - Update dependencies
+  - react to 17.0.2 #1218
+  - webpack to 5.74.0
   - webpack-dev-server to 2.11.5 #1150
   - Node-sass to 7.0.0 #1158
   - url-parse to 1.5.10 #1167

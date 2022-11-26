@@ -11,6 +11,6 @@
     "build": "cd react_ujs && webpack"
   },
   "devDependencies": {
-    "webpack": "^2.3.3"
+    "webpack": "^5.74.0"
   }
 }
