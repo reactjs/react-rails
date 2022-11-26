@@ -20,8 +20,9 @@ React-Rails is a flexible tool to use [React](http://facebook.github.io/react/) 
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 ## Contents
 
-- [Get started with Webpacker](#get-started-with-webpacker)
+- [Get started with Shakapacker](#get-started-with-shakapacker)
   - [File naming](#file-naming)
+  - [Typescript support](#typescript-support)
 - [Use with Asset Pipeline](#use-with-asset-pipeline)
   - [Custom JSX Transformer](#custom-jsx-transformer)
   - [React.js versions](#reactjs-versions)
@@ -57,31 +58,45 @@ https://github.com/reactjs/React-Rails/wiki
 The Wiki page features a significant amount of additional information about React-Rails which includes instructional articles and answers to the most frequently asked questions.
 
 
-## Get started with Webpacker
+## Get started with Shakapacker
 
-[Alternatively, get started with Sprockets](#use-with-asset-pipeline)
+_Alternatively, get started with [Sprockets](#use-with-asset-pipeline)_
 
-[Webpacker](https://github.com/rails/webpacker) provides modern JS tooling for Rails. Here are the listed steps for integrating Webpacker and Rails-React with Rails:
+#### 1) Create a new Rails app:
+Prevent installing default javascript dependencies by using `--skip-javascript` option:
 
-##### 1) Create a new Rails app:
-```
-$ rails new my-app
+```bash
+$ rails new my-app --skip-javascript
 $ cd my-app
 ```
 
-##### 2) Add `react-rails` to your Gemfile:
-```ruby
-gem 'react-rails'
+#### 2) Install `shakapacker`:
+```bash
+$ bundle add shakapacker --strict
+$ rails webpacker:install
 ```
-Note: On rails versions < 6.0, You need to add `gem 'webpacker'` to your Gemfile in step 2 above.
 
-##### 3) Now run the installers:
-
-###### Rails 6.x and 5.x:
+#### 3) Install `react` and some other required npm packages:
+```bash
+$ yarn add react react-dom @babel/preset-react prop-types \
+  css-loader style-loader mini-css-extract-plugin css-minimizer-webpack-plugin
 ```
-$ bundle install
-$ rails webpacker:install         # OR (on rails version < 5.0) rake webpacker:install
-$ rails webpacker:install:react   # OR (on rails version < 5.0) rake webpacker:install:react
+
+Also update the Babel configuration in the `package.json` file:
+
+```diff
+"babel": {
+  "presets": [
+-   "./node_modules/shakapacker/package/babel/preset.js"
++   "./node_modules/shakapacker/package/babel/preset.js",
++   "@babel/preset-react"
+  ]
+},
+```
+
+#### 4) Install `react-rails`:
+```bash
+$ bundle add 'react-rails' --strict
 $ rails generate react:install
 ```
 
@@ -91,31 +106,27 @@ This gives you:
 - [`ReactRailsUJS`](#ujs) setup in `app/javascript/packs/application.js`
 - `app/javascript/packs/server_rendering.js` for [server-side rendering](#server-side-rendering)
 
-Note: On rails versions < 6.0, link the JavaScript pack in Rails view using `javascript_pack_tag` [helper](https://github.com/rails/webpacker#usage):
-```erb
-<!-- application.html.erb in Head tag below turbolinks -->
-<%= javascript_pack_tag 'application' %>
-```
-
-##### 4) Generate your first component:
-```
+#### 5) Generate your first component:
+```bash
 $ rails g react:component HelloWorld greeting:string
 ```
 
-##### 5) You can also generate your component in a subdirectory:
-```
+You can also generate your component in a subdirectory:
+
+```bash
 $ rails g react:component my_subdirectory/HelloWorld greeting:string
 ```
+
 Note: Your component is added to `app/javascript/components/` by default.
 
 Note: If your component is in a subdirectory you will append the directory path to your erb component call.
 
 Example:
-```
+```erb
 <%= react_component("my_subdirectory/HelloWorld", { greeting: "Hello from react-rails." }) %>
 ```
 
-##### 6) [Render it in a Rails view](#view-helper):
+#### 6) [Render it in a Rails view](#view-helper):
 
 ```erb
 <!-- erb: paste this in view -->
@@ -123,10 +134,19 @@ Example:
 ```
 
 ##### 7) Lets Start the app:
-```
+```bash
 $ rails s
 ```
 Output: greeting: Hello from react-rails", inspect webpage in your browser to see the change in tag props.
+
+##### 7) Run dev server (optional)
+In order to run dev server with HMR feature you need to parallely run:
+
+```bash
+$ ./bin/webpacker-dev-server
+```
+
+Note: On Rails 6 you need to specify `webpack-dev-server` host. To this end, update `config/initializers/content_security_policy.rb` and uncomment relevant lines.
 
 ### Component name
 
@@ -166,14 +186,52 @@ Component File Name | `react_component` call
 
 ### Typescript support
 
-If you want to use React-Rails with Typescript, simply run the installer and add @types:
+```bash
+yarn add typescript @babel/preset-typescript
 ```
-$ bundle exec rails webpacker:install:typescript
-$ yarn add @types/react @types/react-dom
+
+Babel won’t perform any type-checking on TypeScript code. To optionally use type-checking run:
+
+```bash
+yarn add fork-ts-checker-webpack-plugin
+```
+
+Add `tsconfig.json` with the following content:
+
+```json
+{
+  "compilerOptions": {
+    "declaration": false,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "lib": ["es6", "dom"],
+    "module": "es6",
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "target": "es5",
+    "jsx": "react",
+    "noEmit": true
+  },
+  "exclude": ["**/*.spec.ts", "node_modules", "vendor", "public"],
+  "compileOnSave": false
+}
+```
+
+Then modify the webpack config to use it as a plugin:
+
+```js
+// config/webpack/webpack.config.js
+const { webpackConfig, merge } = require("shakapacker");
+const ForkTSCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
+
+module.exports = merge(webpackConfig, {
+  plugins: [new ForkTSCheckerWebpackPlugin()],
+});
 ```
 
 Doing this will allow React-Rails to support the .tsx extension. Additionally, it is recommended to add `ts` and `tsx` to the `server_renderer_extensions` in your application configuration:
-```
+
+```ruby
 config.react.server_renderer_extensions = ["jsx", "js", "tsx", "ts"]
 ```
 
@@ -181,9 +239,9 @@ config.react.server_renderer_extensions = ["jsx", "js", "tsx", "ts"]
 
 You can use `assert_react_component` to test component render:
 
-app/views/welcome/index.html.erb
-
 ```erb
+<!-- app/views/welcome/index.html.erb -->
+
 <%= react_component("HelloWorld", { greeting: "Hello from react-rails.", info: { name: "react-rails" } }, { class: "hello-world" }) %>
 ```
 
@@ -406,10 +464,10 @@ delete window.Turbolinks;
 
 ### `getConstructor`
 
-Components are loaded with `ReactRailsUJS.getConstructor(className)`. This function has two default implementations, depending on if you're using the asset pipeline or Webpacker:
+Components are loaded with `ReactRailsUJS.getConstructor(className)`. This function has two default implementations, depending on if you're using the asset pipeline or Shakapacker:
 
 - On the asset pipeline, it looks up `className` in the global namespace (`ReactUJS.constructorFromGlobal`).
-- On Webpacker, it `require`s files and accesses named exports, as described in [Get started with Webpacker](#get-started-with-webpacker), falling back to the global namespace (`ReactUJS.constructorFromRequireContextWithGlobalFallback`).
+- On Shakapacker, it `require`s files and accesses named exports, as described in [Get started with Shakapacker](#get-started-with-shakapacker), falling back to the global namespace (`ReactUJS.constructorFromRequireContextWithGlobalFallback`).
 
 You can override this function to customize the mapping of name-to-constructor. [Server-side rendering](#server-side-rendering) also uses this function.
 
