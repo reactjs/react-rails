@@ -172,8 +172,21 @@ ReactRailsUJS.useContext(myCustomContext)
 
 If `require` fails to find your component, [`ReactRailsUJS`](#ujs) falls back to the global namespace, described in [Use with Asset Pipeline](#use-with-asset-pipeline).
 
-In some cases, having multiple `require.context` may be desired. If so, an array of `require.context` can be passed to `ReactRailsUJS.useContexts`. With an array of contexts, an attempt will be made to `require` the component from each context before falling back to the global namespace as described above.
+In some cases, having multiple `require.context` may be desired - for example, if you have additional entry points to create JavaScript files for different routes, you would add multiple `require.context` to your `server_rendering.js` to allow for [Server-Side Rendering](#server-side-rendering) across your application. If so, an array of `require.context` can be passed to `ReactRailsUJS.useContexts`. With an array of contexts, an attempt will be made to `require` the component from each context before falling back to the global namespace as described above.
 
+```js
+// server_rendering.js
+var componentsRequireContext = require.context('components', true);
+var searchRequireContext = require.context('search', true);
+var checkoutRequireContext = require.context('checkout', true);
+
+var ReactRailsUJS = require('react_ujs');
+ReactRailsUJS.useContexts([
+  componentsRequireContext,
+  searchRequireContext,
+  checkoutRequireContext
+]);
+```
 ### File naming
 
 React-Rails supports plenty of file extensions such as: .js, .jsx.js, .js.jsx, .es6.js, .coffee, etcetera!
