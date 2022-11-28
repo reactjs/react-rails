@@ -5,6 +5,7 @@
 #### New Features
 - Camelizes keys with primitive values, in addition to hashes #946
 - Expose alternative implementations for `ReactUJS.getConstructor` #1050
+- Add support for multiple `require.context` with addition of `useContexts` #1221
 - Update dependencies
   - react to 17.0.2 #1218
   - webpack to 5.74.0
