@@ -172,8 +172,11 @@ ReactRailsUJS.useContext(myCustomContext)
 
 If `require` fails to find your component, [`ReactRailsUJS`](#ujs) falls back to the global namespace, described in [Use with Asset Pipeline](#use-with-asset-pipeline).
 
-In some cases, having multiple `require.context` entries may be desired. In a larger application, you might find it helpful to split your JavaScript by routes/controllers to avoid serving unused components and improve your site performance by keeping bundles smaller. For example, you might have separate bundles for homepage, search, and checkout routes. In that scenario, you can add an array of `require.context` component directory paths via `useContexts` to `server_rendering.js`, to allow for [Server-Side Rendering](#server-side-rendering) across your application
+In some cases, having multiple `require.context` entries may be desired. Examples of this include:
 
+- In a larger application, you might find it helpful to split your JavaScript by routes/controllers to avoid serving unused components and improve your site performance by keeping bundles smaller. For example, you might have separate bundles for homepage, search, and checkout routes. In that scenario, you can add an array of `require.context` component directory paths via `useContexts` to `server_rendering.js`, to allow for [Server-Side Rendering](#server-side-rendering) across your application
+- Refactoring a typical Rails application into a Rails API with an (eventually) separate Single Page Application (SPA). For this use case, one can add a separate pack in addition to the typical `application` one. React components can be shared between the packs but the new pack can use a minimal Rails view layout, different default styling, etc.
+ 
 ```js
 // server_rendering.js
 var homepageRequireContext = require.context('homepage', true);
