@@ -172,17 +172,17 @@ ReactRailsUJS.useContext(myCustomContext)
 
 If `require` fails to find your component, [`ReactRailsUJS`](#ujs) falls back to the global namespace, described in [Use with Asset Pipeline](#use-with-asset-pipeline).
 
-In some cases, having multiple `require.context` may be desired - for example, if you have additional entry points to create JavaScript files for different routes, you would add multiple `require.context` to your `server_rendering.js` to allow for [Server-Side Rendering](#server-side-rendering) across your application. If so, an array of `require.context` can be passed to `ReactRailsUJS.useContexts`. With an array of contexts, an attempt will be made to `require` the component from each context before falling back to the global namespace as described above.
+In some cases, having multiple `require.context` entries may be desired. In a larger application, you might find it helpful to split your JavaScript by routes/controllers to avoid serving unused components and improve your site performance by keeping bundles smaller. For example, you might have separate bundles for homepage, search, and checkout routes. In that scenario, you can add an array of `require.context` component directory paths via `useContexts` to `server_rendering.js`, to allow for [Server-Side Rendering](#server-side-rendering) across your application
 
 ```js
 // server_rendering.js
-var applicationRequireContext = require.context('application', true);
+var homepageRequireContext = require.context('homepage', true);
 var searchRequireContext = require.context('search', true);
 var checkoutRequireContext = require.context('checkout', true);
 
 var ReactRailsUJS = require('react_ujs');
 ReactRailsUJS.useContexts([
-  applicationRequireContext,
+  homepageRequireContext,
   searchRequireContext,
   checkoutRequireContext
 ]);
