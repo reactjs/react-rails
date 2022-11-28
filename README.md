@@ -176,13 +176,13 @@ In some cases, having multiple `require.context` may be desired - for example, i
 
 ```js
 // server_rendering.js
-var componentsRequireContext = require.context('components', true);
+var applicationRequireContext = require.context('application', true);
 var searchRequireContext = require.context('search', true);
 var checkoutRequireContext = require.context('checkout', true);
 
 var ReactRailsUJS = require('react_ujs');
 ReactRailsUJS.useContexts([
-  componentsRequireContext,
+  applicationRequireContext,
   searchRequireContext,
   checkoutRequireContext
 ]);
