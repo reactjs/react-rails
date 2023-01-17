@@ -1,11 +1,19 @@
 # react-rails
 
+If you need help upgrading `react-rails`, `webpacker` to `shakapacker`, or JS packages, contact justin@shakacode.com. The ShakaCode.com team is helping to maintain this Ruby gem. You also might want to consider the [react_on_rails](https://github.com/shakacode/react_on_rails) gem. 
+
+[#1209 2.7 Release Discussion](https://github.com/reactjs/react-rails/issues/1209)
+
+## Unrelease 
+
 #### Breaking Changes
 
 #### New Features
 - Camelizes keys with primitive values, in addition to hashes #946
 - Expose alternative implementations for `ReactUJS.getConstructor` #1050
-- Update dependencies
+- Include turbolinks in dev and update webdrivers #1174
+
+#### Update dependencies
   - react to 17.0.2 #1218
   - webpack to 5.74.0
   - webpack-dev-server to 2.11.5 #1150
@@ -17,7 +25,6 @@
   - eventsource to 1.1.1 #1183
   - rails-html-sanitizer to 1.4.3 #1188
   - tzinfo to 1.2.10 #1190
-- Include turbolinks in dev and update webdrivers #1174
 
 #### Deprecation
 
