@@ -98,7 +98,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.12.2)
-    concurrent-ruby (1.1.5)
+    concurrent-ruby (1.1.10)
     connection_pool (2.3.0)
     crass (1.0.6)
     docile (1.1.5)
@@ -109,8 +109,8 @@ GEM
     execjs (2.7.0)
     ffi (1.11.3)
     formatador (0.2.5)
-    globalid (0.4.2)
-      activesupport (>= 4.2.0)
+    globalid (1.0.1)
+      activesupport (>= 5.0)
     guard (2.17.0)
       formatador (>= 0.2.4)
       listen (>= 2.7, < 4.0)
@@ -124,7 +124,7 @@ GEM
     guard-minitest (2.4.6)
       guard-compat (~> 1.2)
       minitest (>= 3.0)
-    i18n (1.7.0)
+    i18n (1.12.0)
       concurrent-ruby (~> 1.0)
     jbuilder (2.11.5)
       actionview (>= 5.0.0)
@@ -148,7 +148,7 @@ GEM
       rake
     mini_mime (1.0.2)
     mini_portile2 (2.8.0)
-    minitest (5.16.3)
+    minitest (5.17.0)
     nenv (0.3.0)
     nio4r (2.5.2)
     nokogiri (1.13.10)
@@ -236,7 +236,7 @@ GEM
     websocket-extensions (0.1.5)
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    zeitwerk (2.6.1)
+    zeitwerk (2.6.6)
 
 PLATFORMS
   ruby
