@@ -6,6 +6,7 @@ var detectEvents = require("./src/events/detect")
 var constructorFromGlobal = require("./src/getConstructor/fromGlobal")
 var constructorFromRequireContext = require("./src/getConstructor/fromRequireContext")
 var constructorFromRequireContextWithGlobalFallback = require("./src/getConstructor/fromRequireContextWithGlobalFallback")
+var constructorFromRequireContextsWithGlobalFallback = require("./src/getConstructor/fromRequireContextsWithGlobalFallback")
 const { supportsHydration, reactHydrate, createReactRootLike } = require("./src/renderHelpers")
 
 var ReactRailsUJS = {
