@@ -107,7 +107,7 @@ GEM
       actionpack (>= 3.1)
       railties (>= 3.1)
     execjs (2.7.0)
-    ffi (1.11.3)
+    ffi (1.13.1)
     formatador (0.2.5)
     globalid (1.0.1)
       activesupport (>= 5.0)
