@@ -5,6 +5,12 @@ module React
     # Get a compiled file from Webpacker's output path
     class SeparateServerBundleContainer
 
+      begin
+        MAJOR, MINOR, PATCH, _ = Bundler.locked_gems.specs.find { |gem_spec| gem_spec.name == 'webpacker' || gem_spec.name == 'shakapacker' }.version.segments
+      rescue
+        MAJOR, MINOR, PATCH, _ = [0,0,0]
+      end
+
       def self.compatible?
         !!defined?(Webpacker)
       end
