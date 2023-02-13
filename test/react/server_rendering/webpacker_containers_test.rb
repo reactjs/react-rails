@@ -11,6 +11,8 @@ WebpackerHelpers.when_webpacker_available do
       WebpackerHelpers.compile
       container = React::ServerRendering::WebpackerManifestContainer.new
       assert_not_empty container.find_asset('application.js')
+      container = React::ServerRendering::SeparateServerBundleContainer.new
+      assert_not_empty container.find_asset('server_rendering.js')
     end
 
     def test_it_loads_from_webpack_dev_server
