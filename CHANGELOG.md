@@ -12,6 +12,8 @@ If you need help upgrading `react-rails`, `webpacker` to `shakapacker`, or JS pa
 - Camelizes keys with primitive values, in addition to hashes #946
 - Expose alternative implementations for `ReactUJS.getConstructor` #1050
 - Include turbolinks in dev and update webdrivers #1174
+- Add support for multiple `require.context` with addition of `useContexts` #1144
+- Update dependencies
 
 #### Update dependencies
   - react to 17.0.2 #1218
