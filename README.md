@@ -2,9 +2,12 @@
 
 [![Gem](https://img.shields.io/gem/v/react-rails.svg?style=flat-square)](http://rubygems.org/gems/react-rails)
 [![npm](https://img.shields.io/npm/v/react_ujs.svg?style=flat-square)](https://www.npmjs.com/package/react_ujs)
-[![Ruby](https://github.com/reactjs/react-rails/actions/workflows/ruby.yml/badge.svg)](https://github.com/reactjs/react-rails/actions/workflows/ruby.yml)[![Maintainers Wanted](https://img.shields.io/badge/Maintainers-Wanted-red.svg?style=flat-square)]()
+[![Ruby](https://github.com/reactjs/react-rails/actions/workflows/ruby.yml/badge.svg)](https://github.com/reactjs/react-rails/actions/workflows/ruby.yml)
 
+## News
+v2.7.0.rc.0 is out on [Ruby Gems](https://rubygems.org/gems/react-rails/versions/2.7.0.rc.0) and [NPM](https://www.npmjs.com/package/react_ujs/v/2.7.0-rc.0). Please try it out!
 
+## Summary
 React-Rails is a flexible tool to use [React](http://facebook.github.io/react/) with Rails. The benefits:
 * Automatically renders React server-side and client-side
 * Supports Webpacker 4.x, 3.x, 2.x, 1.1+ or Shakapacker v6+
