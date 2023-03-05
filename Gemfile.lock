@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    react-rails (2.6.2)
+    react-rails (2.7.0.rc.0)
       babel-transpiler (>= 0.7.0)
       connection_pool
       execjs
@@ -221,7 +221,7 @@ GEM
     test-unit (2.5.5)
     thor (1.2.1)
     thread_safe (0.3.6)
-    tilt (2.0.10)
+    tilt (2.1.0)
     turbolinks (5.2.1)
       turbolinks-source (~> 5.2)
     turbolinks-source (5.2.0)
