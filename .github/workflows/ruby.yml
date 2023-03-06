@@ -42,3 +42,5 @@ jobs:
         # bundler-cache: true
     - run: bundle install
     - run: bundle exec rake test
+      env:
+        NODE_OPTIONS: --openssl-legacy-provider
