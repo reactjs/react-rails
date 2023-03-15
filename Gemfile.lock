@@ -109,6 +109,7 @@ GEM
     execjs (2.7.0)
     ffi (1.15.5)
     formatador (1.1.0)
+    gem-release (2.2.2)
     globalid (1.0.1)
       activesupport (>= 5.0)
     guard (2.18.0)
@@ -248,6 +249,7 @@ DEPENDENCIES
   codeclimate-test-reporter
   coffee-rails
   es5-shim-rails (>= 2.0.5)
+  gem-release
   guard
   guard-minitest
   jbuilder
