@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "@rails/webpacker": "^3.0.1",
+    "@rails/webpacker": "^4.0.0",
     "babel-preset-react": "^6.24.1",
     "create-react-class": "^15.6.2",
     "prop-types": "^15.6.0",

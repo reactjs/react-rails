@@ -103,10 +103,8 @@ module React
       def asset_container_class
         if self.class.asset_container_class.present?
           self.class.asset_container_class
-        elsif SeparateServerBundleContainer.compatible? && self.class.dont_use_webpacker_manifest
+        elsif SeparateServerBundleContainer.compatible?
           SeparateServerBundleContainer
-        elsif WebpackerManifestContainer.compatible?
-          WebpackerManifestContainer
         elsif assets_precompiled?
           if ManifestContainer.compatible?
             ManifestContainer
