@@ -88,7 +88,10 @@ task :test_setup do
   Dir.chdir('./test/dummy_sprockets') do
     `yarn install`
   end
-  Dir.chdir('./test/dummy_webpacker3') do
+  Dir.chdir('./test/dummy_webpacker4') do
+    `yarn install`
+  end
+  Dir.chdir('./test/dummy_shakapacker') do
     `yarn install`
   end
 end
