@@ -13,16 +13,16 @@ jobs:
       fail-fast: false
       matrix:
         ruby:
-          - 2.7.0
+          - 2.7.7
           - 2.6.5
           # TODO restore testing against JRuby w/ therubyrhino
           # - jruby-9.3.7.0
         gemfile:
           # These have webpacker:
-          - rails_5.2_no_sprockets
-          - rails_5.2_no_sprockets_webpacker_3
           - rails_5.2_no_sprockets_webpacker_4
+          - rails_7.0_no_sprockets_shakapacker_6
           # These don't have webpacker:
+          - rails_5.2_no_sprockets
           - rails_5.2_sprockets_3
           - rails_5.2_sprockets_4
     runs-on: ubuntu-latest

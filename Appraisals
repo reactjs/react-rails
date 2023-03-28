@@ -21,6 +21,13 @@ appraise 'rails-5.2_no_sprockets_webpacker_4' do
   gem 'therubyrhino', :platforms => :jruby
 end
 
+appraise 'rails-7.0_no_sprockets_shakapacker_6' do
+  gem 'rails', '~> 7.0.x'
+  gem 'shakapacker', '~> 6.6'
+  gem 'mini_racer', :platforms => :mri
+  gem 'therubyrhino', :platforms => :jruby
+end
+
 appraise 'rails-5.2-no_sprockets' do
   # Appraisal adds `turbolinks` to this gemfile because it is
   # present in `./Gemfile`.
