@@ -14,13 +14,6 @@ appraise 'rails-5.2-sprockets_3' do
   gem 'therubyrhino', :platforms => :jruby
 end
 
-appraise 'rails-5.2_no_sprockets_webpacker_4' do
-  gem 'rails', '~> 5.2.x'
-  gem 'webpacker', '~> 4.0'
-  gem 'mini_racer', :platforms => :mri
-  gem 'therubyrhino', :platforms => :jruby
-end
-
 appraise 'rails-7.0_no_sprockets_shakapacker_6' do
   gem 'rails', '~> 7.0.x'
   gem 'shakapacker', '~> 6.6'

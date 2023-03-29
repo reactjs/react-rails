@@ -3,9 +3,7 @@ if RUBY_PLATFORM != 'java'
   SimpleCov.start
 end
 
-DUMMY_LOCATION = if (gem_webpack = Bundler.locked_gems.specs.find { |gem_spec| gem_spec.name == 'webpacker' })
-  'dummy_webpacker4'
-elsif (gem_webpack = Bundler.locked_gems.specs.find { |gem_spec| gem_spec.name == 'shakapacker' })
+DUMMY_LOCATION = if (gem_webpack = Bundler.locked_gems.specs.find { |gem_spec| gem_spec.name == 'shakapacker' })
   'dummy_shakapacker'
 else
   'dummy_sprockets'
