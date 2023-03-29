@@ -26,7 +26,6 @@
   },
   "devDependencies": {
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.7",
-    "fork-ts-checker-webpack-plugin": "^6.5.2",
     "react-refresh": "^0.13.0",
     "webpack-dev-server": "^4.9.2"
   }
