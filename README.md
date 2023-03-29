@@ -2,9 +2,12 @@
 
 [![Gem](https://img.shields.io/gem/v/react-rails.svg?style=flat-square)](http://rubygems.org/gems/react-rails)
 [![npm](https://img.shields.io/npm/v/react_ujs.svg?style=flat-square)](https://www.npmjs.com/package/react_ujs)
-[![Ruby](https://github.com/reactjs/react-rails/actions/workflows/ruby.yml/badge.svg)](https://github.com/reactjs/react-rails/actions/workflows/ruby.yml)[![Maintainers Wanted](https://img.shields.io/badge/Maintainers-Wanted-red.svg?style=flat-square)]()
+[![Ruby](https://github.com/reactjs/react-rails/actions/workflows/ruby.yml/badge.svg)](https://github.com/reactjs/react-rails/actions/workflows/ruby.yml)
 
+## News
+v2.7.0.rc.0 is out on [Ruby Gems](https://rubygems.org/gems/react-rails/versions/2.7.0.rc.0) and [NPM](https://www.npmjs.com/package/react_ujs/v/2.7.0-rc.0). Please try it out!
 
+## Summary
 React-Rails is a flexible tool to use [React](http://facebook.github.io/react/) with Rails. The benefits:
 * Automatically renders React server-side and client-side
 * Supports Webpacker 4.x, 3.x, 2.x, 1.1+ or Shakapacker v6+
@@ -173,6 +176,24 @@ ReactRailsUJS.useContext(myCustomContext)
 
 If `require` fails to find your component, [`ReactRailsUJS`](#ujs) falls back to the global namespace, described in [Use with Asset Pipeline](#use-with-asset-pipeline).
 
+In some cases, having multiple `require.context` entries may be desired. Examples of this include:
+
+- Refactoring a typical Rails application into a Rails API with an (eventually) separate Single Page Application (SPA). For this use case, one can add a separate pack in addition to the typical `application` one. React components can be shared between the packs but the new pack can use a minimal Rails view layout, different default styling, etc.
+- In a larger application, you might find it helpful to split your JavaScript by routes/controllers to avoid serving unused components and improve your site performance by keeping bundles smaller. For example, you might have separate bundles for homepage, search, and checkout routes. In that scenario, you can add an array of `require.context` component directory paths via `useContexts` to `server_rendering.js`, to allow for [Server-Side Rendering](#server-side-rendering) across your application:
+ 
+```js
+// server_rendering.js
+var homepageRequireContext = require.context('homepage', true);
+var searchRequireContext = require.context('search', true);
+var checkoutRequireContext = require.context('checkout', true);
+
+var ReactRailsUJS = require('react_ujs');
+ReactRailsUJS.useContexts([
+  homepageRequireContext,
+  searchRequireContext,
+  checkoutRequireContext
+]);
+```
 ### File naming
 
 React-Rails supports plenty of file extensions such as: .js, .jsx.js, .js.jsx, .es6.js, .coffee, etcetera!

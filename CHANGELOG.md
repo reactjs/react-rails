@@ -4,14 +4,19 @@ If you need help upgrading `react-rails`, `webpacker` to `shakapacker`, or JS pa
 
 [#1209 2.7 Release Discussion](https://github.com/reactjs/react-rails/issues/1209)
 
-## Unrelease 
+## Unreleased
+Changes since last non-beta release.
 
-#### Breaking Changes
+_Please add entries here for your pull requests that are not yet released._
+
+## [2.7.0.rc.0] - TBD
 
 #### New Features
 - Camelizes keys with primitive values, in addition to hashes #946
 - Expose alternative implementations for `ReactUJS.getConstructor` #1050
 - Include turbolinks in dev and update webdrivers #1174
+- Add support for multiple `require.context` with addition of `useContexts` #1144
+- Update dependencies
 
 #### Update dependencies
   - react to 17.0.2 #1218
@@ -549,3 +554,6 @@ If you need help upgrading `react-rails`, `webpacker` to `shakapacker`, or JS pa
 - View helper and UJS for mounting components
 - Server rendering with `prerender: true`
 - Transform `.jsx` in the asset pipeline
+
+[Unreleased]: https://github.com/reactjs/react-rails/compare/v2.7.0...master
+[2.7.0]: https://github.com/shakacode/shakapacker/compare/v2.6.2...v2.7.0
