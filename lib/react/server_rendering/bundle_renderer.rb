@@ -1,6 +1,5 @@
 require 'react/server_rendering/environment_container'
 require 'react/server_rendering/manifest_container'
-require 'react/server_rendering/webpacker_manifest_container'
 require 'react/server_rendering/yaml_manifest_container'
 require 'react/server_rendering/separate_server_bundle_container'
 
