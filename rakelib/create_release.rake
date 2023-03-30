@@ -39,7 +39,7 @@ task :create_release, %i[gem_version dry_run] do |_t, args|
   puts 'Updating ujs:update'
   Rake::Task['ujs:update'].invoke
 
-  Release.commit_the_changes unless is_dry_run
+  Release.commit_the_changes('Update pre-bundled react and React ujs') unless is_dry_run
 
   Release.bump_gem_version(gem_version, is_dry_run)
   Release.release_the_new_npm_version(npm_version, is_dry_run)
@@ -62,11 +62,16 @@ module Release
       puts "sh_in_dir, shell_commands = #{shell_commands}"
       puts "ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ"
 
-      shell_commands.flatten.each { |shell_command| sh %(cd #{dir} && #{shell_command.strip}) }
+      shell_commands.flatten.compact.each { |shell_command| sh %(cd #{dir} && #{shell_command.strip}) }
     end
 
-    def commit_the_changes
-      sh_in_dir(gem_root, 'git commit -am "Update pre-bundled react and React ujs"')
+    def commit_the_changes(message)
+      sh_in_dir(gem_root, "git commit -am #{message}") unless nothing_to_commit?
+    end
+
+    def nothing_to_commit?
+      status = `git status --porcelain`
+      $CHILD_STATUS.success? && status == ''
     end
 
     def ensure_there_is_nothing_to_commit
@@ -112,7 +117,7 @@ module Release
         gem_root,
         "gem bump --no-commit #{gem_version == '' ? '' : %(--version #{gem_version})}",
         'bundle install',
-        (is_dry_run ? "": "git commit -am 'Bump version to #{gem_version}'")
+        (is_dry_run ? nil: "git commit -am 'Bump version to #{gem_version}'")
       )
     end
 
@@ -127,14 +132,14 @@ module Release
     def release_the_new_npm_version(npm_version, is_dry_run)
       puts "Making npm release, #{is_dry_run ? 'dry run' : 'real run'}"
       # Will bump the yarn version, commit, tag the commit, push to repo, and release on yarn
+      puts 'ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ'
+      puts 'Use the OTP for NPM!'
+      puts 'ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ'
       release_it_command = +'release-it'
       release_it_command << " #{npm_version}" unless npm_version == ''
       release_it_command << ' --npm.publish --no-git.requireCleanWorkingDir'
       release_it_command << ' --dry-run --verbose' if is_dry_run
-      puts 'ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ'
-      puts 'Use the OTP for NPM!'
-      puts 'ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ'
-      sh_in_dir(release_it_command)
+      sh_in_dir(gem_root, release_it_command)
     end
 
     def push
