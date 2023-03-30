@@ -107,18 +107,13 @@ It outputs an ironically webpacked couple of files into `lib/assets/react-source
 
 ##### Updating ReactRailsUJS
 - Update the UJS with `rake ujs:update`
-- (For Maintainers) To release a new NPM version:
-  - Update the version in `package.json`
-  - Commit & push to master
-  - `bundle exec rake ujs:publish` (runs `npm publish`)
 
 ##### Releasing the Gem
 - (For Maintainers) To release a new RubyGems version:
-  - Increment the version in `lib/react/rails/version.rb`
-  - Add an entry to `VERSIONS.md`
   - Update the [changelog](CHANGELOG.md) (find recent changes on GitHub by listing commits or showing closed PRs)
-  - Commit changes & push to master
-  - `bundle exec rake release`: pushes a tag to GitHub, builds a `.gem`, and pushes to RubyGems
+  - Regular versions: `bundle exec rake create_release\[2.7.0\]`
+  - RC versions: `bundle exec rake create_release\[2.7.0.rc.2\]`
+  - Note, `rake create_release` runs `rake react:update` and `rake ujs:update`
 
 ## Styleguides
 

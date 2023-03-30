@@ -5,7 +5,7 @@
 [![Ruby](https://github.com/reactjs/react-rails/actions/workflows/ruby.yml/badge.svg)](https://github.com/reactjs/react-rails/actions/workflows/ruby.yml)
 
 ## News
-v2.7.0.rc.0 is out on [Ruby Gems](https://rubygems.org/gems/react-rails/versions/2.7.0.rc.0) and [NPM](https://www.npmjs.com/package/react_ujs/v/2.7.0-rc.0). Please try it out!
+v2.7.0.rc.2 is out on [Ruby Gems](https://rubygems.org/gems/react-rails/versions/2.7.0.rc.2) and [NPM v2.7.0-rc.2](https://www.npmjs.com/package/react_ujs/v/2.7.0-rc.2). Please try it out!
 
 ## Summary
 React-Rails is a flexible tool to use [React](http://facebook.github.io/react/) with Rails. The benefits:
