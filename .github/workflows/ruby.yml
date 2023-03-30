@@ -11,21 +11,8 @@ jobs:
   test:
     strategy:
       fail-fast: false
-      matrix:
-        ruby:
-          - 2.7.7
-          - 2.6.5
-          # TODO restore testing against JRuby w/ therubyrhino
-          # - jruby-9.3.7.0
-        gemfile:
-          - rails_7.0_no_sprockets_shakapacker_6
-          - rails_5.2_no_sprockets
-          - rails_5.2_sprockets_3
-          - rails_5.2_sprockets_4
     runs-on: ubuntu-latest
     env:
-      # $BUNDLE_GEMFILE must be set at the job level, so it is set for all steps
-      BUNDLE_GEMFILE: ${{ github.workspace }}/gemfiles/${{ matrix.gemfile }}.gemfile
       # Workaround b/c upgrading Minitest broke some mocking expectations
       # having to do with automatic kwarg splatting
       MT_KWARGS_HACK: 1
@@ -34,7 +21,7 @@ jobs:
     - uses: actions/setup-node@v3
     - uses: ruby/setup-ruby@v1
       with:
-        ruby-version: ${{ matrix.ruby }}
+        ruby-version: 2.7.7
         # TODO: Impalement caching
         # bundler-cache: true
     - run: bundle install

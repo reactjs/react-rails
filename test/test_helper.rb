@@ -6,8 +6,6 @@ end
 DUMMY_LOCATION = if (gem_webpack = Bundler.locked_gems.specs.find { |gem_spec| gem_spec.name == 'shakapacker' })
   'dummy_shakapacker'
 else
-  'dummy_sprockets'
-end
 
 support_path = File.expand_path('../support/*.rb', __FILE__)
 Dir.glob(support_path).each do |f|

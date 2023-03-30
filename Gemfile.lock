@@ -154,6 +154,8 @@ GEM
     nokogiri (1.13.10)
       mini_portile2 (~> 2.8.0)
       racc (~> 1.4)
+    nokogiri (1.13.10-x86_64-linux)
+      racc (~> 1.4)
     notiffany (0.1.3)
       nenv (~> 0.1)
       shellany (~> 0.0)
@@ -240,10 +242,11 @@ GEM
 
 PLATFORMS
   ruby
+  x86_64-linux
 
 DEPENDENCIES
   appraisal
-  bundler (~> 2.0)
+  bundler (= 2.4.9)
   capybara
   codeclimate-test-reporter
   coffee-rails
@@ -261,4 +264,4 @@ DEPENDENCIES
   webdrivers
 
 BUNDLED WITH
-   2.1.4
+   2.4.9
