@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    react-rails (2.7.0.rc.1)
+    react-rails (2.7.0.rc.2)
       babel-transpiler (>= 0.7.0)
       connection_pool
       execjs
