@@ -21,6 +21,8 @@ task :create_release, %i[gem_version dry_run] do |_t, args|
   args_hash = args.to_hash
 
   is_dry_run = Release.object_to_boolean(args_hash[:dry_run])
+  puts "is_dry_run: #{is_dry_run}" if is_dry_run
+
   gem_version = args_hash.fetch(:gem_version, '').strip
   npm_version = gem_version.empty? ? '' : Release.convert_rubygem_to_npm_version(gem_version)
 
@@ -39,8 +41,9 @@ task :create_release, %i[gem_version dry_run] do |_t, args|
 
   Release.commit_the_changes unless is_dry_run
 
+  Release.bump_gem_version(gem_version, is_dry_run)
   Release.release_the_new_npm_version(npm_version, is_dry_run)
-  Release.release_the_new_gem_version(gem_version, is_dry_run)
+  Release.release_the_new_gem_version(is_dry_run)
 
   Release.push
 end
@@ -55,6 +58,10 @@ module Release
 
     # Executes a string or an array of strings in a shell in the given directory in an unbundled environment
     def sh_in_dir(dir, *shell_commands)
+      puts "ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ"
+      puts "sh_in_dir, shell_commands = #{shell_commands}"
+      puts "ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ"
+
       shell_commands.flatten.each { |shell_command| sh %(cd #{dir} && #{shell_command.strip}) }
     end
 
@@ -99,14 +106,17 @@ module Release
       raise 'Ensure you have Git and Bundler installed before continuing.'
     end
 
-    def release_the_new_gem_version(gem_version, is_dry_run)
+    def bump_gem_version(gem_version, is_dry_run)
       puts 'Bumping gem version'
       Release.sh_in_dir(
         gem_root,
         "gem bump --no-commit #{gem_version == '' ? '' : %(--version #{gem_version})}",
         'bundle install',
-        "git commit -am 'Bump version to #{gem_version}'"
+        (is_dry_run ? "": "git commit -am 'Bump version to #{gem_version}'")
       )
+    end
+
+    def release_the_new_gem_version(is_dry_run)
       puts 'ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ'
       puts 'Use the OTP for RubyGems!'
       puts 'ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ'
@@ -115,7 +125,7 @@ module Release
     end
 
     def release_the_new_npm_version(npm_version, is_dry_run)
-      puts 'Making npm release'
+      puts "Making npm release, #{is_dry_run ? 'dry run' : 'real run'}"
       # Will bump the yarn version, commit, tag the commit, push to repo, and release on yarn
       release_it_command = +'release-it'
       release_it_command << " #{npm_version}" unless npm_version == ''
