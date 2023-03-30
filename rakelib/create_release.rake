@@ -37,8 +37,10 @@ task :create_release, %i[gem_version dry_run] do |_t, args|
   puts 'Updating ujs:update'
   Rake::Task['ujs:update'].invoke
 
-  release_the_new_npm_version(npm_version, is_dry_run)
-  release_the_new_gem_version(gem_version, is_dry_run)
+  Release.commit_the_changes unless is_dry_run
+
+  Release.release_the_new_npm_version(npm_version, is_dry_run)
+  Release.release_the_new_gem_version(gem_version, is_dry_run)
 
   Release.push
 end
@@ -54,6 +56,10 @@ module Release
     # Executes a string or an array of strings in a shell in the given directory in an unbundled environment
     def sh_in_dir(dir, *shell_commands)
       shell_commands.flatten.each { |shell_command| sh %(cd #{dir} && #{shell_command.strip}) }
+    end
+
+    def commit_the_changes
+      sh_in_dir(gem_root, 'git commit -am "Update pre-bundled react and React ujs"')
     end
 
     def ensure_there_is_nothing_to_commit
@@ -84,6 +90,10 @@ module Release
       puts 'Pulling latest commits from remote repository'
 
       sh_in_dir(gem_root, 'git pull --rebase')
+      sh_in_dir(gem_root, 'bundle')
+      sh_in_dir(gem_root, 'yarn')
+      sh_in_dir(File.join(gem_root, 'react-builds'), 'yarn')
+
       raise 'Failed in pulling latest changes from default remore repository.' unless $CHILD_STATUS.success?
     rescue Errno::ENOENT
       raise 'Ensure you have Git and Bundler installed before continuing.'
@@ -114,8 +124,7 @@ module Release
       puts 'ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ'
       puts 'Use the OTP for NPM!'
       puts 'ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ'
-
-      system(release_it_command)
+      sh_in_dir(release_it_command)
     end
 
     def push

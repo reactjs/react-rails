@@ -13,6 +13,6 @@
     "webpack": "^5.74.0"
   },
   "scripts": {
-    "build": "webpack && NODE_ENV=production webpack -p"
+    "build": "NODE_ENV=development webpack && NODE_ENV=production webpack"
   }
 }

@@ -1,21 +1,5 @@
 // Use `rake react:update` to build this bundle & copy files into the gem.
-var webpack = require("webpack");
-
-var reactRailsEnv = process.env.NODE_ENV == "production" ? "production" : "development";
-
-var plugins = [];
-
-if (reactRailsEnv == "production") {
-  var definePlugin = new webpack.DefinePlugin({'process.env.NODE_ENV': '"production"'});
-  var minifyPlugin = new webpack.optimize.UglifyJsPlugin({
-    compress: {
-        warnings: false
-    }
-  });
-  plugins.push(definePlugin);
-  plugins.push(minifyPlugin);
-}
-
+// Be sure to set NODE_ENV=production or NODE_ENV=development before running
 
 module.exports = {
   context: __dirname,
@@ -24,8 +8,7 @@ module.exports = {
     "react-server": "./react-server.js",
   },
   output: {
-      path: __dirname + "/build/" + reactRailsEnv,
+      path: __dirname + "/build/" + process.env.NODE_ENV,
       filename: "[name].js",
   },
-  plugins: plugins,
 };
