@@ -70,7 +70,6 @@ namespace :ujs do
   end
 end
 
-require 'appraisal'
 require 'rake/testtask'
 
 Rake::TestTask.new(:test) do |t|
