@@ -11,7 +11,7 @@ jobs:
   test:
     strategy:
       fail-fast: false
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-2.20
     env:
       # Workaround b/c upgrading Minitest broke some mocking expectations
       # having to do with automatic kwarg splatting
@@ -21,7 +21,7 @@ jobs:
     - uses: actions/setup-node@v3
     - uses: ruby/setup-ruby@v1
       with:
-        ruby-version: 2.7.7
+        ruby-version: 2.7.3
         # TODO: Impalement caching
         # bundler-cache: true
     - run: bundle install
