@@ -14,7 +14,7 @@ Gem::Specification.new do |s|
   s.author = ['Paul O’Shannessy', 'Robert Mosolgo', 'Gregory Myers', 'Tsukuru Tanimichi']
   s.email = ['paul@oshannessy.com', 'rmosolgo@gmail.com', 'neonmd@hotmail.co.uk', 'info@ttanimichi.com']
 
-  s.add_development_dependency 'appraisal'
+  s.add_development_dependency 'shakapacker'
   s.add_development_dependency 'bundler', '2.4.9'
   s.add_development_dependency 'codeclimate-test-reporter'
   s.add_development_dependency 'coffee-rails'

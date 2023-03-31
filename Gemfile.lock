@@ -68,10 +68,6 @@ GEM
       zeitwerk (~> 2.2)
     addressable (2.8.0)
       public_suffix (>= 2.0.2, < 5.0)
-    appraisal (2.4.1)
-      bundler
-      rake
-      thor (>= 0.14.0)
     babel-source (5.8.35)
     babel-transpiler (0.7.0)
       babel-source (>= 4.0, < 6)
@@ -147,12 +143,10 @@ GEM
       nokogiri (~> 1)
       rake
     mini_mime (1.0.2)
-    mini_portile2 (2.8.0)
     minitest (5.17.0)
     nenv (0.3.0)
     nio4r (2.5.2)
-    nokogiri (1.13.10)
-      mini_portile2 (~> 2.8.0)
+    nokogiri (1.13.10-x86_64-darwin)
       racc (~> 1.4)
     nokogiri (1.13.10-x86_64-linux)
       racc (~> 1.4)
@@ -168,6 +162,8 @@ GEM
     public_suffix (4.0.6)
     racc (1.6.1)
     rack (2.2.6.2)
+    rack-proxy (0.7.6)
+      rack
     rack-test (2.0.2)
       rack (>= 1.3)
     rails (6.0.2.1)
@@ -207,6 +203,12 @@ GEM
       childprocess (>= 0.5, < 5.0)
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2)
+    semantic_range (3.0.0)
+    shakapacker (6.6.0)
+      activesupport (>= 5.2)
+      rack-proxy (>= 0.6.1)
+      railties (>= 5.2)
+      semantic_range (>= 2.3.0)
     shellany (0.0.1)
     simplecov (0.13.0)
       docile (~> 1.1.0)
@@ -241,11 +243,10 @@ GEM
     zeitwerk (2.6.6)
 
 PLATFORMS
-  ruby
+  x86_64-darwin-20
   x86_64-linux
 
 DEPENDENCIES
-  appraisal
   bundler (= 2.4.9)
   capybara
   codeclimate-test-reporter
@@ -259,6 +260,7 @@ DEPENDENCIES
   rails (>= 3.2)
   react-rails!
   selenium-webdriver
+  shakapacker
   test-unit (~> 2.5)
   turbolinks
   webdrivers
