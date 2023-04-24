@@ -13,22 +13,6 @@ default: &default
   # Reload manifest.json on all requests so we reload latest compiled packs
   cache_manifest: false
 
-  extensions:
-    - .coffee
-    - .erb
-    - .js
-    - .jsx
-    - .ts
-    - .vue
-    - .sass
-    - .scss
-    - .css
-    - .png
-    - .svg
-    - .gif
-    - .jpeg
-    - .jpg
-
 development:
   <<: *default
   compile: true
