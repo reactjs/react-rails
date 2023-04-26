@@ -30,6 +30,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rails', '>= 3.2'
   s.add_development_dependency 'pry-byebug'
   s.add_development_dependency 'turbolinks'
+  s.add_development_dependency 'sprockets', '~> 4.0.x'
 
   s.add_dependency 'connection_pool'
   s.add_dependency 'execjs'
