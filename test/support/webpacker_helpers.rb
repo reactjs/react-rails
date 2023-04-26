@@ -43,7 +43,7 @@ module WebpackerHelpers
 
     # Start the server in a forked process:
     Dir.chdir("test/#{DUMMY_LOCATION}") do
-      spawn 'RAILS_ENV=development ./bin/webpack-dev-server '
+      spawn 'RAILS_ENV=development ./bin/webpacker-dev-server'
     end
 
     stop_time = Time.now + 30.seconds

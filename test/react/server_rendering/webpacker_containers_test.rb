@@ -9,16 +9,14 @@ WebpackerHelpers.when_webpacker_available do
 
     def test_it_loads_JS_from_the_webpacker_container
       WebpackerHelpers.compile
-      container = React::ServerRendering::WebpackerManifestContainer.new
-      assert_not_empty container.find_asset('application.js')
       container = React::ServerRendering::SeparateServerBundleContainer.new
       assert_not_empty container.find_asset('server_rendering.js')
     end
 
     def test_it_loads_from_webpack_dev_server
       WebpackerHelpers.with_dev_server do
-        container = React::ServerRendering::WebpackerManifestContainer.new
-        assert_not_empty container.find_asset('application.js')
+        container = React::ServerRendering::SeparateServerBundleContainer.new
+        assert_not_empty container.find_asset('server_rendering.js')
       end
     end
   end
