@@ -67,6 +67,12 @@ module React
                    default: false,
                    desc: "Output coffeescript based component"
 
+      class_option :function,
+                   type: :boolean,
+                   default: false,
+                   aliases: '--func',
+                   desc: 'Output function based component'
+
       REACT_PROP_TYPES = {
         "node" => "PropTypes.node",
         "bool" => "PropTypes.bool",
