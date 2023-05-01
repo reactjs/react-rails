@@ -21,6 +21,9 @@ _Please add entries here for your pull requests that are not yet released._
 #### Bug Fixes
 - Fix ReactDomClient initialization error during SSR. #1278
 
+#### Changed
+- The `react:component` generator now generates a function component by default #1271
+
 ## [2.7.0] - 2023-05-06
 
 #### New Features
