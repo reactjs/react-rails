@@ -652,7 +652,7 @@ Prerendering is set to `true` by default, but can be turned off with `prerender:
 You can generate a new component file with:
 
 ```sh
-rails g react:component ComponentName prop1:type prop2:type ...
+rails g react:component ComponentName prop1:type prop2:type ... [options]
 ```
 
 For example,
@@ -685,8 +685,37 @@ var Post = createReactClass({
 
 The generator also accepts options:
 
+- `--function` or `--func`: use `function ComponentName() {...}`
 - `--es6`: use `class ComponentName extends React.Component`
 - `--coffee`: use CoffeeScript
+
+For example,
+
+```sh
+rails g react:component ButtonComponent title:string --function
+```
+
+would generate:
+
+```jsx
+import React from "react"
+import PropTypes from "prop-types"
+
+function ButtonComponent() {
+  return (
+    <React.Fragment>
+      Title: {this.props.title}
+    </React.Fragment>
+  );
+}
+
+ButtonComponent.propTypes = {
+  title: PropTypes.string
+};
+
+export default ButtonComponent
+
+```
 
 Accepted PropTypes are:
 
