@@ -49,7 +49,7 @@ module React
       end
 
       class << self
-        attr_accessor :asset_container_class, :dont_use_webpacker_manifest
+        attr_accessor :asset_container_class
       end
 
       # Get an object which exposes assets by their logical path.

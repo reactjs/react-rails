@@ -84,7 +84,7 @@ task default: :test
 
 task :test_setup do
   load 'webdrivers/Rakefile'
-  Dir.chdir('./test/dummy_shakapacker') do
+  Dir.chdir('./test/dummy') do
     `yarn install`
   end
 end

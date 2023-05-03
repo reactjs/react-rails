@@ -6,7 +6,7 @@ module SprocketsHelpers
     # We also can't scan for defined?(Sprockets) because this is used to
     #   require Sprockets in the config/application.rb
     # !!Bundler.locked_gems.specs.find {|gem_spec| gem_spec.name == 'sprockets'}
-    false
+    true
   end
 
   # The block depends on sprockets, don't run it if sprockets is missing
@@ -42,15 +42,7 @@ module SprocketsHelpers
       # - assets:precompile runs webpacker:compile when availabled
       # - webpacker:compile depends on `./bin/webpack`, so `.` must be the app root
       Dir.chdir("./test/#{DUMMY_LOCATION}") do
-
-        ENV['RAILS_GROUPS'] = 'assets' # required for Rails 3.2
         Rake::Task['assets:precompile'].reenable
-
-        if Rails::VERSION::MAJOR == 3
-          Rake::Task['assets:precompile:all'].reenable
-          Rake::Task['assets:precompile:primary'].reenable
-          Rake::Task['assets:precompile:nondigest'].reenable
-        end
 
         Rake::Task['assets:precompile'].invoke
       end

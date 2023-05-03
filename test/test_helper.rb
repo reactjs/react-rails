@@ -3,7 +3,7 @@ if RUBY_PLATFORM != 'java'
   SimpleCov.start
 end
 
-DUMMY_LOCATION = 'dummy_shakapacker'
+DUMMY_LOCATION = 'dummy'
 
 support_path = File.expand_path('../support/*.rb', __FILE__)
 Dir.glob(support_path).each do |f|
