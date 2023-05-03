@@ -21,8 +21,8 @@ jobs:
     - uses: actions/setup-node@v3
     - run: npm -g install yalc
     - run: yalc publish
-    - run: cd test/app && yalc add react_ujs
-    - run: cd test/app && yarn
+    - run: cd test/dummy && yalc add react_ujs
+    - run: cd test/dummy && yarn
     - uses: ruby/setup-ruby@v1
       with:
         ruby-version: 2.7.3
