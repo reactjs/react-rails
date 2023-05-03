@@ -8,6 +8,7 @@ If you need help upgrading `react-rails`, `webpacker` to `shakapacker`, or JS pa
 Changes since last non-beta release.
 
 _Please add entries here for your pull requests that are not yet released._
+- Add option to replace `null`s in props with `undefined` via `ReactRailsUJS.setOptions` #1273
 
 ### Breaking Changes
 - Remove support & testing for Webpacker 3/4.
