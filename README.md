@@ -528,7 +528,6 @@ use it like so:
 ReactUJS.getConstructor = ReactUJS.constructorFromRequireContext(require.context('components', true));
 ```
 
-
 ## Server-Side Rendering
 
 You can render React components inside your Rails server with `prerender: true`:
@@ -800,6 +799,26 @@ For the vast majority of cases this will get you most of the migration:
 - global find+replace `React.Prop` -> `Prop`
 - add `import PropTypes from 'prop-types'` (Webpacker only)
 - re-run `bundle exec rails webpacker:install:react` to update npm packages (Webpacker only)
+
+## Other features
+
+### Replace `null` with `undefined` in props
+
+React-Rails converts `nil` to `null` while parsing props from Ruby to JavaScript. Optionally, you can configure React-Rails to parse `nil` values to `undefined` as per the following:
+
+```ruby
+# config/application.rb
+module TheAppName
+  class Application < Rails::Application
+    # ...
+    # Set to true to convert null values in props into undefined
+    config.react.null_to_undefined_props = true
+    # ...
+  end
+end
+```
+
+More information in: [discussion#1272](https://github.com/reactjs/react-rails/discussions/1272).
 
 ## Common Errors
 ### Getting warning for `Can't resolve 'react-dom/client'` in React < 18
