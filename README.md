@@ -528,6 +528,19 @@ use it like so:
 ReactUJS.getConstructor = ReactUJS.constructorFromRequireContext(require.context('components', true));
 ```
 
+### Configure UJS
+
+You can change the behaviours of `ReactRailsUJS` by calling `setOptions(options)` function:
+
+```js
+ReactRailsUJS.setOptions({ replaceNull: false });
+```
+
+Current acceptable options are the following:
+
+| Key | Value type | Description | Default |
+| --- | ---------- | ----------- | ------- |
+| `replaceNull` | boolean (`true` / `false`) | Whether to replace all `null`s in the props from Rails (originally `nil` in Rails) with `undefined`. May be helpful when defining the types of the props in TypeScript. See [discussion#1272](https://github.com/reactjs/react-rails/discussions/1272). | `false`|
 
 ## Server-Side Rendering
 
