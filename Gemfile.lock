@@ -261,6 +261,7 @@ DEPENDENCIES
   react-rails!
   selenium-webdriver
   shakapacker
+  sprockets (~> 4.0.x)
   test-unit (~> 2.5)
   turbolinks
   webdrivers

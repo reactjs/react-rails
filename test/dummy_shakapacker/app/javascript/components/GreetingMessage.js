@@ -7,6 +7,8 @@ module.exports = createReactClass({
     if (typeof global !== "undefined" && global.ctx && global.ctx.greeting) {
       initialGreeting = global.ctx.greeting
     }
+    console.log(`global: ${global}`)
+    console.log(`global.ctx: ${JSON.stringify(global.ctx)}`)
 
     return {
       greeting: initialGreeting

@@ -92,14 +92,20 @@ gem 'react-rails', path: '../react-rails'
 
 To develop the React_UJS NPM Package, make your changes and run `npm pack` to make a `.tgz` bundle, then in react-rails-example-app `yarn add ../react_ujs-<version>.tgz`
 
+You're also going to need a global version of [yalc](https://github.com/wclr/yalc)
 ##### Running tests
 
-`bundle exec appraisal install` to install gems on every gemfile Appraisal contains.
-`rake test` or `bundle exec appraisal rake test` runs everything.
-or run a specific suite using `bundle exec appraisal <appraisal name> rake test`
-- Find appraisal names in [Appraisals](Appraisals)
-- Integration tests run in Headless Chrome which is included in Chrome (59+ linux,OSX | 60+ Windows)
-- ChromeDriver is included with `chromedriver-helper` gem so no need to manually install that 👍
+- `bundle`
+- `yalc publish`
+- `cd test/dummy && yalc add react_ujs`
+- `yarn`
+- `bundle exec rake test`
+
+If you update react-rails code, then to test the new code:
+
+- `yalc publish` in the root directory
+- `cd test/dummy && yalc update react_ujs`
+- `bundle exec rake test`
 
 ##### Updating the pre-bundled react
 - Update React with `rake react:update`
