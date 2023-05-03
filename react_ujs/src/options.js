@@ -11,3 +11,8 @@ export function replaceNullWithUndefined(obj) {
   })
   return obj
 }
+
+export function overwriteOption(ujsOptions, newOptions, key) {
+  if (!Object.prototype.hasOwnProperty.call(newOptions, key)) return
+  ujsOptions[key] = newOptions[key]
+}
