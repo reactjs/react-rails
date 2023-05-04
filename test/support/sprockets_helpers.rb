@@ -6,16 +6,16 @@ module SprocketsHelpers
     # We also can't scan for defined?(Sprockets) because this is used to
     #   require Sprockets in the config/application.rb
     # !!Bundler.locked_gems.specs.find {|gem_spec| gem_spec.name == 'sprockets'}
-    ENV['USE_SPROCKETS']
+    ENV['USE_SPROCKETS'].present?
   end
 
   # The block depends on sprockets, don't run it if sprockets is missing
   def when_available
-    ENV['USE_SPROCKETS'] = true
+    ENV['USE_SPROCKETS'] = 'true'
     if available?
       yield
     end
-    ENV['USE_SPROCKETS'] = false
+    ENV['USE_SPROCKETS'] = nil
   end
 
   def clear_sprockets_cache
