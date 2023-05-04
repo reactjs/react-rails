@@ -3,13 +3,15 @@ module WebpackerHelpers
 
   module_function
   def available?
-    !!defined?(Webpacker)
+    ENV['USE_WEBPACKER']
   end
 
   def when_webpacker_available
+    ENV['USE_WEBPACKER'] = true
     if available?
       yield
     end
+    ENV['USE_WEBPACKER'] = false
   end
 
   def compile
