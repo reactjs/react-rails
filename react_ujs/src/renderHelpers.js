@@ -1,4 +1,4 @@
-import ReactDOM from "react-dom"
+import ReactDOM from "./reactDomClient"
 
 export function supportsHydration() {
   return typeof ReactDOM.hydrate === "function" || typeof ReactDOM.hydrateRoot === "function"

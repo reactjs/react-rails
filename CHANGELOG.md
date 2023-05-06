@@ -35,6 +35,7 @@ _Please add entries here for your pull requests that are not yet released._
 
 #### Bug Fixes
 - Fix installation crash caused by absolute path for `source_entry_path` in default `config/webpacker.yml` coming from `shakapacker` version 6.x - #1216
+- Fix warning for loading `react-dom` in React 18 - #1269
 
 ## 2.6.2
 
