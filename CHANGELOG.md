@@ -9,7 +9,7 @@ Changes since last non-beta release.
 
 _Please add entries here for your pull requests that are not yet released._
 
-## [2.7.0] - 2021-10-12
+## [2.7.0] - 2023-05-06
 
 #### New Features
 - Camelizes keys with primitive values, in addition to hashes #946
