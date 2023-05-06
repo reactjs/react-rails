@@ -40,10 +40,13 @@ Read the [full review here](https://clutch.co/profile/shakacode#reviews?sort_by=
 ## Contents
 
 - [Get started with Shakapacker](#get-started-with-shakapacker)
+  - [Component name](#component-name)
   - [File naming](#file-naming)
   - [Typescript support](#typescript-support)
+  - [Test component](#test-component)
 - [Use with Asset Pipeline](#use-with-asset-pipeline)
   - [Custom JSX Transformer](#custom-jsx-transformer)
+    - [Transform Plugin Options](#transform-plugin-options)
   - [React.js versions](#reactjs-versions)
 - [View Helper](#view-helper)
     - [Custom View Helper](#custom-view-helper)
@@ -59,6 +62,7 @@ Read the [full review here](https://clutch.co/profile/shakacode#reviews?sort_by=
 - [Component Generator](#component-generator)
     - [Use with JBuilder](#use-with-jbuilder)
   - [Camelize Props](#camelize-props)
+  - [Changing Component Templates](#changing-component-templates)
 - [Upgrading](#upgrading)
   - [2.3 to 2.4](#23-to-24)
 - [Common Errors](#common-errors)
@@ -81,7 +85,7 @@ The Wiki page features a significant amount of additional information about Reac
 
 _Alternatively, get started with [Sprockets](#use-with-asset-pipeline)_
 
-#### 1) Create a new Rails app:
+1. Create a new Rails app:
 Prevent installing default javascript dependencies by using `--skip-javascript` option:
 
 ```bash
@@ -89,13 +93,13 @@ $ rails new my-app --skip-javascript
 $ cd my-app
 ```
 
-#### 2) Install `shakapacker`:
+2. Install `shakapacker`:
 ```bash
 $ bundle add shakapacker --strict
 $ rails webpacker:install
 ```
 
-#### 3) Install `react` and some other required npm packages:
+3. Install `react` and some other required npm packages:
 ```bash
 $ yarn add react react-dom @babel/preset-react prop-types \
   css-loader style-loader mini-css-extract-plugin css-minimizer-webpack-plugin
@@ -113,7 +117,7 @@ Also update the Babel configuration in the `package.json` file:
 },
 ```
 
-#### 4) Install `react-rails`:
+4. Install `react-rails`:
 ```bash
 $ bundle add 'react-rails' --strict
 $ rails generate react:install
@@ -125,7 +129,7 @@ This gives you:
 - [`ReactRailsUJS`](#ujs) setup in `app/javascript/packs/application.js`
 - `app/javascript/packs/server_rendering.js` for [server-side rendering](#server-side-rendering)
 
-#### 5) Generate your first component:
+5. Generate your first component:
 ```bash
 $ rails g react:component HelloWorld greeting:string
 ```
@@ -145,20 +149,20 @@ Example:
 <%= react_component("my_subdirectory/HelloWorld", { greeting: "Hello from react-rails." }) %>
 ```
 
-#### 6) [Render it in a Rails view](#view-helper):
+6. [Render it in a Rails view](#view-helper):
 
 ```erb
 <!-- erb: paste this in view -->
 <%= react_component("HelloWorld", { greeting: "Hello from react-rails." }) %>
 ```
 
-##### 7) Lets Start the app:
+7. Lets Start the app:
 ```bash
 $ rails s
 ```
 Output: greeting: Hello from react-rails", inspect webpage in your browser to see the change in tag props.
 
-##### 7) Run dev server (optional)
+8. Run dev server (optional)
 In order to run dev server with HMR feature you need to parallely run:
 
 ```bash
