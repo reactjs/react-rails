@@ -5,7 +5,7 @@
 [![Ruby](https://github.com/reactjs/react-rails/actions/workflows/ruby.yml/badge.svg)](https://github.com/reactjs/react-rails/actions/workflows/ruby.yml)
 
 ## News
-v2.7.0.rc.2 is out on [Ruby Gems](https://rubygems.org/gems/react-rails/versions/2.7.0.rc.2) and [NPM v2.7.0-rc.2](https://www.npmjs.com/package/react_ujs/v/2.7.0-rc.2). Please try it out!
+v2.7.0 is released. Please try it out and report any issues. We'll try to address any critical issues ASAP. We're going shortly release 3.0 which improves support for SSR, but it's a breaking change because it requires updating dependencies, such as going from `webpacker` to `shakapacker`.
 
 ## Summary
 React-Rails is a flexible tool to use [React](http://facebook.github.io/react/) with Rails. The benefits:
@@ -14,9 +14,24 @@ React-Rails is a flexible tool to use [React](http://facebook.github.io/react/) 
 * Supports Sprockets 4.x, 3.x, 2.x
 * Lets you use [JSX](http://facebook.github.io/react/docs/jsx-in-depth.html), [ES6](http://es6-features.org/), [TypeScript](https://www.typescriptlang.org/), [CoffeeScript](http://coffeescript.org/)
 
+---
+## ShakaCode Support
+
+[ShakaCode](https://www.shakacode.com) offers support for upgrading this gem, and related gems such as Webpacker and using Shakapacker. If interested, contact Justin Gordon, [justin@shakacode.com](mailto:justin@shakacode.com). We're also [hiring](https://jobs.lever.co/shakacode/3bdbfdb3-4495-4611-a279-01dddb351abe)!
+
+Here's a testimonial of how ShakaCode can help, from [Florian Gößler](https://github.com/FGoessler) of [Blinkist](https://www.blinkist.com/), January 2, 2023:
+> Hey Justin 👋
+>
+> I just wanted to let you know that we today shipped the webpacker to shakapacker upgrades and it all seems to be running smoothly! Thanks again for all your support and your teams work! 😍
+>
+> On top of your work, it was now also very easy for me to upgrade Tailwind and include our external node_module based web component library which we were using for our other (more modern) apps already. That work is going to be shipped later this week though as we are polishing the last bits of it. 😉
+>
+> Have a great 2023 and maybe we get to work together again later in the year! 🙌
+
+Read the [full review here](https://clutch.co/profile/shakacode#reviews?sort_by=date_DESC#review-2118154). Here's [another review of a Shakapacker migration that led to more work](https://clutch.co/profile/shakacode#reviews?sort_by=date_DESC#review-2096078).
+
 ## Resouces
 * [Click to join **React + Rails Slack**](https://reactrails.slack.com/join/shared_invite/enQtNjY3NTczMjczNzYxLTlmYjdiZmY3MTVlMzU2YWE0OWM0MzNiZDI0MzdkZGFiZTFkYTFkOGVjODBmOWEyYWQ3MzA2NGE1YWJjNmVlMGE). Then join the channel `#react-rails`.
-* If you need help upgrading `react-rails`, `webpacker`, or JS packages, contact [justin@shakacode.com](mailto:justin@shakacode.com). The [ShakaCode.com](https://www.shakacode.com) team is helping to maintain this Ruby gem. Check out [this discussion](https://github.com/reactjs/react-rails/discussions/1200).
 * If you are upgrading, you might consider migrating to the [react_on_rails](https://github.com/shakacode/react_on_rails) gem.
 * Source code example utilizing React-Rails: https://github.com/BookOfGreg/react-rails-example-app
 

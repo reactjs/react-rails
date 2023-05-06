@@ -9,29 +9,14 @@ Changes since last non-beta release.
 
 _Please add entries here for your pull requests that are not yet released._
 
-## [2.7.0.rc.0] - TBD
+## [2.7.0] - 2021-10-12
 
 #### New Features
 - Camelizes keys with primitive values, in addition to hashes #946
 - Expose alternative implementations for `ReactUJS.getConstructor` #1050
 - Include turbolinks in dev and update webdrivers #1174
 - Add support for multiple `require.context` with addition of `useContexts` #1144
-- Update dependencies
-
-#### Update dependencies
-  - react to 17.0.2 #1218
-  - webpack to 5.74.0
-  - webpack-dev-server to 2.11.5 #1150
-  - Node-sass to 7.0.0 #1158
-  - url-parse to 1.5.10 #1167
-  - minimist to 1.2.6 #1169
-  - async to 2.6.4 #1178
-  - rack to 2.2.3.1 #1182
-  - eventsource to 1.1.1 #1183
-  - rails-html-sanitizer to 1.4.3 #1188
-  - tzinfo to 1.2.10 #1190
-
-#### Deprecation
+- Update many dependencies
 
 #### Bug Fixes
 - Fix installation crash caused by absolute path for `source_entry_path` in default `config/webpacker.yml` coming from `shakapacker` version 6.x - #1216
