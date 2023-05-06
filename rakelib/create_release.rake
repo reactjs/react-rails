@@ -66,7 +66,7 @@ module Release
     end
 
     def commit_the_changes(message)
-      sh_in_dir(gem_root, "git commit -am #{message}") unless nothing_to_commit?
+      sh_in_dir(gem_root, "git commit -am '#{Shellwords.escape(message)}'") unless nothing_to_commit?
     end
 
     def nothing_to_commit?
@@ -117,7 +117,7 @@ module Release
         gem_root,
         "gem bump --no-commit #{gem_version == '' ? '' : %(--version #{gem_version})}",
         'bundle install',
-        (is_dry_run ? nil: "git commit -am 'Bump version to #{gem_version}'")
+        (is_dry_run ? nil: commit_the_changes("Bump version to #{gem_version}"))
       )
     end
 
