@@ -7,3 +7,5 @@ test/*/public/packs
 **/node_modules
 react-builds/build
 coverage/
+**/.yalc/**
+yalc.lock

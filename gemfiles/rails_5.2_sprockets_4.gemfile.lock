@@ -237,7 +237,6 @@ DEPENDENCIES
   selenium-webdriver
   sprockets (~> 4.0.x)
   test-unit (~> 2.5)
-  therubyrhino
   turbolinks (~> 5)
   webdrivers
 

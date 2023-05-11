@@ -1,7 +1,7 @@
 require 'react/server_rendering/environment_container'
 require 'react/server_rendering/manifest_container'
-require 'react/server_rendering/webpacker_manifest_container'
 require 'react/server_rendering/yaml_manifest_container'
+require 'react/server_rendering/separate_server_bundle_container'
 
 module React
   module ServerRendering
@@ -102,8 +102,8 @@ module React
       def asset_container_class
         if self.class.asset_container_class.present?
           self.class.asset_container_class
-        elsif WebpackerManifestContainer.compatible?
-          WebpackerManifestContainer
+        elsif SeparateServerBundleContainer.compatible?
+          SeparateServerBundleContainer
         elsif assets_precompiled?
           if ManifestContainer.compatible?
             ManifestContainer

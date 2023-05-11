@@ -6,7 +6,6 @@
 # For more information see: https://github.com/marketplace/actions/setup-ruby-jruby-and-truffleruby
 
 name: Ruby
-
 on: [push]
 jobs:
   check_react_and_ujs:
@@ -35,11 +34,10 @@ jobs:
       matrix:
         ruby: [2.7]
         gemfile:
-          # These have webpacker:
+          # These have shakapacker:
           - rails_5.2_no_sprockets
-          - rails_5.2_no_sprockets_webpacker_3
-          - rails_5.2_no_sprockets_webpacker_4
-          # These don't have webpacker:
+          - rails_5.2_no_sprockets_shakapacker
+          # These don't have shakapacker:
           - rails_5.2_sprockets_3
           - rails_5.2_sprockets_4
     runs-on: ubuntu-latest
@@ -52,6 +50,9 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - uses: actions/setup-node@v3
+    - run: npm -g install yalc
+    - run: yalc publish
+    - run: cd test/dummy && yalc add react_ujs && yarn
     - uses: ruby/setup-ruby@v1
       with:
         bundler: 2.4.9
