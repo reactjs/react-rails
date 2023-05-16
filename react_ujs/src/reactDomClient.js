@@ -1,6 +1,6 @@
 import ReactDOM from "react-dom"
 
-const reactMajorVersion = ReactDOM.version?.split('.')[0] || 16
+const reactMajorVersion = ReactDOM?.version?.split('.')[0] || 16
 
 // TODO: once we require React 18, we can remove this and inline everything guarded by it.
 const supportsRootApi = reactMajorVersion >= 18
