@@ -66,6 +66,7 @@ Read the [full review here](https://clutch.co/profile/shakacode#reviews?sort_by=
 - [Upgrading](#upgrading)
   - [2.3 to 2.4](#23-to-24)
 - [Common Errors](#common-errors)
+  - [Getting warning for `Can't resolve 'react-dom/client'` in React < 18](#getting-warning-for-cant-resolve-react-domclient-in-react--18)
   - [During installation](#during-installation)
   - [Undefined Set](#undefined-set)
   - [Using TheRubyRacer](#using-therubyracer)
@@ -764,6 +765,22 @@ For the vast majority of cases this will get you most of the migration:
 - re-run `bundle exec rails webpacker:install:react` to update npm packages (Webpacker only)
 
 ## Common Errors
+### Getting warning for `Can't resolve 'react-dom/client'` in React < 18
+
+You may see a warning like this when building a Webpack bundle using any version of React below 18. This warning can be safely [suppressed](https://webpack.js.org/configuration/other-options/#ignorewarnings) in your Webpack configuration. The following is an example of this suppression in `config/webpack/webpack.config.js`:
+
+```diff
+- const { webpackConfig } = require('shakapacker')
++ const { webpackConfig, merge } = require('shakapacker')
+
++const ignoreWarningsConfig = {
++  ignoreWarnings: [/Module not found: Error: Can't resolve 'react-dom\/client'/],
++};
+
+- module.exports = webpackConfig
++ module.exports = merge({}, webpackConfig, ignoreWarningsConfig)
+```
+
 ### During installation
 1) While using installers.(rails webpacker:install:react && rails webpacker:install)
 Error:
