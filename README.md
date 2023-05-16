@@ -685,14 +685,13 @@ var Post = createReactClass({
 
 The generator also accepts options:
 
-- `--function` or `--func`: use `function ComponentName() {...}`
-- `--es6`: use `class ComponentName extends React.Component`
+- `--es6`: generates a function component
 - `--coffee`: use CoffeeScript
 
 For example,
 
 ```sh
-rails g react:component ButtonComponent title:string --function
+rails g react:component ButtonComponent title:string --es6
 ```
 
 would generate:
@@ -701,7 +700,7 @@ would generate:
 import React from "react"
 import PropTypes from "prop-types"
 
-function ButtonComponent() {
+function ButtonComponent(props) {
   return (
     <React.Fragment>
       Title: {this.props.title}
@@ -714,8 +713,9 @@ ButtonComponent.propTypes = {
 };
 
 export default ButtonComponent
-
 ```
+
+**Note:** In a Webpacker project, es6 template is the default template in the generator.
 
 Accepted PropTypes are:
 
