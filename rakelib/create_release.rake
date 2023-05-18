@@ -39,7 +39,7 @@ task :create_release, %i[gem_version dry_run] do |_t, args|
   puts 'Updating ujs:update'
   Rake::Task['ujs:update'].invoke
 
-  Release.commit_the_changes('Update pre-bundled react and React ujs') unless is_dry_run
+  Release.make_sure_react_and_ujs_are_updated_and_commited
 
   Release.bump_gem_version(gem_version, is_dry_run)
   Release.release_the_new_npm_version(npm_version, is_dry_run)
@@ -81,6 +81,19 @@ module Release
 
       error = if $CHILD_STATUS.success?
                 'You have uncommitted code. Please commit or stash your changes before continuing'
+              else
+                'You do not have Git installed. Please install Git, and commit your changes before continuing'
+              end
+      raise(error)
+    end
+
+    def make_sure_react_and_ujs_are_updated_and_commited
+      status = `git status --porcelain`
+
+      return if $CHILD_STATUS.success? && status == ''
+
+      error = if $CHILD_STATUS.success?
+                'Running react:update and ujs:update resulted in uncommitted changes. Please commit those changes & confirm that CI passes before continuing.'
               else
                 'You do not have Git installed. Please install Git, and commit your changes before continuing'
               end

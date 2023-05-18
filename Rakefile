@@ -71,12 +71,12 @@ namespace :ujs do
 end
 
 require 'appraisal'
-require 'rake/testtask'
+require 'minitest/test_task'
 
-Rake::TestTask.new(:test) do |t|
+Minitest::TestTask.create(:test) do |t|
   t.libs << 'lib'
   t.libs << 'test'
-  t.pattern = ENV['TEST_PATTERN'] || 'test/**/*_test.rb'
+  t.test_globs = ENV['TEST_PATTERN'] || 'test/**/*_test.rb'
   t.verbose = ENV['TEST_VERBOSE'] == '1'
   t.warning = false
 end
