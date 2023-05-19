@@ -9,6 +9,11 @@ Changes since last non-beta release.
 
 _Please add entries here for your pull requests that are not yet released._
 
+## [2.7.1] - 2023-05-19
+
+#### Bug Fixes
+- Fix ReactDomClient initialization error during SSR. #1278
+
 ## [2.7.0] - 2023-05-06
 
 #### New Features
@@ -541,5 +546,6 @@ _Please add entries here for your pull requests that are not yet released._
 - Server rendering with `prerender: true`
 - Transform `.jsx` in the asset pipeline
 
-[Unreleased]: https://github.com/reactjs/react-rails/compare/v2.7.0...master
+[Unreleased]: https://github.com/reactjs/react-rails/compare/v2.7.1...master
+[2.7.1]: https://github.com/shakacode/shakapacker/compare/v2.7.0...v2.7.1
 [2.7.0]: https://github.com/shakacode/shakapacker/compare/v2.6.2...v2.7.0
