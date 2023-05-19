@@ -25,7 +25,7 @@ namespace :react do
 
   desc 'Install the JavaScript dependencies'
   task :install do
-    yarn_run_in('react-builds', 'upgrade')
+    yarn_run_in('react-builds', 'install')
   end
 
   desc 'Build the JS bundles with Webpack'
@@ -49,7 +49,7 @@ namespace :ujs do
 
   desc 'Install the JavaScript dependencies'
   task :install do
-    `yarn upgrade`
+    `yarn install`
   end
 
   desc 'Build the JS bundles with Webpack'
