@@ -244,7 +244,7 @@ PLATFORMS
 
 DEPENDENCIES
   appraisal
-  bundler (~> 2.0)
+  bundler (= 2.4.9)
   capybara
   codeclimate-test-reporter
   coffee-rails
@@ -263,4 +263,4 @@ DEPENDENCIES
   webdrivers
 
 BUNDLED WITH
-   2.4.10
+   2.4.9

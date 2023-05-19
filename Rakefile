@@ -25,7 +25,7 @@ namespace :react do
 
   desc 'Install the JavaScript dependencies'
   task :install do
-    yarn_run_in('react-builds', 'upgrade')
+    yarn_run_in('react-builds', 'install')
   end
 
   desc 'Build the JS bundles with Webpack'
@@ -49,7 +49,7 @@ namespace :ujs do
 
   desc 'Install the JavaScript dependencies'
   task :install do
-    `yarn upgrade`
+    `yarn install`
   end
 
   desc 'Build the JS bundles with Webpack'
@@ -71,12 +71,12 @@ namespace :ujs do
 end
 
 require 'appraisal'
-require 'rake/testtask'
+require 'minitest/test_task'
 
-Rake::TestTask.new(:test) do |t|
+Minitest::TestTask.create(:test) do |t|
   t.libs << 'lib'
   t.libs << 'test'
-  t.pattern = ENV['TEST_PATTERN'] || 'test/**/*_test.rb'
+  t.test_globs = ENV['TEST_PATTERN'] || 'test/**/*_test.rb'
   t.verbose = ENV['TEST_VERBOSE'] == '1'
   t.warning = false
 end

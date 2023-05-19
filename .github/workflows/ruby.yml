@@ -6,17 +6,34 @@
 # For more information see: https://github.com/marketplace/actions/setup-ruby-jruby-and-truffleruby
 
 name: Ruby
-on: [push, pull_request]
+
+on: [push]
 jobs:
+  check_react_and_ujs:
+    strategy:
+      fail-fast: true
+      matrix:
+        ruby: [2.7]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ruby/setup-ruby@v1
+        with:
+          bundler: 2.4.9
+          ruby-version: ${{ matrix.ruby }}
+      - uses: actions/setup-node@v3
+      - run: bundle install
+      - run: yarn
+      - run: bundle exec rake react:update
+      - run: bundle exec rake ujs:update
+      - run: ./check_for_uncommitted_files.sh
+
   test:
+    needs: check_react_and_ujs
     strategy:
       fail-fast: false
       matrix:
-        ruby:
-          - 2.7.0
-          - 2.6.5
-          # TODO restore testing against JRuby w/ therubyrhino
-          # - jruby-9.3.7.0
+        ruby: [2.7]
         gemfile:
           # These have webpacker:
           - rails_5.2_no_sprockets
@@ -37,6 +54,7 @@ jobs:
     - uses: actions/setup-node@v3
     - uses: ruby/setup-ruby@v1
       with:
+        bundler: 2.4.9
         ruby-version: ${{ matrix.ruby }}
         # TODO: Impalement caching
         # bundler-cache: true
