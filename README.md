@@ -5,7 +5,7 @@
 [![Ruby](https://github.com/reactjs/react-rails/actions/workflows/ruby.yml/badge.svg)](https://github.com/reactjs/react-rails/actions/workflows/ruby.yml)
 
 ## News
-v2.7.0 is released. Please try it out and report any issues. We'll try to address any critical issues ASAP. We're going shortly release 3.0 which improves support for SSR, but it's a breaking change because it requires updating dependencies, such as going from `webpacker` to `shakapacker`.
+v2.7.1 is released. Please try it out and report any issues. We'll try to address any critical issues ASAP. We're going shortly release 3.0 which improves support for SSR, but it's a breaking change because it requires updating dependencies, such as going from `webpacker` to `shakapacker`.
 
 ## Summary
 React-Rails is a flexible tool to use [React](http://facebook.github.io/react/) with Rails. The benefits:
