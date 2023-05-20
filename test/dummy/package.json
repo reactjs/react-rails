@@ -17,7 +17,7 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react_ujs": "file:.yalc/react_ujs",
-    "shakapacker": "^6.4.1",
+    "shakapacker": "6.6.0",
     "style-loader": "^3.3.1",
     "terser-webpack-plugin": "^5.3.3",
     "webpack": "^5.73.0",

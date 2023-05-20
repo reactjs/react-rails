@@ -2,7 +2,7 @@
 
 source "http://rubygems.org"
 
-gem "rails", "~> 5.2.x"
+gem "rails", "~> 7.0.x"
 gem "shakapacker", "6.6.0"
 
 gemspec path: "../"

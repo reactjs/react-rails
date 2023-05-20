@@ -3514,7 +3514,7 @@ react@^17.0.2:
     object-assign "^4.1.1"
 
 "react_ujs@file:.yalc/react_ujs":
-  version "2.6.2"
+  version "2.7.1"
 
 readable-stream@^2.0.1:
   version "2.3.7"
@@ -3789,7 +3789,7 @@ setprototypeof@1.2.0:
   resolved "https://registry.yarnpkg.com/setprototypeof/-/setprototypeof-1.2.0.tgz#66c9a24a73f9fc28cbe66b09fed3d33dcaf1b424"
   integrity sha512-E5LDX7Wrp85Kil5bhZv46j8jOeboKq5JMmYM3gVGdGH8xFpPWXUMsNrlODCrkoxMEeNi/XZIwuRvY4XNwYMJpw==
 
-shakapacker@^6.4.1:
+shakapacker@6.6.0:
   version "6.6.0"
   resolved "https://registry.yarnpkg.com/shakapacker/-/shakapacker-6.6.0.tgz#1e372a7ce6fa93f1a7bd1820737b8168679eb220"
   integrity sha512-7sNnv8PXMlgm2Ob7vZOayLKu0+PPMN3q0HEyAlkFIJtHJt7wA3p1rObhlk0/OrNeBa4dio/9HiBUeEU7bZsHvw==
