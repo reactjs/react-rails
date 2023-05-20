@@ -16,11 +16,23 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+      - name: Save root node_modules to cache
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: package-node-modules-cache-${{ hashFiles('yarn.lock') }}
+      - name: Save react-builds/node_modules to cache
+        uses: actions/cache@v3
+        with:
+          path: react-builds/node_modules
+          key: dummy-app-node-modules-cache-${{ hashFiles('react-builds/yarn.lock') }}
+      - run: cd test/dummy && yalc add react_ujs && yarn
       - uses: ruby/setup-ruby@v1
         with:
           bundler: 2.4.9
           ruby-version: ${{ matrix.ruby }}
-      - uses: actions/setup-node@v3
+          bundler-cache: true
       - run: bundle install
       - run: yarn
       - run: bundle exec rake react:update
@@ -52,13 +64,22 @@ jobs:
     - uses: actions/setup-node@v3
     - run: npm -g install yalc
     - run: yalc publish
+    - name: Save root node_modules to cache
+      uses: actions/cache@v3
+      with:
+        path: node_modules
+        key: package-node-modules-cache-${{ hashFiles('yarn.lock') }}
+    - name: Save test/dummy/node_modules to cache
+      uses: actions/cache@v3
+      with:
+        path: test/dummy/node_modules
+        key: dummy-app-node-modules-cache-${{ hashFiles('test/dummy/yarn.lock') }}
     - run: cd test/dummy && yalc add react_ujs && yarn
     - uses: ruby/setup-ruby@v1
       with:
         bundler: 2.4.9
         ruby-version: ${{ matrix.ruby }}
-        # TODO: Impalement caching
-        # bundler-cache: true
+        bundler-cache: true
     - run: bundle install
     - run: bundle exec rake test
       env:
