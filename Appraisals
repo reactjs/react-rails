@@ -1,6 +1,7 @@
 appraise 'sprockets_4' do
   gem 'rails', '~> 7.0.x'
   gem 'sprockets', '~> 4.0.x'
+  gem 'sprockets-rails'
   gem 'turbolinks', '~> 5'
   gem 'mini_racer', :platforms => :mri
 end
@@ -8,6 +9,7 @@ end
 appraise 'sprockets_3' do
   gem 'rails', '~> 7.0.x'
   gem 'sprockets', '~> 3.5'
+  gem 'sprockets-rails'
   gem 'turbolinks', '~> 5'
   gem 'mini_racer', :platforms => :mri
 end
