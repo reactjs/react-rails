@@ -7,3 +7,7 @@ test/*/public/packs
 **/node_modules
 react-builds/build
 coverage/
+**/.yalc/**
+yalc.lock
+/vendor/bundle
+.bundle/config

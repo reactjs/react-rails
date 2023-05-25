@@ -10,7 +10,9 @@ module React
 
       def initialize(options={})
         js_code = options[:code] || raise('Pass `code:` option to instantiate a JS context!')
-        @context = ExecJS.compile(GLOBAL_WRAPPER + js_code)
+        full_code = GLOBAL_WRAPPER + js_code
+        # File.write("./test/dummy/tmp/latest_js_context.js", full_code)
+        @context = ExecJS.compile(full_code)
       end
 
       def render(component_name, props, prerender_options)

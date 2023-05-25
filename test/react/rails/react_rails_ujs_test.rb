@@ -4,32 +4,13 @@ SprocketsHelpers.when_available do
   class ReactRailsUJSTest < ActionDispatch::IntegrationTest
     include Capybara::DSL
 
-    compiled = false
-    setup do
-      unless compiled
-        React::ServerRendering.reset_pool
-        WebpackerHelpers.compile
-      end
-    end
-
     # Normalize for webpacker check:
-    def assert_greeting(page, plain_greeting, refute: false)
-      normalized_greeting = if WebpackerHelpers.available?
-        greeting, name = plain_greeting.split(' ')
-        "#{greeting} from Webpacker #{name}"
-      else
-        plain_greeting
-      end
-
-      if refute
-        assert page.has_no_content?(normalized_greeting), page.body
-      else
-        assert page.has_content?(normalized_greeting), page.body
-      end
+    def assert_greeting(page, greeting)
+      assert page.has_content?(greeting), [page.body, page.driver.browser.manage.logs.get(:browser).inspect]
     end
 
     def refute_greeting(page, greeting)
-      assert_greeting(page, greeting, refute: true)
+      assert page.has_no_content?(greeting), [page.body, page.driver.browser.manage.logs.get(:browser).inspect]
     end
 
     test 'ujs object present on the global React object and has our methods' do

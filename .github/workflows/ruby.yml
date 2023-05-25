@@ -6,7 +6,6 @@
 # For more information see: https://github.com/marketplace/actions/setup-ruby-jruby-and-truffleruby
 
 name: Ruby
-
 on: [push]
 jobs:
   check_react_and_ujs:
@@ -17,12 +16,28 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+      - name: Save root node_modules to cache
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: package-node-modules-cache-${{ hashFiles('yarn.lock') }}
+      - name: Save react-builds/node_modules to cache
+        uses: actions/cache@v3
+        with:
+          path: react-builds/node_modules
+          key: dummy-app-node-modules-cache-${{ hashFiles('react-builds/yarn.lock') }}
       - uses: ruby/setup-ruby@v1
         with:
           bundler: 2.4.9
           ruby-version: ${{ matrix.ruby }}
-      - uses: actions/setup-node@v3
-      - run: bundle install
+      - name: Save dummy app ruby gems to cache
+        uses: actions/cache@v3
+        with:
+          path: vendor/bundle
+          key: root-gem-cache-${{ hashFiles('Gemfile.lock') }}
+      - name: Install Ruby Gems
+        run: bundle lock --add-platform 'x86_64-linux' && bundle check --path=vendor/bundle || bundle _2.4.9_ install --path=vendor/bundle --jobs=4 --retry=3
       - run: yarn
       - run: bundle exec rake react:update
       - run: bundle exec rake ujs:update
@@ -35,13 +50,12 @@ jobs:
       matrix:
         ruby: [2.7]
         gemfile:
-          # These have webpacker:
-          - rails_5.2_no_sprockets
-          - rails_5.2_no_sprockets_webpacker_3
-          - rails_5.2_no_sprockets_webpacker_4
-          # These don't have webpacker:
-          - rails_5.2_sprockets_3
-          - rails_5.2_sprockets_4
+          # These have shakapacker:
+          - no_sprockets
+          - no_sprockets_shakapacker
+          # These don't have shakapacker:
+          - sprockets_3
+          - sprockets_4
     runs-on: ubuntu-latest
     env:
       # $BUNDLE_GEMFILE must be set at the job level, so it is set for all steps
@@ -52,13 +66,30 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - uses: actions/setup-node@v3
+    - run: npm -g install yalc
+    - run: yalc publish
+    - name: Save root node_modules to cache
+      uses: actions/cache@v3
+      with:
+        path: node_modules
+        key: package-node-modules-cache-${{ hashFiles('yarn.lock') }}
+    - name: Save test/dummy/node_modules to cache
+      uses: actions/cache@v3
+      with:
+        path: test/dummy/node_modules
+        key: dummy-app-node-modules-cache-${{ hashFiles('test/dummy/yarn.lock') }}
     - uses: ruby/setup-ruby@v1
       with:
         bundler: 2.4.9
         ruby-version: ${{ matrix.ruby }}
-        # TODO: Impalement caching
-        # bundler-cache: true
-    - run: bundle install
+    - name: Save dummy app ruby gems to cache
+      uses: actions/cache@v3
+      with:
+        path: test/dummy/vendor/bundle
+        key: dummy-app-gem-cache-${{ hashFiles('${{ github.workspace }}/gemfiles/${{ matrix.gemfile }}.gemfile.lock') }}
+    - name: Install Ruby Gems for dummy app
+      run: bundle lock --add-platform 'x86_64-linux' && bundle check --path=test/dummy/vendor/bundle || bundle _2.4.9_ install --path=test/dummy/vendor/bundle --jobs=4 --retry=3
+    - run: cd test/dummy && yalc add react_ujs && yarn
     - run: bundle exec rake test
       env:
         NODE_OPTIONS: --openssl-legacy-provider

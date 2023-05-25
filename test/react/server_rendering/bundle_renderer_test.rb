@@ -67,14 +67,6 @@ if SprocketsHelpers.available? || WebpackerHelpers.available?
       err = assert_raises React::ServerRendering::PrerenderError do
         @renderer.render('NonExistentComponent', {}, nil)
       end
-
-      if WebpackerHelpers.available?
-        # require() failed:
-        assert_match(/Invariant Violation:/, err.to_s)
-      else
-        # eval() failed:
-        assert_match(/ReferenceError/, err.to_s)
-      end
       assert_match(/NonExistentComponent/, err.to_s, 'it names the component')
 
       assert_match(/\n/, err.to_s, 'it includes the multi-line backtrace')

@@ -3,17 +3,7 @@ if RUBY_PLATFORM != 'java'
   SimpleCov.start
 end
 
-DUMMY_LOCATION = if (gem_webpack = Bundler.locked_gems.specs.find { |gem_spec| gem_spec.name == 'webpacker' })
-  if gem_webpack.version.segments.first == 1
-    'dummy_webpacker1'
-  elsif gem_webpack.version.segments.first == 2
-    'dummy_webpacker2'
-  else #if gem_webpack.version.segments.first == 3
-    'dummy_webpacker3'
-  end
-else
-  'dummy_sprockets'
-end
+DUMMY_LOCATION = 'dummy'
 
 support_path = File.expand_path('../support/*.rb', __FILE__)
 Dir.glob(support_path).each do |f|
@@ -55,27 +45,6 @@ def reset_transformer
   React::JSX.transformer_class = React::JSX::DEFAULT_TRANSFORMER
   React::JSX.transform_options = {}
   React::JSX.transformer = nil
-end
-
-# Rails 3.2's version of MiniTest does not have `capture_io` defined. For
-# consistency across multiple versions we've defined that method here.
-#
-def capture_io
-  require 'stringio'
-
-  orig_stdout = $stdout
-  orig_stderr = $stderr
-  captured_stdout = StringIO.new
-  captured_stderr = StringIO.new
-  $stdout = captured_stdout
-  $stderr = captured_stderr
-
-  yield
-
-  return captured_stdout.string, captured_stderr.string
-ensure
-  $stdout = orig_stdout
-  $stderr = orig_stderr
 end
 
 # Load support files
