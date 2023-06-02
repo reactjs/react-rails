@@ -747,6 +747,11 @@ For example, to change the [ES6 Component template](https://github.com/reactjs/r
 
 ## Upgrading
 
+### 2.7 to 3.0
+- Keep your `react_ujs` up to date: `yarn upgrade`
+- **Drop support for Webpacker 3/4:** Before any ReactRails upgrade, make sure the project uses supported bunlders (Webpacker 5, Shakapacker 6, Sprockets 3 and 4)
+- **SSR:** ReactRails 3.x requires separate compilations for server & client bundles. See [Webpack config](https://github.com/reactjs/react-rails/tree/master/test/dummy/config/webpack) directory in the dummy app to addapt the new implementation.
+
 ### 2.3 to 2.4
 
 Keep your `react_ujs` up to date, `yarn upgrade`
