@@ -71,11 +71,11 @@ module React
       def prepare_options(options)
         r_func = render_function(options)
         opts = case options
-          when Hash then options
-          when TrueClass then {}
-          else
-            {}
-        end
+               when Hash then options
+               when TrueClass then {}
+               else
+                 {}
+               end
         # This seems redundant to pass
         opts.merge(render_function: r_func)
       end
