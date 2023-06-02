@@ -12,7 +12,7 @@ _Please add entries here for your pull requests that are not yet released._
 ### Breaking Changes
 - Remove support & testing for Webpacker 3/4.
 - Add support & testing for Shakapacker v6
-- Requires separate compilations for server & client bundles (see [Webpack config](https://github.com/reactjs/react-rails/blob/judahmeek/workingCI/test/dummy/config/webpack))
+- Requires separate compilations for server & client bundles (see [Webpack config](https://github.com/reactjs/react-rails/tree/master/test/dummy/config/webpack))
 - Replaces WebpackManifestContainer, which searched for assets in the webpack manifest, with SeparateServerBundleContainer, which expects a single server bundle file & does not use the webpack manifest at all.
 - All in one PR! #1274
 
