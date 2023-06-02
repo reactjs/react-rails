@@ -10,8 +10,8 @@ v2.7.1 is released. Please try it out and report any issues. We'll try to addres
 ## Summary
 React-Rails is a flexible tool to use [React](http://facebook.github.io/react/) with Rails. The benefits:
 * Automatically renders React server-side and client-side
-* Supports Webpacker 4.x, 3.x, 2.x, 1.1+ or Shakapacker v6+
-* Supports Sprockets 4.x, 3.x, 2.x
+* Supports Webpacker 5.x and Shakapacker v6.x
+* Supports Sprockets 4.x, 3.x
 * Lets you use [JSX](http://facebook.github.io/react/docs/jsx-in-depth.html), [ES6](http://es6-features.org/), [TypeScript](https://www.typescriptlang.org/), [CoffeeScript](http://coffeescript.org/)
 
 ---
