@@ -100,22 +100,16 @@ module React
       # Or, if the user has provided {.asset_container_class}, use that.
       # @return [Class] suitable for {#asset_container}
       def asset_container_class
-        if self.class.asset_container_class.present?
-          self.class.asset_container_class
-        elsif SeparateServerBundleContainer.compatible?
-          SeparateServerBundleContainer
-        elsif assets_precompiled?
-          if ManifestContainer.compatible?
-            ManifestContainer
-          elsif YamlManifestContainer.compatible?
-            YamlManifestContainer
-          else
-            # Even though they are precompiled, we can't find them :S
-            EnvironmentContainer
-          end
-        else
-          EnvironmentContainer
-        end
+        return self.class.asset_container_class if self.class.asset_container_class.present?
+        return SeparateServerBundleContainer if SeparateServerBundleContainer.compatible?
+
+        return EnvironmentContainer unless assets_precompiled?
+
+        return ManifestContainer if ManifestContainer.compatible?
+        return YamlManifestContainer if YamlManifestContainer.compatible?
+
+        # Even though they are precompiled, we can't find them :S
+        EnvironmentContainer
       end
     end
   end
