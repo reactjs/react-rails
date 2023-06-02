@@ -17,7 +17,9 @@ const commonOptions = {
         ]
       }
     ]
-  }
+  },
+  // Uncommemt if getting "Module not found: Error: Can't resolve 'react-dom/client'" warning
+  // ignoreWarnings: [/Module not found: Error: Can't resolve 'react-dom\/client'/]
 }
 
 // Copy the object using merge b/c the baseClientWebpackConfig and commonOptions are mutable globals
