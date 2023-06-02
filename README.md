@@ -10,7 +10,7 @@ v2.7.1 is released. Please try it out and report any issues. We'll try to addres
 ## Summary
 React-Rails is a flexible tool to use [React](http://facebook.github.io/react/) with Rails. The benefits:
 * Automatically renders React server-side and client-side
-* Supports Webpacker 5.x and Shakapacker v6.x
+* Supports [Webpacker](https://github.com/rails/webpacker) 5.x and [Shakapacker](https://github.com/shakacode/shakapacker) v6.x
 * Supports Sprockets 4.x, 3.x
 * Lets you use [JSX](http://facebook.github.io/react/docs/jsx-in-depth.html), [ES6](http://es6-features.org/), [TypeScript](https://www.typescriptlang.org/), [CoffeeScript](http://coffeescript.org/)
 
@@ -545,6 +545,7 @@ Server rendering is powered by [`ExecJS`](https://github.com/rails/execjs) and s
 
 - `react-rails` must load your code. By convention, it uses `server_rendering.js`, which was created
 by the install task. This file must include your components _and_ their dependencies (eg, Underscore.js).
+- Requires separate compilations for server & client bundles (see [Webpack config](https://github.com/reactjs/react-rails/tree/master/test/dummy/config/webpack))
 - Your code can't reference `document` or `window`. Prerender processes don't have access to `document` or `window`,
 so jQuery and some other libs won't work in this environment :(
 
