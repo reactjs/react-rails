@@ -10,7 +10,7 @@ V3.0.0 is released with Shakapacker v6 support, including SSR. Please try it out
 ## Summary
 React-Rails is a flexible tool to use [React](http://facebook.github.io/react/) with Rails. The benefits:
 * Automatically renders React server-side and client-side
-* Supports [Webpacker](https://github.com/rails/webpacker) 5.x and [Shakapacker](https://github.com/shakacode/shakapacker) v6.x
+* Supports [Shakapacker](https://github.com/shakacode/shakapacker) v6.x
 * Supports Sprockets 4.x, 3.x
 * Lets you use [JSX](http://facebook.github.io/react/docs/jsx-in-depth.html), [ES6](http://es6-features.org/), [TypeScript](https://www.typescriptlang.org/), [CoffeeScript](http://coffeescript.org/)
 
@@ -491,7 +491,7 @@ ReactRailsUJS.detectEvents()
 
 For example, if `Turbolinks` is loaded _after_ `ReactRailsUJS`, you'll need to call this again. This function removes previous handlers before adding new ones, so it's safe to call as often as needed.
 
-If `Turbolinks` is `import`ed via Webpacker (and thus not available globally), `ReactRailsUJS` will be unable to locate it. To fix this, you can temporarily add it to the global namespace:
+If `Turbolinks` is `import`ed via Shakapacker (and thus not available globally), `ReactRailsUJS` will be unable to locate it. To fix this, you can temporarily add it to the global namespace:
 
 ```js
 // Order is particular. First start Turbolinks:
@@ -749,7 +749,7 @@ For example, to change the [ES6 Component template](https://github.com/reactjs/r
 
 ### 2.7 to 3.0
 - Keep your `react_ujs` up to date: `yarn upgrade`
-- **Drop support for Webpacker 3/4:** Before any ReactRails upgrade, make sure the project uses supported bunlders (Webpacker 5, Shakapacker 6, Sprockets 3 and 4)
+- **Drop support for Webpacker:** Before any ReactRails upgrade, make sure upgrading from Webpacker to Shakapacker 6.x.
 - **SSR:** ReactRails 3.x requires separate compilations for server & client bundles. See [Webpack config](https://github.com/reactjs/react-rails/tree/master/test/dummy/config/webpack) directory in the dummy app to addapt the new implementation.
 
 ### 2.3 to 2.4
@@ -826,7 +826,7 @@ TheRubyRacer [hasn't updated LibV8](https://github.com/cowboyd/therubyracer/blob
 LibV8 itself is already [beyond version 7](https://github.com/cowboyd/libv8/releases/tag/v7.3.492.27.1) therefore many serverside issues are caused by old JS engines and fixed by using an up to date one such as [MiniRacer](https://github.com/discourse/mini_racer) or [TheRubyRhino](https://github.com/cowboyd/therubyrhino) on JRuby.
 
 ### HMR
-Hot Module Replacement is [possible with this gem](https://stackoverflow.com/a/54846330/193785) as it does just pass through to Webpacker. Please open an issue to let us know tips and tricks for it to add to the wiki.
+Hot Module Replacement is [possible with this gem](https://stackoverflow.com/a/54846330/193785) as it does just pass through to Shakapacker. Please open an issue to let us know tips and tricks for it to add to the wiki.
 
 Sample repo that shows HMR working with `react-rails`: [https://github.com/edelgado/react-rails-hmr](https://github.com/edelgado/react-rails-hmr)
 
