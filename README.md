@@ -1,4 +1,4 @@
-# React-Rails
+# React-Rails v3
 
 [![Gem](https://img.shields.io/gem/v/react-rails.svg?style=flat-square)](http://rubygems.org/gems/react-rails)
 [![npm](https://img.shields.io/npm/v/react_ujs.svg?style=flat-square)](https://www.npmjs.com/package/react_ujs)
@@ -6,6 +6,8 @@
 
 ## News
 V3.0.0 is released with Shakapacker v6 support, including SSR. Please try it out and report any issues. We'll try to address any critical issues ASAP.
+
+For version 2.7 documentation checkout [2.7-stable](https://github.com/reactjs/react-rails/tree/2.7-stable) branch.
 
 ## Summary
 React-Rails is a flexible tool to use [React](http://facebook.github.io/react/) with Rails. The benefits:
