@@ -35,6 +35,7 @@ Naming/FileName:
   Exclude:
     - '**/Gemfile'
     - '**/Rakefile'
+    - 'lib/react-rails.rb'
 
 Layout/LineLength:
   Max: 120
