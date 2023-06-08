@@ -22,6 +22,8 @@ EXPECTED_JS_2 = <<~EOS
 EOS
 
 class NullTransformer
+  def initialize(_options = {}); end # rubocop:disable-line Style/RedundantInitialize
+
   def transform(_code)
     "TRANSFORMED CODE!;\n"
   end
