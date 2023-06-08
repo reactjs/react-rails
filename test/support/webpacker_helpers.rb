@@ -97,7 +97,7 @@ module WebpackerHelpers
     return false unless example_asset_path
 
     begin
-      file = URI.open("#{ds.protocol}://#{ds.host}:#{ds.port}#{example_asset_path}")
+      file = URI.parse("#{ds.protocol}://#{ds.host}:#{ds.port}#{example_asset_path}").open
     rescue StandardError
       file = nil
     end
