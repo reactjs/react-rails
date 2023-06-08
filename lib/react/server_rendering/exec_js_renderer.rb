@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module React
   module ServerRendering
     # A bare-bones renderer for React.js + Exec.js
@@ -8,8 +10,8 @@ module React
       # @return [ExecJS::Runtime::Context] The JS context for this renderer
       attr_reader :context
 
-      def initialize(options={})
-        js_code = options[:code] || raise('Pass `code:` option to instantiate a JS context!')
+      def initialize(options = {})
+        js_code = options[:code] || raise("Pass `code:` option to instantiate a JS context!")
         full_code = GLOBAL_WRAPPER + js_code
         # File.write("./test/dummy/tmp/latest_js_context.js", full_code)
         @context = ExecJS.compile(full_code)
@@ -25,8 +27,13 @@ module React
       end
 
       # Hooks for inserting JS before/after rendering
-      def before_render(component_name, props, prerender_options); ''; end
-      def after_render(component_name, props, prerender_options); ''; end
+      def before_render(_component_name, _props, _prerender_options)
+        ""
+      end
+
+      def after_render(_component_name, _props, _prerender_options)
+        ""
+      end
 
       # Handle Node.js & other ExecJS contexts
       GLOBAL_WRAPPER = <<-JS
@@ -42,7 +49,7 @@ module React
       end
 
       def main_render(component_name, props, prerender_options)
-        render_function = prerender_options.fetch(:render_function, 'renderToString')
+        render_function = prerender_options.fetch(:render_function, "renderToString")
         "this.ReactRailsUJS.serverRender('#{render_function}', '#{component_name}', #{props})"
       end
 

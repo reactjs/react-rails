@@ -1,4 +1,6 @@
-require 'test_helper'
+# frozen_string_literal: true
+
+require "test_helper"
 
 class ReactTest < ActiveSupport::TestCase
   def test_it_camelizes_props
@@ -7,23 +9,23 @@ class ReactTest < ActiveSupport::TestCase
         nested_key: [
           { double_nested: true },
           1,
-          'string item',
+          "string item",
           [{ nested_array: {} }]
         ]
       },
-      'alreadyCamelized' => :ok
+      "alreadyCamelized" => :ok
     }
 
     expected_props = {
-      'multiWordSym' => {
-        'nestedKey' => [
-          { 'doubleNested' => true },
+      "multiWordSym" => {
+        "nestedKey" => [
+          { "doubleNested" => true },
           1,
-          'string item',
-          [{ 'nestedArray' => {} }]
+          "string item",
+          [{ "nestedArray" => {} }]
         ]
       },
-      'alreadyCamelized' => 'ok'
+      "alreadyCamelized" => "ok"
     }
 
     assert_equal expected_props, React.camelize_props(raw_props)
@@ -31,17 +33,17 @@ class ReactTest < ActiveSupport::TestCase
 
   def test_it_camelizes_params
     raw_params = ActionController::Parameters.new({
-      foo_bar_baz: 'foo bar baz',
-      nested_keys: {
-        qux_etc: 'bish bash bosh'
-      }
-    })
+                                                    foo_bar_baz: "foo bar baz",
+                                                    nested_keys: {
+                                                      qux_etc: "bish bash bosh"
+                                                    }
+                                                  })
     permitted_params = raw_params.permit(:foo_bar_baz, nested_keys: :qux_etc)
 
     expected_params = {
-      'fooBarBaz' => 'foo bar baz',
-      'nestedKeys' => {
-        'quxEtc' => 'bish bash bosh'
+      "fooBarBaz" => "foo bar baz",
+      "nestedKeys" => {
+        "quxEtc" => "bish bash bosh"
       }
     }
 
@@ -60,18 +62,18 @@ class ReactTest < ActiveSupport::TestCase
     end
 
     raw_props = {
-      key_one: 'value1',
+      key_one: "value1",
       key_two: my_json_serializer.new(
-        nested_key_one: 'nested_value1',
-        nested_key_two: ['nested', 'value', 'two']
+        nested_key_one: "nested_value1",
+        nested_key_two: %w[nested value two]
       )
     }
 
     expected_params = {
-      'keyOne' => 'value1',
-      'keyTwo' => {
-        'nestedKeyOne' => 'nested_value1',
-        'nestedKeyTwo' => ['nested', 'value', 'two']
+      "keyOne" => "value1",
+      "keyTwo" => {
+        "nestedKeyOne" => "nested_value1",
+        "nestedKeyTwo" => %w[nested value two]
       }
     }
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module React
   module ServerRendering
     # Get asset content by reading the compiled file from disk using a Sprockets::Manifest.
@@ -11,7 +13,7 @@ module React
 
       def find_asset(logical_path)
         asset_path = @manifest.assets[logical_path] || raise("No compiled asset for #{logical_path}, was it precompiled?")
-        asset_full_path = ::Rails.root.join('public', @manifest.dir, asset_path)
+        asset_full_path = ::Rails.root.join("public", @manifest.dir, asset_path)
         File.read(asset_full_path)
       end
 

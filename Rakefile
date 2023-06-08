@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 begin
-  require 'bundler/setup'
+  require "bundler/setup"
 rescue LoadError
-  puts 'You must `gem install bundler` and `bundle install` to run rake tasks'
+  puts "You must `gem install bundler` and `bundle install` to run rake tasks"
 end
 
 Bundler::GemHelper.install_tasks
@@ -20,22 +22,22 @@ def yarn_run_in(dirname, cmd)
 end
 
 namespace :react do
-  desc 'Run the JS build process to put files in the gem source'
-  task update: [:install, :build, :copy]
+  desc "Run the JS build process to put files in the gem source"
+  task update: %i[install build copy]
 
-  desc 'Install the JavaScript dependencies'
+  desc "Install the JavaScript dependencies"
   task :install do
-    yarn_run_in('react-builds', 'install')
+    yarn_run_in("react-builds", "install")
   end
 
-  desc 'Build the JS bundles with Webpack'
+  desc "Build the JS bundles with Webpack"
   task :build do
-    yarn_run_in('react-builds', 'build')
+    yarn_run_in("react-builds", "build")
   end
 
   desc "Copy browser-ready JS files to the gem's asset paths"
   task :copy do
-    environments = ['development', 'production']
+    environments = %w[development production]
     environments.each do |environment|
       copy_react_asset("#{environment}/react-browser.js", "#{environment}/react.js")
       copy_react_asset("#{environment}/react-server.js", "#{environment}/react-server.js")
@@ -44,48 +46,48 @@ namespace :react do
 end
 
 namespace :ujs do
-  desc 'Run the JS build process to put files in the gem source'
-  task update: [:install, :build, :copy]
+  desc "Run the JS build process to put files in the gem source"
+  task update: %i[install build copy]
 
-  desc 'Install the JavaScript dependencies'
+  desc "Install the JavaScript dependencies"
   task :install do
     `yarn install`
   end
 
-  desc 'Build the JS bundles with Webpack'
+  desc "Build the JS bundles with Webpack"
   task :build do
     `yarn build`
   end
 
   desc "Copy browser-ready JS files to the gem's asset paths"
   task :copy do
-    full_webpack_path = File.expand_path('../react_ujs/dist/react_ujs.js', __FILE__)
-    full_destination_path = File.expand_path('../lib/assets/javascripts/react_ujs.js', __FILE__)
+    full_webpack_path = File.expand_path("react_ujs/dist/react_ujs.js", __dir__)
+    full_destination_path = File.expand_path("lib/assets/javascripts/react_ujs.js", __dir__)
     FileUtils.cp(full_webpack_path, full_destination_path)
   end
 
-  desc 'Publish the package in ./react_ujs/ to npm as `react_ujs`'
+  desc "Publish the package in ./react_ujs/ to npm as `react_ujs`"
   task publish: :update do
     `npm publish`
   end
 end
 
-require 'appraisal'
-require 'minitest/test_task'
+require "appraisal"
+require "minitest/test_task"
 
 Minitest::TestTask.create(:test) do |t|
-  t.libs << 'lib'
-  t.libs << 'test'
-  t.test_globs = ENV['TEST_PATTERN'] || 'test/**/*_test.rb'
-  t.verbose = ENV['TEST_VERBOSE'] == '1'
+  t.libs << "lib"
+  t.libs << "test"
+  t.test_globs = ENV["TEST_PATTERN"] || "test/**/*_test.rb"
+  t.verbose = ENV["TEST_VERBOSE"] == "1"
   t.warning = false
 end
 
 task default: :test
 
 task :test_setup do
-  load 'webdrivers/Rakefile'
-  Dir.chdir('./test/dummy') do
+  load "webdrivers/Rakefile"
+  Dir.chdir("./test/dummy") do
     `yarn install`
   end
 end

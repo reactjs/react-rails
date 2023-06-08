@@ -1,4 +1,6 @@
-require 'test_helper'
+# frozen_string_literal: true
+
+require "test_helper"
 
 WebpackerHelpers.when_webpacker_available do
   class ReactRailsWebpackerTest < ActionDispatch::IntegrationTest
@@ -14,12 +16,12 @@ WebpackerHelpers.when_webpacker_available do
       WebpackerHelpers.clear_webpacker_packs
     end
 
-    test 'it mounts components from the pack' do
-      visit '/pack_component'
-      assert page.has_content?('Export Default')
-      assert page.has_content?('Named Export')
-      assert page.has_content?('Exports')
-      assert page.has_content?('Global Component')
+    test "it mounts components from the pack" do
+      visit "/pack_component"
+      assert page.has_content?("Export Default")
+      assert page.has_content?("Named Export")
+      assert page.has_content?("Exports")
+      assert page.has_content?("Global Component")
     end
   end
 end

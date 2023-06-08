@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module React
   module Rails
     module ViewHelper
@@ -18,7 +20,7 @@ module React
       # Otherwise, make a new instance.
       def react_component(*args, &block)
         helper_obj = @__react_component_helper ||= helper_implementation_class.new
-        helper_obj.react_component(*args) { capture &block if block_given? }
+        helper_obj.react_component(*args) { capture(&block) if block }
       end
     end
   end

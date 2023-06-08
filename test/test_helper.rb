@@ -1,25 +1,27 @@
-if RUBY_PLATFORM != 'java'
-  require 'simplecov'
+# frozen_string_literal: true
+
+if RUBY_PLATFORM != "java"
+  require "simplecov"
   SimpleCov.start
 end
 
-DUMMY_LOCATION = 'dummy'
+DUMMY_LOCATION = "dummy"
 
-support_path = File.expand_path('../support/*.rb', __FILE__)
-Dir.glob(support_path).each do |f|
+support_path = File.expand_path("support/*.rb", __dir__)
+Dir.glob(support_path).sort.each do |f|
   require(f)
 end
 
 # Configure Rails Environment
-ENV['RAILS_ENV'] = 'test'
+ENV["RAILS_ENV"] = "test"
 
 require File.expand_path("../#{DUMMY_LOCATION}/config/environment.rb", __FILE__)
-require 'rails/test_help'
-require 'rails/generators'
-require 'pathname'
-require 'minitest/mock'
-require 'capybara/rails'
-require 'selenium/webdriver'
+require "rails/test_help"
+require "rails/generators"
+require "pathname"
+require "minitest/mock"
+require "capybara/rails"
+require "selenium/webdriver"
 Dummy::Application.load_tasks
 
 WebpackerHelpers.clear_webpacker_packs
@@ -48,16 +50,14 @@ def reset_transformer
 end
 
 # Load support files
-Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
+Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].sort.each { |f| require f }
 
 # Load fixtures from the engine
 if ActiveSupport::TestCase.method_defined?(:fixture_path=)
-  ActiveSupport::TestCase.fixture_path = File.expand_path('../fixtures', __FILE__)
+  ActiveSupport::TestCase.fixture_path = File.expand_path("fixtures", __dir__)
 end
 
-if ActiveSupport::TestCase.respond_to?(:test_order=)
-  ActiveSupport::TestCase.test_order = :random
-end
+ActiveSupport::TestCase.test_order = :random if ActiveSupport::TestCase.respond_to?(:test_order=)
 
 def wait_for_turbolinks_to_be_available
   sleep(1)
@@ -68,21 +68,21 @@ end
 # Because appraisal is used, multiple versions of coffee-script are treated
 # together. Remove all spaces to make test pass.
 def assert_compiled_javascript_matches(javascript, expectation)
-  assert_equal expectation.gsub(/\s/, ''), javascript.gsub(/\s/, '')
+  assert_equal expectation.gsub(/\s/, ""), javascript.gsub(/\s/, "")
 end
 
 def assert_compiled_javascript_includes(javascript, expected_part)
-  assert_includes javascript.gsub(/\s/, ''), expected_part.gsub(/\s/, '')
+  assert_includes javascript.gsub(/\s/, ""), expected_part.gsub(/\s/, "")
 end
 
 def when_stateful_js_context_available
-  if defined?(V8) || defined?(MiniRacer)
-    yield
-  end
+  return unless defined?(V8) || defined?(MiniRacer)
+
+  yield
 end
 
 def expected_working_jsx
-  /\.createElement\(\s*\S*\.Fragment,\s*null,\s*\"Name:\s*\",\s*this\.props\.name,\s*\"Address:\s*\",\s*this\.props\.address\s*\)/x
+  /\.createElement\(\s*\S*\.Fragment,\s*null,\s*"Name:\s*",\s*this\.props\.name,\s*"Address:\s*",\s*this\.props\.address\s*\)/x
 end
 
 module ParamsHelper

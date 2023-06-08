@@ -1,5 +1,7 @@
-require 'test_helper'
-require 'open-uri'
+# frozen_string_literal: true
+
+require "test_helper"
+require "open-uri"
 
 WebpackerHelpers.when_webpacker_available do
   class WebpackerManifestContainerTest < ActiveSupport::TestCase
@@ -10,7 +12,7 @@ WebpackerHelpers.when_webpacker_available do
     def test_it_loads_JS_from_the_webpacker_container
       WebpackerHelpers.compile
       container = React::ServerRendering::SeparateServerBundleContainer.new
-      assert_not_empty container.find_asset('server_rendering.js')
+      assert_not_empty container.find_asset("server_rendering.js")
     end
   end
 end

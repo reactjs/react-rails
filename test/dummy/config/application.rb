@@ -1,4 +1,6 @@
-require File.expand_path('../boot', __FILE__)
+# frozen_string_literal: true
+
+require File.expand_path("boot", __dir__)
 
 # Pick the frameworks you want:
 # require "active_record/railtie"
@@ -6,16 +8,14 @@ require "action_controller/railtie"
 require "action_mailer/railtie"
 
 # Test no-sprockets environment by testing the gemfile name
-if SprocketsHelpers.available?
-  require "sprockets/railtie"
-end
+require "sprockets/railtie" if SprocketsHelpers.available?
 
 require "rails/test_unit/railtie"
 
 # Make sure gems in development group are required, for example, react-rails and turbolinks.
 # These gems are specified in .gemspec file by add_development_dependency. They are not runtime
 # dependencies for react-rails project but probably runtime dependencies for this dummy rails app.
-Bundler.require(*(Rails.groups | ['development']))
+Bundler.require(*(Rails.groups | ["development"]))
 
 module Dummy
   class Application < Rails::Application
@@ -32,11 +32,11 @@ module Dummy
     # config.i18n.default_locale = :de
     config.react.variant = :production
     config.react.server_renderer_options = {
-      replay_console: true,
+      replay_console: true
     }
 
     if SprocketsHelpers.available?
-      config.assets.precompile += %w( app_no_turbolinks.js )
+      config.assets.precompile += %w[app_no_turbolinks.js]
       config.assets.enabled = true
     end
   end
