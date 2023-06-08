@@ -74,7 +74,6 @@ module React
         r_func = render_function(options)
         opts = case options
                when Hash then options
-               when TrueClass then {}
                else
                  {}
                end
