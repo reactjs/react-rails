@@ -41,9 +41,6 @@ class ViewHelperTest < ActionView::TestCase
   end
 
   test "view helper uses the implementation class set in the initializer" do
-    assert_equal(
-      React::Rails::ViewHelper.helper_implementation_class.to_s,
-      "CustomComponentMount"
-    )
+    assert_equal("CustomComponentMount", React::Rails::ViewHelper.helper_implementation_class.to_s)
   end
 end

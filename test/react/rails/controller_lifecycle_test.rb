@@ -54,6 +54,6 @@ class ControllerLifecycleTest < ActionDispatch::IntegrationTest
     first_helper = controller.__react_component_helper
     get "/pages/1"
     second_helper = controller.__react_component_helper
-    assert(first_helper != second_helper, "The helper for the second request is brand new")
+    refute_equal(first_helper, second_helper, "The helper for the second request is brand new")
   end
 end

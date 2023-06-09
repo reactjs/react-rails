@@ -21,21 +21,21 @@ class ReactRailsUJSTest < ActionDispatch::IntegrationTest
 
       # the exposed ujs object is present
       ujs_present = page.evaluate_script('typeof ReactRailsUJS === "object";')
-      assert_equal(ujs_present, true)
+      assert(ujs_present)
 
       # it contains the constants
       class_name_present = page.evaluate_script('ReactRailsUJS.CLASS_NAME_ATTR === "data-react-class";')
-      assert_equal(class_name_present, true)
+      assert(class_name_present)
       props_present = page.evaluate_script('ReactRailsUJS.PROPS_ATTR === "data-react-props";')
-      assert_equal(props_present, true)
+      assert(props_present)
 
       # it contains the methods
       find_dom_nodes_present = page.evaluate_script('typeof ReactRailsUJS.findDOMNodes === "function";')
-      assert_equal(find_dom_nodes_present, true)
+      assert(find_dom_nodes_present)
       mount_components_present = page.evaluate_script('typeof ReactRailsUJS.mountComponents === "function";')
-      assert_equal(mount_components_present, true)
+      assert(mount_components_present)
       unmount_components_present = page.evaluate_script('typeof ReactRailsUJS.unmountComponents === "function";')
-      assert_equal(unmount_components_present, true)
+      assert(unmount_components_present)
     end
 
     test "react_ujs works with rendered HTML" do

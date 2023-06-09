@@ -90,6 +90,8 @@ unless WebpackerHelpers.available?
       File.write "#{destination_root}/app/assets/javascripts/application.js", content
     end
 
+    private
+
     def assert_application_file_created
       assert_file "app/assets/javascripts/application.js",
                   %r{//= require react\n//= require react_ujs\n//= require components\n}

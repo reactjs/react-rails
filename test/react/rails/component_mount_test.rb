@@ -29,7 +29,7 @@ class ComponentMountTest < ActionDispatch::IntegrationTest
       html = @helper.react_component("Foo", { bar: "value" })
       expected_props = %w[data-react-class="Foo" data-react-props="{&quot;bar&quot;:&quot;value&quot;}"]
       expected_props.each do |segment|
-        assert html.include?(segment)
+        assert_includes html, segment
       end
     end
 
@@ -39,7 +39,7 @@ class ComponentMountTest < ActionDispatch::IntegrationTest
       html = helper.react_component("Foo", { foo_bar: "value" })
       expected_props = %w[data-react-class="Foo" data-react-props="{&quot;fooBar&quot;:&quot;value&quot;}"]
       expected_props.each do |segment|
-        assert html.include?(segment)
+        assert_includes html, segment
       end
     end
 
@@ -49,7 +49,7 @@ class ComponentMountTest < ActionDispatch::IntegrationTest
       html = helper.react_component("Foo", { foo_bar: "value" }, camelize_props: true)
       expected_props = %w[data-react-class="Foo" data-react-props="{&quot;fooBar&quot;:&quot;value&quot;}"]
       expected_props.each do |segment|
-        assert html.include?(segment)
+        assert_includes html, segment
       end
 
       React::Rails::ComponentMount.camelize_props_switch = true
@@ -57,7 +57,7 @@ class ComponentMountTest < ActionDispatch::IntegrationTest
       html = helper.react_component("Foo", { foo_bar: "value" }, camelize_props: false)
       expected_props = %w[data-react-class="Foo" data-react-props="{&quot;foo_bar&quot;:&quot;value&quot;}"]
       expected_props.each do |segment|
-        assert html.include?(segment)
+        assert_includes html, segment
       end
     end
 
@@ -72,7 +72,7 @@ class ComponentMountTest < ActionDispatch::IntegrationTest
       )
       # rubocop:enable Layout/LineLength
       expected_props.each do |segment|
-        assert html.include?(segment)
+        assert_includes html, segment
       end
     end
 
@@ -84,19 +84,19 @@ class ComponentMountTest < ActionDispatch::IntegrationTest
       html = @helper.react_component("Foo", jbuilder_json)
       expected_props = %w[data-react-class="Foo" data-react-props="{&quot;bar&quot;:&quot;value&quot;}"]
       expected_props.each do |segment|
-        assert html.include?(segment), "expected #{html} to include #{segment}"
+        assert_includes html, segment, "expected #{html} to include #{segment}"
       end
     end
 
     test "#react_component accepts string props with prerender: true" do
       html = @helper.react_component("Todo", { todo: "render on the server" }.to_json, prerender: true)
-      assert(html.include?('data-react-class="Todo"'), "it includes attrs for UJS")
-      assert(html.include?(">render on the server</li>"), "it includes rendered HTML")
+      assert_includes(html, 'data-react-class="Todo"', "it includes attrs for UJS")
+      assert_includes(html, ">render on the server</li>", "it includes rendered HTML")
     end
 
     test "#react_component passes :static to BundleRenderer" do
       html = @helper.react_component("Todo", { todo: "render on the server" }.to_json, prerender: :static)
-      assert(html.include?(">render on the server</li>"), "it includes rendered HTML")
+      assert_includes(html, ">render on the server</li>", "it includes rendered HTML")
     end
 
     test "#react_component does not include HTML properties with a static render" do
@@ -105,12 +105,12 @@ class ComponentMountTest < ActionDispatch::IntegrationTest
     end
 
     test "#react_component accepts HTML options and HTML tag" do
-      assert @helper.react_component("Foo", {}, :span).match(%r{<span\s.*></span>})
+      assert_match %r{<span\s.*></span>}, @helper.react_component("Foo", {}, :span)
 
       html = @helper.react_component("Foo", {}, { class: "test", tag: :span, data: { foo: 1 } })
-      assert html.match(%r{<span\s.*></span>})
-      assert html.include?('class="test"')
-      assert html.include?('data-foo="1"')
+      assert_match %r{<span\s.*></span>}, html
+      assert_includes html, 'class="test"'
+      assert_includes html, 'data-foo="1"'
     end
 
     test "it uses the controller's react_rails_prerenderer, if available" do
