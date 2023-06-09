@@ -1,8 +1,5 @@
-# This is the configuration used to check the rubocop source code.
-# Check out: https://github.com/bbatsov/rubocop
 require:
   - rubocop-performance
-  - rubocop-rspec
 
 AllCops:
   NewCops: enable
@@ -55,15 +52,6 @@ Style/HashTransformKeys:
 Style/HashTransformValues:
   Enabled: true
 
-# Lint/AssignmentInCondition:
-#   Exclude:
-#     - 'spec/dummy/bin/spring'
-
-# Lint/SuppressedException:
-#   Exclude:
-#     - 'spec/dummy/bin/rails'
-#     - 'spec/dummy/bin/rake'
-
 Metrics/AbcSize:
   Max: 28
 
@@ -88,45 +76,6 @@ Metrics/ModuleLength:
 
 Naming/RescuedExceptionsVariableName:
   Enabled: false
-
-# RSpec/AnyInstance:
-#   Exclude:
-#     - 'spec/react_on_rails/git_utils_spec.rb'
-#     - 'spec/react_on_rails/locales_to_js_spec.rb'
-#     - 'spec/react_on_rails/binstubs/dev_spec.rb'
-#     - 'spec/react_on_rails/binstubs/dev_static_spec.rb'
-
-RSpec/DescribeClass:
-  Enabled: false
-
-RSpec/ExampleLength:
-  Enabled: false
-
-RSpec/MessageSpies:
-  Enabled: false
-
-RSpec/NestedGroups:
-  Max: 4
-
-# RSpec/BeforeAfterAll:
-  # Exclude:
-  #   - 'spec/react_on_rails/generators/dev_tests_generator_spec.rb'
-  #   - 'spec/react_on_rails/generators/install_generator_spec.rb'
-  #   - 'spec/react_on_rails/binstubs/dev_spec.rb'
-  #   - 'spec/react_on_rails/binstubs/dev_static_spec.rb'
-
-RSpec/MessageChain:
-  Enabled: false
-
-RSpec/MultipleExpectations:
-  Enabled: false
-
-# RSpec/MultipleDescribes:
-  # Exclude:
-  #   - 'spec/dummy/spec/system/integration_spec.rb'
-
-RSpec/MultipleMemoizedHelpers:
-  Max: 12
 
 # Style/GlobalVars:
   # Exclude:
