@@ -131,3 +131,7 @@ RSpec/MultipleMemoizedHelpers:
 # Style/GlobalVars:
   # Exclude:
   #   - 'spec/dummy/config/environments/development.rb'
+
+Metrics/BlockLength:
+  Exclude:
+    - 'test/**/*_test.rb'
