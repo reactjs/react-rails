@@ -93,7 +93,10 @@ module Release
       return if $CHILD_STATUS.success? && status == ""
 
       error = if $CHILD_STATUS.success?
-                "Running react:update and ujs:update resulted in uncommitted changes. Please commit those changes & confirm that CI passes before continuing."
+                <<-MSG
+                  Running react:update and ujs:update resulted in uncommitted changes.
+                  Please commit those changes & confirm that CI passes before continuing.
+                MSG
               else
                 "You do not have Git installed. Please install Git, and commit your changes before continuing"
               end

@@ -82,17 +82,17 @@ module React
         "any" => "PropTypes.any",
 
         "instanceOf" => lambda { |type|
-          "PropTypes.instanceOf(%s)" % type.to_s.camelize
+          "PropTypes.instanceOf(#{type.to_s.camelize})"
         },
 
         "oneOf" => lambda { |*options|
           enums = options.map { |k| "'#{k}'" }.join(",")
-          "PropTypes.oneOf([%s])" % enums
+          "PropTypes.oneOf([#{enums}])"
         },
 
         "oneOfType" => lambda { |*options|
           types = options.map { |k| lookup(k.to_s, k.to_s).to_s }.join(",")
-          "PropTypes.oneOfType([%s])" % types
+          "PropTypes.oneOfType([#{types}])"
         }
       }.freeze
 

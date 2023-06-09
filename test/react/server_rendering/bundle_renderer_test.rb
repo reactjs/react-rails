@@ -79,7 +79,7 @@ if SprocketsHelpers.available? || WebpackerHelpers.available?
 
       assert_match(%r{I am rendered!</span>}, result)
 
-      message = "is not defined for execJS. See https://github.com/sstephenson/execjs#faq. Note babel-polyfill may call this."
+      message = "is not defined for execJS. See https://github.com/sstephenson/execjs#faq. Note babel-polyfill may call this." # rubocop:disable Layout/LineLength
       assert_match(/console.error.apply\(console, \["clearTimeout #{message}"\]\);$/, result)
       assert_match(/console.error.apply\(console, \["setTimeout #{message}"\]\);$/, result)
     end

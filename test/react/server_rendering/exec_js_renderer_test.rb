@@ -19,9 +19,11 @@ class ExecJSRendererTest < ActiveSupport::TestCase
     react_server_source = File.read(File.expand_path("../../../lib/assets/react-source/production/react-server.js",
                                                      __dir__))
     react_ujs_source = File.read(File.expand_path("../../../lib/assets/javascripts/react_ujs.js", __dir__))
-    todo_component_source = File.read(File.expand_path(
-                                        "../../../#{DUMMY_LOCATION}/app/assets/javascripts/components/PlainJSTodo.js", __FILE__
-                                      ))
+    todo_component_source = File.read(
+      File.expand_path(
+        "../../../#{DUMMY_LOCATION}/app/assets/javascripts/components/PlainJSTodo.js", __FILE__
+      )
+    )
     code = react_server_source + react_ujs_source + todo_component_source
     @renderer = React::ServerRendering::ExecJSRenderer.new(code: code)
   end
