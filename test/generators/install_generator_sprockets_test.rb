@@ -45,22 +45,22 @@ unless WebpackerHelpers.available?
     end
 
     test "updates `application.js` if require_tree is commented" do
-      init_application_js <<-END
+      init_application_js <<-DIRECTIVE
         //
         // require_tree .
         //
-      END
+      DIRECTIVE
 
       run_generator
       assert_application_file_modified
     end
 
     test "updates `application.js` if require turbolinks has extra spaces" do
-      init_application_js <<-END
+      init_application_js <<-DIRECTIVE
         //
         //=  require  turbolinks#{'  '}
         //
-      END
+      DIRECTIVE
 
       run_generator
       assert_application_file_modified

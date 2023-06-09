@@ -3,11 +3,11 @@
 require "test_helper"
 
 # Sprockets is inserting a newline after the docblock for some reason...
-EXPECTED_JS = <<~EOS
+EXPECTED_JS = <<~STR
   [2].concat([1]);React.createElement("div", null);
-EOS
+STR
 
-EXPECTED_JS_2 = <<~EOS
+EXPECTED_JS_2 = <<~STR
   (function() {
     var Component;
 
@@ -19,7 +19,7 @@ EXPECTED_JS_2 = <<~EOS
 
     this.Component = Component;
   }).call(this);
-EOS
+STR
 
 class NullTransformer
   def initialize(_options = {}); end # rubocop:disable-line Style/RedundantInitialize
