@@ -9,10 +9,11 @@ module React
       DEFAULT_TRANSFORM_OPTIONS = { blacklist: ["spec.functionName", "validation.react", "strict"] }.freeze
       def initialize(options)
         if (options.keys & DEPRECATED_OPTIONS).any?
-          ActiveSupport::Deprecation.warn(<<-MSG
-            Setting config.react.jsx_transform_options for :harmony, :strip_types, and :asset_path keys is now deprecated and has no effect with the default Babel Transformer.
-            Please use new Babel Transformer options :whitelist, :plugin instead.
-          MSG
+          ActiveSupport::Deprecation.warn(
+            <<-MSG
+              Setting config.react.jsx_transform_options for :harmony, :strip_types, and :asset_path keys is now deprecated and has no effect with the default Babel Transformer.
+              Please use new Babel Transformer options :whitelist, :plugin instead.
+            MSG
           )
         end
 
