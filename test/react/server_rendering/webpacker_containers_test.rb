@@ -3,8 +3,8 @@
 require "test_helper"
 require "open-uri"
 
-WebpackerHelpers.when_webpacker_available do
-  class WebpackerManifestContainerTest < ActiveSupport::TestCase
+class WebpackerManifestContainerTest < ActiveSupport::TestCase
+  WebpackerHelpers.when_webpacker_available do
     setup do
       WebpackerHelpers.clear_webpacker_packs
     end

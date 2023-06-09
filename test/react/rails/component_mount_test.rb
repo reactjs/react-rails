@@ -2,8 +2,20 @@
 
 require "test_helper"
 
-SprocketsHelpers.when_available do
-  class ComponentMountTest < ActionDispatch::IntegrationTest
+class ComponentMountTest < ActionDispatch::IntegrationTest
+  module DummyRenderer
+    def self.render(component_name, props, _prerender_options)
+      "rendered #{component_name} with #{props.to_json}"
+    end
+  end
+
+  module DummyController
+    def self.react_rails_prerenderer
+      DummyRenderer
+    end
+  end
+
+  SprocketsHelpers.when_available do
     compiled_once = false
     setup do
       unless compiled_once
@@ -99,18 +111,6 @@ SprocketsHelpers.when_available do
       assert html.match(%r{<span\s.*></span>})
       assert html.include?('class="test"')
       assert html.include?('data-foo="1"')
-    end
-
-    module DummyRenderer
-      def self.render(component_name, props, _prerender_options)
-        "rendered #{component_name} with #{props.to_json}"
-      end
-    end
-
-    module DummyController
-      def self.react_rails_prerenderer
-        DummyRenderer
-      end
     end
 
     test "it uses the controller's react_rails_prerenderer, if available" do

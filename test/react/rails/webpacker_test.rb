@@ -2,8 +2,8 @@
 
 require "test_helper"
 
-WebpackerHelpers.when_webpacker_available do
-  class ReactRailsWebpackerTest < ActionDispatch::IntegrationTest
+class ReactRailsWebpackerTest < ActionDispatch::IntegrationTest
+  WebpackerHelpers.when_webpacker_available do
     include Capybara::DSL
 
     setup do

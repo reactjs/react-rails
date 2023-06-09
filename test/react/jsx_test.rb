@@ -29,8 +29,8 @@ class NullTransformer
   end
 end
 
-SprocketsHelpers.when_available do
-  class JSXTransformTest < ActionDispatch::IntegrationTest
+class JSXTransformTest < ActionDispatch::IntegrationTest
+  SprocketsHelpers.when_available do
     setup do
       reset_transformer
     end

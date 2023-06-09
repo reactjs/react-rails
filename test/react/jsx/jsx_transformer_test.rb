@@ -2,8 +2,8 @@
 
 require "test_helper"
 
-SprocketsHelpers.when_available do
-  class JSXTransformerTest < ActionDispatch::IntegrationTest
+class JSXTransformerTest < ActionDispatch::IntegrationTest
+  SprocketsHelpers.when_available do
     setup do
       reset_transformer
       React::JSX.transformer_class = React::JSX::JSXTransformer

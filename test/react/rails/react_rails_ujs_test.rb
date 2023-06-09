@@ -2,8 +2,8 @@
 
 require "test_helper"
 
-SprocketsHelpers.when_available do
-  class ReactRailsUJSTest < ActionDispatch::IntegrationTest
+class ReactRailsUJSTest < ActionDispatch::IntegrationTest
+  SprocketsHelpers.when_available do
     include Capybara::DSL
 
     # Normalize for webpacker check:

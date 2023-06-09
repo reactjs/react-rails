@@ -3,8 +3,8 @@
 require "test_helper"
 require "fileutils"
 
-SprocketsHelpers.when_available do
-  class ServerRenderedHtmlTest < ActionDispatch::IntegrationTest
+class ServerRenderedHtmlTest < ActionDispatch::IntegrationTest
+  SprocketsHelpers.when_available do
     # Rails' asset pipeline has trouble picking up changes to files if they happen too fast.
     # By sleeping for a little bit at certain points, we can make sure that rails notices the
     # change in the file mtime, and calls our renderer setup functions appropriately

@@ -2,8 +2,8 @@
 
 require "test_helper"
 
-SprocketsHelpers.when_available do
-  class ReactAssetTest < ActionDispatch::IntegrationTest
+class ReactAssetTest < ActionDispatch::IntegrationTest
+  SprocketsHelpers.when_available do
     setup do
       SprocketsHelpers.clear_sprockets_cache
     end
