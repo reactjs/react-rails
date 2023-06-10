@@ -124,16 +124,7 @@ module React
       }.freeze
 
       def create_component_file
-        template_extension = if options[:coffee]
-                               "js.jsx.coffee"
-                             elsif options[:ts]
-                               "js.jsx.tsx"
-                             elsif options[:es6] || webpacker?
-                               "es6.jsx"
-                             else
-                               "js.jsx"
-                             end
-
+        template_extension = detect_template_extension
         # Prefer webpacker to sprockets:
         if webpacker?
           new_file_name = file_name.camelize
@@ -257,6 +248,18 @@ module React
 
       def lookup(type = "node", options = "")
         self.class.lookup(type, options)
+      end
+
+      def detect_template_extension
+        if options[:coffee]
+          "js.jsx.coffee"
+        elsif options[:ts]
+          "js.jsx.tsx"
+        elsif options[:es6] || webpacker?
+          "es6.jsx"
+        else
+          "js.jsx"
+        end
       end
     end
   end

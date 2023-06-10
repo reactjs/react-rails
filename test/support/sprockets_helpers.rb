@@ -42,21 +42,7 @@ module SprocketsHelpers
   end
 
   def precompile_assets
-    # Changing directories is required because:
-    # - assets:precompile runs webpacker:compile when availabled
-    # - webpacker:compile depends on `./bin/webpack`, so `.` must be the app root
-    Dir.chdir("./test/#{DUMMY_LOCATION}") do
-      ENV["RAILS_GROUPS"] = "assets" # required for Rails 3.2
-      Rake::Task["assets:precompile"].reenable
-
-      if Rails::VERSION::MAJOR == 3
-        Rake::Task["assets:precompile:all"].reenable
-        Rake::Task["assets:precompile:primary"].reenable
-        Rake::Task["assets:precompile:nondigest"].reenable
-      end
-
-      Rake::Task["assets:precompile"].invoke
-    end
+    invoke_assets_precompile_task
 
     if Rails.application.respond_to?(:assets_manifest)
       # Make a new manifest since assets weren't compiled before
@@ -74,5 +60,27 @@ module SprocketsHelpers
     assets_directory = File.expand_path("../../#{DUMMY_LOCATION}/public/assets", __FILE__)
     FileUtils.rm_r(assets_directory)
     ENV.delete("RAILS_GROUPS")
+  end
+
+  class << self
+    private
+
+    def invoke_assets_precompile_task
+      # Changing directories is required because:
+      # - assets:precompile runs webpacker:compile when availabled
+      # - webpacker:compile depends on `./bin/webpack`, so `.` must be the app root
+      Dir.chdir("./test/#{DUMMY_LOCATION}") do
+        ENV["RAILS_GROUPS"] = "assets" # required for Rails 3.2
+        Rake::Task["assets:precompile"].reenable
+
+        if Rails::VERSION::MAJOR == 3
+          Rake::Task["assets:precompile:all"].reenable
+          Rake::Task["assets:precompile:primary"].reenable
+          Rake::Task["assets:precompile:nondigest"].reenable
+        end
+
+        Rake::Task["assets:precompile"].invoke
+      end
+    end
   end
 end
