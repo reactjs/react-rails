@@ -1,0 +1,24 @@
+name: Rubocop
+
+on: [push]
+
+jobs:
+  rubocop:
+    name: Rubocop
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        ruby: ['2.7', '3.0']
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+          bundler-cache: true
+
+      - name: Ruby rubocop
+        run: |
+          gem install rubocop rubocop-performance rubocop-minitest
+          rubocop
