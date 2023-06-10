@@ -8,7 +8,7 @@ class JSXPreprocessorTest < ActiveSupport::TestCase
     required_coffeescript = "var requireCoffee; requireCoffee = true;"
     required_jsx = 'React.createElement("div", { className: "require-jsx" });'
     own_jsx = 'React.createElement("div", { className: "le-javascript" });'
-    test "executes //= require directives" do
+    test "executes //= require directives" do # rubocop:disable Minitest/MultipleAssertions
       require_parent = SprocketsHelpers.fetch_asset_body("require_test/jsx_preprocessor_test.js")
 
       assert_compiled_javascript_includes(require_parent, required_javascript)

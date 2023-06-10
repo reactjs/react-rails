@@ -49,7 +49,7 @@ if SprocketsHelpers.available? || WebpackerHelpers.available?
       assert_no_match(/data-reactroot/, result)
     end
 
-    test "#render replays console messages" do
+    test "#render replays console messages" do # rubocop:disable Minitest/MultipleAssertions
       result = @renderer.render("TodoListWithConsoleLog", { todos: ["log some messages"] }, nil)
       assert_match(/<script class="react-rails-console-replay">$/, result)
       assert_match(/console.log.apply\(console, \["got initial state"\]\);$/, result)

@@ -31,7 +31,7 @@ ReactRailsUJS.useContext(componentRequireContext);
       assert_file "app/javascript/components"
     end
 
-    test "creates server_rendering.js with default requires" do
+    test "creates server_rendering.js with default requires" do # rubocop:disable Minitest/MultipleAssertions
       run_generator
       assert_file default_server_rendering_pack_path do |contents|
         assert_includes contents, "var componentRequireContext = require.context(\"components\", true);\n"

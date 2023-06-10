@@ -88,7 +88,7 @@ class ServerRenderedHtmlTest < ActionDispatch::IntegrationTest
       wait_to_ensure_asset_pipeline_detects_changes
     end
 
-    test "react server rendering shows console output as html comment" do
+    test "react server rendering shows console output as html comment" do # rubocop:disable Minitest/MultipleAssertions
       # Make sure console messages are replayed when requested
       React::ServerRendering.renderer_options = { replay_console: true }
       React::ServerRendering.reset_pool
@@ -109,7 +109,7 @@ class ServerRenderedHtmlTest < ActionDispatch::IntegrationTest
       assert_no_match(/console.error/, response.body)
     end
 
-    test "react inline component rendering (pre-rendered)" do
+    test "react inline component rendering (pre-rendered)" do # rubocop:disable Minitest/MultipleAssertions
       get "/server/inline_component_prerender_true"
       rendered_html = response.body
       assert_match(/<span.*data-react-class="TodoList"/, rendered_html)

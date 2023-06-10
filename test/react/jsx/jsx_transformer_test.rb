@@ -29,7 +29,7 @@ class JSXTransformerTest < ActionDispatch::IntegrationTest
       assert_equal "test_confirmation_token_jsx_transformed;", @response.body.strip
     end
 
-    test "accepts harmony: true option" do
+    test "accepts harmony: true option" do # rubocop:disable Minitest/MultipleAssertions
       React::JSX.transform_options = { harmony: true }
       get "/assets/harmony_example.js"
       assert_response :success

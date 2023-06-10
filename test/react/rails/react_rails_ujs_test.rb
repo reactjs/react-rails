@@ -8,14 +8,20 @@ class ReactRailsUJSTest < ActionDispatch::IntegrationTest
 
     # Normalize for webpacker check:
     def assert_greeting(page, greeting)
-      assert page.has_content?(greeting), [page.body, page.driver.browser.manage.logs.get(:browser).inspect]
+      assert page.has_content?(greeting), <<~MSG
+        #{page.body}
+        #{page.driver.browser.manage.logs.get(:browser).inspect}
+      MSG
     end
 
     def refute_greeting(page, greeting)
-      assert page.has_no_content?(greeting), [page.body, page.driver.browser.manage.logs.get(:browser).inspect]
+      assert page.has_no_content?(greeting), <<~MSG
+        #{page.body}
+        #{page.driver.browser.manage.logs.get(:browser).inspect}
+      MSG
     end
 
-    test "ujs object present on the global React object and has our methods" do
+    test "ujs object present on the global React object and has our methods" do # rubocop:disable Minitest/MultipleAssertions
       visit "/pages/1"
       assert_greeting(page, "Hello Bob")
 
@@ -47,7 +53,7 @@ class ReactRailsUJSTest < ActionDispatch::IntegrationTest
       assert_greeting(page, "Goodbye Bob")
     end
 
-    test "react_ujs works with Turbolinks" do
+    test "react_ujs works with Turbolinks" do # rubocop:disable Minitest/MultipleAssertions
       visit "/pages/1"
       assert_greeting(page, "Hello Bob")
       assert page.evaluate_script("Turbolinks.supported")
@@ -111,18 +117,18 @@ class ReactRailsUJSTest < ActionDispatch::IntegrationTest
       assert_greeting(page, "Hello Bob")
     end
 
-    test "react_ujs does not unmount components that do not match a selector reference for the component" do
+    test "react_ujs does not unmount components that do not match a selector reference for the component" do  # rubocop:disable Minitest/MultipleAssertions
       visit "/pages/1"
       assert_greeting page, "Hello Bob"
-      assert page.has_content?("Another Component"), page.body
+      assert page.has_content?("Another Component"), "Body of the page:\n#{page.body}"
 
       page.click_button "Unmount by own selector"
       refute_greeting(page, "Hello Bob")
-      assert page.has_content?("Another Component"), page.body
+      assert page.has_content?("Another Component"), "Body of the page:\n#{page.body}"
 
       page.click_button "Mount by own selector"
       assert_greeting(page, "Hello Bob")
-      assert page.has_content?("Another Component"), page.body
+      assert page.has_content?("Another Component"), "Body of the page:\n#{page.body}"
     end
 
     test "react_ujs can unmount/mount using a dom node context" do

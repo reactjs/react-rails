@@ -16,7 +16,7 @@ class ReactRailsWebpackerTest < ActionDispatch::IntegrationTest
       WebpackerHelpers.clear_webpacker_packs
     end
 
-    test "it mounts components from the pack" do
+    test "it mounts components from the pack" do # rubocop:disable Minitest/MultipleAssertions
       visit "/pack_component"
       assert page.has_content?("Export Default")
       assert page.has_content?("Named Export")

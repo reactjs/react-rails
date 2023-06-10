@@ -104,7 +104,7 @@ class ComponentMountTest < ActionDispatch::IntegrationTest
       assert_equal("<div><li>render on the server</li></div>", html)
     end
 
-    test "#react_component accepts HTML options and HTML tag" do
+    test "#react_component accepts HTML options and HTML tag" do # rubocop:disable Minitest/MultipleAssertions
       assert_match %r{<span\s.*></span>}, @helper.react_component("Foo", {}, :span)
 
       html = @helper.react_component("Foo", {}, { class: "test", tag: :span, data: { foo: 1 } })

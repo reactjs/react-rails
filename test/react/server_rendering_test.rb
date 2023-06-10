@@ -34,7 +34,7 @@ class ReactServerRenderingTest < ActiveSupport::TestCase
     assert_equal("TEST rendered MyComponent with #{props} and prerender-opts", result)
   end
 
-  test ".reset_pool forgets old renderers" do
+  test ".reset_pool forgets old renderers" do # rubocop:disable Minitest/MultipleAssertions
     # At first, they use the first options:
     assert_match(/^TEST/, React::ServerRendering.render(nil, nil, nil))
     assert_match(/^TEST/, React::ServerRendering.render(nil, nil, nil))

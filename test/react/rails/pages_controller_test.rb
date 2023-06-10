@@ -17,15 +17,16 @@ class PagesControllerTest < ActionController::TestCase
     test "it sets up and tears down a react context" do
       get :show, params: { id: 1, prerender: true }
       assert_includes(response.body, "Hello")
+    end
 
+    test "it sets up and tears down a react context with the given greeting text" do
       get :show, params: { id: 1, prerender: true, greeting: "Howdy" }
       assert_includes(response.body, "Howdy")
+    end
 
+    test "it sets up and tears down a react context with the given greeting emoji" do
       get :show, params: { id: 1, prerender: true, greeting: "👋" }
       assert_includes(response.body, "👋")
-
-      get :show, params: { id: 1, prerender: true }
-      assert_includes(response.body, "Hello")
     end
   end
 end
