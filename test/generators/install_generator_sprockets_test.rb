@@ -20,12 +20,14 @@ unless WebpackerHelpers.available?
 
     test "adds requires to `application.js`" do
       run_generator
+
       assert_application_file_created
     end
 
     test "it modifes an existing 'application.js'" do
       copy_directory("app/assets/javascripts/application.js")
       run_generator
+
       assert_application_file_modified
     end
 
@@ -34,6 +36,7 @@ unless WebpackerHelpers.available?
       File.delete "#{destination_root}/app/assets/javascripts/application.js"
 
       run_generator
+
       assert_application_file_created
     end
 
@@ -41,6 +44,7 @@ unless WebpackerHelpers.available?
       init_application_js ""
 
       run_generator
+
       assert_application_file_created
     end
 
@@ -52,6 +56,7 @@ unless WebpackerHelpers.available?
       DIRECTIVE
 
       run_generator
+
       assert_application_file_modified
     end
 
@@ -63,12 +68,14 @@ unless WebpackerHelpers.available?
       DIRECTIVE
 
       run_generator
+
       assert_application_file_modified
     end
 
     test "creates server_rendering.js with default requires" do
       run_generator
       server_rendering_file_path = "app/assets/javascripts/server_rendering.js"
+
       assert_file server_rendering_file_path, %r{//= require react-server\n}
       assert_file server_rendering_file_path, %r{//= require ./components\n}
     end
@@ -76,11 +83,13 @@ unless WebpackerHelpers.available?
     test "creates server rendering initializer" do
       run_generator
       initializer_path = "config/initializers/react_server_rendering.rb"
+
       assert_file(initializer_path, /Rails.application.config.assets.precompile \+= \["server_rendering.js"\]/)
     end
 
     test "skipping server rendering" do
       run_generator %w[--skip-server-rendering]
+
       assert_no_file "config/initializers/react_server_rendering.rb"
       assert_no_file "app/assets/javascripts/server_rendering.js"
     end

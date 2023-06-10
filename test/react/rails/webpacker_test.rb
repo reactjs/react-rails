@@ -18,6 +18,7 @@ class ReactRailsWebpackerTest < ActionDispatch::IntegrationTest
 
     test "it mounts components from the pack" do # rubocop:disable Minitest/MultipleAssertions
       visit "/pack_component"
+
       assert page.has_content?("Export Default")
       assert page.has_content?("Named Export")
       assert page.has_content?("Exports")

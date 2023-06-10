@@ -38,6 +38,7 @@ class ReactAssetTest < ActionDispatch::IntegrationTest
       production_path = File.expand_path("../lib/assets/react-source/production/react.js", __dir__)
       production_js = File.read(production_path)
       env_checks = production_js.scan("NODE_ENV")
+
       assert_equal(0, env_checks.length, "Dead code is removed for production")
     end
   end

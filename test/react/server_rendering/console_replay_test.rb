@@ -19,8 +19,10 @@ if WebpackerHelpers.available? || SprocketsHelpers.available?
     test "it clears the state between each request" do
       # Each request should only contain one log:
       get "/server/1"
+
       assert_includes(response.body, EXPECTED_REPLAY)
       get "/server/1"
+
       assert_includes(response.body, EXPECTED_REPLAY)
     end
   end

@@ -30,12 +30,14 @@ class ExecJSRendererTest < ActiveSupport::TestCase
 
   test "#render returns HTML" do
     result = @renderer.render("Todo", { todo: "write tests" }.to_json, {})
+
     assert_match(%r{<li.*write tests</li>}, result)
     assert_match(/data-reactroot/, result)
   end
 
   test "#render accepts render_function:" do
     result = @renderer.render("Todo", { todo: "write more tests" }.to_json, render_function: "renderToStaticMarkup")
+
     assert_match(%r{<li>write more tests</li>}, result)
     assert_no_match(/data-reactroot/, result)
   end
@@ -77,6 +79,7 @@ class ExecJSRendererTest < ActiveSupport::TestCase
   test ".new accepts code:" do
     dummy_renderer = React::ServerRendering::ExecJSRenderer.new(code: DUMMY_IMPLEMENTATION)
     result = dummy_renderer.render("Todo", { todo: "get a real job" }.to_json, {})
+
     assert_equal("serverRender was called", result)
   end
 end

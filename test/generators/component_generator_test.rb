@@ -50,12 +50,14 @@ class ComponentGeneratorTest < Rails::Generators::TestCase
 
   test "creates the component file with a node argument" do
     run_generator %w[GeneratedComponent name]
+
     assert_file filename, /name: PropTypes.node/
   end
 
   test "creates the component file with various standard proptypes" do
     proptypes = %w[string bool number array func number object any]
     run_generator %w[GeneratedComponent] + proptypes.map { |type| "my_#{type}:#{type}" }
+
     proptypes.each do |type|
       assert_file filename, /my#{type.capitalize}: PropTypes.#{type}/
     end
@@ -63,11 +65,13 @@ class ComponentGeneratorTest < Rails::Generators::TestCase
 
   test "creates a component file with an instanceOf property" do
     run_generator %w[GeneratedComponent favorite_food:instanceOf{food}]
+
     assert_file filename, /favoriteFood: PropTypes.instanceOf\(Food\)/
   end
 
   test "creates a component file with a oneOf property" do
     run_generator %w[GeneratedComponent favorite_food:oneOf{pizza,hamburgers}]
+
     assert_file filename, /favoriteFood: PropTypes.oneOf\(\['pizza','hamburgers'\]\)/
   end
 

@@ -16,6 +16,7 @@ if Rails::VERSION::MAJOR == 3
 
     def test_find_asset_gets_asset_contents
       application_js_content = @manifest_container.find_asset("application.js")
+
       assert(application_js_content.length > 50_000, "It's the compiled file")
     end
   end

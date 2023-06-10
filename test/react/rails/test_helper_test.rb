@@ -9,6 +9,7 @@ class TestHelperTest < ActionDispatch::IntegrationTest
 
   test "assert_react_component" do # rubocop:disable Minitest/MultipleAssertions
     get "/pages/1"
+
     assert_equal 200, response.status
     assert_react_component "GreetingMessage"
     assert_react_component "GreetingMessage" do |props|

@@ -42,6 +42,7 @@ class JSXTransformTest < ActionDispatch::IntegrationTest
     test "asset pipeline should transform JSX" do
       SprocketsHelpers.manually_expire_asset("example.js")
       get "/assets/example.js"
+
       assert_response :success
       assert_compiled_javascript_matches(EXPECTED_JS, @response.body)
     end
@@ -49,6 +50,7 @@ class JSXTransformTest < ActionDispatch::IntegrationTest
     test "asset pipeline should transform JSX + Coffeescript" do
       SprocketsHelpers.manually_expire_asset("example2.js")
       get "/assets/example2.js"
+
       assert_response :success
       assert_compiled_javascript_matches(EXPECTED_JS_2, @response.body)
     end
@@ -65,6 +67,7 @@ class JSXTransformTest < ActionDispatch::IntegrationTest
       React::JSX.transform_options = { blacklist: ["spec.functionName", "validation.react", "strict"] }
       SprocketsHelpers.manually_expire_asset("example.js")
       get "/assets/example.js"
+
       assert_response :success
 
       refute_includes @response.body, "strict"

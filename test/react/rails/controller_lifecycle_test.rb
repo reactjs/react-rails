@@ -39,6 +39,7 @@ class ControllerLifecycleTest < ActionDispatch::IntegrationTest
   test "it creates a helper object and puts it in the request env" do
     get "/pages/1"
     helper_obj = controller.__react_component_helper
+
     assert(helper_obj.is_a?(DummyHelperImplementation), "It uses the view helper implementation class")
   end
 
@@ -46,6 +47,7 @@ class ControllerLifecycleTest < ActionDispatch::IntegrationTest
     get "/pages/1?param_test=123"
     helper_obj = controller.__react_component_helper
     lifecycle_steps = ["123", :react_component, :react_component, :teardown]
+
     assert_equal(lifecycle_steps, helper_obj.events)
   end
 
@@ -54,6 +56,7 @@ class ControllerLifecycleTest < ActionDispatch::IntegrationTest
     first_helper = controller.__react_component_helper
     get "/pages/1"
     second_helper = controller.__react_component_helper
+
     refute_equal(first_helper, second_helper, "The helper for the second request is brand new")
   end
 end

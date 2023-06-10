@@ -27,6 +27,7 @@ ReactRailsUJS.useContext(componentRequireContext);
 
     test "adds requires to `application.js`" do
       run_generator
+
       assert_file "app/javascript/packs/application.js", expected_setup
       assert_file "app/javascript/components"
     end
@@ -42,6 +43,7 @@ ReactRailsUJS.useContext(componentRequireContext);
 
     test "skipping server rendering" do
       run_generator %w[--skip-server-rendering]
+
       assert_no_file default_server_rendering_pack_path
     end
   end
