@@ -85,6 +85,10 @@ def expected_working_jsx
   /\.createElement\(\s*\S*\.Fragment,\s*null,\s*"Name:\s*",\s*this\.props\.name,\s*"Address:\s*",\s*this\.props\.address\s*\)/x # rubocop:disable Layout/LineLength
 end
 
+def expected_working_jsx_in_function_component
+  /\.createElement\(\s*\S*\.Fragment,\s*null,\s*\"Name:\s*\",\s*props\.name,\s*\"Address:\s*\",\s*props\.address\s*\)/x
+end
+
 module ParamsHelper
   # Normalize params for Rails 5.1+
   def query_params(params)

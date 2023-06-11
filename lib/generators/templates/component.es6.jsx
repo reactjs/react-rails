@@ -1,12 +1,12 @@
 <%= file_header %>
-function <%= component_name %>(props) {
+const <%= component_name %> = (props) => {
   return (
     <React.Fragment>
 <% attributes.each do |attribute| -%>
       <%= attribute[:name].titleize %>: {props.<%= attribute[:name].camelize(:lower) %>}
 <% end -%>
     </React.Fragment>
-  );
+  )
 }
 
 <% if attributes.size > 0 -%>
