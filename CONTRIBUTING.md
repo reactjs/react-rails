@@ -94,12 +94,16 @@ To develop the React_UJS NPM Package, make your changes and run `npm pack` to ma
 
 ##### Running tests
 
+Run `yalc publish --push` in the root directory of the gem to ensure the test suites use the exact same js code used in the currenlty developing ReactRails.
+
 `bundle exec appraisal install` to install gems on every gemfile Appraisal contains.
 `rake test` or `bundle exec appraisal rake test` runs everything.
 or run a specific suite using `bundle exec appraisal <appraisal name> rake test`
 - Find appraisal names in [Appraisals](Appraisals)
 - Integration tests run in Headless Chrome which is included in Chrome (59+ linux,OSX | 60+ Windows)
 - ChromeDriver is included with `chromedriver-helper` gem so no need to manually install that 👍
+
+**Note:** If using Ruby 2.7, set `MT_KWARGS_HACK=1` to ensure Minitest runs smoothly.
 
 ##### Updating the pre-bundled react
 - Update React with `rake react:update`

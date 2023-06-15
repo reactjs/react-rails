@@ -1,17 +1,19 @@
-# React-Rails
+# React-Rails v3
 
 [![Gem](https://img.shields.io/gem/v/react-rails.svg?style=flat-square)](http://rubygems.org/gems/react-rails)
 [![npm](https://img.shields.io/npm/v/react_ujs.svg?style=flat-square)](https://www.npmjs.com/package/react_ujs)
 [![Ruby](https://github.com/reactjs/react-rails/actions/workflows/ruby.yml/badge.svg)](https://github.com/reactjs/react-rails/actions/workflows/ruby.yml)
 
 ## News
-v2.7.1 is released. Please try it out and report any issues. We'll try to address any critical issues ASAP. We're going shortly release 3.0, which fully support Shakapacker v6, including SSR.
+V3.0.0 is released with Shakapacker v6 support, including SSR. Please try it out and report any issues. We'll try to address any critical issues ASAP.
+
+For version 2.7 documentation checkout [2.7-stable](https://github.com/reactjs/react-rails/tree/2.7-stable) branch.
 
 ## Summary
 React-Rails is a flexible tool to use [React](http://facebook.github.io/react/) with Rails. The benefits:
 * Automatically renders React server-side and client-side
-* Supports Webpacker 4.x, 3.x, 2.x, 1.1+ or Shakapacker v6+
-* Supports Sprockets 4.x, 3.x, 2.x
+* Supports [Shakapacker](https://github.com/shakacode/shakapacker) v6.x
+* Supports Sprockets 4.x, 3.x
 * Lets you use [JSX](http://facebook.github.io/react/docs/jsx-in-depth.html), [ES6](http://es6-features.org/), [TypeScript](https://www.typescriptlang.org/), [CoffeeScript](http://coffeescript.org/)
 
 ---
@@ -64,10 +66,10 @@ Read the [full review here](https://clutch.co/profile/shakacode#reviews?sort_by=
   - [Camelize Props](#camelize-props)
   - [Changing Component Templates](#changing-component-templates)
 - [Upgrading](#upgrading)
+  - [2.7 to 3.0](#27-to-30)
   - [2.3 to 2.4](#23-to-24)
 - [Common Errors](#common-errors)
   - [Getting warning for `Can't resolve 'react-dom/client'` in React < 18](#getting-warning-for-cant-resolve-react-domclient-in-react--18)
-  - [During installation](#during-installation)
   - [Undefined Set](#undefined-set)
   - [Using TheRubyRacer](#using-therubyracer)
   - [HMR](#hmr)
@@ -491,7 +493,7 @@ ReactRailsUJS.detectEvents()
 
 For example, if `Turbolinks` is loaded _after_ `ReactRailsUJS`, you'll need to call this again. This function removes previous handlers before adding new ones, so it's safe to call as often as needed.
 
-If `Turbolinks` is `import`ed via Webpacker (and thus not available globally), `ReactRailsUJS` will be unable to locate it. To fix this, you can temporarily add it to the global namespace:
+If `Turbolinks` is `import`ed via Shakapacker (and thus not available globally), `ReactRailsUJS` will be unable to locate it. To fix this, you can temporarily add it to the global namespace:
 
 ```js
 // Order is particular. First start Turbolinks:
@@ -545,6 +547,7 @@ Server rendering is powered by [`ExecJS`](https://github.com/rails/execjs) and s
 
 - `react-rails` must load your code. By convention, it uses `server_rendering.js`, which was created
 by the install task. This file must include your components _and_ their dependencies (eg, Underscore.js).
+- Requires separate compilations for server & client bundles (see [Webpack config](https://github.com/reactjs/react-rails/tree/master/test/dummy/config/webpack))
 - Your code can't reference `document` or `window`. Prerender processes don't have access to `document` or `window`,
 so jQuery and some other libs won't work in this environment :(
 
@@ -746,6 +749,11 @@ For example, to change the [ES6 Component template](https://github.com/reactjs/r
 
 ## Upgrading
 
+### 2.7 to 3.0
+- Keep your `react_ujs` up to date: `yarn upgrade`
+- **Drop support for Webpacker:** Before any ReactRails upgrade, make sure upgrading from Webpacker to Shakapacker 6.x.
+- **SSR:** ReactRails 3.x requires separate compilations for server & client bundles. See [Webpack config](https://github.com/reactjs/react-rails/tree/master/test/dummy/config/webpack) directory in the dummy app to addapt the new implementation.
+
 ### 2.3 to 2.4
 
 Keep your `react_ujs` up to date, `yarn upgrade`
@@ -781,30 +789,6 @@ You may see a warning like this when building a Webpack bundle using any version
 + module.exports = merge({}, webpackConfig, ignoreWarningsConfig)
 ```
 
-### During installation
-1) While using installers.(rails webpacker:install:react && rails webpacker:install)
-Error:
-```
-public/packs/manifest.json. Possible causes:
-1. You want to set webpacker.yml value of compile to true for your environment
-   unless you are using the `webpack -w` or the webpack-dev-server.
-2. webpack has not yet re-run to reflect updates.
-3. You have misconfigured Webpacker's config/webpacker.yml file.
-4. Your webpack configuration is not creating a manifest.
-or
-yarn: error: no such option: --dev
-ERROR: [Errno 2] No such file or directory: 'add'
-```
-Fix: Try updating yarn package.
-```
-sudo apt remove cmdtest
-sudo apt remove yarn
-curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
-echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
-sudo apt-get update && sudo apt-get install yarn
-
-yarn install
-```
 ### Undefined Set
 ```
 ExecJS::ProgramError (identifier 'Set' undefined):
@@ -820,9 +804,8 @@ TheRubyRacer [hasn't updated LibV8](https://github.com/cowboyd/therubyracer/blob
 LibV8 itself is already [beyond version 7](https://github.com/cowboyd/libv8/releases/tag/v7.3.492.27.1) therefore many serverside issues are caused by old JS engines and fixed by using an up to date one such as [MiniRacer](https://github.com/discourse/mini_racer) or [TheRubyRhino](https://github.com/cowboyd/therubyrhino) on JRuby.
 
 ### HMR
-Hot Module Replacement is [possible with this gem](https://stackoverflow.com/a/54846330/193785) as it does just pass through to Webpacker. Please open an issue to let us know tips and tricks for it to add to the wiki.
 
-Sample repo that shows HMR working with `react-rails`: [https://github.com/edelgado/react-rails-hmr](https://github.com/edelgado/react-rails-hmr)
+Check out [Enabling Hot Module Replacement (HMR)](https://github.com/shakacode/shakapacker/blob/master/docs/react.md#enabling-hot-module-replacement-hmr) in Shakapacker documentation.
 
 One caveat is that currently you [cannot Server-Side Render along with HMR](https://github.com/reactjs/react-rails/issues/925#issuecomment-415469572).
 
