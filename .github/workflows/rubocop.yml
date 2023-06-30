@@ -17,8 +17,7 @@ jobs:
         with:
           ruby-version: ${{ matrix.ruby }}
           bundler-cache: true
-
-      - name: Ruby rubocop
-        run: |
-          gem install rubocop rubocop-performance rubocop-minitest
-          rubocop
+      - name: Install linting gems
+        run: gem install rubocop rubocop-performance rubocop-minitest
+      - name: Run rubocop
+        run: rubocop

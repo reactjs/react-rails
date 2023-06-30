@@ -29,6 +29,10 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'selenium-webdriver'
   s.add_development_dependency 'test-unit', '~> 2.5'
   s.add_development_dependency 'pry-byebug'
+  s.add_development_dependency 'rubocop'
+  s.add_development_dependency 'rubocop-performance'
+  s.add_development_dependency 'rubocop-minitest'
+
 
   s.add_dependency 'connection_pool'
   s.add_dependency 'execjs'
