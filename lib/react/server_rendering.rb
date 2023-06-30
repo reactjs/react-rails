@@ -16,7 +16,7 @@ module React
     # @return [void]
     def self.reset_pool
       options = { size: pool_size, timeout: pool_timeout }
-      @@pool = ConnectionPool.new(options) { renderer.new(renderer_options) }
+      @pool = ConnectionPool.new(options) { renderer.new(renderer_options) }
     end
 
     # Check a renderer out of the pool and use it to render the component.
@@ -25,14 +25,14 @@ module React
     # @param prerender_options [Hash] Renderer-specific options
     # @return [String] Prerendered HTML from `component_name`
     def self.render(component_name, props, prerender_options)
-      @@pool.with do |renderer|
+      @pool.with do |renderer|
         renderer.render(component_name, props, prerender_options)
       end
     end
 
     # Yield a renderer for an arbitrary block
     def self.with_renderer(&block)
-      @@pool.with(&block)
+      @pool.with(&block)
     end
 
     # Raised when something went wrong during server rendering.
