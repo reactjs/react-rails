@@ -18,19 +18,6 @@ module React
                    default: false,
                    desc: "Don't generate server_rendering.js or config/initializers/react_server_rendering.rb"
 
-      # For Shakapacker below version 7, we need to set relative path for source_entry_path
-      def modify_webpacker_yml
-        webpacker_yml_path = "config/webpacker.yml"
-        return unless webpacker? && Pathname.new(webpacker_yml_path).exist?
-
-        gsub_file(
-          webpacker_yml_path,
-          "source_entry_path: /\n",
-          "source_entry_path: packs\n"
-        )
-        reloaded_webpacker_config
-      end
-
       # Make an empty `components/` directory in the right place:
       def create_directory
         components_dir = if webpacker?
