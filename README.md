@@ -94,8 +94,10 @@ $ cd my-app
 ```
 
 2. Install `shakapacker`:
+We recommend to use the latest version of Shakapacker. For that, you need to install version 6 and after running install generator of react-rails, upgrade the project to Shakapacker 7.
+
 ```bash
-$ bundle add shakapacker --strict
+$ bundle add shakapacker --version 6.6.0 --strict
 $ rails webpacker:install
 ```
 
@@ -128,6 +130,8 @@ This gives you:
 - `app/javascript/components/` directory for your React components
 - [`ReactRailsUJS`](#ujs) setup in `app/javascript/packs/application.js`
 - `app/javascript/packs/server_rendering.js` for [server-side rendering](#server-side-rendering)
+
+After this step you can upgrade your Shakpacker to version 7. For this, check Shakapacker [v7 upgrade](https://github.com/shakacode/shakapacker/blob/master/docs/v7_upgrade.md) guide. 
 
 5. Generate your first component:
 ```bash
