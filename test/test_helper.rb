@@ -24,7 +24,7 @@ require "capybara/rails"
 require "selenium/webdriver"
 Dummy::Application.load_tasks
 
-WebpackerHelpers.clear_webpacker_packs
+ShakapackerHelpers.clear_shakapacker_packs
 
 Capybara.app = Rails.application
 Capybara.server = :webrick

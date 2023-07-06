@@ -8,12 +8,12 @@ class CoffeeComponentGeneratorTest < Rails::Generators::TestCase
   setup :prepare_destination
   tests React::Generators::ComponentGenerator
 
-  if WebpackerHelpers.available?
+  if ShakapackerHelpers.available?
     def filename
       "app/javascript/components/GeneratedComponent.coffee"
     end
 
-    test "that Webpacker defaults to ES6" do
+    test "that Shakapacker defaults to ES6" do
       run_generator %w[GeneratedComponent name]
 
       es6 = File.read(File.join(destination_root, "app/javascript/components/GeneratedComponent.js"))

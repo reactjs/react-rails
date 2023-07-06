@@ -2,9 +2,8 @@
 
 require "test_helper"
 require "generators/react/install_generator"
-
-class InstallGeneratorWebpackerTest < Rails::Generators::TestCase
-  WebpackerHelpers.when_webpacker_available do
+class InstallGeneratorShakapackerTest < Rails::Generators::TestCase
+  ShakapackerHelpers.when_shakapacker_available do
     destination File.join(Rails.root, "tmp", "generator_test_output")
     tests React::Generators::InstallGenerator
     setup :prepare_destination

@@ -13,11 +13,11 @@ class ServerRenderedHtmlTest < ActionDispatch::IntegrationTest
     end
 
     setup do
-      WebpackerHelpers.compile if WebpackerHelpers.available?
+      ShakapackerHelpers.compile if ShakapackerHelpers.available?
     end
 
     test "react server rendering reloads jsx after changes to the jsx files" do
-      if WebpackerHelpers.available?
+      if ShakapackerHelpers.available?
         file_with_updates = File.expand_path("helper_files/TodoListWithUpdates.js", __dir__)
         file_without_updates = File.expand_path("helper_files/TodoListWithoutUpdates.js", __dir__)
         app_file = File.expand_path("../#{DUMMY_LOCATION}/app/javascript/components/TodoList.js", __FILE__)
@@ -38,8 +38,8 @@ class ServerRenderedHtmlTest < ActionDispatch::IntegrationTest
 
         FileUtils.cp file_with_updates, app_file
         FileUtils.touch app_file
-        if WebpackerHelpers.available?
-          WebpackerHelpers.compile
+        if ShakapackerHelpers.available?
+          ShakapackerHelpers.compile
         else
           wait_to_ensure_asset_pipeline_detects_changes
         end
@@ -60,24 +60,24 @@ class ServerRenderedHtmlTest < ActionDispatch::IntegrationTest
         get "/server/1?component_name=NewList"
       end
 
-      if WebpackerHelpers.available?
+      if ShakapackerHelpers.available?
         new_file_path = "../#{DUMMY_LOCATION}/app/javascript/components/NewList.js"
-        new_file_contents = <<~HEREDOC
+        new_file_contents = <<~JS
           var React = require("react")
           module.exports = function() { return <span>"New List"</span> }
-        HEREDOC
+        JS
       else
         new_file_path = "../#{DUMMY_LOCATION}/app/assets/javascripts/components/ZZ_NewComponent.js.jsx"
-        new_file_contents = <<~HEREDOC
+        new_file_contents = <<~JS
           var NewList = function() { return <span>"New List"</span> }
-        HEREDOC
+        JS
       end
 
       new_file_path = File.expand_path(new_file_path, __FILE__)
       File.write new_file_path, new_file_contents
 
-      if WebpackerHelpers.available?
-        WebpackerHelpers.compile
+      if ShakapackerHelpers.available?
+        ShakapackerHelpers.compile
       else
         wait_to_ensure_asset_pipeline_detects_changes
         FileUtils.touch new_file_path
@@ -95,7 +95,7 @@ class ServerRenderedHtmlTest < ActionDispatch::IntegrationTest
       # Make sure console messages are replayed when requested
       React::ServerRendering.renderer_options = { replay_console: true }
       React::ServerRendering.reset_pool
-      get "/server/console_example"
+      get "/server/console_example" 
 
       assert_match(/Console Logged/, response.body)
       assert_match(/console.log.apply\(console, \["got initial state"\]\)/, response.body)

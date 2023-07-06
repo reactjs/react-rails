@@ -5,7 +5,7 @@ require "test_helper"
 class PagesControllerTest < ActionController::TestCase
   include ParamsHelper
   setup do
-    WebpackerHelpers.compile_if_missing
+    ShakapackerHelpers.compile_if_missing
   end
 
   test "renders successfully" do

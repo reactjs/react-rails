@@ -2,10 +2,10 @@
 
 require "test_helper"
 
-if WebpackerHelpers.available? || SprocketsHelpers.available?
+if ShakapackerHelpers.available? || SprocketsHelpers.available?
   class ConsoleReplayTest < ActionDispatch::IntegrationTest
     setup do
-      WebpackerHelpers.compile
+      ShakapackerHelpers.compile
       React::ServerRendering.renderer_options = { replay_console: true }
       React::ServerRendering.reset_pool
     end

@@ -19,8 +19,8 @@ class ComponentMountTest < ActionDispatch::IntegrationTest
     compiled_once = false
     setup do
       unless compiled_once
-        WebpackerHelpers.clear_webpacker_packs
-        WebpackerHelpers.compile
+        ShakapackerHelpers.clear_shakapacker_packs
+        ShakapackerHelpers.compile
       end
       @helper = React::Rails::ComponentMount.new
     end

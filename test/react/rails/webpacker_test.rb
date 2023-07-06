@@ -2,18 +2,18 @@
 
 require "test_helper"
 
-class ReactRailsWebpackerTest < ActionDispatch::IntegrationTest
-  WebpackerHelpers.when_webpacker_available do
+class ReactRailsShakapackerTest < ActionDispatch::IntegrationTest
+  ShakapackerHelpers.when_shakapacker_available do
     include Capybara::DSL
 
     setup do
       Capybara.current_driver = Capybara.javascript_driver
-      WebpackerHelpers.compile
+      ShakapackerHelpers.compile
       React::ServerRendering.reset_pool
     end
 
     teardown do
-      WebpackerHelpers.clear_webpacker_packs
+      ShakapackerHelpers.clear_shakapacker_packs
     end
 
     test "it mounts components from the pack" do # rubocop:disable Minitest/MultipleAssertions
