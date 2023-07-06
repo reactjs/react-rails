@@ -20,21 +20,21 @@ module React
 
       # Make an empty `components/` directory in the right place:
       def create_directory
-        components_dir = if webpacker?
-                           Pathname.new(javascript_dir).parent.to_s
-                         else
-                           javascript_dir
-                         end
-        empty_directory File.join(components_dir, "components")
-        return if options[:skip_git]
-
-        create_file File.join(components_dir, "components/.keep")
+        components_dir = if shakapacker?
+          Pathname.new(javascript_dir).parent.to_s
+        else
+          javascript_dir
+        end
+        empty_directory File.join(components_dir, 'components')
+        unless options[:skip_git]
+          create_file File.join(components_dir, 'components/.keep')
+        end
       end
 
       # Add requires, setup UJS
       def setup_react
-        if webpacker?
-          setup_react_webpacker
+        if shakapacker?
+          setup_react_shakapacker
         else
           setup_react_sprockets
         end
@@ -42,10 +42,10 @@ module React
 
       def create_server_rendering
         if options[:skip_server_rendering]
-          nil
-        elsif webpacker?
-          ssr_manifest_path = File.join(javascript_dir, "server_rendering.js")
-          template("server_rendering_pack.js", ssr_manifest_path)
+          return
+        elsif shakapacker?
+          ssr_manifest_path = File.join(javascript_dir, 'server_rendering.js')
+          template('server_rendering_pack.js', ssr_manifest_path)
         else
           ssr_manifest_path = File.join(javascript_dir, "server_rendering.js")
           template("server_rendering.js", ssr_manifest_path)
@@ -56,13 +56,13 @@ module React
 
       private
 
-      def webpacker?
-        !!defined?(Webpacker)
+      def shakapacker?
+        !!defined?(Shakapacker)
       end
 
       def javascript_dir
-        if webpacker?
-          webpack_source_path
+        if shakapacker?
+          shakapacker_source_path
             .relative_path_from(::Rails.root)
             .to_s
         else
@@ -96,33 +96,26 @@ module React
         create_file components_file, components_js
       end
 
-      WEBPACKER_SETUP_UJS = <<~JS
+      SHAKAPACKER_SETUP_UJS = <<~JS
         // Support component names relative to this directory:
         var componentRequireContext = require.context("components", true);
         var ReactRailsUJS = require("react_ujs");
         ReactRailsUJS.useContext(componentRequireContext);
       JS
 
-      def setup_react_webpacker
+      def setup_react_shakapacker
         `yarn add react_ujs`
         if manifest.exist?
-          append_file(manifest, WEBPACKER_SETUP_UJS)
+          append_file(manifest, SHAKAPACKER_SETUP_UJS)
         else
-          create_file(manifest, WEBPACKER_SETUP_UJS)
+          create_file(manifest, SHAKAPACKER_SETUP_UJS)
         end
       end
 
-      def webpack_source_path
-        if Webpacker.respond_to?(:config)
-          Webpacker.config.source_entry_path # Webpacker >3
-        else
-          Webpacker::Configuration.source_path.join(Webpacker::Configuration.entry_path) # Webpacker <3
-        end
-      end
+      private
 
-      def reloaded_webpacker_config
-        Webpacker.instance.instance_variable_set(:@config, nil)
-        Webpacker.config
+      def shakapacker_source_path
+        Shakapacker.config.source_entry_path
       end
     end
   end

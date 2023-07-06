@@ -6,7 +6,7 @@ module React
       source_root File.expand_path "../templates", __dir__
       desc <<-DESC.strip_heredoc
       Description:
-          Scaffold a React component into `components/` of your Webpacker source or asset pipeline.
+          Scaffold a React component into `components/` of your Shakapacker source or asset pipeline.
           The generated component will include a basic render function and a PropTypes
           hash to help with development.
 
@@ -125,8 +125,8 @@ module React
 
       def create_component_file
         template_extension = detect_template_extension
-        # Prefer webpacker to sprockets:
-        if webpacker?
+        # Prefer Shakapacker to Sprockets:
+        if shakapacker?
           new_file_name = file_name.camelize
           extension = if options[:coffee]
                         "coffee"
@@ -152,7 +152,7 @@ module React
       private
 
       def webpack_configuration
-        Webpacker.respond_to?(:config) ? Webpacker.config : Webpacker::Configuration
+        Shakapacker.respond_to?(:config) ? Shakapacker.config : Shakapacker::Configuration
       end
 
       def component_name
@@ -160,25 +160,28 @@ module React
       end
 
       def file_header
-        if webpacker?
+        if shakapacker?
           return %(import * as React from "react"\n) if options[:ts]
 
-          %(import React from "react"\nimport PropTypes from "prop-types"\n)
+          <<~JS
+            import React from "react"
+            import PropTypes from "prop-types"
+          JS
         else
           ""
         end
       end
 
       def file_footer
-        if webpacker?
+        if shakapacker?
           %(export default #{component_name})
         else
           ""
         end
       end
 
-      def webpacker?
-        defined?(Webpacker)
+      def shakapacker?
+        defined?(Shakapacker)
       end
 
       def parse_attributes!
