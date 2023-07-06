@@ -96,7 +96,7 @@ $ cd my-app
 2. Install `shakapacker`:
 ```bash
 $ bundle add shakapacker --strict
-$ rails webpacker:install
+$ rails shakapacker:install # or `rails webpacker:install` for Shakapacker v6
 ```
 
 3. Install `react` and some other required npm packages:
@@ -166,7 +166,7 @@ Output: greeting: Hello from react-rails", inspect webpage in your browser to se
 In order to run dev server with HMR feature you need to parallely run:
 
 ```bash
-$ ./bin/webpacker-dev-server
+$ ./bin/shakapacker-dev-server # or ./bin/webpacker-dev-server for Shakapacker 6
 ```
 
 Note: On Rails 6 you need to specify `webpack-dev-server` host. To this end, update `config/initializers/content_security_policy.rb` and uncomment relevant lines.
