@@ -10,12 +10,12 @@ Changes since last non-beta release.
 _Please add entries here for your pull requests that are not yet released._
 
 ### Breaking Changes
-- Remove support & testing for Webpacker 3/4.
-- Add support & testing for Shakapacker
-- Requires separate compilations for server & client bundles (see [Webpack config](https://github.com/reactjs/react-rails/tree/master/test/dummy/config/webpack))
-- Replaces WebpackManifestContainer, which searched for assets in the webpack manifest, with SeparateServerBundleContainer, which expects a single server bundle file & does not use the webpack manifest at all.
-- All in one PR! #1274
-- Drop Shakapacker 6 support in favor of Shakapacker 7 #1285
+- Remove support & testing for Webpacker 3 and 4 #1274
+- Requires separate compilations for server & client bundles (see [Webpack config](https://github.com/reactjs/react-rails/tree/master/test/dummy/config/webpack)) #1274
+- Replaces WebpackManifestContainer, which searched for assets in the webpack manifest, with SeparateServerBundleContainer, which expects a single server bundle file & does not use the webpack manifest at all. #1274
+
+### Added
+- Add support & testing for Shakapacker 7 #1274 and #1285
 
 #### Changed
 - The `react:component` generator now generates a function component by default #1271
