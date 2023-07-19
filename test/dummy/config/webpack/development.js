@@ -1,7 +1,6 @@
-const path = require('path')
 const { devServer, inliningCss } = require('shakapacker')
 
-const webpackConfig = require('./ServerClientOrBoth')
+const webpackConfig = require('./serverClientOrBoth')
 
 const developmentEnvOnly = (clientWebpackConfig, serverWebpackConfig) => {
 
