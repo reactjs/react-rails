@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Override setting set in application.rb
 class CustomComponentMount < React::Rails::ComponentMount
 end
@@ -10,4 +12,3 @@ Dummy::Application.configure do
                                               "app/javascript",
                                               "app/pants"]
 end
-

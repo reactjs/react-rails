@@ -103,11 +103,9 @@ GEM
     matrix (0.4.2)
     method_source (1.0.0)
     mini_mime (1.0.2)
-    mini_portile2 (2.8.1)
     minitest (5.17.0)
     nenv (0.3.0)
-    nokogiri (1.14.3)
-      mini_portile2 (~> 2.8.0)
+    nokogiri (1.14.3-x86_64-darwin)
       racc (~> 1.4)
     nokogiri (1.14.3-x86_64-linux)
       racc (~> 1.4)
@@ -168,7 +166,7 @@ GEM
     zeitwerk (2.6.6)
 
 PLATFORMS
-  ruby
+  x86_64-darwin-20
   x86_64-linux
 
 DEPENDENCIES

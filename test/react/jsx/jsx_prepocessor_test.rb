@@ -1,18 +1,20 @@
-require 'test_helper'
+# frozen_string_literal: true
 
-SprocketsHelpers.when_available do
-  class JSXPreprocessorTest < ActiveSupport::TestCase
-    REQUIRED_JAVASCRIPT = 'var requirePlainJavascript = true;'
-    REQUIRED_COFFEESCRIPT =  'var requireCoffee; requireCoffee = true;'
-    REQUIRED_JSX = 'React.createElement("div", { className: "require-jsx" });'
-    OWN_JSX = 'React.createElement("div", { className: "le-javascript" });'
-    test 'executes //= require directives' do
-      require_parent = SprocketsHelpers.fetch_asset_body('require_test/jsx_preprocessor_test.js')
+require "test_helper"
 
-      assert_compiled_javascript_includes(require_parent, REQUIRED_JAVASCRIPT)
-      assert_compiled_javascript_includes(require_parent, REQUIRED_COFFEESCRIPT)
-      assert_compiled_javascript_includes(require_parent, REQUIRED_JSX)
-      assert_compiled_javascript_includes(require_parent, OWN_JSX)
+class JSXPreprocessorTest < ActiveSupport::TestCase
+  SprocketsHelpers.when_available do
+    required_javascript = "var requirePlainJavascript = true;"
+    required_coffeescript = "var requireCoffee; requireCoffee = true;"
+    required_jsx = 'React.createElement("div", { className: "require-jsx" });'
+    own_jsx = 'React.createElement("div", { className: "le-javascript" });'
+    test "executes //= require directives" do # rubocop:disable Minitest/MultipleAssertions
+      require_parent = SprocketsHelpers.fetch_asset_body("require_test/jsx_preprocessor_test.js")
+
+      assert_compiled_javascript_includes(require_parent, required_javascript)
+      assert_compiled_javascript_includes(require_parent, required_coffeescript)
+      assert_compiled_javascript_includes(require_parent, required_jsx)
+      assert_compiled_javascript_includes(require_parent, own_jsx)
     end
   end
 end

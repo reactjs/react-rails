@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module React
   module Rails
     # A renderer class suitable for `ActionController::Renderers`.
@@ -20,7 +22,7 @@ module React
 
       attr_accessor :output_buffer
 
-      def initialize(options={})
+      def initialize(options = {})
         controller = options[:controller]
         @__react_component_helper = controller.__react_component_helper
       end

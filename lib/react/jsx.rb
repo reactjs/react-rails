@@ -1,10 +1,12 @@
-require 'execjs'
-require 'react/jsx/processor'
-require 'react/jsx/template'
-require 'react/jsx/jsx_transformer'
-require 'react/jsx/babel_transformer'
-require 'react/jsx/sprockets_strategy'
-require 'rails'
+# frozen_string_literal: true
+
+require "execjs"
+require "react/jsx/processor"
+require "react/jsx/template"
+require "react/jsx/jsx_transformer"
+require "react/jsx/babel_transformer"
+require "react/jsx/sprockets_strategy"
+require "rails"
 
 module React
   module JSX

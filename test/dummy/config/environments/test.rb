@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Dummy::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
@@ -9,9 +11,7 @@ Dummy::Application.configure do
   # we need this to reload the jsx transformer when different version is dropped in
   config.cache_classes = false
   config.reload_plugins = true
-  if SprocketsHelpers.available?
-    config.assets.cache_store = :null_store
-  end
+  config.assets.cache_store = :null_store if SprocketsHelpers.available?
 
   # Do not eager load code on boot. This avoids loading your whole application
   # just for the purpose of running a single test. If you are using a tool that

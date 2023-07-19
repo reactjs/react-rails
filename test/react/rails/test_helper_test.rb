@@ -1,12 +1,15 @@
-require 'test_helper'
+# frozen_string_literal: true
+
+require "test_helper"
 
 class TestHelperTest < ActionDispatch::IntegrationTest
   setup do
     WebpackerHelpers.compile_if_missing
   end
 
-  test 'assert_react_component' do
+  test "assert_react_component" do # rubocop:disable Minitest/MultipleAssertions
     get "/pages/1"
+
     assert_equal 200, response.status
     assert_react_component "GreetingMessage"
     assert_react_component "GreetingMessage" do |props|

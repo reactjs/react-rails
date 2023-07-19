@@ -1,45 +1,47 @@
+# frozen_string_literal: true
+
 module React
   module Generators
     class InstallGenerator < ::Rails::Generators::Base
-      source_root File.expand_path '../../templates', __FILE__
+      source_root File.expand_path "../templates", __dir__
 
-      desc 'Create default react.js folder layout and prep application.js'
+      desc "Create default react.js folder layout and prep application.js"
 
       class_option :skip_git,
-        type: :boolean,
-        aliases: '-g',
-        default: false,
-        desc: 'Skip Git keeps'
+                   type: :boolean,
+                   aliases: "-g",
+                   default: false,
+                   desc: "Skip Git keeps"
 
       class_option :skip_server_rendering,
-        type: :boolean,
-        default: false,
-        desc: "Don't generate server_rendering.js or config/initializers/react_server_rendering.rb"
+                   type: :boolean,
+                   default: false,
+                   desc: "Don't generate server_rendering.js or config/initializers/react_server_rendering.rb"
 
       # For Shakapacker below version 7, we need to set relative path for source_entry_path
       def modify_webpacker_yml
-        webpacker_yml_path = 'config/webpacker.yml'
-        if webpacker? && Pathname.new(webpacker_yml_path).exist?
-          gsub_file(
-            webpacker_yml_path,
-            "source_entry_path: /\n",
-            "source_entry_path: packs\n"
-          )
-          reloaded_webpacker_config
-        end
+        webpacker_yml_path = "config/webpacker.yml"
+        return unless webpacker? && Pathname.new(webpacker_yml_path).exist?
+
+        gsub_file(
+          webpacker_yml_path,
+          "source_entry_path: /\n",
+          "source_entry_path: packs\n"
+        )
+        reloaded_webpacker_config
       end
 
       # Make an empty `components/` directory in the right place:
       def create_directory
         components_dir = if webpacker?
-          Pathname.new(javascript_dir).parent.to_s
-        else
-          javascript_dir
-        end
-        empty_directory File.join(components_dir, 'components')
-        unless options[:skip_git]
-          create_file File.join(components_dir, 'components/.keep')
-        end
+                           Pathname.new(javascript_dir).parent.to_s
+                         else
+                           javascript_dir
+                         end
+        empty_directory File.join(components_dir, "components")
+        return if options[:skip_git]
+
+        create_file File.join(components_dir, "components/.keep")
       end
 
       # Add requires, setup UJS
@@ -53,15 +55,15 @@ module React
 
       def create_server_rendering
         if options[:skip_server_rendering]
-          return
+          nil
         elsif webpacker?
-          ssr_manifest_path = File.join(javascript_dir, 'server_rendering.js')
-          template('server_rendering_pack.js', ssr_manifest_path)
+          ssr_manifest_path = File.join(javascript_dir, "server_rendering.js")
+          template("server_rendering_pack.js", ssr_manifest_path)
         else
-          ssr_manifest_path = File.join(javascript_dir, 'server_rendering.js')
-          template('server_rendering.js', ssr_manifest_path)
-          initializer_path = 'config/initializers/react_server_rendering.rb'
-          template('react_server_rendering.rb', initializer_path)
+          ssr_manifest_path = File.join(javascript_dir, "server_rendering.js")
+          template("server_rendering.js", ssr_manifest_path)
+          initializer_path = "config/initializers/react_server_rendering.rb"
+          template("react_server_rendering.rb", initializer_path)
         end
       end
 
@@ -77,12 +79,12 @@ module React
             .relative_path_from(::Rails.root)
             .to_s
         else
-          'app/assets/javascripts'
+          "app/assets/javascripts"
         end
       end
 
       def manifest
-        Pathname.new(destination_root).join(javascript_dir, 'application.js')
+        Pathname.new(destination_root).join(javascript_dir, "application.js")
       end
 
       def setup_react_sprockets
@@ -91,9 +93,9 @@ module React
         if manifest.exist?
           manifest_contents = File.read(manifest)
 
-          if match = manifest_contents.match(/\/\/=\s+require\s+turbolinks\s+\n/)
+          if (match = manifest_contents.match(%r{//=\s+require\s+turbolinks\s+\n}))
             inject_into_file manifest, require_react, { after: match[0] }
-          elsif match = manifest_contents.match(/\/\/=\s+require_tree[^\n]*/)
+          elsif (match = manifest_contents.match(%r{//=\s+require_tree[^\n]*}))
             inject_into_file manifest, require_react, { before: match[0] }
           else
             append_file manifest, require_react
@@ -103,16 +105,16 @@ module React
         end
 
         components_js = "//= require_tree ./components\n"
-        components_file = File.join(javascript_dir, 'components.js')
+        components_file = File.join(javascript_dir, "components.js")
         create_file components_file, components_js
       end
 
-      WEBPACKER_SETUP_UJS = <<-JS
-// Support component names relative to this directory:
-var componentRequireContext = require.context("components", true);
-var ReactRailsUJS = require("react_ujs");
-ReactRailsUJS.useContext(componentRequireContext);
-JS
+      WEBPACKER_SETUP_UJS = <<~JS
+        // Support component names relative to this directory:
+        var componentRequireContext = require.context("components", true);
+        var ReactRailsUJS = require("react_ujs");
+        ReactRailsUJS.useContext(componentRequireContext);
+      JS
 
       def setup_react_webpacker
         `yarn add react_ujs`
@@ -122,8 +124,6 @@ JS
           create_file(manifest, WEBPACKER_SETUP_UJS)
         end
       end
-
-      private
 
       def webpack_source_path
         if Webpacker.respond_to?(:config)

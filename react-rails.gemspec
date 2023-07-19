@@ -30,6 +30,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'test-unit', '~> 2.5'
   s.add_development_dependency 'pry-byebug'
 
+
   s.add_dependency 'connection_pool'
   s.add_dependency 'execjs'
   s.add_dependency 'railties', '>= 3.2'
