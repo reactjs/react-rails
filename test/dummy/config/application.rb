@@ -5,7 +5,6 @@ require File.expand_path("boot", __dir__)
 # Pick the frameworks you want:
 # require "active_record/railtie"
 require "action_controller/railtie"
-require "action_mailer/railtie"
 
 # Test no-sprockets environment by testing the gemfile name
 require "sprockets/railtie" if SprocketsHelpers.available?
