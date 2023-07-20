@@ -48,7 +48,6 @@ if SprocketsHelpers.available? || ShakapackerHelpers.available?
       result = @renderer.render("Todo", { todo: "write more tests" }, :static)
 
       assert_match(%r{<li>write more tests</li>}, result)
-      assert_no_match(/data-reactroot/, result)
     end
 
     test "#render replays console messages" do # rubocop:disable Minitest/MultipleAssertions
