@@ -715,7 +715,7 @@ ButtonComponent.propTypes = {
 export default ButtonComponent
 ```
 
-**Note:** In a Webpacker project, es6 template is the default template in the generator.
+**Note:** In a Shakapacker project, es6 template is the default template in the generator.
 
 Accepted PropTypes are:
 
