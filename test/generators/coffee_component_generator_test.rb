@@ -18,7 +18,7 @@ class CoffeeComponentGeneratorTest < Rails::Generators::TestCase
 
       es6 = File.read(File.join(destination_root, "app/javascript/components/GeneratedComponent.js"))
 
-      assert_match(/extends React.Component/, es6)
+      assert_match(/const GeneratedComponent = \(props\) => {/, es6)
     end
   else
     def filename
