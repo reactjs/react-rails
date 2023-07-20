@@ -16,13 +16,13 @@ _Please add entries here for your pull requests that are not yet released._
 - Replaces WebpackManifestContainer, which searched for assets in the webpack manifest, with SeparateServerBundleContainer, which expects a single server bundle file & does not use the webpack manifest at all.
 - All in one PR! #1274
 
+#### Changed
+- The `react:component` generator now generates a function component by default #1271
+
 ## [2.7.1] - 2023-05-19
 
 #### Bug Fixes
 - Fix ReactDomClient initialization error during SSR. #1278
-
-#### Changed
-- The `react:component` generator now generates a function component by default #1271
 
 ## [2.7.0] - 2023-05-06
 
