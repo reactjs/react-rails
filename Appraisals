@@ -14,12 +14,12 @@ appraise 'sprockets_3' do
   gem 'mini_racer', :platforms => :mri
 end
 
-appraise 'no_sprockets_shakapacker' do
+appraise 'shakapacker' do
   gem 'rails', '~> 7.0.x'
   gem 'shakapacker', '6.6.0'
 end
 
-appraise 'no_sprockets' do
+appraise 'base' do
   # Appraisal adds `turbolinks` to this gemfile because it is
   # present in `./Gemfile`.
   # But it causes this gemfile to break, so it must be removed

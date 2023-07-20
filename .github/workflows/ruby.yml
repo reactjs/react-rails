@@ -53,8 +53,8 @@ jobs:
         ruby: [2.7]
         gemfile:
           # These have shakapacker:
-          - no_sprockets
-          - no_sprockets_shakapacker
+          - base
+          - shakapacker
           # These don't have shakapacker:
           - sprockets_3
           - sprockets_4

@@ -9,7 +9,7 @@ module SprocketsHelpers
     # We also can't scan for defined?(Sprockets) because this is used to
     #   require Sprockets in the config/application.rb
     # !!Bundler.locked_gems.specs.find {|gem_spec| gem_spec.name == 'sprockets'}
-    !ENV.fetch("BUNDLE_GEMFILE", nil).include?("no_sprockets")
+    ENV.fetch("BUNDLE_GEMFILE", nil).include?("sprockets")
   end
 
   # The block depends on sprockets, don't run it if sprockets is missing
