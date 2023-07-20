@@ -19,7 +19,7 @@ class Es6ComponentGeneratorTest < Rails::Generators::TestCase
   end
 
   def component_name
-    'GeneratedComponent'
+    "GeneratedComponent"
   end
 
   test "uses es6 syntax" do

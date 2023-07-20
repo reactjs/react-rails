@@ -86,7 +86,7 @@ def expected_working_jsx
 end
 
 def expected_working_jsx_in_function_component
-  /\.createElement\(\s*\S*\.Fragment,\s*null,\s*\"Name:\s*\",\s*props\.name,\s*\"Address:\s*\",\s*props\.address\s*\)/x
+  /\.createElement\(\s*\S*\.Fragment,\s*null,\s*"Name:\s*",\s*props\.name,\s*"Address:\s*",\s*props\.address\s*\)/x
 end
 
 module ParamsHelper
