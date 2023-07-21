@@ -258,7 +258,7 @@ module React
           "js.jsx.coffee"
         elsif options[:ts]
           "js.jsx.tsx"
-        elsif options[:es6] || webpacker?
+        elsif options[:es6] || shakapacker?
           "es6.jsx"
         else
           "js.jsx"
