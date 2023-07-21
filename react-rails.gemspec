@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.name = 'react-rails'
   s.version = React::Rails::VERSION
   s.summary = 'React integration for Ruby on Rails'
-  s.description = 'Render components in views or controller actions. Server-side rendering powered by ExecJS. Transform JSX in the asset pipeline or use Webpacker.'
+  s.description = 'Render components in views or controller actions. Server-side rendering powered by ExecJS. Transform JSX in the asset pipeline or use Shakapacker.'
   s.homepage = 'https://github.com/reactjs/react-rails'
   s.license = 'Apache-2.0'
 

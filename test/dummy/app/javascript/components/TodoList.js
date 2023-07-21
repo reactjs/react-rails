@@ -16,7 +16,7 @@ module.exports = createReactClass({
         {this.props.todos.map(function(todo, i) {
           return (<li key={i}>{todo}</li>)
         })}
-        <li>From Webpacker</li>
+        <li>From Shakapacker</li>
       </ul>
     )
   }
