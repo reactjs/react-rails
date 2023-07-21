@@ -38,7 +38,6 @@ class ComponentGeneratorTest < Rails::Generators::TestCase
   end
 
   test "creates the component file in a subdirectory" do
-    puts ShakapackerHelpers.available?
     run_generator %w[generated_folder/GeneratedComponent]
     assert_file filename_with_subfolder do |contents|
       if ShakapackerHelpers.available?
