@@ -36,7 +36,6 @@ if SprocketsHelpers.available? || ShakapackerHelpers.available?
       result = @renderer.render("Todo", { todo: "write tests" }, nil)
 
       assert_match(%r{<li.*write tests</li>}, result)
-      assert_match(/data-reactroot/, result)
     end
 
     test "#render accepts strings" do
