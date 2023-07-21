@@ -21,14 +21,14 @@ module React
       # Make an empty `components/` directory in the right place:
       def create_directory
         components_dir = if shakapacker?
-          Pathname.new(javascript_dir).parent.to_s
-        else
-          javascript_dir
-        end
-        empty_directory File.join(components_dir, 'components')
-        unless options[:skip_git]
-          create_file File.join(components_dir, 'components/.keep')
-        end
+                           Pathname.new(javascript_dir).parent.to_s
+                         else
+                           javascript_dir
+                         end
+        empty_directory File.join(components_dir, "components")
+        return if options[:skip_git]
+
+        create_file File.join(components_dir, "components/.keep")
       end
 
       # Add requires, setup UJS
@@ -42,10 +42,10 @@ module React
 
       def create_server_rendering
         if options[:skip_server_rendering]
-          return
+          nil
         elsif shakapacker?
-          ssr_manifest_path = File.join(javascript_dir, 'server_rendering.js')
-          template('server_rendering_pack.js', ssr_manifest_path)
+          ssr_manifest_path = File.join(javascript_dir, "server_rendering.js")
+          template("server_rendering_pack.js", ssr_manifest_path)
         else
           ssr_manifest_path = File.join(javascript_dir, "server_rendering.js")
           template("server_rendering.js", ssr_manifest_path)
@@ -111,8 +111,6 @@ module React
           create_file(manifest, SHAKAPACKER_SETUP_UJS)
         end
       end
-
-      private
 
       def shakapacker_source_path
         Shakapacker.config.source_entry_path

@@ -105,6 +105,7 @@ if SprocketsHelpers.available? || ShakapackerHelpers.available?
       test ".new accepts any filenames" do
         limited_renderer = React::ServerRendering::BundleRenderer.new(files: ["react-server.js", "react_ujs.js",
                                                                               "components/Todo.js"])
+
         assert_match(%r{get a real job</li>}, limited_renderer.render("Todo", { todo: "get a real job" }, nil))
         err = assert_raises React::ServerRendering::PrerenderError do
           limited_renderer.render("TodoList", { todos: [] }, nil)

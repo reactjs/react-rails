@@ -95,7 +95,7 @@ class ServerRenderedHtmlTest < ActionDispatch::IntegrationTest
       # Make sure console messages are replayed when requested
       React::ServerRendering.renderer_options = { replay_console: true }
       React::ServerRendering.reset_pool
-      get "/server/console_example" 
+      get "/server/console_example"
 
       assert_match(/Console Logged/, response.body)
       assert_match(/console.log.apply\(console, \["got initial state"\]\)/, response.body)
