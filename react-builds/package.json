@@ -5,8 +5,9 @@
   "main": "react.js",
   "dependencies": {
     "create-react-class": "^15.6.2",
-    "fastestsmallesttextencoderdecoder": "^1.0.22",
+    "fast-text-encoding": "^1.0.6",
     "immutability-helper": "^2.4.0",
+    "node-polyfill-webpack-plugin": "^2.0.1",
     "prop-types": "^15.6.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
