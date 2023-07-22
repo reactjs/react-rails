@@ -132,7 +132,9 @@ var ReactRailsUJS = {
         } else {
           const root = createReactRootLike(node)
           component = root.render(component);
-          this.roots.push({"node": node, "root": root}) =  if ReactDOM.createRoot
+          if(ReactDOM.createRoot) {
+            this.roots.push({"node": node, "root": root})
+          }
         }
       }
     }
