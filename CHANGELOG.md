@@ -11,18 +11,15 @@ _Please add entries here for your pull requests that are not yet released._
 
 ## Breaking Changes
 ### Removed
-- Support & testing for Webpacker 3/4.
-- WebpackManifestContainer, which searched for assets in the webpack manifest
+- Support & testing for Webpacker & Shakapacker v6. #1274
+- WebpackManifestContainer, which searched for assets in the webpack manifest. #1274
 ### Added
-- Support & testing for Shakapacker 7 #1274 and #1285
-- SeparateServerBundleContainer, which expects a single server bundle file & does not use the webpack manifest at all.
-### Usage
-- Requires separate compilations for server & client bundles (see [Webpack config](https://github.com/reactjs/react-rails/tree/master/test/dummy/config/webpack))
-- All in one PR! #1274
+- Support & testing for Shakapacker v7. #1274 and #1285
+- SeparateServerBundleContainer, which expects a single server bundle file & does not use the webpack manifest at all. #1274
 ### Dependencies
 - Upgrades React-Rails' embedded react to v18.2.0. Uses node polyfill plugin & fast-text-encoder for SSR text encoding. #1290
-
 #### Changed
+- Requires separate compilations for server & client bundles (see [Webpack config](https://github.com/reactjs/react-rails/tree/master/test/dummy/config/webpack)). #1274
 - The `react:component` generator now generates a function component by default #1271
 
 ## [2.7.1] - 2023-05-19
