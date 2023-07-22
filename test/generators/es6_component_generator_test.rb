@@ -8,7 +8,7 @@ class Es6ComponentGeneratorTest < Rails::Generators::TestCase
   setup :prepare_destination
   tests React::Generators::ComponentGenerator
 
-  if WebpackerHelpers.available?
+  if ShakapackerHelpers.available?
     def filename
       "app/javascript/components/GeneratedComponent.js"
     end

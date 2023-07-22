@@ -227,7 +227,7 @@ GEM
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
     semantic_range (3.0.0)
-    shakapacker (6.6.0)
+    shakapacker (7.0.2)
       activesupport (>= 5.2)
       rack-proxy (>= 0.6.1)
       railties (>= 5.2)
@@ -276,7 +276,7 @@ DEPENDENCIES
   rails (~> 7.0.x)
   react-rails!
   selenium-webdriver
-  shakapacker (= 6.6.0)
+  shakapacker (= 7.0.2)
   test-unit (~> 2.5)
   webdrivers
 

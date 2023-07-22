@@ -3,6 +3,6 @@
 source "http://rubygems.org"
 
 gem "rails", "~> 7.0.x"
-gem "shakapacker", "6.6.0"
+gem "shakapacker", "7.0.2"
 
 gemspec path: "../"

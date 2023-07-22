@@ -1,15 +1,15 @@
 # frozen_string_literal: true
 
-module WebpackerHelpers
+module ShakapackerHelpers
   PACKS_DIRECTORY = File.expand_path("../../#{DUMMY_LOCATION}/public/packs", __FILE__)
 
   module_function
 
   def available?
-    !!defined?(Webpacker)
+    !!defined?(Shakapacker)
   end
 
-  def when_webpacker_available
+  def when_shakapacker_available
     return unless available?
 
     yield
@@ -18,10 +18,10 @@ module WebpackerHelpers
   def compile
     return unless available?
 
-    clear_webpacker_packs
+    clear_shakapacker_packs
     Dir.chdir("./test/#{DUMMY_LOCATION}") do
-      Rake::Task["webpacker:compile"].reenable
-      Rake::Task["webpacker:compile"].invoke
+      Rake::Task["shakapacker:compile"].reenable
+      Rake::Task["shakapacker:compile"].invoke
     end
     # Reload cached JSON manifest:
     manifest_refresh
@@ -33,7 +33,7 @@ module WebpackerHelpers
     compile
   end
 
-  def clear_webpacker_packs
+  def clear_shakapacker_packs
     FileUtils.rm_rf(PACKS_DIRECTORY)
   end
 
@@ -46,7 +46,7 @@ module WebpackerHelpers
 
     # Start the server in a forked process:
     Dir.chdir("test/#{DUMMY_LOCATION}") do
-      spawn "RAILS_ENV=development ./bin/webpacker-dev-server"
+      spawn "RAILS_ENV=development ./bin/shakapacker-dev-server"
     end
 
     stop_time = Time.now + 30.seconds
@@ -83,16 +83,16 @@ module WebpackerHelpers
     end
 
     # Remove the dev-server packs:
-    WebpackerHelpers.clear_webpacker_packs
+    ShakapackerHelpers.clear_shakapacker_packs
     ENV["NODE_ENV"] = old_env
     puts "Killed."
   end
 
   def dev_server_running?
-    Webpacker.instance.instance_variable_set(:@config, nil)
-    return false unless Webpacker.dev_server.running?
+    Shakapacker.instance.instance_variable_set(:@config, nil)
+    return false unless Shakapacker.dev_server.running?
 
-    ds = Webpacker.dev_server
+    ds = Shakapacker.dev_server
     example_asset_path = manifest_data.values.first
     return false unless example_asset_path
 
@@ -109,14 +109,14 @@ module WebpackerHelpers
   end
 
   def manifest_refresh
-    Webpacker.manifest.refresh
+    Shakapacker.manifest.refresh
   end
 
   def manifest_lookup
-    Webpacker.manifest
+    Shakapacker.manifest
   end
 
   def manifest_data
-    Webpacker.manifest.refresh
+    Shakapacker.manifest.refresh
   end
 end

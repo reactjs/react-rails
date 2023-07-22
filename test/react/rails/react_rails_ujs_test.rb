@@ -6,7 +6,7 @@ class ReactRailsUJSTest < ActionDispatch::IntegrationTest
   SprocketsHelpers.when_available do
     include Capybara::DSL
 
-    # Normalize for webpacker check:
+    # Normalize for shakapacker check:
     def assert_greeting(page, greeting)
       assert page.has_content?(greeting), <<~MSG
         #{page.body}

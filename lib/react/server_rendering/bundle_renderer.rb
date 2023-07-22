@@ -8,7 +8,7 @@ require "react/server_rendering/separate_server_bundle_container"
 module React
   module ServerRendering
     # Extends ExecJSRenderer for the Rails environment
-    # - fetches JS code from the Rails app (webpacker or sprockets)
+    # - fetches JS code from the Rails app (Shakapacker or Sprockets)
     # - stringifies props
     # - implements console replay
     class BundleRenderer < ExecJSRenderer

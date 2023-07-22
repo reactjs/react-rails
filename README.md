@@ -12,7 +12,7 @@ For version 2.7 documentation checkout [2.7-stable](https://github.com/reactjs/r
 ## Summary
 React-Rails is a flexible tool to use [React](http://facebook.github.io/react/) with Rails. The benefits:
 * Automatically renders React server-side and client-side
-* Supports [Shakapacker](https://github.com/shakacode/shakapacker) v6.x
+* Supports [Shakapacker](https://github.com/shakacode/shakapacker) v7
 * Supports Sprockets 4.x, 3.x
 * Lets you use [JSX](http://facebook.github.io/react/docs/jsx-in-depth.html), [ES6](http://es6-features.org/), [TypeScript](https://www.typescriptlang.org/), [CoffeeScript](http://coffeescript.org/)
 
@@ -92,20 +92,20 @@ _Alternatively, get started with [Sprockets](#use-with-asset-pipeline)_
 Prevent installing default javascript dependencies by using `--skip-javascript` option:
 
 ```bash
-$ rails new my-app --skip-javascript
-$ cd my-app
+rails new my-app --skip-javascript
+cd my-app
 ```
 
 2. Install `shakapacker`:
 ```bash
-$ bundle add shakapacker --strict
-$ rails webpacker:install
+bundle add shakapacker --strict
+rails shakapacker:install
 ```
 
 3. Install `react` and some other required npm packages:
 ```bash
-$ yarn add react react-dom @babel/preset-react prop-types \
-  css-loader style-loader mini-css-extract-plugin css-minimizer-webpack-plugin
+yarn add react react-dom @babel/preset-react prop-types \
+     css-loader style-loader mini-css-extract-plugin css-minimizer-webpack-plugin
 ```
 
 Also update the Babel configuration in the `package.json` file:
@@ -169,7 +169,7 @@ Output: greeting: Hello from react-rails", inspect webpage in your browser to se
 In order to run dev server with HMR feature you need to parallely run:
 
 ```bash
-$ ./bin/webpacker-dev-server
+$ ./bin/shakapacker-dev-server
 ```
 
 Note: On Rails 6 you need to specify `webpack-dev-server` host. To this end, update `config/initializers/content_security_policy.rb` and uncomment relevant lines.
@@ -780,7 +780,7 @@ For example, to change the [ES6 Component template](https://github.com/reactjs/r
 
 ### 2.7 to 3.0
 - Keep your `react_ujs` up to date: `yarn upgrade`
-- **Drop support for Webpacker:** Before any ReactRails upgrade, make sure upgrading from Webpacker to Shakapacker 6.x.
+- **Drop support for Webpacker:** Before any ReactRails upgrade, make sure upgrading from Webpacker to Shakapacker 7. For more information check out Shakapacker  
 - **SSR:** ReactRails 3.x requires separate compilations for server & client bundles. See [Webpack config](https://github.com/reactjs/react-rails/tree/master/test/dummy/config/webpack) directory in the dummy app to addapt the new implementation.
 
 ### 2.3 to 2.4

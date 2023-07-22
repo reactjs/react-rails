@@ -2,7 +2,7 @@
 <html>
 <head>
   <title>Dummy</title>
-  <% if WebpackerHelpers.available? %>
+  <% if ShakapackerHelpers.available? %>
     <%= javascript_include_tag "turbolinks_only", "data-turbolinks-track" => true %>
     <%= javascript_pack_tag "application" %>
   <% elsif SprocketsHelpers.available? %>

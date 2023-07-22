@@ -17,7 +17,7 @@ module.exports = createReactClass({
   },
   render: function() {
     return React.createElement('div', {},
-      React.createElement('div', {}, this.state.greeting, ' from Webpacker ', this.props.name ),
+      React.createElement('div', {}, this.state.greeting, ' from Shakapacker ', this.props.name ),
       React.createElement('button', {onClick: this.goodbye}, 'Goodbye')
     );
   }

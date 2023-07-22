@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class PagesController < ApplicationController
-  per_request_react_rails_prerenderer if WebpackerHelpers.available? || SprocketsHelpers.available?
+  per_request_react_rails_prerenderer if ShakapackerHelpers.available? || SprocketsHelpers.available?
 
   def show
     @prerender = !params[:prerender].nil?

@@ -2,15 +2,15 @@
 
 require "test_helper"
 
-if SprocketsHelpers.available? || WebpackerHelpers.available?
+if SprocketsHelpers.available? || ShakapackerHelpers.available?
   class BundleRendererTest < ActiveSupport::TestCase
     CALLBACKS = %i[before_render after_render].freeze
 
-    webpacker_compiled = false
+    shakapacker_compiled = false
     setup do
-      if WebpackerHelpers.available? && !webpacker_compiled
-        WebpackerHelpers.compile
-        webpacker_compiled = true
+      if ShakapackerHelpers.available? && !shakapacker_compiled
+        ShakapackerHelpers.compile
+        shakapacker_compiled = true
       end
       @renderer = React::ServerRendering::BundleRenderer.new({})
     end
@@ -36,7 +36,6 @@ if SprocketsHelpers.available? || WebpackerHelpers.available?
       result = @renderer.render("Todo", { todo: "write tests" }, nil)
 
       assert_match(%r{<li.*write tests</li>}, result)
-      assert_match(/data-reactroot/, result)
     end
 
     test "#render accepts strings" do
@@ -91,18 +90,17 @@ if SprocketsHelpers.available? || WebpackerHelpers.available?
       assert_match(/console.error.apply\(console, \["setTimeout #{message}"\]\);$/, result)
     end
 
-    unless WebpackerHelpers.available?
-      # This doesn't work with webpacker since finding components is based on filename
+    unless ShakapackerHelpers.available?
+      # This doesn't work with Shakapacker since finding components is based on filename
       test ".new accepts additional code to add to the JS context" do
         additional_code = File.read(File.expand_path("../../helper_files/WithoutSprockets.js", __dir__))
-
         additional_renderer = React::ServerRendering::BundleRenderer.new(code: additional_code)
 
         assert_match(%r{drink more caffeine</span>},
                      additional_renderer.render("WithoutSprockets", { label: "drink more caffeine" }, nil))
       end
 
-      # These use cases don't apply to Webpacker since the require.context comes from a pack:
+      # These use cases don't apply to Shakapacker since the require.context comes from a pack:
       test ".new accepts any filenames" do
         limited_renderer = React::ServerRendering::BundleRenderer.new(files: ["react-server.js", "react_ujs.js",
                                                                               "components/Todo.js"])

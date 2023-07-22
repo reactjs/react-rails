@@ -4,7 +4,7 @@ require "test_helper"
 
 class TestHelperTest < ActionDispatch::IntegrationTest
   setup do
-    WebpackerHelpers.compile_if_missing
+    ShakapackerHelpers.compile_if_missing
   end
 
   test "assert_react_component" do # rubocop:disable Minitest/MultipleAssertions

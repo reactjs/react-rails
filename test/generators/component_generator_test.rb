@@ -8,7 +8,7 @@ class ComponentGeneratorTest < Rails::Generators::TestCase
   setup :prepare_destination
   tests React::Generators::ComponentGenerator
 
-  if WebpackerHelpers.available?
+  if ShakapackerHelpers.available?
     def filename
       "app/javascript/components/GeneratedComponent.js"
     end
@@ -30,7 +30,7 @@ class ComponentGeneratorTest < Rails::Generators::TestCase
     run_generator %w[GeneratedComponent]
 
     assert_file filename do |contents|
-      if WebpackerHelpers.available?
+      if ShakapackerHelpers.available?
         assert_match(/^import React from "react"/, contents)
         assert_match(/export default GeneratedComponent\n$/m, contents)
       end
@@ -38,10 +38,9 @@ class ComponentGeneratorTest < Rails::Generators::TestCase
   end
 
   test "creates the component file in a subdirectory" do
-    puts WebpackerHelpers.available?
     run_generator %w[generated_folder/GeneratedComponent]
     assert_file filename_with_subfolder do |contents|
-      if WebpackerHelpers.available?
+      if ShakapackerHelpers.available?
         assert_match(/^import React from "react"/, contents)
         assert_match(/export default GeneratedComponent\n$/m, contents)
       end
