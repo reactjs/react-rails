@@ -7,7 +7,8 @@ var constructorFromGlobal = require("./src/getConstructor/fromGlobal")
 var constructorFromRequireContext = require("./src/getConstructor/fromRequireContext")
 var constructorFromRequireContextWithGlobalFallback = require("./src/getConstructor/fromRequireContextWithGlobalFallback")
 var constructorFromRequireContextsWithGlobalFallback = require("./src/getConstructor/fromRequireContextsWithGlobalFallback")
-const { supportsHydration, reactHydrate, createReactRootLike } = require("./src/renderHelpers")
+var { supportsHydration, reactHydrate, createReactRootLike } = require("./src/renderHelpers")
+var supportsRootApi = require("./src/supportsRootApi")
 
 var ReactRailsUJS = {
   // This attribute holds the name of component which should be mounted
@@ -132,7 +133,7 @@ var ReactRailsUJS = {
         } else {
           const root = createReactRootLike(node)
           component = root.render(component);
-          if(ReactDOM.createRoot) {
+          if(supportsRootApi) {
             this.roots.push({"node": node, "root": root})
           }
         }
@@ -147,7 +148,11 @@ var ReactRailsUJS = {
 
     for (var i = 0; i < nodes.length; ++i) {
       var node = nodes[i];
-      ReactDOM.createRoot ? this.unmountRoot(node) : ReactDOM.unmountComponentAtNode(node);
+      if(supportsRootApi) {
+        this.unmountRoot(node)
+      } else {
+        ReactDOM.unmountComponentAtNode(node);
+      }
     }
   },
 
@@ -160,13 +165,18 @@ var ReactRailsUJS = {
   },
 
   unmountRoot: function(node) {
-    var targetRoots = this.roots.filter(function(rootElement) {return rootElement["node"] && (rootElement["node"] === node)})
-    targetRoots.forEach(function(rootElement) {
-      rootElement["root"].unmount();
-      rootElement["root"] = null;
-      rootElement["node"] = null;
-      return undefined;
-    });
+    var targetRoots = this.roots.filter(
+      function(rootElement) {
+        return rootElement["node"] && (rootElement["node"] === node)
+      }
+    )
+    targetRoots.forEach(
+      function(rootElement) {
+        rootElement["root"].unmount();
+        rootElement["root"] = null;
+        rootElement["node"] = null;
+      }
+    )
   }
 }
 
