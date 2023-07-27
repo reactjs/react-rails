@@ -24,7 +24,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'guard-minitest'
   s.add_development_dependency 'jbuilder'
   s.add_development_dependency 'listen', '~> 3.0.0'
-  s.add_development_dependency 'webdrivers'
   s.add_development_dependency 'capybara'
   s.add_development_dependency 'selenium-webdriver'
   s.add_development_dependency 'test-unit', '~> 2.5'

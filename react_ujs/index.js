@@ -7,7 +7,8 @@ var constructorFromGlobal = require("./src/getConstructor/fromGlobal")
 var constructorFromRequireContext = require("./src/getConstructor/fromRequireContext")
 var constructorFromRequireContextWithGlobalFallback = require("./src/getConstructor/fromRequireContextWithGlobalFallback")
 var constructorFromRequireContextsWithGlobalFallback = require("./src/getConstructor/fromRequireContextsWithGlobalFallback")
-const { supportsHydration, reactHydrate, createReactRootLike } = require("./src/renderHelpers")
+var { supportsHydration, reactHydrate, createReactRootLike } = require("./src/renderHelpers")
+var supportsRootApi = require("./src/supportsRootApi")
 
 var ReactRailsUJS = {
   // This attribute holds the name of component which should be mounted
@@ -30,6 +31,7 @@ var ReactRailsUJS = {
   jQuery: (typeof window !== 'undefined') && (typeof window.jQuery !== 'undefined') && window.jQuery,
 
   components: {},
+  roots: [],
 
   // helper method for the mount and unmount methods to find the
   // `data-react-class` DOM elements
@@ -131,6 +133,9 @@ var ReactRailsUJS = {
         } else {
           const root = createReactRootLike(node)
           component = root.render(component);
+          if(supportsRootApi) {
+            this.roots.push({"node": node, "root": root})
+          }
         }
       }
     }
@@ -143,7 +148,11 @@ var ReactRailsUJS = {
 
     for (var i = 0; i < nodes.length; ++i) {
       var node = nodes[i];
-      ReactDOM.unmountComponentAtNode(node);
+      if(supportsRootApi) {
+        this.unmountRoot(node)
+      } else {
+        ReactDOM.unmountComponentAtNode(node);
+      }
     }
   },
 
@@ -155,6 +164,20 @@ var ReactRailsUJS = {
     detectEvents(this)
   },
 
+  unmountRoot: function(node) {
+    var targetRoots = this.roots.filter(
+      function(rootElement) {
+        return rootElement["node"] && (rootElement["node"] === node)
+      }
+    )
+    targetRoots.forEach(
+      function(rootElement) {
+        rootElement["root"].unmount();
+        rootElement["root"] = null;
+        rootElement["node"] = null;
+      }
+    )
+  }
 }
 
 // These stable references are so that handlers can be added and removed:
@@ -170,7 +193,6 @@ ReactRailsUJS.handleUnmount = function(e) {
   if (e && e.target) {
     target = e.target;
   }
-  ReactRailsUJS.unmountComponents(target);
 }
 
 
