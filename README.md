@@ -855,6 +855,37 @@ With 5 Million+ downloads of the react-rails Gem and another 2 Million+ download
 
 By contributing to React-Rails, you agree to abide by the [code of conduct](https://github.com/reactjs/react-rails/blob/master/CODE_OF_CONDUCT.md).
 
-You can always help by submitting patches or triaging issues, even offering reproduction steps to issues is incredibly helpful!
+You can always help by submitting patches or triaging issues. Even offering reproduction steps to issues is incredibly helpful!
+
+# Supporters
+
+The following companies support the development of this and other open-source projects maintained by ShakaCode by providing licenses to the ShakaCode team. ShakaCode stands by the usefulness of these products!
+
+<br />
+<br />
+
+<a href="https://www.jetbrains.com">
+  <img src="https://user-images.githubusercontent.com/4244251/184881139-42e4076b-024b-4b30-8c60-c3cd0e758c0a.png" alt="JetBrains" height="120px">
+</a>
+<a href="https://scoutapp.com">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://user-images.githubusercontent.com/4244251/184881147-0d077438-3978-40da-ace9-4f650d2efe2e.png">
+    <source media="(prefers-color-scheme: light)" srcset="https://user-images.githubusercontent.com/4244251/184881152-9f2d8fba-88ac-4ba6-873b-22387f8711c5.png">
+    <img alt="ScoutAPM" src="https://user-images.githubusercontent.com/4244251/184881152-9f2d8fba-88ac-4ba6-873b-22387f8711c5.png" height="120px">
+  </picture>
+</a>
+<a href="https://controlplane.com">
+  <picture>
+    <img alt="Control Plane" src="https://github.com/shakacode/.github/assets/20628911/90babd87-62c4-4de3-baa4-3d78ef4bec25" height="120px">
+  </picture>
+</a>
+<br />
+<a href="https://www.browserstack.com">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://user-images.githubusercontent.com/4244251/184881122-407dcc29-df78-4b20-a9ad-f597b56f6cdb.png">
+    <source media="(prefers-color-scheme: light)" srcset="https://user-images.githubusercontent.com/4244251/184881129-e1edf4b7-3ae1-4ea8-9e6d-3595cf01609e.png">
+    <img alt="BrowserStack" src="https://user-images.githubusercontent.com/4244251/184881129-e1edf4b7-3ae1-4ea8-9e6d-3595cf01609e.png" height="55px">
+  </picture>
+</a>
 
 Please see our [Contribution guide](https://github.com/reactjs/react-rails/blob/master/CONTRIBUTING.md) for more info.
