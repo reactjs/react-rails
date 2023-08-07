@@ -12,6 +12,7 @@ module React
       config.react.jsx_transformer_class = nil # defaults to BabelTransformer
       config.react.camelize_props = false # pass in an underscored hash but get a camelized hash
       config.react.sprockets_strategy = nil # how to attach JSX to the asset pipeline (or `false` for none)
+      config.react.null_to_undefined_props = false # Set to true to convert null values in props into undefined
 
       # Server rendering:
       config.react.server_renderer_pool_size  = 1   # increase if you're on JRuby

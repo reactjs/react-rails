@@ -128,5 +128,23 @@ class ComponentMountTest < ActionDispatch::IntegrationTest
 
       assert_equal %(<div>rendered Foo with {&quot;ok&quot;:true}</div>), rendered_component
     end
+
+    test "#react_component sets null props to undefined when null_to_undefined_props set to true" do
+      app.config.react.null_to_undefined_props = true
+
+      @helper.setup(DummyController)
+      rendered_component = @helper.react_component("Foo", { bar: nil, content: 'bar":null,' })
+
+      assert_includes rendered_component, '&quot;bar&quot;:undefined,&quot;content&quot;:&quot;bar\\&quot;:null,&quot;'
+    end
+
+    test "#react_component passes null props as null when null_to_undefined_props set to false" do
+      app.config.react.null_to_undefined_props = false
+
+      @helper.setup(DummyController)
+      rendered_component = @helper.react_component("Foo", { bar: nil, content: 'bar":null,' })
+
+      assert_includes rendered_component, "&quot;bar&quot;:null,&quot;content&quot;:&quot;bar\\&quot;:null,&quot;"
+    end
   end
 end
