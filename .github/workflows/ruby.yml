@@ -20,6 +20,8 @@ jobs:
       matrix:
         ruby: [2.7]
     runs-on: ubuntu-latest
+    env:
+      PACKAGE_JSON_FALLBACK_MANAGER: yarn_classic
     steps:
       - uses: actions/checkout@v4
         with:

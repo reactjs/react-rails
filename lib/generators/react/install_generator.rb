@@ -103,8 +103,20 @@ module React
         ReactRailsUJS.useContext(componentRequireContext);
       JS
 
+      # TODO: replace with standard "require" call once gem is published
+      def require_package_json_gem
+        require "bundler/inline"
+
+        gemfile { gem "package_json", github: "G-Rath/package_json" }
+
+        puts "using package_json v#{PackageJson::VERSION}"
+      end
+
       def setup_react_shakapacker
-        `yarn add react_ujs`
+        require_package_json_gem
+
+        PackageJson.read.manager.add(["react_ujs"])
+
         if manifest.exist?
           append_file(manifest, SHAKAPACKER_SETUP_UJS)
         else
