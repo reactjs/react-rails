@@ -9,6 +9,8 @@ Changes since last non-beta release.
 
 _Please add entries here for your pull requests that are not yet released._
 
+## [3.0.0] - 2023-08-14
+
 ### Breaking Changes
 - Requires separate compilations for server & client bundles if using Shakapacker (see [Webpack config](https://github.com/reactjs/react-rails/tree/master/test/dummy/config/webpack)) #1274
 - Replaces WebpackManifestContainer, which searched for assets in the webpack manifest, with SeparateServerBundleContainer, which expects a single server bundle file & does not use the webpack manifest at all. #1274
@@ -555,6 +557,7 @@ _Please add entries here for your pull requests that are not yet released._
 - Server rendering with `prerender: true`
 - Transform `.jsx` in the asset pipeline
 
-[Unreleased]: https://github.com/reactjs/react-rails/compare/v2.7.1...master
+[Unreleased]: https://github.com/reactjs/react-rails/compare/v3.0.0...master
+[3.0.0]: https://github.com/shakacode/shakapacker/compare/v2.7.1...v3.0.0
 [2.7.1]: https://github.com/shakacode/shakapacker/compare/v2.7.0...v2.7.1
 [2.7.0]: https://github.com/shakacode/shakapacker/compare/v2.6.2...v2.7.0
