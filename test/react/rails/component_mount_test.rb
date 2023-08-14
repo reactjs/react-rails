@@ -178,8 +178,19 @@ class ComponentMountTest < ActionDispatch::IntegrationTest
     end
 
     test "#props_to_json doesnt converts null-like values in arrays to undefined with null_to_undefined: true option" do
-      props = { items1: "[null]", items2: "[1, null]", items3: "[null, 1]", items4: "[1, null, 2]" }
-      expected_json = '{"items1":"[null]","items2":"[1,null]","items3":"[null,1]","items4":"[1,null,2]"}'
+      props = {
+        items1: "[null]",
+        items2: "[1,null]",
+        items3: "[null,1]",
+        items4: "[1,null,2]",
+        items5: '["a",null]',
+        items6: '[null,"b"]',
+        items7: '["a",null,"b"]',
+        items8: '["a",nullx,"b"]'
+      }
+      expected_json = '{"items1":"[null]","items2":"[1,null]","items3":"[null,1]","items4":"[1,null,2]",' \
+                      '"items5":"[\"a\",null]","items6":"[null,\"b\"]","items7":"[\"a\",null,\"b\"]"' \
+                      ',"items8":"[\"a\",nullx,\"b\"]"}'
       component_mount = React::Rails::ComponentMount.new
 
       actual_json = component_mount.send(:props_to_json, props, { null_to_undefined: true })

@@ -76,7 +76,9 @@ module React
 
         # This regex matches key:value with null values while ensuing no string with similar
         # pattern gets matched. It doesn't include null values in arrays.
-        props.to_json.gsub(/([^\\]":)null([,}\]])/, '\1undefined\2')
+        props.to_json
+             .gsub(/([^\\]":)null([,}\]])/, '\1undefined\2') # match simple null values
+             .gsub(/([^\\]":(\[[^\\"]+,|\[))null([,\]])/, '\1undefined\3') # Match nulls in array
       end
 
       def rendered_tag(html_options, &block)
