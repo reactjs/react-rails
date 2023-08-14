@@ -56,7 +56,10 @@ module React
         unless prerender_options == :static
           html_options[:data].tap do |data|
             data[:react_class] = name
-            data[:react_props] = props_to_json(props)
+            data[:react_props] = props_to_json(
+              props,
+              null_to_undefined: Dummy::Application.config.react.null_to_undefined_props
+            )
             data[:hydrate] = "t" if prerender_options
 
             num_components = @cache_ids.count { |c| c.start_with? name }
@@ -67,9 +70,9 @@ module React
         html_options
       end
 
-      def props_to_json(props)
+      def props_to_json(props, options = { null_to_undefined: false })
         return props if props.is_a?(String)
-        return props.to_json unless Dummy::Application.config.react.null_to_undefined_props
+        return props.to_json unless options[:null_to_undefined]
 
         # This regex matches key:value with null values while ensuing no string with similar
         # pattern gets matched. It doesn't include null values in arrays.
