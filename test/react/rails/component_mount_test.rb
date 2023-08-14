@@ -197,5 +197,22 @@ class ComponentMountTest < ActionDispatch::IntegrationTest
 
       assert_equal(expected_json, actual_json)
     end
+
+    test "#props_to_json doesnt converts null values in nested arrays to undefined with null_to_undefined: true" do
+      props = {
+        items1: nil,
+        items2: [1, nil, 2],
+        items3: nil,
+        items4: "[1, null, 2]",
+        items5: nil
+      }
+      expected_json = '{"items1":undefined,"items2":[1,undefined,2],"items3":undefined,"items4":"[1, null, 2]"' \
+                      ',"items5":undefined}'
+      component_mount = React::Rails::ComponentMount.new
+
+      actual_json = component_mount.send(:props_to_json, props, { null_to_undefined: true })
+
+      assert_equal(expected_json, actual_json)
+    end
   end
 end
