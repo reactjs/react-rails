@@ -9,6 +9,9 @@ Changes since last non-beta release.
 
 _Please add entries here for your pull requests that are not yet released._
 
+#### Added
+- Added option to replace `null`s in props with `undefined` via `config.react.null_to_undefined_props` in `config/application.rb` #1293
+
 ## [3.0.0] - 2023-08-14
 
 ### Breaking Changes
@@ -16,9 +19,6 @@ _Please add entries here for your pull requests that are not yet released._
 - Replaces WebpackManifestContainer, which searched for assets in the webpack manifest, with SeparateServerBundleContainer, which expects a single server bundle file & does not use the webpack manifest at all. #1274
 - Upgrades React-Rails' embedded react to v18.2.0. Uses node polyfill plugin & fast-text-encoder for SSR text encoding. #1290
 - If using Webpacker/Shakapacker, requires upgrading to Shakapacker v7 #1274 and #1285
-
-#### Added
-- Added option to replace `null`s in props with `undefined` via `config.react.null_to_undefined_props` in `config/application.rb` #1293
 
 #### Changed
 - The `react:component` generator now generates a function component by default #1271
