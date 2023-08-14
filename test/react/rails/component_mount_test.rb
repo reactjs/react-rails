@@ -146,5 +146,45 @@ class ComponentMountTest < ActionDispatch::IntegrationTest
 
       assert_includes rendered_component, "&quot;bar&quot;:null,&quot;content&quot;:&quot;bar\\&quot;:null,&quot;"
     end
+
+    test "#props_to_json doesn't converts null values to undefined be default" do
+      props = { name: nil }
+      expected_json = '{"name":null}'
+      component_mount = React::Rails::ComponentMount.new
+
+      actual_json = component_mount.send(:props_to_json, props)
+
+      assert_equal(expected_json, actual_json)
+    end
+
+    test "#props_to_json converts null values to undefined with null_to_undefined: true option" do
+      props = { bar: nil, content: 'bar":null,' }
+      expected_json = '{"bar":undefined,"content":"bar\\":null,"}'
+      component_mount = React::Rails::ComponentMount.new
+
+      actual_json = component_mount.send(:props_to_json, props, { null_to_undefined: true })
+
+      assert_equal(expected_json, actual_json)
+    end
+
+    test "#props_to_json converts null values in arrays to undefined with null_to_undefined: true option" do
+      props = { items1: [nil], items2: [1, nil], items3: [nil, 1], items4: [1, nil, 2] }
+      expected_json = '{"items1":[undefined],"items2":[1,undefined],"items3":[undefined,1],"items4":[1,undefined,2]}'
+      component_mount = React::Rails::ComponentMount.new
+
+      actual_json = component_mount.send(:props_to_json, props, { null_to_undefined: true })
+
+      assert_equal(expected_json, actual_json)
+    end
+
+    test "#props_to_json doesnt converts null-like values in arrays to undefined with null_to_undefined: true option" do
+      props = { items1: "[null]", items2: "[1, null]", items3: "[null, 1]", items4: "[1, null, 2]" }
+      expected_json = '{"items1":"[null]","items2":"[1,null]","items3":"[null,1]","items4":"[1,null,2]"}'
+      component_mount = React::Rails::ComponentMount.new
+
+      actual_json = component_mount.send(:props_to_json, props, { null_to_undefined: true })
+
+      assert_equal(expected_json, actual_json)
+    end
   end
 end
