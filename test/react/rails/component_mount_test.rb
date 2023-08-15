@@ -2,6 +2,7 @@
 
 require "test_helper"
 
+# rubocop:disable Metrics/ClassLength
 class ComponentMountTest < ActionDispatch::IntegrationTest
   module DummyRenderer
     def self.render(component_name, props, _prerender_options)
@@ -216,3 +217,4 @@ class ComponentMountTest < ActionDispatch::IntegrationTest
     end
   end
 end
+# rubocop:enable Metrics/ClassLength
