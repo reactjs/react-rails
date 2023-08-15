@@ -2,6 +2,7 @@
 
 require "test_helper"
 
+# rubocop:disable Metrics/ClassLength
 class ComponentMountTest < ActionDispatch::IntegrationTest
   module DummyRenderer
     def self.render(component_name, props, _prerender_options)
@@ -128,5 +129,92 @@ class ComponentMountTest < ActionDispatch::IntegrationTest
 
       assert_equal %(<div>rendered Foo with {&quot;ok&quot;:true}</div>), rendered_component
     end
+
+    test "#react_component sets null props to undefined when null_to_undefined_props set to true" do
+      app.config.react.null_to_undefined_props = true
+
+      @helper.setup(DummyController)
+      rendered_component = @helper.react_component("Foo", { bar: nil, content: 'bar":null,' })
+
+      assert_includes rendered_component, '&quot;bar&quot;:undefined,&quot;content&quot;:&quot;bar\\&quot;:null,&quot;'
+    end
+
+    test "#react_component passes null props as null when null_to_undefined_props set to false" do
+      app.config.react.null_to_undefined_props = false
+
+      @helper.setup(DummyController)
+      rendered_component = @helper.react_component("Foo", { bar: nil, content: 'bar":null,' })
+
+      assert_includes rendered_component, "&quot;bar&quot;:null,&quot;content&quot;:&quot;bar\\&quot;:null,&quot;"
+    end
+
+    test "#props_to_json doesn't converts null values to undefined be default" do
+      props = { name: nil }
+      expected_json = '{"name":null}'
+      component_mount = React::Rails::ComponentMount.new
+
+      actual_json = component_mount.send(:props_to_json, props)
+
+      assert_equal(expected_json, actual_json)
+    end
+
+    test "#props_to_json converts null values to undefined with null_to_undefined: true option" do
+      props = { bar: nil, content: 'bar":null,' }
+      expected_json = '{"bar":undefined,"content":"bar\\":null,"}'
+      component_mount = React::Rails::ComponentMount.new
+
+      actual_json = component_mount.send(:props_to_json, props, { null_to_undefined: true })
+
+      assert_equal(expected_json, actual_json)
+    end
+
+    test "#props_to_json converts null values in arrays to undefined with null_to_undefined: true option" do
+      props = { items1: [nil], items2: [1, nil], items3: [nil, 1], items4: [1, nil, 2] }
+      expected_json = '{"items1":[undefined],"items2":[1,undefined],"items3":[undefined,1],"items4":[1,undefined,2]}'
+      component_mount = React::Rails::ComponentMount.new
+
+      actual_json = component_mount.send(:props_to_json, props, { null_to_undefined: true })
+
+      assert_equal(expected_json, actual_json)
+    end
+
+    test "#props_to_json doesnt converts null-like values in arrays to undefined with null_to_undefined: true option" do
+      props = {
+        items1: "[null]",
+        items2: "[1,null]",
+        items3: "[null,1]",
+        items4: "[1,null,2]",
+        items5: '["a",null]',
+        items6: '[null,"b"]',
+        items7: '["a",null,"b"]',
+        items8: '["a",nullx,"b"]'
+      }
+      expected_json = '{"items1":"[null]","items2":"[1,null]","items3":"[null,1]","items4":"[1,null,2]",' \
+                      '"items5":"[\"a\",null]","items6":"[null,\"b\"]","items7":"[\"a\",null,\"b\"]"' \
+                      ',"items8":"[\"a\",nullx,\"b\"]"}'
+      component_mount = React::Rails::ComponentMount.new
+
+      actual_json = component_mount.send(:props_to_json, props, { null_to_undefined: true })
+
+      assert_equal(expected_json, actual_json)
+    end
+
+    test "#props_to_json doesnt converts null values in nested arrays to undefined with null_to_undefined: true" do
+      props = {
+        items1: nil,
+        items2: [1, nil, 2],
+        items3: nil,
+        items4: "[1, null, 2]",
+        items5: nil
+      }
+      expected_json = '{"items1":undefined,"items2":[1,undefined,2],"items3":undefined,"items4":"[1, null, 2]"' \
+                      ',"items5":undefined}'
+      component_mount = React::Rails::ComponentMount.new
+
+      actual_json = component_mount.send(:props_to_json, props, { null_to_undefined: true })
+
+      assert_equal(expected_json, actual_json)
+    end
   end
 end
+# rubocop:enable Metrics/ClassLength

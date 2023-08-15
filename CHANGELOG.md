@@ -9,6 +9,9 @@ Changes since last non-beta release.
 
 _Please add entries here for your pull requests that are not yet released._
 
+#### Added
+- Added option to replace `null`s in props with `undefined` via `config.react.null_to_undefined_props` in `config/application.rb` #1293
+
 ## [3.0.0] - 2023-08-14
 
 ### Breaking Changes
