@@ -5,9 +5,11 @@ If you need help upgrading `react-rails`, `webpacker` to `shakapacker`, or JS pa
 [#1209 2.7 Release Discussion](https://github.com/reactjs/react-rails/issues/1209)
 
 ## Unreleased
-Changes since last non-beta release.
+Changes since the last non-beta release.
 
 _Please add entries here for your pull requests that are not yet released._
+
+## [3.1.0] - 2023-08-15
 
 #### Added
 - Added option to replace `null`s in props with `undefined` via `config.react.null_to_undefined_props` in `config/application.rb` #1293
@@ -560,7 +562,8 @@ _Please add entries here for your pull requests that are not yet released._
 - Server rendering with `prerender: true`
 - Transform `.jsx` in the asset pipeline
 
-[Unreleased]: https://github.com/reactjs/react-rails/compare/v3.0.0...master
+[Unreleased]: https://github.com/reactjs/react-rails/compare/v3.1.0...master
+[3.1.0]: https://github.com/reactjs/react-rails/compare/v3.0.0...v3.1.0
 [3.0.0]: https://github.com/reactjs/react-rails/compare/v2.7.1...v3.0.0
 [2.7.1]: https://github.com/reactjs/react-rails/compare/v2.7.0...v2.7.1
 [2.7.0]: https://github.com/reactjs/react-rails/compare/v2.6.2...v2.7.0
