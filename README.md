@@ -32,7 +32,7 @@ Here's a testimonial of how ShakaCode can help, from [Florian Gößler](https://
 
 Read the [full review here](https://clutch.co/profile/shakacode#reviews?sort_by=date_DESC#review-2118154). Here's [another review of a Shakapacker migration that led to more work](https://clutch.co/profile/shakacode#reviews?sort_by=date_DESC#review-2096078).
 
-## Resouces
+## Resources
 * [Click to join **React + Rails Slack**](https://reactrails.slack.com/join/shared_invite/enQtNjY3NTczMjczNzYxLTlmYjdiZmY3MTVlMzU2YWE0OWM0MzNiZDI0MzdkZGFiZTFkYTFkOGVjODBmOWEyYWQ3MzA2NGE1YWJjNmVlMGE). Then join the channel `#react-rails`.
 * If you are upgrading, you might consider migrating to the [react_on_rails](https://github.com/shakacode/react_on_rails) gem.
 * Source code example utilizing React-Rails: https://github.com/BookOfGreg/react-rails-example-app
