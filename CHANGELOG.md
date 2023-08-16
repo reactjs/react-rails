@@ -11,8 +11,8 @@ _Please add entries here for your pull requests that are not yet released._
 
 ## [3.1.1] - 2023-08-16
 
-#### Fixed
-- Reverted the buggy feature added in 3.1.0 #1300
+#### Removed
+- Removed the replace-null functionality due a severe logic error added in 3.1.0 #1300
 
 ## [3.1.0] - 2023-08-15
 
