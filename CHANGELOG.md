@@ -9,6 +9,9 @@ Changes since the last non-beta release.
 
 _Please add entries here for your pull requests that are not yet released._
 
+#### Changed
+- Make es6 and ts usable at same time. #1299
+
 ## [3.1.1] - 2023-08-16
 
 #### Removed
