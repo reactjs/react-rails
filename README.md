@@ -68,8 +68,6 @@ Read the [full review here](https://clutch.co/profile/shakacode#reviews?sort_by=
 - [Upgrading](#upgrading)
   - [2.7 to 3.0](#27-to-30)
   - [2.3 to 2.4](#23-to-24)
-- [Other features](#other-features)
-  - [Replace `null` with `undefined` in props](#replace-null-with-undefined-in-props)
 - [Common Errors](#common-errors)
   - [Getting warning for `Can't resolve 'react-dom/client'` in React < 18](#getting-warning-for-cant-resolve-react-domclient-in-react--18)
   - [Undefined Set](#undefined-set)
@@ -77,7 +75,6 @@ Read the [full review here](https://clutch.co/profile/shakacode#reviews?sort_by=
   - [HMR](#hmr)
 - [Related Projects](#related-projects)
 - [Contributing](#contributing)
-- [Supporters](#supporters)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -531,6 +528,7 @@ use it like so:
 ReactUJS.getConstructor = ReactUJS.constructorFromRequireContext(require.context('components', true));
 ```
 
+
 ## Server-Side Rendering
 
 You can render React components inside your Rails server with `prerender: true`:
@@ -803,26 +801,6 @@ For the vast majority of cases this will get you most of the migration:
 - add `import PropTypes from 'prop-types'` (Webpacker only)
 - re-run `bundle exec rails webpacker:install:react` to update npm packages (Webpacker only)
 
-## Other features
-
-### Replace `null` with `undefined` in props
-
-React-Rails converts `nil` to `null` while parsing props from Ruby to JavaScript. Optionally, you can configure React-Rails to parse `nil` values to `undefined` as per the following:
-
-```ruby
-# config/application.rb
-module TheAppName
-  class Application < Rails::Application
-    # ...
-    # Set to true to convert null values in props into undefined
-    config.react.null_to_undefined_props = true
-    # ...
-  end
-end
-```
-
-More information in: [discussion#1272](https://github.com/reactjs/react-rails/discussions/1272).
-
 ## Common Errors
 ### Getting warning for `Can't resolve 'react-dom/client'` in React < 18
 
@@ -879,7 +857,7 @@ By contributing to React-Rails, you agree to abide by the [code of conduct](http
 
 You can always help by submitting patches or triaging issues. Even offering reproduction steps to issues is incredibly helpful!
 
-## Supporters
+# Supporters
 
 The following companies support the development of this and other open-source projects maintained by ShakaCode by providing licenses to the ShakaCode team. ShakaCode stands by the usefulness of these products!
 
