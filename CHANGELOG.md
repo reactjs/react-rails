@@ -568,7 +568,7 @@ _Please add entries here for your pull requests that are not yet released._
 - Transform `.jsx` in the asset pipeline
 
 [Unreleased]: https://github.com/reactjs/react-rails/compare/v3.1.1...master
-[3.1.0]: https://github.com/reactjs/react-rails/compare/v3.1.0...v3.1.1
+[3.1.1]: https://github.com/reactjs/react-rails/compare/v3.1.0...v3.1.1
 [3.1.0]: https://github.com/reactjs/react-rails/compare/v3.0.0...v3.1.0
 [3.0.0]: https://github.com/reactjs/react-rails/compare/v2.7.1...v3.0.0
 [2.7.1]: https://github.com/reactjs/react-rails/compare/v2.7.0...v2.7.1
