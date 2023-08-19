@@ -1,0 +1,36 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+# creates a set of fake JavaScript package managers in a temporary bin
+# directory for GitHub Actions, _excluding_ the one passed in as an
+# argument in order to assert that only that package manager is used
+
+require "tmpdir"
+
+# setup the bin directory we want to use
+bin_dir = Dir.mktmpdir("react-rails-")
+
+if ENV["GITHUB_ACTIONS"]
+  puts "adding #{bin_dir} to GITHUB_PATH..."
+  File.write(ENV.fetch("GITHUB_PATH"), "#{bin_dir}\n", mode: "a+")
+end
+
+managers = %w[npm yarn pnpm]
+manager_in_use = ARGV[0]
+
+Dir.chdir(bin_dir) do
+  managers.each do |manager|
+    next if manager == manager_in_use
+
+    puts "creating #{bin_dir}/#{manager}..."
+    File.write(
+      manager,
+      <<~CONTENTS
+        #!/usr/bin/env node
+
+        throw new Error("(#{manager}) this is not the package manager you're looking...");
+      CONTENTS
+    )
+    File.chmod(0o755, manager)
+  end
+end

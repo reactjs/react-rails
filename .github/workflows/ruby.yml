@@ -58,6 +58,13 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        js_package_manager:
+          - name: npm
+            installer: npm
+          - name: yarn_classic
+            installer: yarn
+          - name: pnpm
+            installer: pnpm
         ruby: [2.7]
         gemfile:
           # These have shakapacker:
@@ -73,12 +80,13 @@ jobs:
       # Workaround b/c upgrading Minitest broke some mocking expectations
       # having to do with automatic kwarg splatting
       MT_KWARGS_HACK: 1
+      PACKAGE_JSON_FALLBACK_MANAGER: ${{ matrix.js_package_manager.name }}
     steps:
     - uses: actions/checkout@v4
       with:
         persist-credentials: false
     - uses: actions/setup-node@v3
-    - run: npm -g install yalc
+    - run: npm -g install yalc ${{ matrix.js_package_manager.installer }}
     - run: yalc publish
     - name: Save root node_modules to cache
       uses: actions/cache@v3
@@ -94,6 +102,7 @@ jobs:
       with:
         bundler: 2.4.9
         ruby-version: ${{ matrix.ruby }}
+    - run: ./test/bin/create-fake-js-package-managers ${{ matrix.js_package_manager.installer }}
     - name: Save dummy app ruby gems to cache
       uses: actions/cache@v3
       with:
@@ -101,7 +110,7 @@ jobs:
         key: dummy-app-gem-cache-${{ hashFiles('${{ github.workspace }}/gemfiles/${{ matrix.gemfile }}.gemfile.lock') }}
     - name: Install Ruby Gems for dummy app
       run: bundle lock --add-platform 'x86_64-linux' && bundle check --path=test/dummy/vendor/bundle || bundle _2.4.9_ install --frozen --path=test/dummy/vendor/bundle --jobs=4 --retry=3
-    - run: cd test/dummy && yalc add react_ujs && yarn
+    - run: cd test/dummy && yalc add react_ujs && ${{ matrix.js_package_manager.installer }} install
     - run: bundle exec rake test
       env:
         NODE_OPTIONS: --openssl-legacy-provider
