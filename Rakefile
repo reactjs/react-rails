@@ -8,6 +8,14 @@ end
 
 Bundler::GemHelper.install_tasks
 
+def require_package_json_gem
+  require "bundler/inline"
+
+  gemfile { gem "package_json", github: "G-Rath/package_json" }
+
+  puts "using package_json v#{PackageJson::VERSION}"
+end
+
 def copy_react_asset(webpack_file, destination_file)
   full_webpack_path = File.expand_path("../react-builds/build/#{webpack_file}", __FILE__)
   full_destination_path = File.expand_path("../lib/assets/react-source/#{destination_file}", __FILE__)
@@ -20,14 +28,14 @@ namespace :react do
 
   desc "Install the JavaScript dependencies"
   task :install do
-    require "package_json"
+    require_package_json_gem
 
     PackageJson.read("react-builds").manager.install
   end
 
   desc "Build the JS bundles with Webpack"
   task :build do
-    require "package_json"
+    require_package_json_gem
 
     PackageJson.read("react-builds").manager.run("build")
   end
@@ -48,14 +56,14 @@ namespace :ujs do
 
   desc "Install the JavaScript dependencies"
   task :install do
-    require "package_json"
+    require_package_json_gem
 
     PackageJson.read.manager.install
   end
 
   desc "Build the JS bundles with Webpack"
   task :build do
-    require "package_json"
+    require_package_json_gem
 
     PackageJson.read.manager.run("build")
   end
@@ -88,7 +96,7 @@ task default: :test
 
 task :test_setup do
   Dir.chdir("./test/dummy") do
-    require "package_json"
+    require_package_json_gem
 
     PackageJson.read.manager.install
   end
