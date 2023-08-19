@@ -2,6 +2,7 @@
 
 source "http://rubygems.org"
 
+gem "package_json", github: "G-Rath/package_json"
 gem "rails", "~> 7.0.x"
 gem "sprockets", "~> 3.5"
 gem "sprockets-rails"

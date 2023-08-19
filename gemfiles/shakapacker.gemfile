@@ -2,7 +2,8 @@
 
 source "http://rubygems.org"
 
+gem "package_json", github: "G-Rath/package_json"
 gem "rails", "~> 7.0.x"
-gem "shakapacker", "7.0.2"
+gem "shakapacker", github: "G-Rath/shakapacker", branch: "use-package_json"
 
 gemspec path: "../"

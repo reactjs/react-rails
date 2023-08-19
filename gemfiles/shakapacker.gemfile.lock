@@ -1,3 +1,20 @@
+GIT
+  remote: https://github.com/G-Rath/package_json.git
+  revision: d48f2c0db14bb1305f249fffb52fd2e0065678ee
+  specs:
+    package_json (0.1.0)
+
+GIT
+  remote: https://github.com/G-Rath/shakapacker.git
+  revision: 8e9db60edd13429bdae9783d7f37bac70470870c
+  branch: use-package_json
+  specs:
+    shakapacker (7.0.3)
+      activesupport (>= 5.2)
+      rack-proxy (>= 0.6.1)
+      railties (>= 5.2)
+      semantic_range (>= 2.3.0)
+
 PATH
   remote: ..
   specs:
@@ -227,11 +244,6 @@ GEM
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
     semantic_range (3.0.0)
-    shakapacker (7.0.2)
-      activesupport (>= 5.2)
-      rack-proxy (>= 0.6.1)
-      railties (>= 5.2)
-      semantic_range (>= 2.3.0)
     shellany (0.0.1)
     simplecov (0.13.0)
       docile (~> 1.1.0)
@@ -268,11 +280,12 @@ DEPENDENCIES
   guard-minitest
   jbuilder
   listen (~> 3.0.0)
+  package_json!
   pry-byebug
   rails (~> 7.0.x)
   react-rails!
   selenium-webdriver
-  shakapacker (= 7.0.2)
+  shakapacker!
   test-unit (~> 2.5)
 
 BUNDLED WITH

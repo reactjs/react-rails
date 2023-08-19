@@ -81,6 +81,7 @@ jobs:
       # having to do with automatic kwarg splatting
       MT_KWARGS_HACK: 1
       PACKAGE_JSON_FALLBACK_MANAGER: ${{ matrix.js_package_manager.name }}
+      SHAKAPACKER_USE_PACKAGE_JSON_GEM: true
     steps:
     - uses: actions/checkout@v4
       with:

@@ -1,3 +1,9 @@
+GIT
+  remote: https://github.com/G-Rath/package_json.git
+  revision: d48f2c0db14bb1305f249fffb52fd2e0065678ee
+  specs:
+    package_json (0.1.0)
+
 PATH
   remote: ..
   specs:
@@ -258,6 +264,7 @@ DEPENDENCIES
   guard-minitest
   jbuilder
   listen (~> 3.0.0)
+  package_json!
   pry-byebug
   rails (~> 7.0.x)
   react-rails!
