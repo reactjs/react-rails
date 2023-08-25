@@ -256,13 +256,19 @@ module React
       def detect_template_extension
         if options[:coffee]
           "js.jsx.coffee"
+        elsif options[:ts] && es6_enabled?
+          "es6.tsx"
         elsif options[:ts]
           "js.jsx.tsx"
-        elsif options[:es6] || shakapacker?
+        elsif es6_enabled?
           "es6.jsx"
         else
           "js.jsx"
         end
+      end
+
+      def es6_enabled?
+        options[:es6] || shakapacker?
       end
     end
   end
