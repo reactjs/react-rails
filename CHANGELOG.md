@@ -1,6 +1,6 @@
 # react-rails
 
-If you need help upgrading `react-rails`, `webpacker` to `shakapacker`, or JS packages, contact justin@shakacode.com. The ShakaCode.com team is helping to maintain this Ruby gem. You also might want to consider the [react_on_rails](https://github.com/shakacode/react_on_rails) gem. 
+If you need help upgrading `react-rails`, `webpacker` to `shakapacker`, or JS packages, contact justin@shakacode.com. The ShakaCode.com team is helping to maintain this Ruby gem. You also might want to consider the [react_on_rails](https://github.com/shakacode/react_on_rails) gem.
 
 [#1209 2.7 Release Discussion](https://github.com/reactjs/react-rails/issues/1209)
 
@@ -8,6 +8,8 @@ If you need help upgrading `react-rails`, `webpacker` to `shakapacker`, or JS pa
 Changes since the last non-beta release.
 
 _Please add entries here for your pull requests that are not yet released._
+
+- Prevent roots from being re-created when using React 18 [PR 1305](https://github.com/reactjs/react-rails/pull/1305) by [diogobeda](https://github.com/diogobeda)
 
 #### Changed
 - Make es6 and ts usable at same time. #1299

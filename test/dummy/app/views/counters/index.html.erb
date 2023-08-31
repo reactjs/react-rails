@@ -1,0 +1,10 @@
+<h2>React 18 bug reproduction</h2>
+
+<%= turbo_frame_tag :counters, data: { controller: "mount-counters" } do %>
+  <% @counters.each do |counter| %>
+    <%= react_component("Counter", counter) %>
+  <% end %>
+<% end %>
+<%= form_with(url: counters_path, method: :post, data: { turbo: true, turbo_stream: true }) do |form| %>
+  <%= form.submit "Add counter" %>
+<% end %>
