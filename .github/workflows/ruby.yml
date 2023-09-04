@@ -17,7 +17,7 @@ jobs:
         ruby: [2.7]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           persist-credentials: false
       - uses: actions/setup-node@v3
@@ -68,7 +68,7 @@ jobs:
       # having to do with automatic kwarg splatting
       MT_KWARGS_HACK: 1
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         persist-credentials: false
     - uses: actions/setup-node@v3
