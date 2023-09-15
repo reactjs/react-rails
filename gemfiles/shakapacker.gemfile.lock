@@ -1,6 +1,7 @@
 GIT
   remote: https://github.com/G-Rath/package_json.git
-  revision: d48f2c0db14bb1305f249fffb52fd2e0065678ee
+  revision: 72e742afb7ea8c19369fa9a4ce0d74ce098e2678
+  branch: add-bun-support
   specs:
     package_json (0.1.0)
 

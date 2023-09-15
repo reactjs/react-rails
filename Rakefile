@@ -11,7 +11,7 @@ Bundler::GemHelper.install_tasks
 def require_package_json_gem
   require "bundler/inline"
 
-  gemfile { gem "package_json", github: "G-Rath/package_json" }
+  gemfile { gem "package_json", github: "G-Rath/package_json", branch: "add-bun-support" }
 
   puts "using package_json v#{PackageJson::VERSION}"
 end

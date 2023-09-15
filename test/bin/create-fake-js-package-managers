@@ -15,7 +15,7 @@ if ENV["GITHUB_ACTIONS"]
   File.write(ENV.fetch("GITHUB_PATH"), "#{bin_dir}\n", mode: "a+")
 end
 
-managers = %w[npm yarn pnpm]
+managers = %w[npm yarn pnpm bun]
 manager_in_use = ARGV[0]
 
 Dir.chdir(bin_dir) do

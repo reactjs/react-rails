@@ -65,6 +65,8 @@ jobs:
             installer: yarn
           - name: pnpm
             installer: pnpm
+          - name: bun
+            installer: bun
         ruby: [2.7]
         gemfile:
           # These have shakapacker:
