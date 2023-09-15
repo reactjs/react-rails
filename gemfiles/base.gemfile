@@ -2,7 +2,6 @@
 
 source "http://rubygems.org"
 
-gem "package_json", github: "G-Rath/package_json", branch: "add-bun-support"
 gem "rails", "~> 7.0.x"
 
 gemspec path: "../"

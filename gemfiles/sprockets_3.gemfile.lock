@@ -1,10 +1,3 @@
-GIT
-  remote: https://github.com/G-Rath/package_json.git
-  revision: 72e742afb7ea8c19369fa9a4ce0d74ce098e2678
-  branch: add-bun-support
-  specs:
-    package_json (0.1.0)
-
 PATH
   remote: ..
   specs:
@@ -277,7 +270,6 @@ DEPENDENCIES
   jbuilder
   listen (~> 3.0.0)
   mini_racer
-  package_json!
   pry-byebug
   rails (~> 7.0.x)
   react-rails!
