@@ -206,7 +206,7 @@ In some cases, having multiple `require.context` entries may be desired. Example
 
 - Refactoring a typical Rails application into a Rails API with an (eventually) separate Single Page Application (SPA). For this use case, one can add a separate pack in addition to the typical `application` one. React components can be shared between the packs but the new pack can use a minimal Rails view layout, different default styling, etc.
 - In a larger application, you might find it helpful to split your JavaScript by routes/controllers to avoid serving unused components and improve your site performance by keeping bundles smaller. For example, you might have separate bundles for homepage, search, and checkout routes. In that scenario, you can add an array of `require.context` component directory paths via `useContexts` to `server_rendering.js`, to allow for [Server-Side Rendering](#server-side-rendering) across your application:
- 
+
 ```js
 // server_rendering.js
 var homepageRequireContext = require.context('homepage', true);
@@ -784,7 +784,7 @@ For example, to change the [ES6 Component template](https://github.com/reactjs/r
 
 ### 2.7 to 3.0
 - Keep your `react_ujs` up to date: `yarn upgrade`
-- **Drop support for Webpacker:** Before any ReactRails upgrade, make sure upgrading from Webpacker to Shakapacker 7. For more information check out Shakapacker  
+- **Drop support for Webpacker:** Before any ReactRails upgrade, make sure upgrading from Webpacker to Shakapacker 7. For more information check out Shakapacker
 - **SSR:** ReactRails 3.x requires separate compilations for server & client bundles. See [Webpack config](https://github.com/reactjs/react-rails/tree/master/test/dummy/config/webpack) directory in the dummy app to addapt the new implementation.
 
 ### 2.3 to 2.4
@@ -807,22 +807,22 @@ For the vast majority of cases this will get you most of the migration:
 
 ## Migrating from `react-rails` to `react_on_rails`
 
-### Why to migrate?
+### Why migrate
 
 [`react_on_rails`](https://github.com/shakacode/react_on_rails/) offers several additional features for a Rails + React application. The following is a table of features comparison.
 
-| **Feature**             | **react-rails** | **react-on-rails** |
-| ----------------------- |:---------------:|:------------------:|
-| Sprockets               | ✅               | ❌                  |
-| Shakapacker             | ✅               | ✅                  |
-| SSR                     | ✅               | ✅                  |
-| SSR with HMR            | ✅               | ✅                  |
-| SSR with React-Router   | ❌               | ✅                  |
-| SSR with Code Splitting | ❌               | ✅                  |
-| Node SSR                | ❌               | ✅                  |
-| Advanced Redux support  | ❌               | ✅                  |
-| ReScript support        | ❌               | ✅                  |
-| I18n support            | ❌               | ✅                  |
+| **Feature**             | **react-rails** | **react-on-rails** | **react-on-rails pro** |
+| ----------------------- |:---------------:|:------------------:|:----------------------:|
+| Sprockets               | ✅               | ❌                | ❌                     |
+| Shakapacker             | ✅               | ✅                | ✅                     |
+| SSR                     | ✅               | ✅                | ✅                     |
+| SSR with HMR            | ✅               | ❌                | ✅                     |
+| SSR with React-Router   | ❌               | ❌                | ✅                     |
+| SSR with Code Splitting | ❌               | ❌                | ✅                     |
+| Node SSR                | ❌               | ❌                | ✅                     |
+| Advanced Redux support  | ❌               | ❌                | ✅                     |
+| ReScript support        | ❌               | ❌                | ✅                     |
+| I18n support            | ❌               | ❌                | ✅                     |
 
 `react_on_rails` offers better performance and bundle optimizations, especially with the option of getting a subscription to `react_on_rails_pro`.
 
