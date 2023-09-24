@@ -38,6 +38,7 @@ Read the [full review here](https://clutch.co/profile/shakacode#reviews?sort_by=
 * Source code example utilizing React-Rails: https://github.com/BookOfGreg/react-rails-example-app
 
 ## Documentation
+
 - [Get started](docs/get-started.md)
 - [View Helper](docs/view-helper.md)
 - [UJS](docs/ujs.md)
