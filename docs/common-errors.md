@@ -7,6 +7,7 @@
 - [Undefined Set](#undefined-set)
 - [Using TheRubyRacer](#using-therubyracer)
 - [HMR](#hmr)
+- [Tests in component directory](#tests-in-component-directory)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -45,3 +46,19 @@ LibV8 itself is already [beyond version 7](https://github.com/cowboyd/libv8/rele
 Check out [Enabling Hot Module Replacement (HMR)](https://github.com/shakacode/shakapacker/blob/master/docs/react.md#enabling-hot-module-replacement-hmr) in Shakapacker documentation.
 
 One caveat is that currently you [cannot Server-Side Render along with HMR](https://github.com/reactjs/react-rails/issues/925#issuecomment-415469572).
+
+## Tests in component directory
+
+If your tests for react components reside alongside the component files in the `app/javascript/components` directory,
+you will get `ModuleNotFoundError` in production environment
+since test libraries are devDependencies.
+
+To resolve this issue,
+you need to specify a matching pattern in `appllication.js` and `server_rendering.js`.
+For example, see the below code:
+
+```js
+const componentRequireContext = require.context('react_rails_components', true, /^(?!.*\.test)^\.\/.*$/)
+const ReactRailsUJS = require('react_ujs')
+ReactRailsUJS.useContext(componentRequireContext)
+```
