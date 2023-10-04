@@ -58,6 +58,7 @@ you need to specify a matching pattern in `appllication.js` and `server_renderin
 For example, see the below code:
 
 ```js
+// app/javascript/packs/application.js
 const componentRequireContext = require.context('react_rails_components', true, /^(?!.*\.test)^\.\/.*$/)
 const ReactRailsUJS = require('react_ujs')
 ReactRailsUJS.useContext(componentRequireContext)
