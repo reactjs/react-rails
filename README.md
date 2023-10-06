@@ -75,7 +75,7 @@ Read the [full review here](https://clutch.co/profile/shakacode#reviews?sort_by=
   - [Undefined Set](docs/common-errors.md#undefined-set)
   - [Using TheRubyRacer](docs/common-errors.md#using-therubyracer)
   - [HMR](docs/common-errors.md#hmr)
-
+  - [Tests in component directory](docs/common-errors.md#tests-in-component-directory)
 
 After reading this README file, additional information about React-Rails can be found in the Wiki page:
 https://github.com/reactjs/React-Rails/wiki
