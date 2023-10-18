@@ -5,7 +5,7 @@
 [![Ruby](https://github.com/reactjs/react-rails/actions/workflows/ruby.yml/badge.svg)](https://github.com/reactjs/react-rails/actions/workflows/ruby.yml)
 
 ## News
-V3.0.0 is released with Shakapacker v6 support, including SSR. Please try it out and report any issues. We'll try to address any critical issues ASAP.
+V3.0.0 is released with Shakapacker v7 support, including SSR. Please try it out and report any issues. We'll try to address any critical issues ASAP.
 
 For version 2.7 documentation checkout [2.7-stable](https://github.com/reactjs/react-rails/tree/2.7-stable) branch.
 
