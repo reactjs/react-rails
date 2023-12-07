@@ -11,6 +11,7 @@ _Please add entries here for your pull requests that are not yet released._
 
 #### Changed
 - Make es6 and ts usable at same time. #1299
+- Support other JS package managers using `package_json` gem #1306
 
 ## [3.1.1] - 2023-08-16
 
