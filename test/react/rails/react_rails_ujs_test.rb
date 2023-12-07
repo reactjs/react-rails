@@ -141,7 +141,7 @@ class ReactRailsUJSTest < ActionDispatch::IntegrationTest
       assert_greeting(page, "Hello Bob")
     end
 
-    test "react_ujs does not unmount components that do not match a selector reference for the component" do  # rubocop:disable Minitest/MultipleAssertions
+    test "react_ujs does not unmount components that do not match a selector reference for the component" do # rubocop:disable Minitest/MultipleAssertions
       visit "/pages/1"
 
       assert_greeting page, "Hello Bob"
