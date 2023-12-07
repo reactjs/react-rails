@@ -16,7 +16,7 @@ end
 
 appraise 'shakapacker' do
   gem 'rails', '~> 7.0.x'
-  gem 'shakapacker', github: 'G-Rath/shakapacker', branch: 'use-package_json'
+  gem 'shakapacker', '7.2.0.rc.0'
 end
 
 appraise 'base' do
