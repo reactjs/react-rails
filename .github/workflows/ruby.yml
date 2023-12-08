@@ -7,7 +7,11 @@
 
 name: Ruby
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - 'master'
+  pull_request:
 
 jobs:
   check_react_and_ujs:
