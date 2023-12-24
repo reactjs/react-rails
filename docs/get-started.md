@@ -51,7 +51,7 @@ Also update the Babel configuration in the `package.json` file:
 
 4. Install `react-rails`:
 ```bash
-$ bundle add 'react-rails' --strict
+$ bundle add 'react-rails' --strict --version '3.1.1'
 $ rails generate react:install
 ```
 
