@@ -30,7 +30,7 @@ Capybara.app = Rails.application
 Capybara.server = :webrick
 
 Capybara.register_driver :headless_chrome do |app|
-  options = Selenium::WebDriver::Chrome::Options.new(args: %w[no-sandbox headless disable-gpu])
+  options = Selenium::WebDriver::Chrome::Options.new(args: %w[no-sandbox headless disable-gpu], w3c: false)
 
   Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
 end
