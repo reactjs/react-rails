@@ -16,7 +16,7 @@ end
 
 appraise 'shakapacker' do
   gem 'rails', '~> 7.0.x'
-  gem 'shakapacker', '7.0.2'
+  gem 'shakapacker', '7.2.0'
 end
 
 appraise 'base' do
