@@ -3,6 +3,9 @@
   "version": "0.0.0",
   "description": "Prepares react-rails asset files",
   "main": "react.js",
+  "scripts": {
+    "build": "NODE_ENV=development webpack && NODE_ENV=production webpack"
+  },
   "dependencies": {
     "create-react-class": "^15.6.2",
     "fast-text-encoding": "^1.0.6",
@@ -11,10 +14,7 @@
     "prop-types": "^15.6.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-transition-group": "1.1.1",
     "webpack": "^5.74.0"
   },
-  "scripts": {
-    "build": "NODE_ENV=development webpack && NODE_ENV=production webpack"
-  }
+  "packageManager": "yarn@1.22.21"
 }

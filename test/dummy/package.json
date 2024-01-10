@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "yalc-postinstall": "yalc link react_ujs"
+  },
   "dependencies": {
     "@babel/core": "^7.18.2",
     "@babel/plugin-transform-runtime": "^7.18.2",
@@ -27,12 +30,9 @@
     "webpack-sources": "^3.2.3"
   },
   "devDependencies": {
-    "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.7",
+    "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "react-refresh": "^0.13.0",
     "webpack-dev-server": "^4.9.2"
-  },
-  "scripts": {
-    "yalc-postinstall": "yalc link react_ujs"
   }
 }
