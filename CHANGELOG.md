@@ -7,11 +7,13 @@ If you need help upgrading `react-rails`, `webpacker` to `shakapacker`, or JS pa
 ## Unreleased
 Changes since the last non-beta release.
 
-_Please add entries here for your pull requests that are not yet released._
+_Please add entries here for your pull requests that are not yet released. Include LINKS for PRs and committers._
+
+## [3.2.0] - 2024-01-10
 
 #### Changed
+- Support other JS package managers using `package_json` gem [PR #1306](https://github.com/reactjs/react-rails/pull/1306) by [G-Rath](https://github.com/G-Rath).
 - Make es6 and ts usable at same time. #1299
-- Support other JS package managers using `package_json` gem #1306
 
 ## [3.1.1] - 2023-08-16
 
@@ -571,7 +573,8 @@ _Please add entries here for your pull requests that are not yet released._
 - Server rendering with `prerender: true`
 - Transform `.jsx` in the asset pipeline
 
-[Unreleased]: https://github.com/reactjs/react-rails/compare/v3.1.1...master
+[Unreleased]: https://github.com/reactjs/react-rails/compare/v3.2.0...master
+[3.2.0]: https://github.com/reactjs/react-rails/compare/v3.1.1...v3.2.0
 [3.1.1]: https://github.com/reactjs/react-rails/compare/v3.1.0...v3.1.1
 [3.1.0]: https://github.com/reactjs/react-rails/compare/v3.0.0...v3.1.0
 [3.0.0]: https://github.com/reactjs/react-rails/compare/v2.7.1...v3.0.0
