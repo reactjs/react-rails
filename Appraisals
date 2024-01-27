@@ -17,6 +17,7 @@ end
 appraise 'shakapacker' do
   gem 'rails', '~> 7.0.x'
   gem 'shakapacker', '7.2.0'
+  gem 'turbo-rails'
 end
 
 appraise 'base' do
