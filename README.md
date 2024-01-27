@@ -96,7 +96,7 @@ The Wiki page features a significant amount of additional information about Reac
 
 With 5 Million+ downloads of the react-rails Gem and another 2 Million+ downloads of react_ujs on NPM, you're helping the biggest React + Rails community!
 
-By contributing to React-Rails, you agree to abide by the [code of conduct](https://github.com/reactjs/react-rails/blob/master/CODE_OF_CONDUCT.md).
+By contributing to React-Rails, you agree to abide by the [code of conduct](https://github.com/reactjs/react-rails/blob/main/CODE_OF_CONDUCT.md).
 
 You can always help by submitting patches or triaging issues. Even offering reproduction steps to issues is incredibly helpful!
 
@@ -131,4 +131,4 @@ The following companies support the development of this and other open-source pr
   </picture>
 </a>
 
-Please see our [Contribution guide](https://github.com/reactjs/react-rails/blob/master/CONTRIBUTING.md) for more info.
+Please see our [Contribution guide](https://github.com/reactjs/react-rails/blob/main/CONTRIBUTING.md) for more info.

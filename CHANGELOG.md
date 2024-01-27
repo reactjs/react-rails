@@ -28,7 +28,7 @@ _Please add entries here for your pull requests that are not yet released. Inclu
 ## [3.0.0] - 2023-08-14
 
 ### Breaking Changes
-- Requires separate compilations for server & client bundles if using Shakapacker (see [Webpack config](https://github.com/reactjs/react-rails/tree/master/test/dummy/config/webpack)) #1274
+- Requires separate compilations for server & client bundles if using Shakapacker (see [Webpack config](https://github.com/reactjs/react-rails/tree/main/test/dummy/config/webpack)) #1274
 - Replaces WebpackManifestContainer, which searched for assets in the webpack manifest, with SeparateServerBundleContainer, which expects a single server bundle file & does not use the webpack manifest at all. #1274
 - Upgrades React-Rails' embedded react to v18.2.0. Uses node polyfill plugin & fast-text-encoder for SSR text encoding. #1290
 - If using Webpacker/Shakapacker, requires upgrading to Shakapacker v7 #1274 and #1285
@@ -573,7 +573,7 @@ _Please add entries here for your pull requests that are not yet released. Inclu
 - Server rendering with `prerender: true`
 - Transform `.jsx` in the asset pipeline
 
-[Unreleased]: https://github.com/reactjs/react-rails/compare/v3.2.0...master
+[Unreleased]: https://github.com/reactjs/react-rails/compare/v3.2.0...main
 [3.2.0]: https://github.com/reactjs/react-rails/compare/v3.1.1...v3.2.0
 [3.1.1]: https://github.com/reactjs/react-rails/compare/v3.1.0...v3.1.1
 [3.1.0]: https://github.com/reactjs/react-rails/compare/v3.0.0...v3.1.0
