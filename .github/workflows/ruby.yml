@@ -89,7 +89,7 @@ jobs:
       with:
         persist-credentials: false
     - uses: actions/setup-node@v3
-    - run: npm -g install yalc ${{ matrix.js_package_manager.installer }}
+    - run: sudo npm -g install yalc ${{ matrix.js_package_manager.installer }}
     - run: yalc publish
     - name: Save root node_modules to cache
       uses: actions/cache@v3
