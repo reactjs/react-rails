@@ -41,7 +41,7 @@ class ControllerLifecycleTest < ActionDispatch::IntegrationTest
     get "/pages/1"
     helper_obj = controller.__react_component_helper
 
-    assert(helper_obj.is_a?(DummyHelperImplementation), "It uses the view helper implementation class")
+    assert_kind_of(DummyHelperImplementation, helper_obj, "It uses the view helper implementation class")
   end
 
   test "it calls setup and teardown methods" do

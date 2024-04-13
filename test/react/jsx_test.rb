@@ -22,7 +22,7 @@ EXPECTED_JS_2 = <<~STR
 STR
 
 class NullTransformer
-  def initialize(_options = {}); end # rubocop:disable-line Style/RedundantInitialize
+  def initialize(_options = {}); end # rubocop:disable Style/RedundantInitialize
 
   def transform(_code)
     "TRANSFORMED CODE!;\n"
