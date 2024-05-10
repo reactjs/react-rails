@@ -194,12 +194,16 @@ Then modify the webpack config to use it as a plugin:
 
 ```js
 // config/webpack/webpack.config.js
-const { webpackConfig, merge } = require("shakapacker");
-const ForkTSCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
+const { generateWebpackConfig, merge } = require('shakapacker')
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
-module.exports = merge(webpackConfig, {
-  plugins: [new ForkTSCheckerWebpackPlugin()],
-});
+const webpackConfig = generateWebpackConfig()
+
+module.exports = merge(
+  webpackConfig, {
+    plugins: [new ForkTsCheckerWebpackPlugin()]
+  }
+);
 ```
 
 Doing this will allow React-Rails to support the .tsx extension. Additionally, it is recommended to add `ts` and `tsx` to the `server_renderer_extensions` in your application configuration:
