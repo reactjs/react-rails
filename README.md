@@ -4,9 +4,6 @@
 [![npm](https://img.shields.io/npm/v/react_ujs.svg?style=flat-square)](https://www.npmjs.com/package/react_ujs)
 [![Ruby](https://github.com/reactjs/react-rails/actions/workflows/ruby.yml/badge.svg)](https://github.com/reactjs/react-rails/actions/workflows/ruby.yml)
 
-## News
-V3.0.0 is released with Shakapacker v7 support, including SSR. Please try it out and report any issues. We'll try to address any critical issues ASAP.
-
 For version 2.7 documentation, visit the [2.7-stable](https://github.com/reactjs/react-rails/tree/2.7-stable) branch.
 
 ## Summary
@@ -15,6 +12,14 @@ React-Rails is a flexible tool to use [React](http://facebook.github.io/react/) 
 * Supports [Shakapacker](https://github.com/shakacode/shakapacker) v7
 * Supports Sprockets 4.x, 3.x
 * Lets you use [JSX](http://facebook.github.io/react/docs/jsx-in-depth.html), [ES6](http://es6-features.org/), [TypeScript](https://www.typescriptlang.org/), [CoffeeScript](http://coffeescript.org/)
+
+---
+
+While ShakaCode will continue to support this gem, you might consider migrating to [React on Rails](https://github.com/shakacode/react_on_rails) or [React on Rails Pro with proper Node rendering](https://www.shakacode.com/react-on-rails-pro/).
+
+Why? React on Rails code receives much more active development and testing. For example, consider the [ReactRailsUJS](https://github.com/reactjs/react-rails/blob/master/react_ujs/index.js) implementation compared to the [ReactOnRails Node package](https://github.com/shakacode/react_on_rails/tree/master/node_package) which is written in TypeScript. For another example, React on Rails has work underway to support the latest React features, such as [React Server Components](https://react.dev/reference/rsc/server-components).
+
+You can find [migration to React on Rails steps here](https://github.com/reactjs/react-rails/blob/master/docs/migrating-from-react-rails-to-react_on_rails.md).
 
 ---
 ## ShakaCode Support
@@ -34,7 +39,7 @@ Read the [full review here](https://clutch.co/profile/shakacode#reviews?sort_by=
 
 ## Resources
 * [Click to join **React + Rails Slack**](https://reactrails.slack.com/join/shared_invite/enQtNjY3NTczMjczNzYxLTlmYjdiZmY3MTVlMzU2YWE0OWM0MzNiZDI0MzdkZGFiZTFkYTFkOGVjODBmOWEyYWQ3MzA2NGE1YWJjNmVlMGE). Then join the channel `#react-rails`.
-* If you are upgrading, you might consider migrating to the [react_on_rails](https://github.com/shakacode/react_on_rails) gem.
+* If upgrading, consider migrating to the [react_on_rails](https://github.com/shakacode/react_on_rails) gem.
 * Source code example utilizing React-Rails: https://github.com/BookOfGreg/react-rails-example-app
 
 ## Documentation
@@ -77,32 +82,24 @@ Read the [full review here](https://clutch.co/profile/shakacode#reviews?sort_by=
   - [HMR](docs/common-errors.md#hmr)
   - [Tests in component directory](docs/common-errors.md#tests-in-component-directory)
 
-After reading this README file, additional information about React-Rails can be found in the Wiki page:
+After reading this README file, additional information about React-Rails can be found on the Wiki page:
 https://github.com/reactjs/React-Rails/wiki
-The Wiki page features a significant amount of additional information about React-Rails which includes instructional articles and answers to the most frequently asked questions.
+The Wiki page features a significant amount of additional information about React-Rails, including instructional articles and answers to the most frequently asked questions.
 
 ## Related Projects
 
-- [webpacker-react](https://github.com/renchap/webpacker-react): Integration of React with Rails utilizing Webpack with Hot Module Replacement (HMR).
-- [The React on Rails Course](https://learnetto.com/users/hrishio/courses/the-free-react-on-rails-5-course) A video course which teaches the basics of React and how to get started using it in Rails with `react-rails`.
 - [react\_on\_rails](https://github.com/shakacode/react_on_rails): Integration of React with Rails utilizing Webpack, Redux, React-Router.
-- [react-rails-hot-loader](https://github.com/rmosolgo/react-rails-hot-loader) Simple live-reloader for `react-rails`.
+- [React on Rails Pro](https://www.shakacode.com/react-on-rails-pro/):React on Rails with Node rendering and many other performance enhancements.
 - [react-rails-benchmark_renderer](https://github.com/pboling/react-rails-benchmark_renderer) adds performance instrumentation to server rendering.
 - [Ruby Hyperstack](https://hyperstack.org/): Use Ruby to build reactive user interfaces with React.
 
 ## Contributing
 
-🎉 Thanks for taking the time to contribute! 🎉
-
-With 5 Million+ downloads of the react-rails Gem and another 2 Million+ downloads of react_ujs on NPM, you're helping the biggest React + Rails community!
-
-By contributing to React-Rails, you agree to abide by the [code of conduct](https://github.com/reactjs/react-rails/blob/main/CODE_OF_CONDUCT.md).
-
-You can always help by submitting patches or triaging issues. Even offering reproduction steps to issues is incredibly helpful!
+🎉 Thanks for taking the time to contribute! 🎉 See [CONTRIBUTING.md](./CONTRIBUTING.md) for more details.
 
 # Supporters
 
-The following companies support the development of this and other open-source projects maintained by ShakaCode by providing licenses to the ShakaCode team. ShakaCode stands by the usefulness of these products!
+The following companies provide licenses to the ShakaCode team, supporting the development of this and other open-source projects maintained by ShakaCode. ShakaCode stands by the usefulness of these products!
 
 <br />
 <br />
@@ -130,5 +127,3 @@ The following companies support the development of this and other open-source pr
     <img alt="BrowserStack" src="https://user-images.githubusercontent.com/4244251/184881129-e1edf4b7-3ae1-4ea8-9e6d-3595cf01609e.png" height="55px">
   </picture>
 </a>
-
-Please see our [Contribution guide](https://github.com/reactjs/react-rails/blob/main/CONTRIBUTING.md) for more info.
