@@ -9,6 +9,9 @@ Changes since the last non-beta release.
 
 _Please add entries here for your pull requests that are not yet released. Include LINKS for PRs and committers._
 
+#### Fixed
+- Replaced call to ReactRailsUJS.unmountComponents that was erroneously removed by #1290 in 3.0.0 #1339
+
 ## [3.2.0] - 2024-01-10
 
 #### Changed
