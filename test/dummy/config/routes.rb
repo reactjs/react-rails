@@ -3,6 +3,7 @@
 Dummy::Application.routes.draw do
   get "no-turbolinks", to: "pages#no_turbolinks"
   resources :pages, only: [:show]
+  resources :counters, only: %i[create index]
   resources :server, only: [:show] do
     collection do
       get :console_example

@@ -131,11 +131,8 @@ var ReactRailsUJS = {
         if (hydrate && supportsHydration()) {
           component = reactHydrate(node, component);
         } else {
-          const root = createReactRootLike(node)
+          const root = this.findOrCreateRoot(node);
           component = root.render(component);
-          if(supportsRootApi) {
-            this.roots.push({"node": node, "root": root})
-          }
         }
       }
     }
@@ -164,19 +161,44 @@ var ReactRailsUJS = {
     detectEvents(this)
   },
 
-  unmountRoot: function(node) {
-    var targetRoots = this.roots.filter(
+  findOrCreateRoot: function(node) {
+    var root = this.findRoot(node);
+    if (!root) {
+      root = createReactRootLike(node);
+      if(supportsRootApi) {
+        this.roots.push({"node": node, "root": root})
+      }
+    }
+
+    return root;
+  },
+
+  findRoot: function(node) {
+    if (!supportsRootApi) {
+      return;
+    }
+    var rootElement = this.roots.find(
       function(rootElement) {
         return rootElement["node"] && (rootElement["node"] === node)
       }
-    )
-    targetRoots.forEach(
+    );
+    if (rootElement) {
+      return rootElement["root"];
+    }
+  },
+
+  unmountRoot: function(node) {
+    var targetRoot = this.findRoot(node);
+    if (!targetRoot) {
+      return;
+    }
+
+    targetRoot.unmount();
+    this.roots = this.roots.filter(
       function(rootElement) {
-        rootElement["root"].unmount();
-        rootElement["root"] = null;
-        rootElement["node"] = null;
+        return rootElement["node"] !== node
       }
-    )
+    );
   }
 }
 
