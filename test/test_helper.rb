@@ -5,8 +5,6 @@ if RUBY_PLATFORM != "java"
   SimpleCov.start
 end
 
-DUMMY_LOCATION = "dummy"
-
 support_path = File.expand_path("support/*.rb", __dir__)
 Dir.glob(support_path).sort.each do |f|
   require(f)
@@ -15,13 +13,15 @@ end
 # Configure Rails Environment
 ENV["RAILS_ENV"] = "test"
 
-require File.expand_path("../#{DUMMY_LOCATION}/config/environment.rb", __FILE__)
+require File.expand_path("dummy/config/environment.rb", __dir__)
 require "rails/test_help"
 require "rails/generators"
 require "pathname"
 require "minitest/mock"
 require "capybara/rails"
 require "selenium/webdriver"
+require "minitest/retry"
+Minitest::Retry.use!
 Dummy::Application.load_tasks
 
 ShakapackerHelpers.clear_shakapacker_packs
@@ -30,15 +30,15 @@ Capybara.app = Rails.application
 Capybara.server = :webrick
 
 Capybara.register_driver :headless_chrome do |app|
-  options = Selenium::WebDriver::Chrome::Options.new(args: %w[no-sandbox headless disable-gpu])
+  options = Selenium::WebDriver::Chrome::Options.new(args: %w[no-sandbox headless=new disable-gpu])
 
-  Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
+  Capybara::Selenium::Driver.new(app, browser: :chrome, options: options, timeout: 300)
 end
 
 Capybara.javascript_driver = :headless_chrome
 Capybara.current_driver = Capybara.javascript_driver
 
-CACHE_PATH = Pathname.new File.expand_path("../#{DUMMY_LOCATION}/tmp/cache", __FILE__)
+CACHE_PATH = Pathname.new File.expand_path("dummy/tmp/cache", __dir__)
 
 Rails.backtrace_cleaner.remove_silencers!
 

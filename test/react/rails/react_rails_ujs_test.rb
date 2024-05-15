@@ -10,14 +10,14 @@ class ReactRailsUJSTest < ActionDispatch::IntegrationTest
     def assert_greeting(page, greeting)
       assert page.has_content?(greeting), <<~MSG
         #{page.body}
-        #{page.driver.browser.manage.logs.get(:browser).inspect}
+        #{page.driver.browser.logs.get(:browser).inspect}
       MSG
     end
 
     def refute_greeting(page, greeting)
       assert page.has_no_content?(greeting), <<~MSG
         #{page.body}
-        #{page.driver.browser.manage.logs.get(:browser).inspect}
+        #{page.driver.browser.logs.get(:browser).inspect}
       MSG
     end
 
