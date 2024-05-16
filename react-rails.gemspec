@@ -30,6 +30,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'pry-byebug'
   s.add_development_dependency 'package_json'
   s.add_development_dependency 'rails', '~> 7.0.7', '>= 7.0.7.2'
+  s.add_development_dependency 'turbo-rails'
   s.add_development_dependency 'minitest-retry'
 
   s.add_dependency 'connection_pool'

@@ -237,6 +237,10 @@ GEM
     thor (1.2.1)
     tilt (2.1.0)
     timeout (0.4.1)
+    turbo-rails (2.0.5)
+      actionpack (>= 6.0.0)
+      activejob (>= 6.0.0)
+      railties (>= 6.0.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     websocket (1.2.9)
@@ -270,6 +274,7 @@ DEPENDENCIES
   react-rails!
   selenium-webdriver
   test-unit (~> 2.5)
+  turbo-rails
 
 BUNDLED WITH
    2.4.9
