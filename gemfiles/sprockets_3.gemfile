@@ -2,7 +2,6 @@
 
 source "http://rubygems.org"
 
-gem "rails", "~> 7.0.x"
 gem "sprockets", "~> 3.5"
 gem "sprockets-rails"
 gem "turbolinks", "~> 5"

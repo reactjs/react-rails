@@ -20,11 +20,11 @@ class ServerRenderedHtmlTest < ActionDispatch::IntegrationTest
       if ShakapackerHelpers.available?
         file_with_updates = File.expand_path("helper_files/TodoListWithUpdates.js", __dir__)
         file_without_updates = File.expand_path("helper_files/TodoListWithoutUpdates.js", __dir__)
-        app_file = File.expand_path("../#{DUMMY_LOCATION}/app/javascript/components/TodoList.js", __FILE__)
+        app_file = File.expand_path("dummy/app/javascript/components/TodoList.js", __dir__)
       else
         file_with_updates = File.expand_path("helper_files/TodoListWithUpdates.js.jsx", __dir__)
         file_without_updates = File.expand_path("helper_files/TodoListWithoutUpdates.js.jsx", __dir__)
-        app_file = File.expand_path("../#{DUMMY_LOCATION}/app/assets/javascripts/components/TodoList.js.jsx", __FILE__)
+        app_file = File.expand_path("dummy/app/assets/javascripts/components/TodoList.js.jsx", __dir__)
       end
 
       FileUtils.cp app_file, file_without_updates
@@ -61,13 +61,13 @@ class ServerRenderedHtmlTest < ActionDispatch::IntegrationTest
       end
 
       if ShakapackerHelpers.available?
-        new_file_path = "../#{DUMMY_LOCATION}/app/javascript/components/NewList.js"
+        new_file_path = "../dummy/app/javascript/components/NewList.js"
         new_file_contents = <<~JS
           var React = require("react")
           module.exports = function() { return <span>"New List"</span> }
         JS
       else
-        new_file_path = "../#{DUMMY_LOCATION}/app/assets/javascripts/components/ZZ_NewComponent.js.jsx"
+        new_file_path = "../dummy/app/assets/javascripts/components/ZZ_NewComponent.js.jsx"
         new_file_contents = <<~JS
           var NewList = function() { return <span>"New List"</span> }
         JS

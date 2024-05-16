@@ -1,0 +1,7 @@
+# frozen_string_literal: true
+
+source "http://rubygems.org"
+# To install gems from this Gemfile locally, use BUNDLE_GEMFILE=./LintingGemfile bundle exec rubocop
+gem "rubocop"
+gem "rubocop-minitest"
+gem "rubocop-performance"

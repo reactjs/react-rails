@@ -193,6 +193,7 @@ ReactRailsUJS.handleUnmount = function(e) {
   if (e && e.target) {
     target = e.target;
   }
+  ReactRailsUJS.unmountComponents(target);
 }
 
 

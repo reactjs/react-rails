@@ -3,7 +3,6 @@
 <head>
   <title>Dummy</title>
   <% if ShakapackerHelpers.available? %>
-    <%= javascript_include_tag "turbolinks_only", "data-turbolinks-track" => true %>
     <%= javascript_pack_tag "application" %>
   <% elsif SprocketsHelpers.available? %>
     <%= javascript_include_tag "application", "data-turbolinks-track" => true %>

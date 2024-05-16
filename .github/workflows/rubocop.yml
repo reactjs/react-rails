@@ -14,6 +14,9 @@ jobs:
       matrix:
         os: [ubuntu-latest]
         ruby: ['2.7', '3.0']
+    env:
+      # $BUNDLE_GEMFILE must be set at the job level, so it is set for all steps
+      BUNDLE_GEMFILE: ${{ github.workspace }}/LintingGemfile
 
     steps:
       - uses: actions/checkout@v4
@@ -23,7 +26,5 @@ jobs:
         with:
           ruby-version: ${{ matrix.ruby }}
           bundler-cache: true
-      - name: Install linting gems
-        run: gem install rubocop rubocop-performance rubocop-minitest
       - name: Run rubocop
-        run: rubocop
+        run: bundle exec rubocop

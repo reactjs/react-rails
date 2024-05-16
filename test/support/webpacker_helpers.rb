@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module ShakapackerHelpers
-  PACKS_DIRECTORY = File.expand_path("../../#{DUMMY_LOCATION}/public/packs", __FILE__)
+  PACKS_DIRECTORY = File.expand_path("../dummy/public/packs", __dir__)
 
   module_function
 
@@ -19,7 +19,7 @@ module ShakapackerHelpers
     return unless available?
 
     clear_shakapacker_packs
-    Dir.chdir("./test/#{DUMMY_LOCATION}") do
+    Dir.chdir("./test/dummy") do
       Rake::Task["shakapacker:compile"].reenable
       Rake::Task["shakapacker:compile"].invoke
     end
@@ -45,7 +45,7 @@ module ShakapackerHelpers
     ENV["NODE_ENV"] = "development"
 
     # Start the server in a forked process:
-    Dir.chdir("test/#{DUMMY_LOCATION}") do
+    Dir.chdir("test/dummy") do
       spawn "RAILS_ENV=development ./bin/shakapacker-dev-server"
     end
 
