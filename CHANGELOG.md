@@ -1,4 +1,4 @@
-# react-rails
+# Changelog for React-Rails
 
 If you need help upgrading `react-rails`, `webpacker` to `shakapacker`, or JS packages, contact justin@shakacode.com. We can upgrade your project and improve your development and customer experiences, allowing you to focus on building new features or fixing bugs instead. 
 
