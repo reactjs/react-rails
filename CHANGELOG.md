@@ -1,16 +1,24 @@
 # react-rails
 
-If you need help upgrading `react-rails`, `webpacker` to `shakapacker`, or JS packages, contact justin@shakacode.com. The ShakaCode.com team is helping to maintain this Ruby gem. You also might want to consider the [react_on_rails](https://github.com/shakacode/react_on_rails) gem.
+If you need help upgrading `react-rails`, `webpacker` to `shakapacker`, or JS packages, contact justin@shakacode.com. We can upgrade your project and improve your development and customer experiences, allowing you to focus on building new features or fixing bugs instead. 
 
-[#1209 2.7 Release Discussion](https://github.com/reactjs/react-rails/issues/1209)
+For an overview of working with us, see our [Client Engagement Model](https://www.shakacode.com/blog/client-engagement-model/) article and [how we bill for time](https://www.shakacode.com/blog/shortcut-jira-trello-github-toggl-time-and-task-tracking/).
+
+We also specialize in helping development teams lower infrastructure and CI costs. Check out our project [Control Plane Flow](https://github.com/shakacode/control-plane-flow/), which can allow you to get the ease of Heroku with the power of Kubernetes and big cost savings.
+
+If you think ShakaCode can help your project, [click here](https://meetings.hubspot.com/justingordon/30-minute-consultation) to book a call with [Justin Gordon](mailto:justin@shakacode.com), the creator of React on Rails and Shakapacker.
+
+You also might want to consider the [react_on_rails](https://github.com/shakacode/react_on_rails) gem.
 
 ## Unreleased
 Changes since the last non-beta release.
 
-_Please add entries here for your pull requests that are not yet released. Include LINKS for PRs and committers._
+_Please add entries here for your pull requests that have not yet been released. Include LINKS for PRs and committers._
+
+## [3.2.1] - 2024-05-16
 
 #### Fixed
-- Replaced call to ReactRailsUJS.unmountComponents that was erroneously removed by #1290 in 3.0.0 #1339
+- Replaced call to ReactRailsUJS.unmountComponents that was erroneously removed by [PR 1290](https://github.com/reactjs/react-rails/pull/1305) in 3.0.0 [PR 1339](https://github.com/reactjs/react-rails/pull/1339).
 
 - Prevent roots from being re-created when using React 18 [PR 1305](https://github.com/reactjs/react-rails/pull/1305) by [diogobeda](https://github.com/diogobeda)
 
@@ -47,6 +55,8 @@ _Please add entries here for your pull requests that are not yet released. Inclu
 - Fix ReactDomClient initialization error during SSR. #1278
 
 ## [2.7.0] - 2023-05-06
+
+[#1209 2.7 Release Discussion](https://github.com/reactjs/react-rails/issues/1209)
 
 #### New Features
 - Camelizes keys with primitive values, in addition to hashes #946
@@ -578,7 +588,8 @@ _Please add entries here for your pull requests that are not yet released. Inclu
 - Server rendering with `prerender: true`
 - Transform `.jsx` in the asset pipeline
 
-[Unreleased]: https://github.com/reactjs/react-rails/compare/v3.2.0...main
+[Unreleased]: https://github.com/reactjs/react-rails/compare/v3.2.1...main
+[3.2.1]: https://github.com/reactjs/react-rails/compare/v3.2.1...v3.2.1
 [3.2.0]: https://github.com/reactjs/react-rails/compare/v3.1.1...v3.2.0
 [3.1.1]: https://github.com/reactjs/react-rails/compare/v3.1.0...v3.1.1
 [3.1.0]: https://github.com/reactjs/react-rails/compare/v3.0.0...v3.1.0
