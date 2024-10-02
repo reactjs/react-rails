@@ -10,6 +10,7 @@ For version 2.7 documentation, visit the [2.7-stable](https://github.com/reactjs
 React-Rails is a flexible tool to use [React](http://facebook.github.io/react/) with Rails. The benefits:
 * Automatically renders React server-side and client-side
 * Supports [Shakapacker](https://github.com/shakacode/shakapacker) v7
+* Supports Propshaft
 * Supports Sprockets 4.x, 3.x
 * Lets you use [JSX](http://facebook.github.io/react/docs/jsx-in-depth.html), [ES6](http://es6-features.org/), [TypeScript](https://www.typescriptlang.org/), [CoffeeScript](http://coffeescript.org/)
 

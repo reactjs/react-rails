@@ -73,6 +73,7 @@ jobs:
           - base
           - shakapacker
           # These don't have shakapacker:
+          - propshaft
           - sprockets_3
           - sprockets_4
     runs-on: ubuntu-latest

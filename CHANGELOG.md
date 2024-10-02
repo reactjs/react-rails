@@ -1,6 +1,6 @@
 # Changelog for React-Rails
 
-If you need help upgrading `react-rails`, `webpacker` to `shakapacker`, or JS packages, contact justin@shakacode.com. We can upgrade your project and improve your development and customer experiences, allowing you to focus on building new features or fixing bugs instead. 
+If you need help upgrading `react-rails`, `webpacker` to `shakapacker`, or JS packages, contact justin@shakacode.com. We can upgrade your project and improve your development and customer experiences, allowing you to focus on building new features or fixing bugs instead.
 
 For an overview of working with us, see our [Client Engagement Model](https://www.shakacode.com/blog/client-engagement-model/) article and [how we bill for time](https://www.shakacode.com/blog/shortcut-jira-trello-github-toggl-time-and-task-tracking/).
 
@@ -14,6 +14,8 @@ You also might want to consider the [react_on_rails](https://github.com/shakacod
 Changes since the last non-beta release.
 
 _Please add entries here for your pull requests that have not yet been released. Include LINKS for PRs and committers._
+
+- Support for Propshaft server rendering. [PR 1345](https://github.com/reactjs/react-rails/pull/1345) by [elektronaut](https://github.com/elektronaut)
 
 ## [3.2.1] - 2024-05-16
 
