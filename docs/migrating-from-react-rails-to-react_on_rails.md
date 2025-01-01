@@ -36,7 +36,8 @@ In this guide, it is assumed that you have upgraded the `react-rails` project to
 
    1. Replace `react-rails` in `Gemfile` with the latest version of `react_on_rails` and run `bundle install`.
    2. Remove `react_ujs` from `package.json` and run `yarn install`.
-   3. Commit changes!
+   3. Add `package_json` in `Gemfile` if you don't have it
+   4. Commit changes!
 
 2. Run `rails g react_on_rails:install` but do not commit the change. `react_on_rails` installs node dependencies and also creates sample react component, Rails view/controller, and update `config/routes.rb`.
 
