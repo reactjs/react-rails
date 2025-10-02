@@ -335,4 +335,4 @@ MyApp::Application.configure do
 end
 ```
 
-Be sure to restart your Rails server after changing these files. See [VERSIONS.md](https://github.com/reactjs/react-rails/blob/main/VERSIONS.md) to learn which version of React.js is included with your `react-rails` version. In some edge cases you may need to bust the sprockets cache with `rake tmp:clear`
+Be sure to restart your Rails server after changing these files. See [VERSIONS.md](https://github.com/reactjs/react-rails/blob/master/VERSIONS.md) to learn which version of React.js is included with your `react-rails` version. In some edge cases you may need to bust the sprockets cache with `rake tmp:clear`
