@@ -138,6 +138,13 @@ The following companies provide licenses to the ShakaCode team, supporting the d
     <img alt="HoneyBadger" src="https://user-images.githubusercontent.com/4244251/184881133-79ee9c3c-8165-4852-958e-31687b9536f4.png" height="70px">
   </picture>
 </a>
+<a href="https://coderabbit.ai">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://victorious-bubble-f69a016683.media.strapiapp.com/White_Typemark_7229870ac5.svg">
+    <source media="(prefers-color-scheme: light)" srcset="https://victorious-bubble-f69a016683.media.strapiapp.com/Orange_Typemark_7958cfa790.svg">
+    <img alt="CodeRabbit" src="https://victorious-bubble-f69a016683.media.strapiapp.com/Orange_Typemark_7958cfa790.svg" height="55px">
+  </picture>
+</a>
 
 ---
 
