@@ -1,3 +1,7 @@
+appraise 'propshaft' do
+  gem 'propshaft', '~> 1.0.x'
+end
+
 appraise 'sprockets_4' do
   gem 'sprockets', '~> 4.0.x'
   gem 'sprockets-rails'
