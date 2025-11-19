@@ -102,7 +102,13 @@ The Wiki page features a significant amount of additional information about Reac
 
 ## Contributing
 
-🎉 Thanks for taking the time to contribute! 🎉 See [CONTRIBUTING.md](./CONTRIBUTING.md) for more details.
+🎉 Thanks for taking the time to contribute! 🎉
+
+With 5 Million+ downloads of the react-rails Gem and another 2 Million+ downloads of react_ujs on NPM, you're helping the biggest React + Rails community!
+
+By contributing to React-Rails, you agree to abide by the [code of conduct](https://github.com/reactjs/react-rails/blob/master/CODE_OF_CONDUCT.md).
+
+You can always help by submitting patches or triaging issues. Even offering reproduction steps to issues is incredibly helpful!
 
 # Supporters
 
@@ -150,3 +156,4 @@ The following companies provide licenses to the ShakaCode team, supporting the d
 ---
 
 ShakaCode is [hiring](https://jobs.lever.co/shakacode/3bdbfdb3-4495-4611-a279-01dddddb351abe)!
+Please see our [Contribution guide](https://github.com/reactjs/react-rails/blob/master/CONTRIBUTING.md) for more info.

@@ -135,4 +135,4 @@ You can also specify this option in `react_component`:
 
 To make simple changes to Component templates, copy the respective template file to your Rails project at `lib/templates/react/component/template_filename`.
 
-For example, to change the [ES6 Component template](https://github.com/reactjs/react-rails/blob/main/lib/generators/templates/component.es6.jsx), copy it to `lib/templates/react/component/component.es6.jsx` and modify it.
+For example, to change the [ES6 Component template](https://github.com/reactjs/react-rails/blob/master/lib/generators/templates/component.es6.jsx), copy it to `lib/templates/react/component/component.es6.jsx` and modify it.

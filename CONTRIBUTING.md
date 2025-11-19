@@ -6,7 +6,7 @@ With 5 Million+ downloads of the react-rails Gem and another 2 Million+ download
 
 What follows is a set of guidelines for contributing to React-Rails, inside the [react-js Organization](https://github.com/reactjs), part of the wider [React Community](https://reactcommunity.org/)
 
-By contributing to React-Rails, you agree to abide by the [code of conduct](https://github.com/reactjs/react-rails/blob/main/CODE_OF_CONDUCT.md).
+By contributing to React-Rails, you agree to abide by the [code of conduct](https://github.com/reactjs/react-rails/blob/master/CODE_OF_CONDUCT.md).
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -36,7 +36,7 @@ By contributing to React-Rails, you agree to abide by the [code of conduct](http
 ### Reporting Bugs
 
 #### Before Submitting A Bug Report
-* **Check the [wiki](https://github.com/reactjs/react-rails/wiki).** You might be able to find a guide on what you're experiencing. Most importantly, check if you can reproduce the problem [in the latest version of React-Rails with React_ujs](https://github.com/reactjs/react-rails/tree/main), sometimes we have already fixed the issue.
+* **Check the [wiki](https://github.com/reactjs/react-rails/wiki).** You might be able to find a guide on what you're experiencing. Most importantly, check if you can reproduce the problem [in the latest version of React-Rails with React_ujs](https://github.com/reactjs/react-rails/tree/master), sometimes we have already fixed the issue.
 * **Perform a [cursory search](https://github.com/reactjs/react-rails/issues)** to see if the problem has already been reported. If it has **and the issue is still open**, add a comment to the existing issue instead of opening a new one. If **the issue is closed** open a new issue with reproduction steps and reference the old one.
 * **If the problem is with pre-rendering, turn off pre-rendering and look at Chrome's developer console**, that normally reveals more details about what the true error message is if it's a syntax error in a component or failing to require a component file.
 

@@ -26,7 +26,7 @@ Server rendering is powered by [`ExecJS`](https://github.com/rails/execjs) and s
 
 - `react-rails` must load your code. By convention, it uses `server_rendering.js`, which was created
 by the install task. This file must include your components _and_ their dependencies (eg, Underscore.js).
-- Requires separate compilations for server & client bundles (see [Webpack config](https://github.com/reactjs/react-rails/tree/main/test/dummy/config/webpack))
+- Requires separate compilations for server & client bundles (see [Webpack config](https://github.com/reactjs/react-rails/tree/master/test/dummy/config/webpack))
 - Your code can't reference `document` or `window`. Prerender processes don't have access to `document` or `window`,
 so jQuery and some other libs won't work in this environment :(
 
