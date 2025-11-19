@@ -12,7 +12,7 @@
 ## 2.7 to 3.0
 - Keep your `react_ujs` up to date: `yarn upgrade`
 - **Drop support for Webpacker:** Before any ReactRails upgrade, make sure upgrading from Webpacker to Shakapacker 7. For more information check out Shakapacker  
-- **SSR:** ReactRails 3.x requires separate compilations for server & client bundles. See [Webpack config](https://github.com/reactjs/react-rails/tree/main/test/dummy/config/webpack) directory in the dummy app to addapt the new implementation.
+- **SSR:** ReactRails 3.x requires separate compilations for server & client bundles. See [Webpack config](https://github.com/reactjs/react-rails/tree/master/test/dummy/config/webpack) directory in the dummy app to addapt the new implementation.
 
 ## 2.3 to 2.4
 
