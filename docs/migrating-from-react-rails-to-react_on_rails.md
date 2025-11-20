@@ -30,7 +30,7 @@
 
 ## Steps to migrate
 
-In this guide, it is assumed that you have upgraded the `react-rails` project to use `shakapacker` version 7. To this end, check out [Shakapacker v7 upgrade guide](https://github.com/shakacode/shakapacker/tree/master/docs/v7_upgrade.md). Upgrading `react-rails` to version 3 can make the migration smoother but it is not required.
+In this guide, it is assumed that you have upgraded the `react-rails` project to use `shakapacker` version 7. To this end, check out [Shakapacker v7 upgrade guide](https://github.com/shakacode/shakapacker/tree/main/docs/v7_upgrade.md). Upgrading `react-rails` to version 3 can make the migration smoother but it is not required.
 
 1. Update Deps
 
