@@ -18,9 +18,9 @@ React-Rails is a flexible tool to use [React](http://facebook.github.io/react/) 
 
 While ShakaCode will continue to support this gem, you might consider migrating to [React on Rails](https://github.com/shakacode/react_on_rails) or [React on Rails Pro with proper Node rendering](https://www.shakacode.com/react-on-rails-pro/).
 
-Why? React on Rails code receives much more active development and testing. For example, consider the [ReactRailsUJS](https://github.com/reactjs/react-rails/blob/master/react_ujs/index.js) implementation compared to the [ReactOnRails Node package](https://github.com/shakacode/react_on_rails/tree/master/node_package) which is written in TypeScript. For another example, React on Rails has work underway to support the latest React features, such as [React Server Components](https://react.dev/reference/rsc/server-components).
+Why? React on Rails code receives much more active development and testing. For example, consider the [ReactRailsUJS](https://github.com/reactjs/react-rails/blob/main/react_ujs/index.js) implementation compared to the [ReactOnRails Node package](https://github.com/shakacode/react_on_rails/tree/master/node_package) which is written in TypeScript. For another example, React on Rails has work underway to support the latest React features, such as [React Server Components](https://react.dev/reference/rsc/server-components).
 
-You can find [migration to React on Rails steps here](https://github.com/reactjs/react-rails/blob/master/docs/migrating-from-react-rails-to-react_on_rails.md).
+You can find [migration to React on Rails steps here](https://github.com/reactjs/react-rails/blob/main/docs/migrating-from-react-rails-to-react_on_rails.md).
 
 ---
 ## ShakaCode Support
