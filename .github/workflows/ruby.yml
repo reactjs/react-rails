@@ -18,7 +18,7 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        ruby: [2.7]
+        ruby: ['2.7', '3.0', '3.1', '3.2', '3.3']
     runs-on: ubuntu-latest
     env:
       PACKAGE_JSON_FALLBACK_MANAGER: yarn_classic
@@ -67,7 +67,7 @@ jobs:
             installer: pnpm
           - name: bun
             installer: bun
-        ruby: [2.7]
+        ruby: ['2.7', '3.0', '3.1', '3.2', '3.3']
         gemfile:
           # These have shakapacker:
           - base
