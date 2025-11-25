@@ -44,11 +44,18 @@ jobs:
       - name: Set Gemfile for Ruby 2.7
         if: matrix.ruby == '2.7'
         run: echo "BUNDLE_GEMFILE=${{ github.workspace }}/gemfiles/ruby27.gemfile" >> $GITHUB_ENV
-      - name: Save dummy app ruby gems to cache
+      - name: Save dummy app ruby gems to cache (Ruby 2.7)
+        if: matrix.ruby == '2.7'
         uses: actions/cache@v3
         with:
           path: vendor/bundle
-          key: root-gem-cache-${{ matrix.ruby }}-${{ hashFiles(env.BUNDLE_GEMFILE || 'Gemfile.lock') }}
+          key: root-gem-cache-${{ matrix.ruby }}-${{ hashFiles('gemfiles/ruby27.gemfile.lock') }}
+      - name: Save dummy app ruby gems to cache (Ruby 3.0+)
+        if: matrix.ruby != '2.7'
+        uses: actions/cache@v3
+        with:
+          path: vendor/bundle
+          key: root-gem-cache-${{ matrix.ruby }}-${{ hashFiles('Gemfile.lock') }}
       - name: Install Ruby Gems
         run: bundle check --path=vendor/bundle || bundle _2.4.9_ install --path=vendor/bundle --jobs=4 --retry=3
       - run: yarn
