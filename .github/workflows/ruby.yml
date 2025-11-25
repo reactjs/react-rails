@@ -18,7 +18,7 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        ruby: [2.7]
+        ruby: ['2.7', '3.0', '3.1', '3.2', '3.3']
     runs-on: ubuntu-latest
     env:
       PACKAGE_JSON_FALLBACK_MANAGER: yarn_classic
@@ -41,13 +41,23 @@ jobs:
         with:
           bundler: 2.4.9
           ruby-version: ${{ matrix.ruby }}
-      - name: Save dummy app ruby gems to cache
+      - name: Set Gemfile for Ruby 2.7
+        if: matrix.ruby == '2.7'
+        run: echo "BUNDLE_GEMFILE=${{ github.workspace }}/gemfiles/ruby27.gemfile" >> $GITHUB_ENV
+      - name: Save dummy app ruby gems to cache (Ruby 2.7)
+        if: matrix.ruby == '2.7'
         uses: actions/cache@v3
         with:
           path: vendor/bundle
-          key: root-gem-cache-${{ hashFiles('Gemfile.lock') }}
+          key: root-gem-cache-${{ matrix.ruby }}-${{ hashFiles('gemfiles/ruby27.gemfile.lock') }}
+      - name: Save dummy app ruby gems to cache (Ruby 3.0+)
+        if: matrix.ruby != '2.7'
+        uses: actions/cache@v3
+        with:
+          path: vendor/bundle
+          key: root-gem-cache-${{ matrix.ruby }}-${{ hashFiles('Gemfile.lock') }}
       - name: Install Ruby Gems
-        run: bundle lock --add-platform 'x86_64-linux' && bundle check --path=vendor/bundle || bundle _2.4.9_ install --path=vendor/bundle --jobs=4 --retry=3
+        run: bundle check --path=${{ github.workspace }}/vendor/bundle || bundle _2.4.9_ install --path=${{ github.workspace }}/vendor/bundle --jobs=4 --retry=3
       - run: yarn
       - run: bundle exec rake react:update
       - run: bundle exec rake ujs:update
@@ -67,7 +77,7 @@ jobs:
             installer: pnpm
           - name: bun
             installer: bun
-        ruby: [2.7]
+        ruby: ['2.7', '3.0', '3.1', '3.2', '3.3']
         gemfile:
           # These have shakapacker:
           - base
@@ -108,13 +118,16 @@ jobs:
         ruby-version: ${{ matrix.ruby }}
     - run: bundle config set --local path 'test/dummy/vendor/bundle'
     - run: ./test/bin/create-fake-js-package-managers ${{ matrix.js_package_manager.installer }}
+    - name: Use Ruby 2.7 specific lockfile
+      if: matrix.ruby == '2.7'
+      run: cp gemfiles/${{ matrix.gemfile }}.gemfile.ruby27.lock gemfiles/${{ matrix.gemfile }}.gemfile.lock
     - name: Save dummy app ruby gems to cache
       uses: actions/cache@v3
       with:
         path: test/dummy/vendor/bundle
-        key: dummy-app-gem-cache-${{ hashFiles(format('{0}/gemfiles/{1}.gemfile.lock', github.workspace, matrix.gemfile)) }}
+        key: dummy-app-gem-cache-${{ matrix.ruby }}-${{ hashFiles(format('{0}/gemfiles/{1}.gemfile.lock', github.workspace, matrix.gemfile)) }}
     - name: Install Ruby Gems for dummy app
-      run: bundle lock --add-platform 'x86_64-linux' && bundle check --path=test/dummy/vendor/bundle || bundle _2.4.9_ install --frozen --path=test/dummy/vendor/bundle --jobs=4 --retry=3
+      run: bundle check --path=test/dummy/vendor/bundle || bundle _2.4.9_ install --frozen --path=test/dummy/vendor/bundle --jobs=4 --retry=3
     - run: cd test/dummy && yalc add react_ujs && ${{ matrix.js_package_manager.installer }} install
     - run: bundle exec rake test
       env:

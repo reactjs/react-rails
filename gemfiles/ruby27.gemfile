@@ -1,0 +1,9 @@
+# Ruby 2.7-specific gemfile with compatible nokogiri version
+
+source "http://rubygems.org"
+
+# Nokogiri 1.15.x is the last version series to support Ruby 2.7
+# Nokogiri 1.16.0+ requires Ruby >= 3.0
+gem "nokogiri", "~> 1.15.0"
+
+gemspec path: "../"

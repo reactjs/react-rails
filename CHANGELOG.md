@@ -15,6 +15,9 @@ Changes since the last non-beta release.
 
 _Please add entries here for your pull requests that have not yet been released. Include LINKS for PRs and committers._
 
+## [3.3.0] - 2024-11-22
+
+#### Added
 - Support for Propshaft server rendering. [PR 1345](https://github.com/reactjs/react-rails/pull/1345) by [elektronaut](https://github.com/elektronaut)
 
 ## [3.2.1] - 2024-05-16
@@ -590,8 +593,9 @@ _Please add entries here for your pull requests that have not yet been released.
 - Server rendering with `prerender: true`
 - Transform `.jsx` in the asset pipeline
 
-[Unreleased]: https://github.com/reactjs/react-rails/compare/v3.2.1...main
-[3.2.1]: https://github.com/reactjs/react-rails/compare/v3.2.1...v3.2.1
+[Unreleased]: https://github.com/reactjs/react-rails/compare/v3.3.0...main
+[3.3.0]: https://github.com/reactjs/react-rails/compare/v3.2.1...v3.3.0
+[3.2.1]: https://github.com/reactjs/react-rails/compare/v3.2.0...v3.2.1
 [3.2.0]: https://github.com/reactjs/react-rails/compare/v3.1.1...v3.2.0
 [3.1.1]: https://github.com/reactjs/react-rails/compare/v3.1.0...v3.1.1
 [3.1.0]: https://github.com/reactjs/react-rails/compare/v3.0.0...v3.1.0

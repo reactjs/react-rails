@@ -7,4 +7,8 @@ gem "sprockets-rails"
 gem "turbolinks", "~> 5"
 gem "mini_racer", platforms: :mri
 
+# Nokogiri version constraints for different Ruby versions
+gem "nokogiri", "~> 1.15.0" if RUBY_VERSION < "3.0"
+gem "nokogiri", "~> 1.17.0" if RUBY_VERSION >= "3.0"
+
 gemspec path: "../"
