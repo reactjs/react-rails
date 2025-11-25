@@ -4,4 +4,8 @@ source "http://rubygems.org"
 
 gem "rails", "~> 7.0.x"
 
+# Nokogiri version constraints for different Ruby versions
+gem "nokogiri", "~> 1.15.0" if RUBY_VERSION < "3.0"
+gem "nokogiri", "~> 1.17.0" if RUBY_VERSION >= "3.0"
+
 gemspec path: "../"
