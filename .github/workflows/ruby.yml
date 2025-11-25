@@ -118,11 +118,14 @@ jobs:
         ruby-version: ${{ matrix.ruby }}
     - run: bundle config set --local path 'test/dummy/vendor/bundle'
     - run: ./test/bin/create-fake-js-package-managers ${{ matrix.js_package_manager.installer }}
+    - name: Use Ruby 2.7 specific lockfile
+      if: matrix.ruby == '2.7'
+      run: cp gemfiles/${{ matrix.gemfile }}.gemfile.ruby27.lock gemfiles/${{ matrix.gemfile }}.gemfile.lock
     - name: Save dummy app ruby gems to cache
       uses: actions/cache@v3
       with:
         path: test/dummy/vendor/bundle
-        key: dummy-app-gem-cache-${{ hashFiles(format('{0}/gemfiles/{1}.gemfile.lock', github.workspace, matrix.gemfile)) }}
+        key: dummy-app-gem-cache-${{ matrix.ruby }}-${{ hashFiles(format('{0}/gemfiles/{1}.gemfile.lock', github.workspace, matrix.gemfile)) }}
     - name: Install Ruby Gems for dummy app
       run: bundle check --path=test/dummy/vendor/bundle || bundle _2.4.9_ install --frozen --path=test/dummy/vendor/bundle --jobs=4 --retry=3
     - run: cd test/dummy && yalc add react_ujs && ${{ matrix.js_package_manager.installer }} install
