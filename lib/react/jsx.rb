@@ -10,6 +10,7 @@ require "rails"
 
 module React
   module JSX
+    FOO=bar
     DEFAULT_TRANSFORMER = BabelTransformer
     mattr_accessor :transform_options, :transformer_class, :transformer
 
