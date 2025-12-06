@@ -16,7 +16,13 @@ module React
     # @return [void]
     def self.reset_pool
       options = { size: pool_size, timeout: pool_timeout }
-      @pool = ConnectionPool.new(options) { renderer.new(renderer_options) }
+
+      # ConnectionPool v3+ uses keyword arguments rather than positional
+      @pool = if ConnectionPool::VERSION[0] <= "2"
+                ConnectionPool.new(options) { renderer.new(renderer_options) }
+              else
+                ConnectionPool.new(**options) { renderer.new(renderer_options) }
+              end
     end
 
     # Check a renderer out of the pool and use it to render the component.
