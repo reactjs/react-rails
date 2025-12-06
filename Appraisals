@@ -19,3 +19,7 @@ end
 appraise 'shakapacker' do
   gem 'shakapacker', '7.2.0'
 end
+
+appraise 'connection_pool_2' do
+  gem 'connection_pool', '~> 2'
+end
