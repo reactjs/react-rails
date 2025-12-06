@@ -2,6 +2,6 @@
 
 source "http://rubygems.org"
 
-gem "connection_pool", "~> 2"
+gem "connection_pool", "~> 3"
 
 gemspec path: "../"

@@ -119,3 +119,63 @@ jobs:
     - run: bundle exec rake test
       env:
         NODE_OPTIONS: --openssl-legacy-provider
+
+  test_connection_pool_v3:
+    needs: check_react_and_ujs
+    strategy:
+      fail-fast: false
+      matrix:
+        js_package_manager:
+          - name: npm
+            installer: npm
+          - name: yarn_classic
+            installer: yarn
+          - name: pnpm
+            installer: pnpm
+          - name: bun
+            installer: bun
+        ruby: [3.2]
+        gemfile: [connection_pool_3]
+    runs-on: ubuntu-latest
+    env:
+      # $BUNDLE_GEMFILE must be set at the job level, so it is set for all steps
+      BUNDLE_GEMFILE: ${{ github.workspace }}/gemfiles/${{ matrix.gemfile }}.gemfile
+      # Workaround b/c upgrading Minitest broke some mocking expectations
+      # having to do with automatic kwarg splatting
+      MT_KWARGS_HACK: 1
+      PACKAGE_JSON_FALLBACK_MANAGER: ${{ matrix.js_package_manager.name }}
+      SHAKAPACKER_USE_PACKAGE_JSON_GEM: true
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        persist-credentials: false
+    - uses: actions/setup-node@v3
+    - run: sudo npm -g install yalc ${{ matrix.js_package_manager.installer }}
+    - run: yalc publish
+    - name: Save root node_modules to cache
+      uses: actions/cache@v3
+      with:
+        path: node_modules
+        key: package-node-modules-cache-${{ hashFiles('yarn.lock') }}
+    - name: Save test/dummy/node_modules to cache
+      uses: actions/cache@v3
+      with:
+        path: test/dummy/node_modules
+        key: dummy-app-node-modules-cache-${{ hashFiles('test/dummy/yarn.lock') }}
+    - uses: ruby/setup-ruby@v1
+      with:
+        bundler: 2.4.9
+        ruby-version: ${{ matrix.ruby }}
+    - run: bundle config set --local path 'test/dummy/vendor/bundle'
+    - run: ./test/bin/create-fake-js-package-managers ${{ matrix.js_package_manager.installer }}
+    - name: Save dummy app ruby gems to cache
+      uses: actions/cache@v3
+      with:
+        path: test/dummy/vendor/bundle
+        key: dummy-app-gem-cache-${{ hashFiles(format('{0}/gemfiles/{1}.gemfile.lock', github.workspace, matrix.gemfile)) }}
+    - name: Install Ruby Gems for dummy app
+      run: bundle lock --add-platform 'x86_64-linux' && bundle check --path=test/dummy/vendor/bundle || bundle _2.4.9_ install --frozen --path=test/dummy/vendor/bundle --jobs=4 --retry=3
+    - run: cd test/dummy && yalc add react_ujs && ${{ matrix.js_package_manager.installer }} install
+    - run: bundle exec rake test
+      env:
+        NODE_OPTIONS: --openssl-legacy-provider
