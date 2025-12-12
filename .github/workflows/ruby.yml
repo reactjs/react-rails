@@ -51,8 +51,8 @@ jobs:
       - name: Restore Gemfile.lock if modified by bundle install
         run: git checkout Gemfile.lock
       - run: yarn
-      - run: bundle exec rake react:update
-      - run: bundle exec rake ujs:update
+      - run: bundle _2.4.9_ exec rake react:update
+      - run: bundle _2.4.9_ exec rake ujs:update
       - run: ./check_for_uncommitted_files.sh
 
   test:
