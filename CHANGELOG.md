@@ -20,6 +20,10 @@ _Please add entries here for your pull requests that have not yet been released.
 #### Added
 - Support for Propshaft server rendering. [PR 1345](https://github.com/reactjs/react-rails/pull/1345) by [elektronaut](https://github.com/elektronaut)
 
+#### Fixed
+
+- Support `connection_pool` v3 [PR 1367](https://github.com/reactjs/react-rails/pull/1367) by [G-Rath](https://github.com/G-Rath).
+
 ## [3.2.1] - 2024-05-16
 
 #### Fixed
