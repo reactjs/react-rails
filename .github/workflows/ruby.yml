@@ -51,9 +51,6 @@ jobs:
       - run: yarn
       - run: bundle exec rake react:update
       - run: bundle exec rake ujs:update
-      - name: Show Gemfile.lock diff
-        if: always()
-        run: git diff Gemfile.lock || true
       - run: ./check_for_uncommitted_files.sh
 
   test:
