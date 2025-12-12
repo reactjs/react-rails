@@ -295,7 +295,6 @@ DEPENDENCIES
   jbuilder
   listen (~> 3.0.0)
   minitest-retry
-  nokogiri (~> 1.17.0)
   package_json
   propshaft (~> 1.0.x)
   pry-byebug (~> 3.8.0)

@@ -306,7 +306,6 @@ DEPENDENCIES
   listen (~> 3.0.0)
   mini_racer
   minitest-retry
-  nokogiri (~> 1.15.0)
   package_json
   pry-byebug (~> 3.8.0)
   rails (~> 7.0.7, >= 7.0.7.2)
