@@ -114,7 +114,7 @@ jobs:
         path: test/dummy/vendor/bundle
         key: dummy-app-gem-cache-${{ matrix.ruby }}-${{ hashFiles(format('{0}/gemfiles/{1}.gemfile.lock', github.workspace, matrix.gemfile)) }}
     - name: Install Ruby Gems for dummy app
-      run: bundle check --path=test/dummy/vendor/bundle || bundle _2.4.9_ install --frozen --path=test/dummy/vendor/bundle --jobs=4 --retry=3
+      run: bundle lock --add-platform 'x86_64-linux' && bundle check --path=test/dummy/vendor/bundle || bundle _2.4.9_ install --frozen --path=test/dummy/vendor/bundle --jobs=4 --retry=3
     - run: cd test/dummy && yalc add react_ujs && ${{ matrix.js_package_manager.installer }} install
     - run: bundle exec rake test
       env:
