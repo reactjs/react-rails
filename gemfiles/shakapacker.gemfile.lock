@@ -258,7 +258,6 @@ GEM
     websocket-extensions (0.1.5)
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    webrick (1.9.2)
     zeitwerk (2.6.7)
 
 PLATFORMS
@@ -286,7 +285,6 @@ DEPENDENCIES
   shakapacker (= 7.2.0)
   test-unit (~> 2.5)
   turbo-rails
-  webrick
 
 BUNDLED WITH
    2.4.9

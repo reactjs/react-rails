@@ -26,7 +26,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'listen', '~> 3.0.0'
   s.add_development_dependency 'capybara'
   s.add_development_dependency 'selenium-webdriver'
-  s.add_development_dependency 'webrick'
   s.add_development_dependency 'test-unit', '~> 2.5'
   s.add_development_dependency 'pry-byebug', '~> 3.8.0'
   s.add_development_dependency 'package_json'
