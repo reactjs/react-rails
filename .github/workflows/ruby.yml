@@ -18,7 +18,7 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        ruby: ['2.7', '3.0', '3.1', '3.2', '3.3']
+        ruby: ['3.3']
     runs-on: ubuntu-latest
     env:
       PACKAGE_JSON_FALLBACK_MANAGER: yarn_classic
@@ -41,23 +41,15 @@ jobs:
         with:
           bundler: 2.4.9
           ruby-version: ${{ matrix.ruby }}
-      - name: Set Gemfile for Ruby 2.7
-        if: matrix.ruby == '2.7'
-        run: echo "BUNDLE_GEMFILE=${{ github.workspace }}/gemfiles/ruby27.gemfile" >> $GITHUB_ENV
-      - name: Save dummy app ruby gems to cache (Ruby 2.7)
-        if: matrix.ruby == '2.7'
-        uses: actions/cache@v3
-        with:
-          path: vendor/bundle
-          key: root-gem-cache-${{ matrix.ruby }}-${{ hashFiles('gemfiles/ruby27.gemfile.lock') }}
-      - name: Save dummy app ruby gems to cache (Ruby 3.0+)
-        if: matrix.ruby != '2.7'
+      - name: Save ruby gems to cache
         uses: actions/cache@v3
         with:
           path: vendor/bundle
           key: root-gem-cache-${{ matrix.ruby }}-${{ hashFiles('Gemfile.lock') }}
       - name: Install Ruby Gems
         run: bundle check --path=${{ github.workspace }}/vendor/bundle || bundle _2.4.9_ install --path=${{ github.workspace }}/vendor/bundle --jobs=4 --retry=3
+      - name: Restore Gemfile.lock if modified by bundle install
+        run: git checkout Gemfile.lock
       - run: yarn
       - run: bundle exec rake react:update
       - run: bundle exec rake ujs:update
