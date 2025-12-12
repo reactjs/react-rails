@@ -18,7 +18,7 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        ruby: ['3.3']
+        ruby: ['2.7']
     runs-on: ubuntu-latest
     env:
       PACKAGE_JSON_FALLBACK_MANAGER: yarn_classic
