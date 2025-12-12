@@ -285,7 +285,7 @@ DEPENDENCIES
   propshaft (~> 1.0.x)
   test-unit (~> 2.5)
   turbo-rails
-
   webrick
+
 BUNDLED WITH
    2.4.9

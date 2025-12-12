@@ -291,7 +291,7 @@ DEPENDENCIES
   test-unit (~> 2.5)
   turbo-rails
   turbolinks (~> 5)
-
   webrick
+
 BUNDLED WITH
    2.4.9

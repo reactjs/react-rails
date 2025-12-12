@@ -271,7 +271,7 @@ DEPENDENCIES
   react-rails!
   selenium-webdriver
   test-unit (~> 2.5)
-
   webrick
+
 BUNDLED WITH
    2.4.9
