@@ -281,7 +281,7 @@ DEPENDENCIES
   mini_racer
   minitest-retry
   package_json
-  pry-byebug
+  pry-byebug (~> 3.8.0)
   rails (~> 7.0.7, >= 7.0.7.2)
   react-rails!
   selenium-webdriver
