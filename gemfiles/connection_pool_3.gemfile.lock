@@ -274,7 +274,7 @@ DEPENDENCIES
   selenium-webdriver
   test-unit (~> 2.5)
   turbo-rails
-  webrick
 
+  webrick
 BUNDLED WITH
    2.4.9
