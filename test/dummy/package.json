@@ -35,6 +35,6 @@
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.7",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "react-refresh": "^0.13.0",
-    "webpack-dev-server": "^4.9.2"
+    "webpack-dev-server": "^5.2.1"
   }
 }
