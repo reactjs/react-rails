@@ -11,3 +11,4 @@ coverage/
 yalc.lock
 /vendor/bundle
 .bundle/config
+gemfiles/.bundle/
