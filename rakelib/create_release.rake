@@ -15,7 +15,7 @@ desc("Releases both the gem and node package using the given version.
   2nd argument: Perform a dry run by passing 'true' as a second argument.
 
   Note, accept defaults for npmjs options. Script will pause to get 2FA tokens.
-  Example: `rake release[2.1.0,false]`")
+  Example: `rake create_release[2.1.0,false]`")
 
 task :create_release, %i[gem_version dry_run] do |_t, args|
   args_hash = args.to_hash

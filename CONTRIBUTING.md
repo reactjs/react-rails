@@ -117,6 +117,7 @@ It outputs an ironically webpacked couple of files into `lib/assets/react-source
   - Update the [changelog](CHANGELOG.md) (find recent changes on GitHub by listing commits or showing closed PRs)
   - Regular versions: `bundle exec rake create_release\[2.7.0\]`
   - RC versions: `bundle exec rake create_release\[2.7.0.rc.2\]`
+  - Dry run: `bundle exec rake create_release\[2.7.0,true\]`
   - Note, `rake create_release` runs `rake react:update` and `rake ujs:update`
 
 ## Styleguides
