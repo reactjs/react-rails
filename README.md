@@ -21,6 +21,7 @@ While ShakaCode will continue to support this gem, you might consider migrating 
 Why? React on Rails code receives much more active development and testing. For example, consider the [ReactRailsUJS](https://github.com/reactjs/react-rails/blob/main/react_ujs/index.js) implementation compared to the [ReactOnRails Node package](https://github.com/shakacode/react_on_rails/tree/master/node_package) which is written in TypeScript. For another example, React on Rails has work underway to support the latest React features, such as [React Server Components](https://react.dev/reference/rsc/server-components).
 
 You can find [migration to React on Rails steps here](https://github.com/reactjs/react-rails/blob/main/docs/migrating-from-react-rails-to-react_on_rails.md).
+
 For the fastest path, try the [LLM-assisted migration prompt](https://github.com/reactjs/react-rails/blob/main/docs/migrating-from-react-rails-to-react_on_rails.md#llm-assisted-migration-prompt).
 
 ---

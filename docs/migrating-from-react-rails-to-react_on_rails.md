@@ -66,8 +66,12 @@ You can also check [react-rails-to-react-on-rails](https://github.com/shakacode/
 
 You can usually do a safe first-pass migration quickly with a coding assistant. Give it this prompt:
 
+If your assistant cannot browse URLs, paste this migration guide content directly into the prompt context before running the template.
+
 ```text
 You are a senior Rails + React engineer. Migrate this app from react-rails to react_on_rails.
+
+Before starting, ask me for the relevant files (at minimum: Gemfile, package.json, JS entrypoints, config/initializers, and representative react_component usages).
 
 Use this guide as the source of truth:
 https://github.com/reactjs/react-rails/blob/main/docs/migrating-from-react-rails-to-react_on_rails.md
@@ -85,7 +89,7 @@ Requirements:
    - show commands run
    - show exact files changed
 4. Do not remove behavior unless you explain the replacement.
-5. Run tests/lint after each phase and report failures before continuing.
+5. After each phase, tell me the exact test/lint commands to run and wait for my output before continuing.
 6. End with:
    - a migration checklist
    - rollback steps
@@ -94,7 +98,7 @@ Requirements:
    - if `rails g react_on_rails:install` fails to install JS deps, run the install commands shown by the generator
    - remove leftover `react_ujs` / `ReactRailsUJS` references
    - remove or replace stale `server_rendering.js` entries if present
-   - run `bundle exec rails shakapacker:compile` and fix compile errors before finalizing
+   - if using Shakapacker, run `bundle exec rails shakapacker:compile` and fix compile errors before finalizing
 ```
 
 Review all generated diffs before merging.
