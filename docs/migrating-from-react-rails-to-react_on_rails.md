@@ -90,6 +90,11 @@ Requirements:
    - a migration checklist
    - rollback steps
    - a PR summary with risk level
+7. Add safety checks:
+   - if `rails g react_on_rails:install` fails to install JS deps, run the install commands shown by the generator
+   - remove leftover `react_ujs` / `ReactRailsUJS` references
+   - remove or replace stale `server_rendering.js` entries if present
+   - run `bundle exec rails shakapacker:compile` and fix compile errors before finalizing
 ```
 
 Review all generated diffs before merging.
