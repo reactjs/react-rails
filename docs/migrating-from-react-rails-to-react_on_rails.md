@@ -5,6 +5,7 @@
 
 - [Why migrate?](#why-migrate)
 - [Steps to migrate](#steps-to-migrate)
+- [LLM-assisted migration prompt](#llm-assisted-migration-prompt)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -61,3 +62,43 @@ In this guide, it is assumed that you have upgraded the `react-rails` project to
 
 You can also check [react-rails-to-react-on-rails](https://github.com/shakacode/react-rails-example-app/tree/react-rails-to-react-on-rails) branch on [react-rails example app](https://github.com/shakacode/react-rails-example-app) for an example of migration from `react-rails` v3 to `react_on_rails` v13.4.
 
+## LLM-assisted migration prompt
+
+You can usually do a safe first-pass migration quickly with a coding assistant. Give it this prompt:
+
+If your assistant cannot browse URLs, paste this migration guide content directly into the prompt context before running the template.
+
+```text
+You are a senior Rails + React engineer. Migrate this app from react-rails to react_on_rails.
+
+Before starting, ask me for the relevant files (at minimum: Gemfile, package.json, JS entrypoints, config/initializers, and representative react_component usages).
+
+Use this guide as the source of truth:
+https://github.com/reactjs/react-rails/blob/main/docs/migrating-from-react-rails-to-react_on_rails.md
+
+Requirements:
+1. Keep changes minimal and production-safe.
+2. Work in clear phases:
+   - dependencies
+   - installer changes
+   - bundle entry points
+   - view helper updates
+   - cleanup
+3. At each phase:
+   - explain what changed and why
+   - show commands run
+   - show exact files changed
+4. Do not remove behavior unless you explain the replacement.
+5. After each phase, tell me the exact test/lint commands to run and wait for my output before continuing.
+6. End with:
+   - a migration checklist
+   - rollback steps
+   - a PR summary with risk level
+7. Add safety checks:
+   - if `rails g react_on_rails:install` fails to install JS deps, run the install commands shown by the generator
+   - remove leftover `react_ujs` / `ReactRailsUJS` references
+   - remove or replace stale `server_rendering.js` entries if present
+   - if using Shakapacker, run `bundle exec rails shakapacker:compile` and fix compile errors before finalizing
+```
+
+Review all generated diffs before merging.
