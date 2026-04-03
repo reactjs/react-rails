@@ -15,7 +15,7 @@ Changes since the last non-beta release.
 
 _Please add entries here for your pull requests that have not yet been released. Include LINKS for PRs and committers._
 
-## [3.3.0] - 2024-11-22
+## [3.3.0] - 2026-03-31
 
 #### Added
 - Support for Propshaft server rendering. [PR 1345](https://github.com/reactjs/react-rails/pull/1345) by [elektronaut](https://github.com/elektronaut)
