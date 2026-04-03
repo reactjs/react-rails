@@ -22,6 +22,8 @@ Why? React on Rails code receives much more active development and testing. For 
 
 You can find [migration to React on Rails steps here](https://github.com/reactjs/react-rails/blob/main/docs/migrating-from-react-rails-to-react_on_rails.md).
 
+For the fastest path, try the [LLM-assisted migration prompt](https://github.com/reactjs/react-rails/blob/main/docs/migrating-from-react-rails-to-react_on_rails.md#llm-assisted-migration-prompt).
+
 ---
 ## ShakaCode Support
 
