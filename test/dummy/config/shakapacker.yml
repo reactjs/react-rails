@@ -5,6 +5,8 @@ default: &default
   source_entry_path: packs
   public_output_path: packs
   cache_path: tmp/cache/shakapacker
+  assets_bundler: webpack
+  javascript_transpiler: babel
 
   # Additional paths webpack should lookup modules
   # ['app/assets', 'engine/foo/app/assets']

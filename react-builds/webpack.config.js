@@ -15,6 +15,7 @@ module.exports = {
   plugins: [
     new NodePolyfillPlugin({
       excludeAliases: ['console', 'Buffer'],
+      additionalAliases: ['process'],
     }),
   ],
 };
