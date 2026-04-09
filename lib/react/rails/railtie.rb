@@ -76,10 +76,8 @@ module React
                                                          variant: app.config.react.variant
                                                        })
 
-        sprockets_env = app.assets || app.config.try(:assets) # sprockets-rails 3.x attaches this at a different config
-        unless sprockets_env.nil?
-          sprockets_env.version = [sprockets_env.version, "react-#{asset_variant.react_build}"].compact.join("-")
-        end
+        assets = app.assets || app.config.try(:assets) # sprockets-rails 3.x attaches this at a different config
+        Railtie.append_react_build_to_assets_version!(assets, asset_variant.react_build)
       end
 
       initializer "react_rails.set_variant", after: :engines_blank_point, group: :all do |app|
@@ -114,6 +112,29 @@ module React
           React::JSX::SprocketsStrategy.attach_with_strategy(sprockets_env, app.config.react.sprockets_strategy)
         end
       end
+
+      # :nodoc:
+      def self.append_react_build_to_assets_version!(assets, react_build)
+        versioned_assets = versioned_assets_for(assets)
+        return if versioned_assets.nil?
+
+        versioned_assets.version = [versioned_assets.version, "react-#{react_build}"].compact.join("-")
+      end
+
+      def self.versioned_assets_for(assets)
+        return assets if versioned_assets?(assets)
+
+        config = assets.config if assets.respond_to?(:config)
+        return config if versioned_assets?(config)
+
+        nil
+      end
+
+      def self.versioned_assets?(assets)
+        assets.respond_to?(:version) && assets.respond_to?(:version=)
+      end
+
+      private_class_method :versioned_assets_for, :versioned_assets?
     end
   end
 end
