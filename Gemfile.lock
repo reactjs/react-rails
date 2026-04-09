@@ -191,7 +191,7 @@ GEM
     pry-byebug (3.8.0)
       byebug (~> 11.0)
       pry (~> 0.10)
-    public_suffix (7.0.5)
+    public_suffix (5.1.1)
     racc (1.8.1)
     rack (2.2.23)
     rack-test (2.0.2)
