@@ -101,7 +101,7 @@ jobs:
       uses: actions/cache@v3
       with:
         path: test/dummy/node_modules
-        key: dummy-app-node-modules-cache-${{ hashFiles('test/dummy/yarn.lock') }}
+        key: dummy-app-node-modules-cache-${{ matrix.js_package_manager.name }}-${{ hashFiles('test/dummy/yarn.lock') }}
     - uses: ruby/setup-ruby@v1
       with:
         bundler: 2.4.9
@@ -161,7 +161,7 @@ jobs:
       uses: actions/cache@v3
       with:
         path: test/dummy/node_modules
-        key: dummy-app-node-modules-cache-${{ hashFiles('test/dummy/yarn.lock') }}
+        key: dummy-app-node-modules-cache-${{ matrix.js_package_manager.name }}-${{ hashFiles('test/dummy/yarn.lock') }}
     - uses: ruby/setup-ruby@v1
       with:
         bundler: 2.4.9
