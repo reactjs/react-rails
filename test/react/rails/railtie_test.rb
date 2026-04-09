@@ -31,4 +31,18 @@ class RailtieTest < ActionDispatch::IntegrationTest
 
     assert_equal "1.0-react-production", config.version
   end
+
+  test "cache busting is a no-op when assets is nil" do
+    assert_nothing_raised do
+      React::Rails::Railtie.append_react_build_to_assets_version!(nil, "development")
+    end
+  end
+
+  test "cache busting is a no-op when assets has no version" do
+    assets = Object.new
+
+    assert_nothing_raised do
+      React::Rails::Railtie.append_react_build_to_assets_version!(assets, "development")
+    end
+  end
 end

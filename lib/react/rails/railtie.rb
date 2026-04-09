@@ -113,6 +113,7 @@ module React
         end
       end
 
+      # :nodoc:
       def self.append_react_build_to_assets_version!(assets, react_build)
         versioned_assets = versioned_assets_for(assets)
         return if versioned_assets.nil?
@@ -130,7 +131,7 @@ module React
       end
 
       def self.versioned_assets?(assets)
-        assets&.respond_to?(:version) && assets.respond_to?(:version=)
+        assets.respond_to?(:version) && assets.respond_to?(:version=)
       end
 
       private_class_method :versioned_assets_for, :versioned_assets?
