@@ -15,6 +15,9 @@ Changes since the last non-beta release.
 
 _Please add entries here for your pull requests that have not yet been released. Include LINKS for PRs and committers._
 
+#### Fixed
+- Preserve default controller layouts for `render component:` after the Rails 8 render pipeline change reported in #1356.
+
 ## [3.3.0] - 2026-03-31
 
 #### Added
