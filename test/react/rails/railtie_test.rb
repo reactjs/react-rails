@@ -47,7 +47,7 @@ class RailtieTest < ActionDispatch::IntegrationTest
   end
 
   test "component render options default to using the current layout" do
-    render_options = React::Rails::Railtie.send(:component_render_options, { status: :accepted }, "<div>SSR</div>")
+    render_options = React::Rails::Railtie.component_render_options({ status: :accepted }, "<div>SSR</div>")
 
     assert_equal "<div>SSR</div>", render_options[:inline]
     assert render_options[:layout]
@@ -55,8 +55,14 @@ class RailtieTest < ActionDispatch::IntegrationTest
   end
 
   test "component render options preserve explicit layout overrides" do
-    render_options = React::Rails::Railtie.send(:component_render_options, { layout: false }, "<div>SSR</div>")
+    render_options = React::Rails::Railtie.component_render_options({ layout: false }, "<div>SSR</div>")
 
     refute render_options[:layout]
+  end
+
+  test "component render options preserve a named layout override" do
+    render_options = React::Rails::Railtie.component_render_options({ layout: "admin" }, "<div>SSR</div>")
+
+    assert_equal "admin", render_options[:layout]
   end
 end
