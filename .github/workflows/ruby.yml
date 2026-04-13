@@ -27,6 +27,8 @@ jobs:
         with:
           persist-credentials: false
       - uses: actions/setup-node@v3
+        with:
+          node-version: 20
       - name: Save root node_modules to cache
         uses: actions/cache@v3
         with:
@@ -90,6 +92,8 @@ jobs:
       with:
         persist-credentials: false
     - uses: actions/setup-node@v3
+      with:
+        node-version: 20
     - run: sudo npm -g install yalc ${{ matrix.js_package_manager.installer }}
     - run: yalc publish
     - name: Save root node_modules to cache
@@ -150,6 +154,8 @@ jobs:
       with:
         persist-credentials: false
     - uses: actions/setup-node@v3
+      with:
+        node-version: 20
     - run: sudo npm -g install yalc ${{ matrix.js_package_manager.installer }}
     - run: yalc publish
     - name: Save root node_modules to cache
