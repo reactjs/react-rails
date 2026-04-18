@@ -13,7 +13,6 @@
   "dependencies": {
     "@babel/preset-react": "^7.22.5",
     "css-loader": "^6.8.1",
-    "css-minimizer-webpack-plugin": "^5.0.1",
     "mini-css-extract-plugin": "^2.7.6",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",

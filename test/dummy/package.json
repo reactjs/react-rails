@@ -16,7 +16,7 @@
     "compression-webpack-plugin": "^9.2.0",
     "create-react-class": "^15.6.2",
     "css-loader": "^7.1.4",
-    "css-minimizer-webpack-plugin": "^2.0.0",
+    "css-minimizer-webpack-plugin": "^8.0.0",
     "mini-css-extract-plugin": "^2.10.2",
     "pnp-webpack-plugin": "^1.7.0",
     "react": "^18.2.0",
