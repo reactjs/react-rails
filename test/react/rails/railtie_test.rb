@@ -45,4 +45,24 @@ class RailtieTest < ActionDispatch::IntegrationTest
       React::Rails::Railtie.append_react_build_to_assets_version!(assets, "development")
     end
   end
+
+  test "component render options default to using the current layout" do
+    render_options = React::Rails::Railtie.component_render_options({ status: :accepted }, "<div>SSR</div>")
+
+    assert_equal "<div>SSR</div>", render_options[:inline]
+    assert_same true, render_options[:layout]
+    assert_equal :accepted, render_options[:status]
+  end
+
+  test "component render options preserve explicit layout overrides" do
+    render_options = React::Rails::Railtie.component_render_options({ layout: false }, "<div>SSR</div>")
+
+    assert_same false, render_options[:layout]
+  end
+
+  test "component render options preserve a named layout override" do
+    render_options = React::Rails::Railtie.component_render_options({ layout: "admin" }, "<div>SSR</div>")
+
+    assert_equal "admin", render_options[:layout]
+  end
 end

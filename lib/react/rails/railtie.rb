@@ -66,7 +66,7 @@ module React
         ActionController::Renderers.add :component do |component_name, options|
           renderer = ::React::Rails::ControllerRenderer.new(controller: self)
           html = renderer.call(component_name, options)
-          render_options = options.merge(inline: html)
+          render_options = Railtie.component_render_options(options, html)
           render(render_options)
         end
       end
@@ -119,6 +119,14 @@ module React
         return if versioned_assets.nil?
 
         versioned_assets.version = [versioned_assets.version, "react-#{react_build}"].compact.join("-")
+      end
+
+      # :nodoc:
+      def self.component_render_options(options, html)
+        render_options = options.merge(inline: html)
+        return render_options if render_options.key?(:layout)
+
+        render_options.merge(layout: true)
       end
 
       def self.versioned_assets_for(assets)
