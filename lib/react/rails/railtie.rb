@@ -121,6 +121,7 @@ module React
         versioned_assets.version = [versioned_assets.version, "react-#{react_build}"].compact.join("-")
       end
 
+      # :nodoc:
       def self.component_render_options(options, html)
         render_options = options.merge(inline: html)
         return render_options if render_options.key?(:layout)
