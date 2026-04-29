@@ -11,14 +11,8 @@
     "build": "cd react_ujs && webpack"
   },
   "dependencies": {
-    "@babel/preset-react": "^7.22.5",
-    "css-loader": "^6.8.1",
-    "mini-css-extract-plugin": "^2.7.6",
-    "prop-types": "^15.8.1",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react_ujs": "^2.7.1",
-    "style-loader": "^3.3.3"
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "webpack": "^5.74.0",
