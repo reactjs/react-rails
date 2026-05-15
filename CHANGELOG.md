@@ -17,6 +17,7 @@ _Please add entries here for your pull requests that have not yet been released.
 
 #### Fixed
 - Preserve default controller layouts for `render component:` after the Rails 8 render pipeline change. [PR 1418](https://github.com/reactjs/react-rails/pull/1418) by [justin808](https://github.com/justin808). Fixes [#1356](https://github.com/reactjs/react-rails/issues/1356).
+- Remove unneeded runtime dependencies. [PR 1420](https://github.com/reactjs/react-rails/pull/1420) by [G-Rath](https://github.com/g-rath)
 
 ## [3.3.0] - 2026-03-31
 
