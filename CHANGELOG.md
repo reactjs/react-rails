@@ -15,9 +15,12 @@ Changes since the last non-beta release.
 
 _Please add entries here for your pull requests that have not yet been released. Include LINKS for PRs and committers._
 
+## [3.3.1] - 2026-05-15
+
 #### Fixed
 - Preserve default controller layouts for `render component:` after the Rails 8 render pipeline change. [PR 1418](https://github.com/reactjs/react-rails/pull/1418) by [justin808](https://github.com/justin808). Fixes [#1356](https://github.com/reactjs/react-rails/issues/1356).
-- Remove unneeded runtime dependencies. [PR 1420](https://github.com/reactjs/react-rails/pull/1420) by [G-Rath](https://github.com/g-rath)
+- Remove unneeded runtime dependencies. [PR 1420](https://github.com/reactjs/react-rails/pull/1420) by [G-Rath](https://github.com/g-rath).
+- Fix Propshaft asset version cache busting so server-rendered bundles invalidate correctly when assets change. [PR 1403](https://github.com/reactjs/react-rails/pull/1403).
 
 ## [3.3.0] - 2026-03-31
 
@@ -601,7 +604,8 @@ _Please add entries here for your pull requests that have not yet been released.
 - Server rendering with `prerender: true`
 - Transform `.jsx` in the asset pipeline
 
-[Unreleased]: https://github.com/reactjs/react-rails/compare/v3.3.0...main
+[Unreleased]: https://github.com/reactjs/react-rails/compare/v3.3.1...main
+[3.3.1]: https://github.com/reactjs/react-rails/compare/v3.3.0...v3.3.1
 [3.3.0]: https://github.com/reactjs/react-rails/compare/v3.2.1...v3.3.0
 [3.2.1]: https://github.com/reactjs/react-rails/compare/v3.2.0...v3.2.1
 [3.2.0]: https://github.com/reactjs/react-rails/compare/v3.1.1...v3.2.0
