@@ -110,7 +110,7 @@ GEM
     concurrent-ruby (1.1.10)
     connection_pool (2.3.0)
     crass (1.0.6)
-    date (3.3.4)
+    date (3.5.1)
     docile (1.1.5)
     erubi (1.9.0)
     es5-shim-rails (4.0.1)
@@ -162,7 +162,7 @@ GEM
     minitest-retry (0.2.2)
       minitest (>= 5.0)
     nenv (0.3.0)
-    net-imap (0.4.11)
+    net-imap (0.5.15)
       date
       net-protocol
     net-pop (0.1.2)
@@ -242,7 +242,7 @@ GEM
     test-unit (2.5.5)
     thor (1.2.1)
     tilt (2.1.0)
-    timeout (0.4.1)
+    timeout (0.6.1)
     turbo-rails (2.0.5)
       actionpack (>= 6.0.0)
       activejob (>= 6.0.0)
